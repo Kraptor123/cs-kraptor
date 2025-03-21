@@ -3,6 +3,6 @@
   "description": "Türkçe içerikli eklenti havuzu",
   "manifestVersion": 1,
   "pluginLists": [
-    "https://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/.github/plugins.json"
+    "https://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/builds/plugins.json"
   ]
 }
