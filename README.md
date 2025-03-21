@@ -1,6 +1,11 @@
 # 📺 cs-kekikanime
 
-kafama göre eklentiler.
+Kısa kod = kekikan
+
+Eklenenler :
+
+Şimdilik sadece Anizm eklentisi eklenmiştir.
+-Arama fonksiyonu düzgün çalışmıyor animenin tam adını girmeniz gerekmekte.
 
 ## 💾 Kurulum
 
@@ -16,7 +21,7 @@ kafama göre eklentiler.
 - [Eklenti Listesi Wiki](https://cloudstream.miraheze.org/wiki/List_of_extensions)
 - [Open Subtitles Desteği (Torrent veya Yabancı Eklentiler İçin)](https://recloudstream.github.io/csdocs/integrations/opensubtitles/)
 - [anicompat (Fazlaca Anime Eklenti Desteği)](https://youtu.be/0Gl48lL7e9Y)
-- [Eklenti Kodlama](https://www.youtube.com/watch?v=gWECdddixyA)
+- [Eklenti Kodlama](https://www.youtube.com/watch?v=gWECdddixyA) ------> Hiç kodlama bilmeden bu video sayesinde ilerleme katedebildim kekiğe sonsuz teşekkürler.
 
 ---
 
