@@ -8,10 +8,11 @@ Anizm sitesi eklenti olarak eklenmiştir.
 
 Düzeltilenler :
 
-Animecix
-Dizipal
-Dizilla
-Setfilmizle
+Animecix,
+Dizipal,
+Dizilla,
+Setfilmizle,
+Türkanime,
 
 
 
