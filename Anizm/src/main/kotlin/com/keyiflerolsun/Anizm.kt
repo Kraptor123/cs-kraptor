@@ -201,14 +201,14 @@ class Anizm : MainAPI() {
         val rating = document.selectFirst("g.circle-chart__info")?.text()?.trim()?.toRatingInt()
         val trailer = fixUrlNull(document.selectFirst("iframe.yt-hd-thumbnail")?.attr("src"))
 
-        val episodes = document.select("div.bolumKutucugu").mapNotNull { episodeBlock ->
-            val aTag = episodeBlock.selectFirst("a[href]") ?: return@mapNotNull null
-            val epHref = fixUrlNull(aTag.attr("href")) ?: return@mapNotNull null
-            val epTitle = aTag.selectFirst("div.episodeNo")?.text() ?: "Bölüm"
-            newEpisode(epHref) {
-                this.name = epTitle
+        val episodes = document.select("div.four.wide.computer.tablet.five.mobile.column.bolumKutucugu a")
+            .mapNotNull { episodeBlock ->
+                val epHref = fixUrlNull(episodeBlock.attr("href")) ?: return@mapNotNull null
+                val epTitle = episodeBlock.selectFirst("div.episodeBlock")?.ownText()?.trim() ?: "Bölüm"
+                newEpisode(epHref) {
+                    this.name = epTitle
+                }
             }
-        }
 
         return newTvSeriesLoadResponse(title, url, TvType.Anime, episodes) {
             this.posterUrl = poster
