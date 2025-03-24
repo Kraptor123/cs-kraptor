@@ -182,7 +182,7 @@ class SetFilmIzle : MainAPI() {
 
         val headers = mapOf(
             "Referer"      to referer,
-            "Content-Type" to "multipart/form-data; boundary=---------------------------112453778312642376182726606734",
+            "Content-Type" to "MultipartBody.Builder().setType(MultipartBody.FORM)",
         )
 
         val request = Request.Builder().url("${mainUrl}/wp-admin/admin-ajax.php").post(requestBody).apply {
@@ -195,7 +195,7 @@ class SetFilmIzle : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        Log.d("STF", "data » $data")
+        Log.d("set", "data » $data")
         val document = app.get(data).document
 
         document.select("nav.player a").map { element ->
@@ -208,11 +208,13 @@ class SetFilmIzle : MainAPI() {
             if (sourceId.contains("event")) return@forEach
             if (partKey == "" || sourceId == "") return@forEach
 
-            val nonce        = Regex("""nonce: '(.*)'""").find(document.html())?.groupValues?.get(1) ?: ""
+            val nonce = document.selectFirst("script:contains(nonce)")?.data()
+                ?.let { Regex("""nonce["']?:["']([^"']+)""").find(it)?.groupValues?.get(1) }
+                ?: throw ErrorLoadingException("Nonce bulunamadı!")
             val multiPart    = sendMultipartRequest(nonce, sourceId, name, partKey, data)
             val sourceBody   = multiPart.body.string()
             val sourceIframe = JSONObject(sourceBody).optJSONObject("data")?.optString("url") ?: return@forEach
-            Log.d("STF", "iframe » $sourceIframe")
+            Log.d("set", "iframe » $sourceIframe")
 
             if (sourceIframe.contains("explay.store") || sourceIframe.contains("setplay.site")) {
                 loadExtractor("${sourceIframe}?partKey=${partKey}", "${mainUrl}/", subtitleCallback, callback)

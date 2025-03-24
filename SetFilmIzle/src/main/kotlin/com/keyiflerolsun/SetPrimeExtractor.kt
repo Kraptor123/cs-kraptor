@@ -22,7 +22,7 @@ open class SetPrime : ExtractorApi() {
         }
 
         val m3uLink = "${mainUrl}${links}"
-        Log.d("Kekik_${this.name}", "m3uLink » $m3uLink")
+        Log.d("Set", "m3uLink » $m3uLink")
 
         callback.invoke(
             ExtractorLink(
