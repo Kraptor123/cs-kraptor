@@ -4,15 +4,23 @@ Kısa kod = kekikan
 
 Eklenenler :
 
-Şimdilik sadece Anizm eklentisi eklenmiştir.
--Arama fonksiyonu düzgün çalışmıyor animenin tam adını girmeniz gerekmekte.
+Anizm sitesi eklenti olarak eklenmiştir.
+
+Düzeltilenler :
+
+Animecix
+Dizipal
+Dizilla
+Setfilmizle
+Sinemacx
+
 
 ## 💾 Kurulum
 
 1. **[cloudstream/pre-release](https://github.com/recloudstream/cloudstream/releases/tag/pre-release)** _Adresinden güncel APK dosyasını indirip kurun._
-2. **Uygulamanın yüklü olduğu cihazda** _[depoyu otomatik yüklemek için tıklayın](https://keyiflerolsun.me/http-protocol-redirector?r=cloudstreamrepo://raw.githubusercontent.com/ramazansancar/keyiflerolsun_Kekik-cloudstream/master/repo.json)_
+2. **Uygulamanın yüklü olduğu cihazda** _[depoyu otomatik yüklemek için tıklayın](https://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/builds/plugins.json)_
   - **veya**
-  - `Depo ekle` _butonuyla **manuel** ekleme yapmak isteyen arkadaşlar için_ `kekikdevam` _**kısa kod**u mevcuttur._ `Depo ismi` _kısmını boş bırakarak_ `Depo URL'si` _kısmına_ `kekikdevam` yazarak `Depo ekle` _demeniz yeterli.._
+  - `Depo ekle` _butonuyla **manuel** ekleme yapmak isteyen arkadaşlar için_ `kekikan` _**kısa kod**u mevcuttur._ `Depo ismi` _kısmını boş bırakarak_ `Depo URL'si` _kısmına_ `kekikan` yazarak `Depo ekle` _demeniz yeterli.._
 
 ## 💡 Faydalı Linkler
 
