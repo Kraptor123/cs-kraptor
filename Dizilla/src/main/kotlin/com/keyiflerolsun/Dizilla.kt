@@ -35,6 +35,7 @@ import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.util.Calendar
+import kotlin.coroutines.cancellation.CancellationException
 
 
 class Dizilla : MainAPI() {
@@ -126,38 +127,45 @@ class Dizilla : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val searchReq = app.post(
-            "${mainUrl}/api/bg/searchcontent?searchterm=$query",
-            headers = mapOf(
-                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-                "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-                "Accept" to "application/json, text/plain, */*",
-                "Accept-Language" to "en-US,en;q=0.5",
-                "X-Requested-With" to "XMLHttpRequest",
-                "Sec-Fetch-Site" to "same-origin",
-                "Sec-Fetch-Mode" to "cors",
-                "Sec-Fetch-Dest" to "empty",
-                "Referer" to "${mainUrl}/"
-            ),
-            referer = "${mainUrl}/",
-        )
-        val objectMapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        val searchResult: SearchResult = objectMapper.readValue(searchReq.toString())
-        val decodedSearch = base64Decode(searchResult.response.toString())
-        val contentJson: SearchData = objectMapper.readValue(decodedSearch)
-        if (contentJson.state != true) {
-            throw ErrorLoadingException("Invalid Json response")
+        return try {
+            val response = app.post(
+                "${mainUrl}/api/bg/searchcontent?searchterm=$query",
+                headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+                    "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+                    "Accept" to "application/json, text/plain, */*",
+                    "Accept-Language" to "en-US,en;q=0.5",
+                    "X-Requested-With" to "XMLHttpRequest",
+                    "Sec-Fetch-Site" to "same-origin",
+                    "Sec-Fetch-Mode" to "cors",
+                    "Sec-Fetch-Dest" to "empty",
+                    "Referer" to "${mainUrl}/"
+                ),
+                referer = "${mainUrl}/"
+            )
+            val responseBody = response.body.string()
+            val objectMapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            val searchResult: SearchResult = objectMapper.readValue(responseBody)
+            val decodedSearch = base64Decode(searchResult.response.toString())
+            val contentJson: SearchData = objectMapper.readValue(decodedSearch)
+            if (contentJson.state != true) {
+                throw ErrorLoadingException("Invalid Json response")
+            }
+            val results = mutableListOf<SearchResponse>()
+            contentJson.result?.forEach {
+                val name = it.title.toString()
+                val link = fixUrl(it.slug.toString())
+                val posterLink = it.poster.toString()
+                results.add(newTvSeriesSearchResponse(name, link, TvType.TvSeries) {
+                    this.posterUrl = posterLink
+                })
+            }
+            results
+        } catch (e: Exception) {
+            Log.e("Dizilla", "Search error: ${e.message}")
+            emptyList()
         }
-        val veriler = mutableListOf<SearchResponse>()
-        contentJson.result?.forEach {
-            val name = it.title.toString()
-            val link = fixUrl(it.slug.toString())
-            val posterLink = it.poster.toString()
-            val toSearchResponse = toSearchResponse(name, link, posterLink)
-            veriler.add(toSearchResponse)
-        }
-        return veriler
     }
 
     private fun toSearchResponse(ad: String, link: String, posterLink: String): SearchResponse {
@@ -173,51 +181,85 @@ class Dizilla : MainAPI() {
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
     override suspend fun load(url: String): LoadResponse? {
-        val mainReq = app.get(url)
-        val document = mainReq.document
-        val title = document.selectFirst("div.poster.poster h2")?.text() ?: return null
-        val poster = fixUrlNull(document.selectFirst("div.w-full.page-top.relative img")?.attr("src"))
-        val year =
-            document.select("div.w-fit.min-w-fit")[1].selectFirst("span.text-sm.opacity-60")?.text()
-                ?.split(" ")?.last()?.toIntOrNull()
-        val description = document.selectFirst("div.mt-2.text-sm")?.text()?.trim()
-        val tags = document.selectFirst("div.poster.poster h3")?.text()?.split(",")?.map { it }
-        val rating =
-            document.selectFirst("div.flex.items-center")?.selectFirst("span.text-white.text-sm")
-                ?.text()?.trim().toRatingInt()
-        val actors = document.select("div.global-box h5").map {
-            Actor(it.text())
-        }
+        try {
+            val response = app.get(url)
+            val bodyString = response.body.string()
+            val document = org.jsoup.Jsoup.parse(bodyString)
 
-        val episodeses = mutableListOf<Episode>()
-
-        for (sezon in document.select("div.flex.items-center.flex-wrap.gap-2.mb-4 a")) {
-            val sezonhref = fixUrl(sezon.attr("href"))
-            val sezonReq = app.get(sezonhref)
-            val split = sezonhref.split("-")
-            val season = split[split.size-2].toIntOrNull()
-            val sezonDoc = sezonReq.document
-            val episodes = sezonDoc.select("div.episodes")
-            for (bolum in episodes.select("div.cursor-pointer")) {
-                val epName = bolum.select("a").last()?.text() ?: continue
-                val epHref = fixUrlNull(bolum.select("a").last()?.attr("href")) ?: continue
-                val epEpisode = bolum.selectFirst("a")?.text()?.trim()?.toIntOrNull()
-                val newEpisode = newEpisode(epHref) {
-                    this.name = epName
-                    this.season = season
-                    this.episode = epEpisode
-                }
-                episodeses.add(newEpisode)
+            val titleElement = document.selectFirst("div.poster.poster h2")
+            if (titleElement == null) {
+                return null
             }
-        }
+            val title = titleElement.ownText()
 
-        return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodeses) {
-            this.posterUrl = poster
-            this.year = year
-            this.plot = description
-            this.tags = tags
-            this.rating = rating
-            addActors(actors)
+            val posterElement = document.selectFirst("div.w-full.page-top.relative img")
+            val poster = fixUrlNull(posterElement?.attr("src"))
+            val yearElements = document.select("div.w-fit.min-w-fit")
+            var year: Int? = null
+            if (yearElements.size > 1) {
+                val yearText = yearElements.getOrNull(1)
+                    ?.selectFirst("span.text-sm.opacity-60")
+                    ?.ownText()
+                year = yearText
+                    ?.split(" ")
+                    ?.lastOrNull()
+                    ?.toIntOrNull()
+            } else {
+            }
+
+            val description = document.selectFirst("div.mt-2.text-sm")?.ownText()?.trim()
+
+            val tagsText = document.selectFirst("div.poster.poster h3")?.ownText()
+            val tags = tagsText?.split(",")?.map { it.trim() }
+
+            val ratingText = document.selectFirst("div.flex.items-center")
+                ?.selectFirst("span.text-white.text-sm")
+                ?.ownText()
+                ?.trim()
+            val rating = ratingText.toRatingInt()
+
+            val actorsElements = document.select("div.global-box h5")
+            val actors = actorsElements.map { Actor(it.ownText()) }
+
+            val episodeses = mutableListOf<Episode>()
+            val seasonElements = document.select("div.flex.items-center.flex-wrap.gap-2.mb-4 a")
+            for (sezon in seasonElements) {
+                val sezonHref = fixUrl(sezon.attr("href"))
+                val sezonResponse = app.get(sezonHref)
+                val sezonBody = sezonResponse.body.string()
+                val sezonDoc = org.jsoup.Jsoup.parse(sezonBody)
+                val split = sezonHref.split("-")
+                val season = split.getOrNull(split.size - 2)?.toIntOrNull()
+                val episodesContainer = sezonDoc.select("div.episodes")
+                for (bolum in episodesContainer.select("div.cursor-pointer")) {
+                    val linkElements = bolum.select("a")
+                    if (linkElements.isEmpty()) {
+                        continue
+                    }
+                    val epName = linkElements.last()?.ownText() ?: continue
+                    val epHref = fixUrlNull(linkElements.last()?.attr("href")) ?: continue
+                    val epEpisode = bolum.selectFirst("a")?.ownText()?.trim()?.toIntOrNull()
+                    val newEpisode = newEpisode(epHref) {
+                        this.name = epName
+                        this.season = season
+                        this.episode = epEpisode
+                    }
+                    episodeses.add(newEpisode)
+                }
+            }
+
+            return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodeses) {
+                this.posterUrl = poster
+                this.year = year
+                this.plot = description
+                this.tags = tags
+                this.rating = rating
+                addActors(actors)
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            return null
         }
     }
 
@@ -227,17 +269,53 @@ class Dizilla : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        val document = app.get(data).document
-        val script = document.selectFirst("script#__NEXT_DATA__")?.data()
-        val objectMapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        val secureData = objectMapper.readTree(script).get("props").get("pageProps").get("secureData")
-        val decodedData = Base64.decode(secureData.toString().replace("\"", ""), Base64.DEFAULT).toString(Charsets.UTF_8)
-        val source = objectMapper.readTree(decodedData).get("RelatedResults")
-            .get("getEpisodeSources").get("result").get(0).get("source_content").toString()
-            .replace("\"", "").replace("\\", "")
-        val iframe = fixUrlNull(Jsoup.parse(source).select("iframe").attr("src")) ?: return false
-        loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
-        return true
+        try {
+            val response = app.get(data)
+            val bodyString = response.body.string()
+            val document = Jsoup.parse(bodyString)
+
+            val scriptElement = document.selectFirst("script#__NEXT_DATA__")
+            if (scriptElement == null) {
+                Log.e("Dizilla", "__NEXT_DATA__ script bulunamadı")
+                return false
+            }
+            val script = scriptElement.data()
+
+            val objectMapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            val rootNode = objectMapper.readTree(script)
+            val secureDataNode = rootNode.get("props")?.get("pageProps")?.get("secureData")
+            if (secureDataNode == null) {
+                return false
+            }
+
+            val secureDataString = secureDataNode.toString().replace("\"", "")
+            val decodedData = try {
+                Base64.decode(secureDataString, Base64.DEFAULT).toString(Charsets.UTF_8)
+            } catch (e: Exception) {
+                return false
+            }
+
+            val decodedJson = objectMapper.readTree(decodedData)
+            val sourceNode = decodedJson.get("RelatedResults")?.get("getEpisodeSources")?.get("result")?.get(0)?.get("source_content")
+            if (sourceNode == null) {
+                Log.e("Dizilla", "source_content bulunamadı")
+                return false
+            }
+            val source = sourceNode.toString().replace("\"", "").replace("\\", "")
+            val iframe = fixUrlNull(Jsoup.parse(source).select("iframe").attr("src"))
+            if (iframe == null) {
+                Log.e("Dizilla", "Iframe URL bulunamadı")
+                return false
+            }
+
+            loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+            return true
+
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            return false
+        }
     }
 }
