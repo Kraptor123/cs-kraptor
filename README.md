@@ -12,7 +12,7 @@ Animecix
 Dizipal
 Dizilla
 Setfilmizle
-Sinemacx
+
 
 
 ## 💾 Kurulum
