@@ -79,7 +79,7 @@ class TurkAnime : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val document = app.post("${mainUrl}/arama", data=mapOf("arama" to query)).document
+        val document = app.post("${mainUrl}/arama", data = mapOf("arama" to query)).document
 
         return document.select("div#orta-icerik div.panel").mapNotNull { it.toMainPageResult() }
     }
@@ -99,10 +99,7 @@ class TurkAnime : MainAPI() {
         val bolumlerUrl = fixUrlNull(document.selectFirst("a[data-url*='ajax/bolumler&animeId=']")?.attr("data-url")) ?: return null
         val bolumlerDoc = app.get(
             bolumlerUrl,
-            headers = mapOf(
-                "X-Requested-With" to "XMLHttpRequest",
-                "token"            to document.selectFirst("meta[name='_token']")!!.attr("content")
-            ),
+            headers = mapOf("X-Requested-With" to "XMLHttpRequest"),
             cookies = mapOf("yasOnay" to "1")
         ).document
 
@@ -134,53 +131,58 @@ class TurkAnime : MainAPI() {
         aesData     = String(Base64.decode(aesData, Base64.DEFAULT))
 
         val aesKey  = "710^8A@3@>T2}#zN5xK?kR7KNKb@-A!LzYL5~M1qU0UfdWsZoBm4UUat%}ueUv6E--*hDPPbH7K2bp9^3o41hw,khL:}Kx8080@M"
-        val aesLink = AesHelper.cryptoAESHandler(aesData, aesKey.toByteArray(), false)?.replace("\\", "") ?: throw ErrorLoadingException("failed to decrypt")
+        val aesLink = AesHelper.cryptoAESHandler(aesData, aesKey.toByteArray(), false)
+            ?.replace("\\", "")
+            ?: throw ErrorLoadingException("failed to decrypt")
 
         return fixUrlNull(aesLink.replace("\"", ""))
     }
 
-    private suspend fun iframe2Load(document: Document, @Suppress("UNUSED_PARAMETER") iframe: String, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
-        // val mainVideo = iframe2AesLink(iframe)
-        // if (mainVideo != null) {
-        //     val mainKey = mainVideo.split("/").last()
-        //     val mainAPI = app.get(
-        //         "${mainUrl}/sources/${mainKey}/true",
-        //         headers = mapOf(
-        //             "Content-Type"     to "application/json",
-        //             "X-Requested-With" to "XMLHttpRequest",
-        //             "Csrf-Token"       to "EqdGHqwZJvydjfbmuYsZeGvBxDxnQXeARRqUNbhRYnPEWqdDnYFEKVBaUPCAGTZA",
-        //             "Connection"       to "keep-alive",
-        //             "Sec-Fetch-Dest"   to "empty",
-        //             "Sec-Fetch-Mode"   to "cors",
-        //             "Sec-Fetch-Site"   to "same-origin",
-        //             "Pragma"           to "no-cache",
-        //             "Cache-Control"    to "no-cache",
-        //         ),
-        //         referer = mainVideo,
-        //         cookies = mapOf("yasOnay" to "1")
-        //     ).text
+    private suspend fun iframe2Load(document: Document, iframe: String, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
+        val mainVideo = iframe2AesLink(iframe)
+        if (mainVideo != null) {
+            val mainKey = mainVideo.split("/").last()
+            val mainAPI = app.get(
+                "${mainUrl}/sources/${mainKey}/true",
+                headers = mapOf(
+                    "Content-Type"     to "application/json",
+                    "X-Requested-With" to "XMLHttpRequest",
+                    "Connection"       to "keep-alive",
+                    "Sec-Fetch-Dest"   to "empty",
+                    "Sec-Fetch-Mode"   to "cors",
+                    "Sec-Fetch-Site"   to "same-origin",
+                    "Pragma"           to "no-cache",
+                    "Cache-Control"    to "no-cache",
+                ),
+                referer = mainVideo,
+                cookies = mapOf("yasOnay" to "1")
+            ).text
 
-        //     val m3uLink = fixUrlNull(Regex("""file\":\"([^\"]+)""").find(mainAPI)?.groupValues?.get(1)?.replace("\\", ""))
-        //     Log.d("TRANM", "m3uLink » ${m3uLink}")
+            val m3uLink = fixUrlNull(Regex("""file\":\"([^\"]+)""").find(mainAPI)?.groupValues?.get(1)?.replace("\\", ""))
+            Log.d("TRANM", "m3uLink » ${m3uLink}")
 
-        //     if (m3uLink != null) {
-        //         callback.invoke(
-        //             ExtractorLink(
-        //                 source  = this.name,
-        //                 name    = this.name,
-        //                 url     = m3uLink,
-        //                 referer = "${mainVideo}",
-        //                 quality = Qualities.Unknown.value,
-        //                 isM3u8  = true,
-        //             )
-        //         )
-        //     }
-        // }
+            if (m3uLink != null) {
+                callback.invoke(
+                    ExtractorLink(
+                        source  = this.name,
+                        name    = this.name,
+                        url     = m3uLink,
+                        referer = mainVideo,
+                        quality = Qualities.Unknown.value,
+                        isM3u8  = true,
+                    )
+                )
+            }
+        }
 
         for (button in document.select("button[onclick*='ajax/videosec']")) {
-            val butonLink = fixUrlNull(button.attr("onclick").substringAfter("IndexIcerik('").substringBefore("'")) ?: continue
+            val butonLink = fixUrlNull(
+                button.attr("onclick")
+                    .substringAfter("IndexIcerik('")
+                    .substringBefore("'")
+            ) ?: continue
             val butonName = button.ownText().trim()
-            val subDoc    = app.get(butonLink, headers=mapOf("X-Requested-With" to "XMLHttpRequest")).document
+            val subDoc    = app.get(butonLink, headers = mapOf("X-Requested-With" to "XMLHttpRequest")).document
 
             val subFrame  = fixUrlNull(subDoc.selectFirst("iframe")?.attr("src")) ?: continue
             val subLink   = iframe2AesLink(subFrame) ?: continue
@@ -193,20 +195,42 @@ class TurkAnime : MainAPI() {
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         Log.d("TRANM", "data » $data")
         val document  = app.get(data).document
-        val iframe    = fixUrlNull(document.selectFirst("iframe")?.attr("src")) ?: return false
-
-        if (iframe.contains("a-ads.com")) {
-            for (button in document.select("button[onclick*='ajax/videosec']")) {
-                val butonLink = fixUrlNull(button.attr("onclick").substringAfter("IndexIcerik('").substringBefore("'")) ?: continue
-                val subDoc    = app.get(butonLink, headers=mapOf("X-Requested-With" to "XMLHttpRequest")).document
-
-                val subFrame  = fixUrlNull(subDoc.selectFirst("iframe")?.attr("src")) ?: continue
-                iframe2Load(subDoc, subFrame, subtitleCallback, callback)
+        val iframeElement = document.selectFirst("iframe")
+        if (iframeElement != null) {
+            val iframe = fixUrlNull(iframeElement.attr("src"))
+            Log.d("TRANM", "iframe » $iframe")
+            if (iframe != null) {
+                if (iframe.contains("a-ads.com")) {
+                    for (button in document.select("button[onclick*='ajax/videosec']")) {
+                        val butonLink = fixUrlNull(
+                            button.attr("onclick")
+                                .substringAfter("IndexIcerik('")
+                                .substringBefore("'")
+                        ) ?: continue
+                        val subDoc = app.get(butonLink, headers = mapOf("X-Requested-With" to "XMLHttpRequest")).document
+                        val subFrame  = fixUrlNull(subDoc.selectFirst("iframe")?.attr("src"))
+                        if (subFrame != null) {
+                            iframe2Load(subDoc, subFrame, subtitleCallback, callback)
+                        }
+                    }
+                } else {
+                    iframe2Load(document, iframe, subtitleCallback, callback)
+                }
             }
         } else {
-            iframe2Load(document, iframe, subtitleCallback, callback)
+            for (button in document.select("button[onclick*='ajax/videosec']")) {
+                val butonLink = fixUrlNull(
+                    button.attr("onclick")
+                        .substringAfter("IndexIcerik('")
+                        .substringBefore("'")
+                ) ?: continue
+                val subDoc = app.get(butonLink, headers = mapOf("X-Requested-With" to "XMLHttpRequest")).document
+                val subFrame  = fixUrlNull(subDoc.selectFirst("iframe")?.attr("src"))
+                if (subFrame != null) {
+                    iframe2Load(subDoc, subFrame, subtitleCallback, callback)
+                }
+            }
         }
-
         return true
     }
 }
