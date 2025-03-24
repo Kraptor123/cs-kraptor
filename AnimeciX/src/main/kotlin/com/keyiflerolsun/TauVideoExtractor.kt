@@ -16,7 +16,7 @@ open class TauVideo : ExtractorApi() {
         val extRef   = referer ?: ""
         val videoKey = url.split("/").last()
         val videoUrl = "${mainUrl}/api/video/${videoKey}"
-        Log.d("Kekik_${this.name}", "videoUrl » $videoUrl")
+        Log.d("ACX", "videoUrl » $videoUrl")
 
         val api = app.get(videoUrl).parsedSafe<TauVideoUrls>() ?: throw ErrorLoadingException("TauVideo")
 
