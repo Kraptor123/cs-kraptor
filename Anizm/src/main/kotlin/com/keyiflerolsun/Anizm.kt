@@ -1,47 +1,61 @@
-// ! Bu araç @kraptor123 tarafından yazılmıştır.
-
 package com.keyiflerolsun
 
 import android.util.Log
-import org.jsoup.nodes.Element
+import com.keyiflerolsun.extractors.AincradExtractor
 import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.*
-import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
+import com.lagradost.cloudstream3.extractors.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.network.CloudflareKiller
+import com.lagradost.cloudstream3.utils.AppUtils.parseJson
+import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.loadExtractor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.Response
-import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 import java.net.URLEncoder
-import com.keyiflerolsun.getVideoUrls
-import com.keyiflerolsun.extractors.AincradExtractor
+import kotlin.coroutines.cancellation.CancellationException
 
 class Anizm : MainAPI() {
-    override var mainUrl              = "https://anizm.net"
-    override var name                 = "Anizm"
-    override val hasMainPage          = true
-    override var lang                 = "tr"
-    override val hasQuickSearch       = false
-    override val supportedTypes       = setOf(TvType.Anime)
+    override var mainUrl = "https://anizm.net"
+    override var name = "Anizm"
+    override val hasMainPage = true
+    override var lang = "tr"
+    override val hasQuickSearch = false
+    override val supportedTypes = setOf(TvType.Anime)
     override var sequentialMainPage = true
-    override var sequentialMainPageDelay       = 50L
+    override var sequentialMainPageDelay = 50L
     override var sequentialMainPageScrollDelay = 50L
 
+    // Cloudflare Bypass
     private val cloudflareKiller by lazy { CloudflareKiller() }
-    private val interceptor      by lazy { CloudflareInterceptor(cloudflareKiller) }
+    private val interceptor by lazy { CloudflareInterceptor(cloudflareKiller) }
 
-    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller): Interceptor {
+    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller) : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
-            val request  = chain.request()
+            val request = chain.request()
             val response = chain.proceed(request)
-            val doc      = Jsoup.parse(response.peekBody(1024 * 1024).string())
-            if (doc.text().contains("Just a moment")) {
-                return cloudflareKiller.intercept(chain)
+
+            // Cloudflare'ın tüm varyantlarını yakala
+            if (response.peekBody(1024).string().contains("Cloudflare")) {
+                return cloudflareKiller.intercept(chain).also {
+                    Log.d("ANZM", "Cloudflare bypass yapıldı!")
+                }
             }
             return response
         }
     }
 
+    // JSON Data Class
+    data class AnimeSearchResult(
+        val info_title: String,
+        val info_slug: String,
+        val info_poster: String?,
+        val info_year: String?
+    )
+
+    // Ana Sayfa
     override val mainPage = mainPageOf(
         "${mainUrl}/harf?harf=a&sayfa=" to "a",
         "${mainUrl}/harf?harf=b&sayfa=" to "b",
@@ -71,109 +85,173 @@ class Anizm : MainAPI() {
         "${mainUrl}/harf?harf=z&sayfa=" to "z"
     )
 
+    // Ana Sayfa Yükleme
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}${page}").document
-        val home     = document.select("a.pfull").mapNotNull { it.toMainPageResult() }
+        val document = app.get("${request.data}$page", interceptor = interceptor).document
+        val home = document.select("a.pfull").mapNotNull { it.toMainPageResult() }
         return newHomePageResponse(request.name, home)
     }
 
     private fun Element.toMainPageResult(): SearchResponse? {
-        val title     = this.selectFirst("div.anizm_textUpper.anizm_textBold.truncateText")?.text() ?: return null
-        val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+        val title = this.selectFirst("div.anizm_textUpper.anizm_textBold.truncateText")?.text() ?: return null
+        val href = fixUrlNull(this.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
-        return newAnimeSearchResponse(title, href, TvType.Anime) { this.posterUrl = posterUrl }
+        return newAnimeSearchResponse(title, href, TvType.Anime) {
+            this.posterUrl = posterUrl
+        }
     }
 
+    // Arama Fonksiyonu (Düzeltilmiş)
     override suspend fun search(query: String): List<SearchResponse> {
-        val formattedQuery = query.lowercase().replace(" ", "-")
-        val document = app.get("${mainUrl}/${formattedQuery}").document
-        return document.select("div.ui.container.animeDetayContainer").mapNotNull { it.toSearchResult() }
+        return try {
+            // 1. CSRF Token Al
+            val csrfToken = app.get(mainUrl, interceptor = interceptor)
+                .document
+                .selectFirst("meta[name='csrf-token']")
+                ?.attr("content")
+                ?: throw Exception("CSRF Token alınamadı")
+
+            // 2. Sorguyu Encode Et
+            val encodedQuery = withContext(Dispatchers.IO) {
+                URLEncoder.encode(query, "UTF-8")
+            }
+
+            // 3. API İsteği
+            val response = app.get(
+                "$mainUrl/getAnimeListForSearch",
+                headers = mapOf(
+                    "Referer" to mainUrl,
+                    "X-Requested-With" to "XMLHttpRequest",
+                    "X-CSRF-TOKEN" to csrfToken,
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+                ),
+                params = mapOf("q" to encodedQuery),
+                interceptor = interceptor,
+                timeout = 60 // Timeout'u 60 saniye yap
+            )
+
+            val responseBody = response.body.string()
+            Log.d("ANZM", "API Yanıtı: ${responseBody.take(200)}...") // Kısmi log
+
+            // 4. JSON Parse
+            val results: List<AnimeSearchResult>? = try {
+                parseJson(responseBody)
+            } catch (e: Exception) {
+                Log.e("ANZM", "JSON Parse Hatası: ${e.message}")
+                null
+            }
+
+            // 5. Sonuçları işle ve detay sayfasından posterleri çek
+            val searchResponses = mutableListOf<SearchResponse>()
+            results?.filter {
+                it.info_title.contains(query, ignoreCase = true)
+            }?.forEach { item ->
+                val detailUrl = "$mainUrl/${item.info_slug}"
+                // Detay sayfasından posteri çekmek için ek fonksiyon kullanılıyor
+                val poster = getPoster(detailUrl)
+                val searchResponse = newAnimeSearchResponse(
+                    item.info_title,
+                    detailUrl,
+                    TvType.Anime
+                ) {
+                    posterUrl = poster
+                }
+                searchResponses.add(searchResponse)
+            }
+            searchResponses
+        } catch (e: CancellationException) {
+            // İşlem iptal edildiyse, iptali propagate et
+            throw e
+        } catch (e: Exception) {
+            Log.e("ANZM", "Arama Hatası: ${e.javaClass.simpleName} - ${e.message}")
+            emptyList()
+        }
     }
 
-    private fun Element.toSearchResult(): SearchResponse? {
-        val title     = this.selectFirst("h2.anizm_pageTitle")?.text() ?: return null
-        val href      = fixUrlNull(this.selectFirst("a.anizm_colorDefault")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("img.anizm_shadow.anizm_round.infoPosterImgItem")?.attr("src"))
-        return newAnimeSearchResponse(title, href, TvType.Anime) { this.posterUrl = posterUrl }
+    // Detay sayfasından poster URL'si çekmek için yardımcı fonksiyon
+    private suspend fun getPoster(url: String): String? {
+        return try {
+            val doc = app.get(url, interceptor = interceptor).document
+            fixUrlNull(
+                doc.selectFirst("img.anizm_shadow.anizm_round.infoPosterImgItem")?.attr("src")?.let { src ->
+                    if (src.startsWith("http")) src else "$mainUrl/$src"
+                }
+            )
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.e("ANZM", "Poster alınamadı: ${e.message}")
+            null
+        }
     }
 
+    // Detay Sayfası (Düzeltilmiş)
     override suspend fun load(url: String): LoadResponse? {
-        val document = app.get(url).document
-        val title       = document.selectFirst("a.anizm_colorDefault")?.text()?.trim() ?: return null
-        val poster      = fixUrlNull(document.selectFirst("img.anizm_shadow.anizm_round.infoPosterImgItem")?.attr("src"))
+        val document = app.get(url, interceptor = interceptor).document
+
+        val title = document.selectFirst("a.anizm_colorDefault")?.text()?.trim() ?: return null
+        val poster = fixUrlNull(
+            document.selectFirst("img.anizm_shadow.anizm_round.infoPosterImgItem")?.attr("src")?.let {
+                if (it.startsWith("http")) it else "$mainUrl/$it"
+            }
+        )
         val description = document.selectFirst("div.infoDesc")?.text()?.trim()
-        val year        = document.selectFirst("div.infoSta.mt-2 li")?.text()?.trim()?.toIntOrNull()
-        val tags        = document.select("span.ui.label").map { it.text() }
-        val rating      = document.selectFirst("g.circle-chart__info")?.text()?.trim()?.toRatingInt()
-        val duration    = document.selectFirst("span.runtime")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
-        val recommendations = document.select("div.relatedAnimeContainer").mapNotNull { it.toRecommendationResult() }
-        val trailer     = fixUrlNull(document.selectFirst("iframe.yt-hd-thumbnail")?.attr("src"))
-        
+        val year = document.selectFirst("div.infoSta.mt-2 li")?.text()?.trim()?.toIntOrNull()
+        val tags = document.select("span.ui.label").map { it.text() }
+        val rating = document.selectFirst("g.circle-chart__info")?.text()?.trim()?.toRatingInt()
+        val trailer = fixUrlNull(document.selectFirst("iframe.yt-hd-thumbnail")?.attr("src"))
+
         val episodes = document.select("div.bolumKutucugu").mapNotNull { episodeBlock ->
             val aTag = episodeBlock.selectFirst("a[href]") ?: return@mapNotNull null
             val epHref = fixUrlNull(aTag.attr("href")) ?: return@mapNotNull null
-            val episodeText = aTag.selectFirst("div.episodeNo")?.text()
-            val epEpisode = Regex("""(\d+)(?:\.|\s|\-)?\s*(?:Bolum)""", RegexOption.IGNORE_CASE)
-                .find(episodeText ?: "")
-                ?.groups?.get(1)
-                ?.value
-                ?.toIntOrNull()
+            val epTitle = aTag.selectFirst("div.episodeNo")?.text() ?: "Bölüm"
             newEpisode(epHref) {
-                this.episode = epEpisode
-                this.name = if (epEpisode != null) "Bölüm $epEpisode" else "Bölüm"
+                this.name = epTitle
             }
         }
-        
+
         return newTvSeriesLoadResponse(title, url, TvType.Anime, episodes) {
-            this.posterUrl       = poster
-            this.plot            = description
-            this.year            = year
-            this.tags            = tags
-            this.rating          = rating
-            this.duration        = duration
-            this.recommendations = recommendations
+            this.posterUrl = poster
+            this.plot = description
+            this.year = year
+            this.tags = tags
+            this.rating = rating
             addTrailer(trailer)
         }
     }
 
-    private fun Element.toRecommendationResult(): SearchResponse? {
-        val title     = this.selectFirst("a img")?.attr("alt") ?: return null
-        val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("a img")?.attr("data-src"))
-        return newAnimeSearchResponse(title, href, TvType.Anime) { this.posterUrl = posterUrl }
-    }
-
+    // Video Linkleri
     override suspend fun loadLinks(
-    data: String,
-    isCasting: Boolean,
-    subtitleCallback: (SubtitleFile) -> Unit,
-    callback: (ExtractorLink) -> Unit
-): Boolean {
-    Log.d("ANZM", "loadLinks - Başlangıç: data » $data")
-    
-    val videoLinks = getVideoUrls(data)
-    Log.d("ANZM", "loadLinks - Çözülen video link sayısı: ${videoLinks.size}")
+        data: String,
+        isCasting: Boolean,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
+        Log.d("ANZM", "loadLinks - Başlangıç: data » $data")
 
-    videoLinks.forEach { (name, url) ->
-        Log.d("ANZM", "loadLinks - İşlenen video: $name -> $url")
-        
-        when {
-            url.contains("anizmplayer.com") -> {
-                AincradExtractor().getUrl(url, mainUrl)?.forEach(callback) // Process Aincrad first
-                return@forEach // Skip other extractors for this URL
-            }
-            else -> {
-                loadExtractor(
-                    url = url,
-                    referer = mainUrl,
-                    subtitleCallback = subtitleCallback,
-                    callback = callback
-                )
+        val videoLinks = getVideoUrls(data)
+        Log.d("ANZM", "loadLinks - Çözülen video link sayısı: ${videoLinks.size}")
+
+        videoLinks.forEach { (name, url) ->
+            Log.d("ANZM", "loadLinks - İşlenen video: $name -> $url")
+
+            when {
+                url.contains("anizmplayer.com") -> {
+                    AincradExtractor().getUrl(url, mainUrl)?.forEach(callback) // Process Aincrad first
+                    return@forEach // Skip other extractors for this URL
+                }
+                else -> {
+                    loadExtractor(
+                        url = url,
+                        referer = mainUrl,
+                        subtitleCallback = subtitleCallback,
+                        callback = callback
+                    )
+                }
             }
         }
+
+        Log.d("ANZM", "loadLinks - Sonuç: ${videoLinks.isNotEmpty()}")
+        return videoLinks.isNotEmpty()
     }
-    
-    Log.d("ANZM", "loadLinks - Sonuç: ${videoLinks.isNotEmpty()}")
-    return videoLinks.isNotEmpty()
-}
 }

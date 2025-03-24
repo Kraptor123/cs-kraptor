@@ -85,7 +85,7 @@ subprojects {
         implementation("org.jsoup:jsoup:1.18.3")                                      // HTML ayrıştırıcı
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.0")   // Kotlin için Jackson JSON kütüphanesi
         implementation("com.fasterxml.jackson.core:jackson-databind:2.16.0")          // JSON-nesne dönüştürme kütüphanesi
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")      // Kotlin için asenkron işlemler
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")      // Kotlin için asenkron işlemler
     }
 }
 

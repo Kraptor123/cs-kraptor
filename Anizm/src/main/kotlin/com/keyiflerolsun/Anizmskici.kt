@@ -88,7 +88,7 @@ fun getVideoUrls(data: String): Map<String, String> {
                     }
                     break
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
         }
     }
@@ -120,7 +120,7 @@ fun getVideoUrls(data: String): Map<String, String> {
                     realVideoUrls[name] = realUrl
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 
