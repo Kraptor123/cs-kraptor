@@ -241,77 +241,119 @@ class DiziMag : MainAPI() {
             "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Referer" to "$mainUrl/"
         )
+
+        android.util.Log.d("dzmg", "loadLinks: Starting with data URL - $data")
+
         val aa = app.get(mainUrl)
         val ciSession = aa.cookies["ci_session"].toString()
+        android.util.Log.d("dzmg", "ci_session cookie obtained: ${ciSession.take(5)}...") // Kısaltılmış log
+
         val document = app.get(
             data, headers = headers, cookies = mapOf(
                 "ci_session" to ciSession
             )
         ).document
-        val iframe =
-            fixUrlNull(document.selectFirst("div#tv-spoox2 iframe")?.attr("src")) ?: return false
+
+        val iframe = fixUrlNull(document.selectFirst("div#tv-spoox2 iframe")?.attr("src")) ?: run {
+            android.util.Log.e("dzmg", "iframe src not found in document")
+            return false
+        }
+        android.util.Log.d("dzmg", "iframe URL found: $iframe")
+
         val docum = app.get(iframe, headers = headers, referer = "$mainUrl/").document
+        android.util.Log.d("dzmg", "iframe content fetched, scanning scripts...")
+
         docum.select("script").forEach { sc ->
             if (sc.toString().contains("bePlayer")) {
+                android.util.Log.d("dzmg", "bePlayer script found")
                 val pattern = Pattern.compile("bePlayer\\('(.*?)', '(.*?)'\\)")
                 val matcher = pattern.matcher(sc.toString().trimIndent())
                 if (matcher.find()) {
+                    android.util.Log.d("dzmg", "bePlayer pattern matched successfully")
                     val key = matcher.group(1)
                     val jsonCipher = matcher.group(2)
-                    val cipherData = ObjectMapper().readValue(
-                        jsonCipher?.replace("\\/", "/"),
-                        Cipher::class.java
-                    )
-                    val ctt = cipherData.ct
-                    val iv = cipherData.iv
-                    val s = cipherData.s
-                    val decrypt = key?.let { CryptoJS.decrypt(it, ctt, iv, s) }
+                    android.util.Log.d("dzmg", "decryption key: ${key?.take(3)}..., cipher: ${jsonCipher?.take(10)}...")
 
-                    val jsonData = ObjectMapper().readValue(decrypt, JsonData::class.java)
+                    try {
+                        val cipherData = ObjectMapper().readValue(
+                            jsonCipher?.replace("\\/", "/"),
+                            Cipher::class.java
+                        )
+                        android.util.Log.d("dzmg", "cipher data parsed - iv: ${cipherData.iv.take(5)}..., s: ${cipherData.s}")
 
-                    for (sub in jsonData.strSubtitles) {
-                        subtitleCallback.invoke(
-                            SubtitleFile(
-                                lang = sub.label.toString(),
-                                url = "https://epikplayer.xyz${sub.file}"
+                        val decrypt = key?.let { CryptoJS.decrypt(it, cipherData.ct, cipherData.iv, cipherData.s) }
+                        android.util.Log.d("dzmg", "decryption result: ${decrypt?.take(50)}...")
+
+                        val jsonData = ObjectMapper().readValue(decrypt, JsonData::class.java)
+                        android.util.Log.d("dzmg", "JSON data parsed with ${jsonData.strSubtitles?.size} subtitles")
+
+                        jsonData.strSubtitles?.let { subtitles -> // Null kontrolü ekledik
+                            for (sub in subtitles) {
+                                android.util.Log.d("dzmg", "adding subtitle: ${sub.label} (${sub.file})")
+                                subtitleCallback.invoke(
+                                    SubtitleFile(
+                                        lang = sub.label.toString(),
+                                        url = "https://epikplayer.xyz${sub.file}"
+                                    )
+                                )
+                            }
+                        }
+
+
+                        android.util.Log.d("dzmg", "fetching m3u8 content from ${jsonData.videoLocation}")
+                        val m3u8Content = app.get(
+                            jsonData.videoLocation,
+                            referer = iframe,
+                            headers = mapOf("Accept" to "*/*", "Referer" to iframe)
+                        ).document.body()
+
+                        val regex = Regex("#EXT-X-STREAM-INF:.*? (https?://\\S+)")
+                        val matchResult = regex.find(m3u8Content.text())
+                        val m3uUrl = matchResult?.groupValues?.get(1) ?: ""
+                        android.util.Log.d("dzmg", "m3u8 URL extracted: ${m3uUrl.take(50)}...")
+
+                        if (m3uUrl.isNotEmpty()) {
+                            android.util.Log.d("dzmg", "invoking callback with m3u8 URL")
+                            callback.invoke(
+                                ExtractorLink(
+                                    source = this.name,
+                                    name = this.name,
+                                    headers = mapOf("Accept" to "*/*", "Referer" to iframe),
+                                    url = m3uUrl,
+                                    referer = iframe,
+                                    quality = Qualities.Unknown.value,
+                                    isM3u8 = true
+                                )
+                            )
+                        } else {
+                            android.util.Log.w("dzmg", "m3u8 URL extraction failed")
+                        }
+
+                        android.util.Log.d("dzmg", "invoking callback with videoLocation")
+                        callback.invoke(
+                            ExtractorLink(
+                                source = this.name,
+                                name = this.name,
+                                headers = mapOf("Accept" to "*/*", "Referer" to iframe),
+                                url = jsonData.videoLocation,
+                                referer = iframe,
+                                quality = Qualities.Unknown.value,
+                                isM3u8 = true
                             )
                         )
+
+                    } catch (e: Exception) {
+                        android.util.Log.e("dzmg", "decryption/parsing error: ${e.stackTraceToString()}")
                     }
-                    val m3u8Content = app.get(
-                        jsonData.videoLocation,
-                        referer = iframe,
-                        headers = mapOf("Accept" to "*/*", "Referer" to iframe)
-                    ).document.body()
-                    val regex = Regex("#EXT-X-STREAM-INF:.*? (https?://\\S+)")
-                    val matchResult = regex.find(m3u8Content.text())
-                    val m3uUrl = matchResult?.groupValues?.get(1) ?: ""
-//                    callback.invoke(
-//                        ExtractorLink(
-//                            source = this.name,
-//                            name = this.name,
-//                            headers = mapOf("Accept" to "*/*", "Referer" to iframe),
-//                            url = m3uUrl,
-//                            referer = iframe,
-//                            quality = Qualities.Unknown.value,
-//                            isM3u8 = true
-//                        )
-//                    )
-                    callback.invoke(
-                        ExtractorLink(
-                            source = this.name,
-                            name = this.name,
-                            headers = mapOf("Accept" to "*/*", "Referer" to iframe),
-                            url = jsonData.videoLocation,
-                            referer = iframe,
-                            quality = Qualities.Unknown.value,
-                            isM3u8 = true
-                        )
-                    )
+                } else {
+                    android.util.Log.w("dzmg", "bePlayer pattern match failed")
                 }
             }
         }
 
+        android.util.Log.d("dzmg", "fallback to loadExtractor")
         loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+
         return true
     }
 }
