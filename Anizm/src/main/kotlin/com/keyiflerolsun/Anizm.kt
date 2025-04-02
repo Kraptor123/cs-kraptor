@@ -3,7 +3,6 @@ package com.keyiflerolsun
 import android.util.Log
 import com.keyiflerolsun.extractors.AincradExtractor
 import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.extractors.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.network.CloudflareKiller
 import com.lagradost.cloudstream3.utils.AppUtils.parseJson
@@ -49,10 +48,10 @@ class Anizm : MainAPI() {
 
     // JSON Data Class
     data class AnimeSearchResult(
-        val info_title: String,
-        val info_slug: String,
-        val info_poster: String?,
-        val info_year: String?
+        val infotitle: String,
+        val infoslug: String,
+        val infoposter: String?,
+        val infoyear: String?
     )
 
     // Ana Sayfa
@@ -144,13 +143,13 @@ class Anizm : MainAPI() {
             // 5. Sonuçları işle ve detay sayfasından posterleri çek
             val searchResponses = mutableListOf<SearchResponse>()
             results?.filter {
-                it.info_title.contains(query, ignoreCase = true)
+                it.infotitle.contains(query, ignoreCase = true)
             }?.forEach { item ->
-                val detailUrl = "$mainUrl/${item.info_slug}"
+                val detailUrl = "$mainUrl/${item.infoslug}"
                 // Detay sayfasından posteri çekmek için ek fonksiyon kullanılıyor
                 val poster = getPoster(detailUrl)
                 val searchResponse = newAnimeSearchResponse(
-                    item.info_title,
+                    item.infotitle,
                     detailUrl,
                     TvType.Anime
                 ) {

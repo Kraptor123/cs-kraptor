@@ -198,6 +198,7 @@ class DiziPal : MainAPI() {
         }
 
         val subtitles = Regex(""""subtitle":"([^"]+)""").find(iSource)?.groupValues?.get(1)
+        Log.d("DZPAL", "Altyazi: ${subtitles}")
         if (subtitles != null) {
             if (subtitles.contains(",")) {
                 subtitles.split(",").forEach {
@@ -234,13 +235,6 @@ class DiziPal : MainAPI() {
                 isM3u8  = true
             )
         )
-
-        // M3u8Helper.generateM3u8(
-        //     source    = this.name,
-        //     name      = this.name,
-        //     streamUrl = m3uLink,
-        //     referer   = "${mainUrl}/"
-        // ).forEach(callback)
 
         return true
     }
