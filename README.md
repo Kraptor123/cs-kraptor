@@ -10,6 +10,7 @@ Düzeltilenler :
 
 Animecix,
 Dizipal,
+Dizibox,
 Dizilla,
 Setfilmizle,
 Türkanime,
