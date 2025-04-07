@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
+import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.utils.AppUtils.tryParseJson
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.Qualities
 import org.jsoup.nodes.Element
 
 class FullHDFilmIzlede : MainAPI() {
@@ -133,15 +132,16 @@ class FullHDFilmIzlede : MainAPI() {
                 )
             }
         callback.invoke(
-            ExtractorLink(
+            newExtractorLink(
                 source = this.name,
                 name = this.name,
                 url = file,
-                referer = "$mainUrl/",
-                quality = Qualities.Unknown.value,
-                isM3u8 = true
+                type = ExtractorLinkType.M3U8
+            ) {
+                headers = mapOf("Referer" to "$mainUrl/") // "Referer" ayarı burada yapılabilir
+                quality = getQualityFromName(Qualities.Unknown.value.toString())
+            }
             )
-        )
         /*M3u8Helper.generateM3u8(
             name,
             file,

@@ -2,10 +2,7 @@ package com.keyiflerolsun
 
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.ExtractorLinkType
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.*
 
 class Vk : ExtractorApi() {
     override val name            = "Vk"
@@ -24,14 +21,15 @@ class Vk : ExtractorApi() {
 
         if (m3u8SourceUrl != null) {
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source  = this.name,
                     name    = this.name,
                     url     = m3u8SourceUrl,
-                    referer = this.mainUrl,
-                    quality = Qualities.Unknown.value,
                     type    = ExtractorLinkType.M3U8
-                )
+                ) {
+                    headers = mapOf("Referer" to mainUrl) // "Referer" ayarı burada yapılabilir
+                    quality = getQualityFromName(Qualities.Unknown.value.toString())
+                }
             )
         } else {
             return

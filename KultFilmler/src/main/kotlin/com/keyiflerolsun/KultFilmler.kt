@@ -6,10 +6,7 @@ import android.util.Base64
 import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.INFER_TYPE
-import com.lagradost.cloudstream3.utils.Qualities
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
@@ -168,7 +165,7 @@ class KultFilmler : MainAPI() {
         for (iframe in iframes) {
             Log.d("KLT", "iframe » $iframe")
             if (iframe.contains("vidmoly")) {
-                val headers  = mapOf(
+                var headers  = mapOf(
                     "User-Agent"     to "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36",
                     "Sec-Fetch-Dest" to "iframe"
                 )
@@ -178,14 +175,15 @@ class KultFilmler : MainAPI() {
                 Log.d("Kekik_VidMoly", "m3uLink » $m3uLink")
 
                 callback.invoke(
-                    ExtractorLink(
+                    newExtractorLink(
                         source  = "VidMoly",
                         name    = "VidMoly",
                         url     = m3uLink,
-                        referer = "https://vidmoly.to/",
-                        quality = Qualities.Unknown.value,
                         type    = INFER_TYPE
-                    )
+                    ) {
+                        headers = mapOf("Referer" to "https://vidmoly.to/") // "Referer" ayarı burada yapılabilir
+                        quality = getQualityFromName(Qualities.Unknown.value.toString())
+                    }
                 )
             } else {
                 loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)

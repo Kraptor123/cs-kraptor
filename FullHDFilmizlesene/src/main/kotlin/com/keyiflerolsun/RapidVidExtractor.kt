@@ -50,14 +50,15 @@ open class RapidVid : ExtractorApi() {
         Log.d("Kekik_${this.name}", "decoded » $decoded")
 
         callback.invoke(
-            ExtractorLink(
+            newExtractorLink(
                 source  = this.name,
                 name    = this.name,
                 url     = decoded,
-                referer = extRef,
-                quality = Qualities.Unknown.value,
-                isM3u8  = true
-            )
+                type = ExtractorLinkType.M3U8
+            ) {
+                headers = mapOf("Referer" to extRef) // "Referer" ayarı burada yapılabilir
+                quality = getQualityFromName(Qualities.Unknown.value.toString())
+            }
         )
     }
 }

@@ -122,15 +122,15 @@ class iptvSevenler : MainAPI() {
         Log.d("IPTV", "kanal » $kanal")
 
         callback.invoke(
-            ExtractorLink(
+            newExtractorLink(
                 source  = this.name,
                 name    = this.name,
                 url     = loadData.url,
-                headers = kanal.headers,
-                referer = kanal.headers["referrer"] ?: "",
-                quality = Qualities.Unknown.value,
-                isM3u8  = true
-            )
+                type = ExtractorLinkType.M3U8
+            ) {
+                headers = mapOf("Referer" to "",) // "Referer" ayarı burada yapılabilir
+                quality = getQualityFromName(Qualities.Unknown.value.toString())
+            }
         )
 
         return true

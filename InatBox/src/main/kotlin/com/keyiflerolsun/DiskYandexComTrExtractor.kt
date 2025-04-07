@@ -2,10 +2,7 @@ package com.keyiflerolsun
 
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.ExtractorLinkType
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.*
 import java.util.regex.Pattern
 
 class DiskYandexComTr : ExtractorApi() {
@@ -38,14 +35,15 @@ class DiskYandexComTr : ExtractorApi() {
             val masterPlaylistUrl = matcher.group()
 
             // Create an ExtractorLink for the master-playlist.m3u8 URL
-            val extractorLink = ExtractorLink(
+            val extractorLink = newExtractorLink(
                 source  = "Yandex Disk",
                 name    = "Yandex Disk",
                 url     = masterPlaylistUrl,
-                referer = referer ?: "",
-                quality = Qualities.Unknown.value,
                 type    = ExtractorLinkType.M3U8
-            )
+            ) {
+                headers = mapOf("Referer" to "") // "Referer" ayarı burada yapılabilir
+                quality = getQualityFromName(Qualities.Unknown.value.toString())
+            }
 
             // Invoke the callback with the ExtractorLink
             callback.invoke(extractorLink)

@@ -6,9 +6,7 @@ import android.util.Log
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.*
 
 open class TurboImgz : ExtractorApi() {
     override val name            = "TurboImgz"
@@ -23,14 +21,15 @@ open class TurboImgz : ExtractorApi() {
         Log.d("Kekik_${this.name}", "videoLink » $videoLink")
 
         callback.invoke(
-            ExtractorLink(
+            newExtractorLink(
                 source  = "${this.name} - " + url.substringBefore("||").uppercase(),
                 name    = "${this.name} - " + url.substringBefore("||").uppercase(),
                 url     = videoLink,
-                referer = extRef,
-                quality = Qualities.Unknown.value,
-                isM3u8  = true
+                type = ExtractorLinkType.M3U8
+            ) {
+                headers = mapOf("Referer" to extRef) // "Referer" ayarı burada yapılabilir
+                quality = getQualityFromName(Qualities.Unknown.value.toString())
+            }
             )
-        )
     }
 }

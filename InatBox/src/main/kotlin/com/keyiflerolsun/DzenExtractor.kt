@@ -1,10 +1,7 @@
 package com.keyiflerolsun
 
 import com.lagradost.cloudstream3.SubtitleFile
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.ExtractorLinkType
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.*
 
 class Dzen : ExtractorApi(){
     override val name            = "Dzen"
@@ -15,23 +12,25 @@ class Dzen : ExtractorApi(){
         val type = if (url.contains(".m3u8")) "m3u8" else if(url.contains(".mpd")) "dash" else null
 
         val extractorLink = when(type) {
-            "m3u8" -> ExtractorLink(
+            "m3u8" -> newExtractorLink(
                 source  = this.name,
                 name    = this.name,
                 url     = url,
-                referer = "",
-                quality = Qualities.Unknown.value,
                 type    = ExtractorLinkType.M3U8
-            )
+            ) {
+                headers = mapOf("Referer" to "") // "Referer" ayarı burada yapılabilir
+                quality = getQualityFromName(Qualities.Unknown.value.toString())
+            }
 
-            "dash" -> ExtractorLink(
+            "dash" -> newExtractorLink(
                 source  = this.name,
                 name    = this.name,
                 url     = url,
-                referer = "",
-                quality = Qualities.Unknown.value,
                 type    = ExtractorLinkType.DASH
-            )
+            ) {
+                headers = mapOf("Referer" to "") // "Referer" ayarı burada yapılabilir
+                quality = getQualityFromName(Qualities.Unknown.value.toString())
+            }
 
             else -> null
         }

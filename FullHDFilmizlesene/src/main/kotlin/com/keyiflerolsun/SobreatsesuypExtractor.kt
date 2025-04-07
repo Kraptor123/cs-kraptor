@@ -7,10 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.INFER_TYPE
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.*
 
 open class Sobreatsesuyp : ExtractorApi() {
     override val name            = "Sobreatsesuyp"
@@ -41,14 +38,15 @@ open class Sobreatsesuyp : ExtractorApi() {
             val videoData = app.post("${mainUrl}/playlist/${item.file.substring(1)}.txt", referer = extRef).text
 
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source  = this.name,
                     name    = "${this.name} - ${item.title}",
                     url     = videoData,
-                    referer = extRef,
-                    quality = Qualities.Unknown.value,
                     type    = INFER_TYPE
-                )
+                ) {
+                    headers = mapOf("Referer" to extRef) // "Referer" ayarı burada yapılabilir
+                    quality = getQualityFromName(Qualities.Unknown.value.toString())
+                }
             )
         }
     }

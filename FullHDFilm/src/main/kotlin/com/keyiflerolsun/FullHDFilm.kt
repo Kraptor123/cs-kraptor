@@ -7,7 +7,12 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.getQualityFromName
 import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.newExtractorLink
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.jsoup.nodes.Element
 
 class FullHDFilm : MainAPI() {
@@ -134,6 +139,7 @@ class FullHDFilm : MainAPI() {
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         Log.d("FHDF", "data » $data")
 
@@ -171,19 +177,24 @@ class FullHDFilm : MainAPI() {
             Log.d("FHDF", "iframeLink » $iframeLink")
 
             loadExtractor(iframeLink, "${mainUrl}/", subtitleCallback) { extractor ->
-                callback.invoke (
-                    ExtractorLink (
+                // Coroutine başlatıyoruz
+                GlobalScope.launch {
+                    // newExtractorLink fonksiyonu bir suspend fonksiyonu olduğu için coroutine içinde çağrılıyor
+                    val extractorLink = newExtractorLink(
                         source  = "$partName - ${extractor.source}",
                         name    = "$partName - ${extractor.name}",
                         url     = extractor.url,
-                        referer = extractor.referer,
-                        quality = extractor.quality,
                         type    = extractor.type
-                    )
-                )
-            }
-        }
+                    ) {
+                        headers = mapOf("Referer" to extractor.referer) // "Referer" ayarı burada yapılabilir
+                        quality = getQualityFromName(extractor.quality.toString())
+                    }
 
-        return true
+                    // Callback fonksiyonuna çağrı yapıyoruz
+                    callback.invoke(extractorLink)
+                }
+            }
     }
+        return true
+}
 }

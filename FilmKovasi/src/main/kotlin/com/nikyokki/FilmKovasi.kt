@@ -9,9 +9,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.ExtractorLinkType
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class FilmKovasi : MainAPI() {
@@ -175,15 +173,17 @@ class FilmKovasi : MainAPI() {
         Log.d("FKV", "sonLink » $sonLink")
 
         callback.invoke(
-            ExtractorLink(
+            newExtractorLink(
                 source = this.name,
                 name = this.name,
                 url = sonLink,
-                referer = iframe,
-                quality = Qualities.Unknown.value,
                 type = ExtractorLinkType.M3U8
-            )
+            ) {
+                headers = mapOf("Referer" to iframe) // "Referer" ayarı burada yapılabilir
+                quality = getQualityFromName(Qualities.Unknown.value.toString())
+            }
         )
+    }
     }
 
     private data class FKVSource(
@@ -209,4 +209,3 @@ class FilmKovasi : MainAPI() {
     private fun String.addMarks(str: String): String {
         return this.replace(Regex("\"?$str\"?"), "\"$str\"")
     }
-}

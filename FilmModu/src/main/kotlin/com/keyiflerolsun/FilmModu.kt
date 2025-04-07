@@ -6,9 +6,7 @@ import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.INFER_TYPE
-import com.lagradost.cloudstream3.utils.getQualityFromName
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class FilmModu : MainAPI() {
@@ -124,14 +122,15 @@ class FilmModu : MainAPI() {
 
             vidReq.sources?.forEach { source ->
                 callback.invoke(
-                    ExtractorLink(
+                    newExtractorLink(
                         source  = "${this.name} - $altName",
                         name    = "${this.name} - $altName",
                         url     = fixUrl(source.src),
-                        referer = "${mainUrl}/",
-                        quality = getQualityFromName(source.label),
                         type    = INFER_TYPE
-                    )
+                    ) {
+                        headers = mapOf("Referer" to "${mainUrl}/") // "Referer" ayarı burada yapılabilir
+                        quality = getQualityFromName(source.label)
+                    }
                 )
             }
         }

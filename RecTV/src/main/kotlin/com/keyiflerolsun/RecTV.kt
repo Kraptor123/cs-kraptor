@@ -145,14 +145,15 @@ class RecTV : MainAPI() {
         if (data.startsWith("http")) {
             Log.d("RCTV", "data » $data")
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source  = this.name,
                     name    = this.name,
                     url     = data,
-                    referer = "https://twitter.com/",
-                    quality = Qualities.Unknown.value,
                     type    = INFER_TYPE
-                )
+                ) {
+                    headers = mapOf("Referer" to "https://twitter.com/") // "Referer" ayarı burada yapılabilir
+                    quality = getQualityFromName(Qualities.Unknown.value.toString())
+                }
             )
             return true
         }
@@ -162,14 +163,15 @@ class RecTV : MainAPI() {
         for (source in veri.sources) {
             Log.d("RCTV", "source » $source")
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source  = this.name,
                     name    = "${this.name} - ${source.type}",
                     url     = source.url,
-                    referer = "https://twitter.com/",
-                    quality = Qualities.Unknown.value,
                     type    = if (source.type == "mp4") ExtractorLinkType.VIDEO else ExtractorLinkType.M3U8
-                )
+                ) {
+                    headers = mapOf("Referer" to "https://twitter.com/") // "Referer" ayarı burada yapılabilir
+                    quality = getQualityFromName(Qualities.Unknown.value.toString())
+                }
             )
         }
 

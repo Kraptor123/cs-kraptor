@@ -7,10 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.AppUtils
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.getQualityFromName
+import com.lagradost.cloudstream3.utils.*
 
 open class Odnoklassniki : ExtractorApi() {
     override val name            = "Odnoklassniki"
@@ -34,7 +31,7 @@ open class Odnoklassniki : ExtractorApi() {
 
             val videoUrl = if (video.url.startsWith("//")) "https:${video.url}" else video.url
 
-            val quality   = video.name.uppercase()
+            var quality   = video.name.uppercase()
                 .replace("MOBILE", "144p")
                 .replace("LOWEST", "240p")
                 .replace("LOW",    "360p")
@@ -45,15 +42,15 @@ open class Odnoklassniki : ExtractorApi() {
                 .replace("ULTRA",  "4k")
 
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source  = this.name,
                     name    = this.name,
                     url     = videoUrl,
-                    referer = url,
-                    quality = getQualityFromName(quality),
-                    headers = userAgent,
-                    isM3u8  = false
-                )
+                    type = ExtractorLinkType.M3U8
+                ) {
+                    headers = userAgent + mapOf("Referer" to url) // "Referer" ayarı burada yapılabilir
+                    quality = getQualityFromName(quality).toString()
+                }
             )
         }
     }
