@@ -1,7 +1,6 @@
 package com.keyiflerolsun
 
 import android.util.Log
-import com.keyiflerolsun.extractors.AincradExtractor
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.network.CloudflareKiller

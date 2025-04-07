@@ -1,12 +1,10 @@
 // ! Bu araç @kraptor123 tarafından yazılmıştır.
 
-package com.keyiflerolsun.extractors
+package com.keyiflerolsun
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.*
-import com.lagradost.cloudstream3.network.*
-import okhttp3.*
 import java.net.URI
 
 class AincradExtractor : ExtractorApi() {
@@ -16,12 +14,9 @@ class AincradExtractor : ExtractorApi() {
 
     enum class Qualities(val qualityValue: Int) {
         Unknown(0),
-        Low(1),
-        Medium(2),
-        High(3)
     }
 
-    override suspend fun getUrl(url: String, referer: String?): List<ExtractorLink>? {
+    override suspend fun getUrl(url: String, referer: String?): List<ExtractorLink> {
         val hash = URI(url).path.substringAfterLast("/")
         val postUrl = "$mainUrl/player/index.php?data=$hash&do=getVideo"
         
@@ -39,15 +34,16 @@ class AincradExtractor : ExtractorApi() {
 
         return response?.securedLink?.let { hlsUrl ->
             listOf(
-                ExtractorLink(
+                newExtractorLink(
                     source = name,
                     name = name,
                     url = hlsUrl,
-                    referer = "$mainUrl/",
-                    quality = Qualities.Unknown.qualityValue, // Corrected here
-                    isM3u8 = true
+                    type = INFER_TYPE
+                ) {
+                    headers = mapOf("Referer" to "$mainUrl/") // "Referer" ayarı burada yapılabilir
+                    quality = getQualityFromName(Qualities.Unknown.qualityValue.toString()) // Int değeri String'e dönüştürülüyor
+                }
                 )
-            )
         } ?: emptyList()  // Return an empty list if response?.securedLink is null
     }
 

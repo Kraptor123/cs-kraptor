@@ -2,11 +2,11 @@
 
 package com.keyiflerolsun
 
-import java.util.Locale
 import android.util.Log
-import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
+import org.jsoup.nodes.Element
+import java.util.*
 
 class BelgeselX : MainAPI() {
     override var mainUrl              = "https://belgeselx.com"
@@ -149,14 +149,15 @@ class BelgeselX : MainAPI() {
                     Log.d("BLX", "videoUrl » $videoUrl")
 
                     callback.invoke(
-                        ExtractorLink(
-                            source  = thisName,
-                            name    = thisName,
-                            url     = videoUrl,
-                            referer = data,
-                            quality = getQualityFromName(quality),
-                            type    = INFER_TYPE
-                        )
+                        newExtractorLink(
+                            source = thisName,
+                            name = thisName,
+                            url = videoUrl,
+                            type = INFER_TYPE // Varsayılan olarak tür atanıyor
+                        ) {
+                            headers = mapOf("Referer" to data) // "Referer" ayarı burada yapılabilir
+                            quality = getQualityFromName(quality).toString() // Int değeri String'e dönüştürülüyor
+                        }
                     )
                 }
             } else {

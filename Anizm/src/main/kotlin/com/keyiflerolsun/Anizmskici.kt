@@ -4,8 +4,8 @@ package com.keyiflerolsun
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.jsoup.Jsoup
 import org.json.JSONObject
+import org.jsoup.Jsoup
 
 class CloudflareKiller {
     fun intercept(chain: okhttp3.Interceptor.Chain): okhttp3.Response {

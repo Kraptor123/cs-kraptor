@@ -2,13 +2,15 @@
 
 package com.keyiflerolsun
 
-import android.util.Log
-import org.jsoup.nodes.Element
-import org.jsoup.nodes.Document
-import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.*
 import android.util.Base64
+import android.util.Log
+import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.extractors.helper.AesHelper
+import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.loadExtractor
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 
 class TurkAnime : MainAPI() {
     override var mainUrl              = "https://www.turkanime.co"

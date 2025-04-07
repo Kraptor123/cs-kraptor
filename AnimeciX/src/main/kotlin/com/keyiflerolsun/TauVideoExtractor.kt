@@ -3,9 +3,11 @@
 package com.keyiflerolsun
 
 import android.util.Log
-import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.*
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.lagradost.cloudstream3.ErrorLoadingException
+import com.lagradost.cloudstream3.SubtitleFile
+import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.utils.*
 
 open class TauVideo : ExtractorApi() {
     override val name            = "TauVideo"
@@ -22,15 +24,16 @@ open class TauVideo : ExtractorApi() {
 
         for (video in api.urls) {
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source  = this.name,
                     name    = this.name,
                     url     = video.url,
-                    referer = extRef,
-                    quality = getQualityFromName(video.label),
                     type    = INFER_TYPE
+                ) {
+                    headers = mapOf("Referer" to extRef) // "Referer" ayarı burada yapılabilir
+                    quality = getQualityFromName(video.label)
+                }
                 )
-            )
         }
     }
 

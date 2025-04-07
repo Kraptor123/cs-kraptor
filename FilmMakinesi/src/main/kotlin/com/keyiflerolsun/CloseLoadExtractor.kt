@@ -2,10 +2,11 @@
 
 package com.keyiflerolsun
 
-import android.util.Log
-import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.*
 import android.util.Base64
+import android.util.Log
+import com.lagradost.cloudstream3.SubtitleFile
+import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.utils.*
 
 private fun getm3uLink(data: String): String {
     val first  = Base64.decode(data,Base64.DEFAULT).reversedArray()

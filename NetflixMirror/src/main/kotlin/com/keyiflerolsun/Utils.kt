@@ -1,17 +1,17 @@
 package com.keyiflerolsun
 
 import android.util.Log
-import com.lagradost.cloudstream3.USER_AGENT
 import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.lagradost.nicehttp.Requests
+import com.lagradost.cloudstream3.USER_AGENT
 import com.lagradost.nicehttp.NiceResponse
+import com.lagradost.nicehttp.Requests
 import com.lagradost.nicehttp.ResponseParser
-import kotlin.reflect.KClass
-import okhttp3.FormBody
 import kotlinx.coroutines.delay
+import okhttp3.FormBody
+import kotlin.reflect.KClass
 
 val jsonParser = object : ResponseParser {
     val objectMapper: ObjectMapper = jacksonObjectMapper().configure(
