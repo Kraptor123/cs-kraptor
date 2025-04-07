@@ -8,10 +8,8 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.network.CloudflareKiller
-import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.utils.StringUtils.decodeUri
-import com.lagradost.cloudstream3.utils.getQualityFromName
-import com.lagradost.cloudstream3.utils.loadExtractor
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.jsoup.Jsoup
@@ -198,14 +196,15 @@ class DiziBox : MainAPI() {
             val vidUrl        = Regex("""file: '(.*)',""").find(decryptedDoc.html())?.groupValues?.get(1) ?: return false
 
             callback.invoke(
-                ExtractorLink(
-                    source  = this.name,
-                    name    = this.name,
-                    url     = vidUrl,
-                    referer = vidUrl,
-                    quality = getQualityFromName("4k"),
-                    isM3u8  = true
-                )
+                newExtractorLink(
+                    source = this.name,
+                    name = this.name,
+                    url = vidUrl,
+                    type = ExtractorLinkType.M3U8 // Tür olarak M3U8 ayarlandı
+                ) {
+                    headers = mapOf("Referer" to vidUrl) // Referer başlığı ayarlandı
+                    quality = getQualityFromName("4k") // Kalite ayarlandı
+                }
             )
 
         } else if (iframe.contains("/player/moly/moly.php")) {

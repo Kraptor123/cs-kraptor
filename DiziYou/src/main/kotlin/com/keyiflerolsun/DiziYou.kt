@@ -7,7 +7,9 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.ExtractorLinkType
 import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
 
 class DiziYou : MainAPI() {
@@ -136,14 +138,15 @@ class DiziYou : MainAPI() {
 
         for (stream in streamUrls) {
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source  = stream.name,
                     name    = stream.name,
                     url     = stream.url,
-                    referer = "${mainUrl}/",
-                    quality = Qualities.Unknown.value,
-                    isM3u8  = true
-                )
+                    type = ExtractorLinkType.M3U8
+                ) {
+                    headers = mapOf("Referer" to "${mainUrl}/") // Referer burada ayarlandı
+                    quality = Qualities.Unknown.value // Kalite ayarlandı
+                }
             )
         }
 

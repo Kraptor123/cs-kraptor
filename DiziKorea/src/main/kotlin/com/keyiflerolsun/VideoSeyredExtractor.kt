@@ -38,14 +38,15 @@ open class VideoSeyred : ExtractorApi() {
 
         for (source in response.sources) {
             callback.invoke(
-                ExtractorLink(
-                    source  = this.name,
-                    name    = this.name,
-                    url     = source.file,
-                    referer = "${mainUrl}/",
-                    quality = Qualities.Unknown.value,
+                newExtractorLink(
+                    source = this.name,
+                    name = this.name,
+                    url = source.file,
                     type    = INFER_TYPE
-                )
+                ) {
+                    headers = mapOf("Referer" to "${mainUrl}/") // Referer ayarlandı
+                    quality = Qualities.Unknown.value // Kalite ayarlandı
+                }
             )
         }
     }

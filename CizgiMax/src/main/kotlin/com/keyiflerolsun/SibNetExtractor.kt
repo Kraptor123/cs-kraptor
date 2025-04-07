@@ -3,13 +3,8 @@
 package com.keyiflerolsun
 
 import android.util.Log
-import com.lagradost.cloudstream3.ErrorLoadingException
-import com.lagradost.cloudstream3.SubtitleFile
-import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.INFER_TYPE
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.utils.*
 
 open class SibNet : ExtractorApi() {
     override val name            = "SibNet"
@@ -25,14 +20,15 @@ open class SibNet : ExtractorApi() {
         Log.d("Kekik_${this.name}", "m3uLink » $m3uLink")
 
         callback.invoke(
-            ExtractorLink(
-                source  = this.name,
-                name    = this.name,
-                url     = m3uLink,
-                referer = url,
-                quality = Qualities.Unknown.value,
-                type    = INFER_TYPE
-            )
+            newExtractorLink(
+                source = this.name,
+                name = this.name,
+                url = m3uLink ?: throw ErrorLoadingException("m3u link not found"),
+                type = INFER_TYPE
+            ) {
+                headers = mapOf("Referer" to url) // Referer başlığı eklendi
+                quality = Qualities.Unknown.value // Kalite ayarlandı
+            }
         )
     }
 }

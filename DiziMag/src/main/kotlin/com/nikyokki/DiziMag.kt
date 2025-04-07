@@ -5,9 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.Qualities
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.util.regex.Pattern
@@ -291,19 +289,20 @@ class DiziMag : MainAPI() {
                         val matchResult = regex.find(m3u8Content.text())
                         val m3uUrl = matchResult?.groupValues?.get(1) ?: ""
                         android.util.Log.d("dzmg", "m3u8 URL extracted: ${m3uUrl.take(50)}...")
+                        val myHeaders = mapOf("Accept" to "*/*", "Referer" to iframe)
 
                         if (m3uUrl.isNotEmpty()) {
                             android.util.Log.d("dzmg", "invoking callback with m3u8 URL")
                             callback.invoke(
-                                ExtractorLink(
+                                newExtractorLink(
                                     source = this.name,
                                     name = this.name,
-                                    headers = mapOf("Accept" to "*/*", "Referer" to iframe),
-                                    url = m3uUrl,
-                                    referer = iframe,
-                                    quality = Qualities.Unknown.value,
-                                    isM3u8 = true
-                                )
+                                    url = jsonData.videoLocation,
+                                    type = ExtractorLinkType.M3U8 // isM3u8 = true yerine ExtractorLinkType belirtiliyor
+                                ) {
+                                    this.headers = myHeaders
+                                    quality = Qualities.Unknown.value
+                                }
                             )
                         } else {
                             android.util.Log.w("dzmg", "m3u8 URL extraction failed")
@@ -311,15 +310,15 @@ class DiziMag : MainAPI() {
 
                         android.util.Log.d("dzmg", "invoking callback with videoLocation")
                         callback.invoke(
-                            ExtractorLink(
+                            newExtractorLink(
                                 source = this.name,
                                 name = this.name,
-                                headers = mapOf("Accept" to "*/*", "Referer" to iframe),
                                 url = jsonData.videoLocation,
-                                referer = iframe,
-                                quality = Qualities.Unknown.value,
-                                isM3u8 = true
-                            )
+                                type = ExtractorLinkType.M3U8 // isM3u8 = true yerine ExtractorLinkType belirtiliyor
+                            ) {
+                                this.headers = myHeaders
+                                quality = Qualities.Unknown.value
+                            }
                         )
 
                     } catch (e: Exception) {

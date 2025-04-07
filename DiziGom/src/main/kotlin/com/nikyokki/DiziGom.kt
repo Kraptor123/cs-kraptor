@@ -8,9 +8,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.JsUnpacker
-import com.lagradost.cloudstream3.utils.getQualityFromName
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class DiziGom : MainAPI() {
@@ -186,14 +184,15 @@ class DiziGom : MainAPI() {
 
         val source: Go = objectMapper.readValue(sourceJ!!)
         callback.invoke(
-            ExtractorLink(
+            newExtractorLink(
                 source = this.name,
                 name = this.name,
                 url = source.file,
-                referer = "$mainUrl/",
-                quality = getQualityFromName(source.label),
-                isM3u8 = true
-            )
+                type = ExtractorLinkType.M3U8
+            ) {
+                headers = mapOf("Referer" to "$mainUrl/")
+                quality = getQualityFromName(source.label)
+            }
         )
 
         return true

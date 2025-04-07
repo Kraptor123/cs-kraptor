@@ -7,10 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.INFER_TYPE
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.*
 
 open class PeaceMakerst : ExtractorApi() {
     override val name            = "PeaceMakerst"
@@ -55,14 +52,15 @@ open class PeaceMakerst : ExtractorApi() {
         }
 
         callback.invoke(
-            ExtractorLink(
-                source  = this.name,
-                name    = this.name,
-                url     = m3uLink ?: throw ErrorLoadingException("m3u link not found"),
-                referer = extRef,
-                quality = Qualities.Unknown.value,
-                type    = INFER_TYPE
-            )
+            newExtractorLink(
+                source = this.name,
+                name = this.name,
+                url = m3uLink ?: throw ErrorLoadingException("m3u link not found"),
+                type = ExtractorLinkType.M3U8 // isM3u8 artık bu şekilde belirtiliyor
+            ) {
+                headers = mapOf("Referer" to url) // Eski "referer" artık headers içinde
+                quality = Qualities.Unknown.value // Kalite ayarlandı
+            }
         )
     }
 

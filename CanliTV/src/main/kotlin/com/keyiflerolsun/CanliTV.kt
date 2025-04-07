@@ -129,7 +129,7 @@ class CanliTV : MainAPI() {
                 headers = kanal.headers,
                 referer = kanal.headers["referrer"] ?: "",
                 quality = Qualities.Unknown.value,
-                isM3u8  = true
+                type    = ExtractorLinkType.M3U8
             )
         )
 

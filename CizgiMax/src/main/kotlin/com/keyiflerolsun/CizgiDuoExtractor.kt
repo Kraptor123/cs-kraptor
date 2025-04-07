@@ -3,13 +3,9 @@
 package com.keyiflerolsun
 
 import android.util.Log
-import com.lagradost.cloudstream3.ErrorLoadingException
-import com.lagradost.cloudstream3.SubtitleFile
-import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.extractors.helper.AesHelper
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.Qualities
 
 open class CizgiDuo : ExtractorApi() {
     override var name            = "CizgiDuo"
@@ -30,14 +26,17 @@ open class CizgiDuo : ExtractorApi() {
         m3uLink = Regex("""video_location":"([^"]+)""").find(encrypted)?.groupValues?.get(1)
 
         callback.invoke(
-            ExtractorLink(
-                source  = this.name,
-                name    = this.name,
-                url     = m3uLink ?: throw ErrorLoadingException("m3u link not found"),
-                referer = url,
-                quality = Qualities.Unknown.value,
-                isM3u8  = true
-            )
+            newExtractorLink(
+                source = this.name,
+                name = this.name,
+                url = m3uLink ?: throw ErrorLoadingException("m3u link not found"),
+                type = ExtractorLinkType.M3U8 // Tür olarak M3U8'yi belirtiyoruz
+            ) {
+                quality = Qualities.Unknown.value // Varsayılan kalite ayarlandı
+                /* referer = url // bunun yerine headers kodunu ekledim */
+                headers = mapOf("Referer" to url) // Referer burada başlıklar üzerinden ayarlandı
+                /* site açılmıyor şu anda o yüzden hata vermemesi için bunu kapatıyorum isM3u8 = true */
+            }
         )
     }
 }
