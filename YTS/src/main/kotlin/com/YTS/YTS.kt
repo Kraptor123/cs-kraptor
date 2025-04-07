@@ -1,9 +1,8 @@
 package com.YTS
 
-import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.INFER_TYPE
 import org.jsoup.nodes.Element
+import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.utils.*
 
 open class YTS : MainAPI() {
     override var mainUrl              = "https://en.yts-official.mx"
@@ -74,12 +73,12 @@ open class YTS : MainAPI() {
             ?.map { it.trim() }
         val rating= document.select("#movie-info > div.bottom-info > div:nth-child(2) > span:nth-child(2)").text().toRatingInt()
         return newMovieLoadResponse(title, url, TvType.Movie, url) {
-                this.posterUrl = poster
-                this.plot = title
-                this.year = year
-                this.rating=rating
-                this.tags = tags
-            }
+            this.posterUrl = poster
+            this.plot = title
+            this.year = year
+            this.rating=rating
+            this.tags = tags
+        }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
@@ -88,20 +87,21 @@ open class YTS : MainAPI() {
             val href=getURL(it.attr("href").replace(" ","%20"))
             val quality =it.ownText().substringBefore(".").replace("p","").toInt()
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     "$name $quality",
                     name,
-                    fixUrl( href),
-                    "",
-                    quality,
+                    url = fixUrl(href),
                     INFER_TYPE
-                )
+                ) {
+                    this.referer = ""
+                    this.quality = quality
+                }
             )
         }
         return true
     }
 
-    fun getURL(url: String): String {
-            return "${mainUrl}$url"
+    private fun getURL(url: String): String {
+        return "${mainUrl}$url"
     }
 }

@@ -3,6 +3,8 @@ package com.kerimmkirac
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.ExtractorLinkType
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.json.JSONObject
 import org.jsoup.nodes.Element
 
@@ -206,13 +208,12 @@ class Watch32Provider : MainAPI() {
             }
 
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     name,
                     vidDataId.text(),
-                    m3u8,
-                    "",
-                    0,
-                    isM3u8 = true
+                    type = ExtractorLinkType.M3U8,
+                    url = "",
+                    initializer = TODO()
                 )
             )
         }

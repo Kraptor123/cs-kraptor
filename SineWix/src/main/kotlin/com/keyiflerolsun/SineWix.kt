@@ -5,10 +5,7 @@ package com.keyiflerolsun
 import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.INFER_TYPE
-import com.lagradost.cloudstream3.utils.Qualities
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.*
 
 class SineWix : MainAPI() {
     override var mainUrl              = "https://ythls.kekikakademi.org"
@@ -169,14 +166,15 @@ class SineWix : MainAPI() {
                     loadExtractor(video.link, twitter, subtitleCallback, callback)
                 } else {
                     callback.invoke(
-                        ExtractorLink(
+                        newExtractorLink(
                             source  = this.name,
                             name    = this.name,
                             url     = video.link,
-                            referer = twitter,
-                            quality = Qualities.Unknown.value,
                             type    = INFER_TYPE
-                        )
+                        ) {
+                            headers = mapOf("Referer" to twitter) // "Referer" ayarı burada yapılabilir
+                            quality = getQualityFromName(Qualities.Unknown.value.toString())
+                        }
                     )
                 }
 
@@ -187,14 +185,15 @@ class SineWix : MainAPI() {
                 loadExtractor(data.substringAfter("&source="), twitter, subtitleCallback, callback)
             } else {
                 callback.invoke(
-                    ExtractorLink(
+                    newExtractorLink(
                         source  = this.name,
                         name    = this.name,
                         url     = data.substringAfter("&source="),
-                        referer = twitter,
-                        quality = Qualities.Unknown.value,
                         type    = INFER_TYPE
-                    )
+                    ) {
+                        headers = mapOf("Referer" to twitter) // "Referer" ayarı burada yapılabilir
+                        quality = getQualityFromName(Qualities.Unknown.value.toString())
+                    }
                 )
             }
 

@@ -7,9 +7,7 @@ import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.extractors.helper.AesHelper
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.*
 
 class MixPlayHD : ExtractorApi() {
     override var name            = "MixPlayHD"
@@ -30,14 +28,15 @@ class MixPlayHD : ExtractorApi() {
         m3uLink = Regex("""video_location":"([^"]+)""").find(encrypted)?.groupValues?.get(1)
 
         callback.invoke(
-            ExtractorLink(
+            newExtractorLink(
                 source  = this.name,
                 name    = this.name,
                 url     = m3uLink ?: throw ErrorLoadingException("m3u link not found"),
-                referer = url,
-                quality = Qualities.Unknown.value,
-                isM3u8  = true
-            )
+                type = ExtractorLinkType.M3U8
+            ) {
+                headers = mapOf("Referer" to url) // "Referer" ayarı burada yapılabilir
+                quality = getQualityFromName(Qualities.Unknown.value.toString())
+            }
         )
     }
 }

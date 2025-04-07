@@ -7,8 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class WFilmIzle : MainAPI() {
@@ -148,19 +147,21 @@ class WFilmIzle : MainAPI() {
             val master = updatedVideoData.videoSource ?: ""
             Log.d("WFI", "Master: $master")
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source = name,
                     name = name,
                     url = master,
-                    referer = mainUrl,
+                    type = ExtractorLinkType.M3U8
+
+                ) {
+                    referer = mapOf("Referer" to mainUrl).toString() // "Referer" ayarı burada yapılabilir
+                    quality = getQualityFromName(Qualities.Unknown.value.toString())
                     headers = mapOf(
                         "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox",
                         "Accept" to "*/*", "X-Requested-With" to "XMLHttpRequest",
                         "Content-Type" to "application/x-www-form-urlencoded; charset=UTF-8"
-                    ),
-                    quality = Qualities.Unknown.value,
-                    isM3u8 = true
-                )
+                    )
+                }
             )
         }
         //loadExtractor(iframe.toS, "${mainUrl}/", subtitleCallback, callback)

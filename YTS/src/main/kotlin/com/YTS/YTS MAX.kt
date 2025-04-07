@@ -1,9 +1,24 @@
 package com.YTS
 
 import com.lagradost.api.Log
-import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.HomePageList
+import com.lagradost.cloudstream3.HomePageResponse
+import com.lagradost.cloudstream3.LoadResponse
+import com.lagradost.cloudstream3.MainPageRequest
+import com.lagradost.cloudstream3.SearchResponse
+import com.lagradost.cloudstream3.SubtitleFile
+import com.lagradost.cloudstream3.TvType
+import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.fixUrl
+import com.lagradost.cloudstream3.fixUrlNull
+import com.lagradost.cloudstream3.mainPageOf
+import com.lagradost.cloudstream3.newHomePageResponse
+import com.lagradost.cloudstream3.newMovieLoadResponse
+import com.lagradost.cloudstream3.newMovieSearchResponse
+import com.lagradost.cloudstream3.toRatingInt
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.ExtractorLinkType
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
 
 class YTSMX : YTS(){
@@ -76,7 +91,7 @@ class YTSMX : YTS(){
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val document = app.get(data).document
-        val TRACKER_LIST_URL="https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
+        val TRACKER_LIST_URL="https://newtrackon.com/api/stable"
         document.select("p.hidden-md.hidden-lg a").map {
             val infoHash=it.attr("href").substringAfter("download/")
             if (infoHash.startsWith("http"))
@@ -87,21 +102,22 @@ class YTSMX : YTS(){
                 val quality = it.ownText().substringBefore(".").replace("p", "").toInt()
                 val magnet = generateMagnetLink(TRACKER_LIST_URL, infoHash)
                 callback.invoke(
-                    ExtractorLink(
+                    newExtractorLink(
                         "$name $quality",
                         name,
-                        magnet,
-                        "",
-                        quality,
+                        url = magnet,
                         ExtractorLinkType.MAGNET
-                    )
+                    ) {
+                        this.referer = ""
+                        this.quality = quality
+                    }
                 )
             }
         }
         return true
     }
 
-    suspend fun generateMagnetLink(url: String, hash: String?): String {
+    private suspend fun generateMagnetLink(url: String, hash: String?): String {
         // Fetch the content of the file from the provided URL
         val response = app.get(url)
         val trackerList = response.text.trim().split("\n") // Assuming each tracker is on a new line

@@ -212,14 +212,15 @@ class WebteIzle : MainAPI() {
                     }
 
                     callback.invoke(
-                        ExtractorLink(
+                        newExtractorLink(
                             source  = "$dilAd - ${this.name}",
                             name    = "$dilAd - ${this.name}",
                             url     = m3uLink,
-                            referer = "${mainUrl}/",
-                            quality = getQualityFromName("1440p"),
-                            isM3u8  = true
-                        )
+                            type = ExtractorLinkType.M3U8
+                        ) {
+                            headers = mapOf("Referer" to "${mainUrl}/") // "Referer" ayarı burada yapılabilir
+                            quality = getQualityFromName("1440p")
+                        }
                     )
 
                     continue
@@ -232,14 +233,15 @@ class WebteIzle : MainAPI() {
                     }
 
                     callback.invoke(
-                        ExtractorLink(
+                        newExtractorLink(
                             source  = "$dilAd - ${this.name}",
                             name    = "$dilAd - ${this.name}",
                             url     = fixUrl(decoded),
-                            referer = "${mainUrl}/",
-                            quality = Qualities.Unknown.value,
-                            isM3u8  = true
-                        )
+                            type = ExtractorLinkType.M3U8
+                        ) {
+                            headers = mapOf("Referer" to "${mainUrl}/") // "Referer" ayarı burada yapılabilir
+                            quality = getQualityFromName(Qualities.Unknown.value.toString())
+                        }
                     )
                 }
 

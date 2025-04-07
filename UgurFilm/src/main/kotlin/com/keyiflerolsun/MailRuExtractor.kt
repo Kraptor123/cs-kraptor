@@ -7,10 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.AppUtils
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.getQualityFromName
+import com.lagradost.cloudstream3.utils.*
 
 open class MailRu : ExtractorApi() {
     override val name            = "MailRu"
@@ -33,15 +30,15 @@ open class MailRu : ExtractorApi() {
             val videoUrl = if (video.url.startsWith("//")) "https:${video.url}" else video.url
 
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source  = this.name,
                     name    = this.name,
                     url     = videoUrl,
-                    referer = url,
-                    headers = mapOf("Cookie" to "video_key=${videoKey}"),
-                    quality = getQualityFromName(video.key),
-                    isM3u8  = false
-                )
+                    type = ExtractorLinkType.M3U8
+                ) {
+                    headers = mapOf("referer" to url) + mapOf("Cookie" to "video_key=${videoKey}")
+                    quality = getQualityFromName(video.key)
+                }
             )
         }
     }

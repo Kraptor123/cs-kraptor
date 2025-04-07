@@ -6,9 +6,7 @@ import android.util.Log
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.Qualities
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class SinemaCX : MainAPI() {
@@ -125,14 +123,15 @@ class SinemaCX : MainAPI() {
             ).parsedSafe<Panel>()?.securedLink ?: return false
 
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source  = this.name,
                     name    = this.name,
                     url     = vidUrl,
-                    referer = iframe,
-                    quality = Qualities.Unknown.value,
-                    isM3u8  = true
-                )
+                    type = ExtractorLinkType.M3U8
+                ) {
+                    headers = mapOf("Referer" to iframe) // "Referer" ayarı burada yapılabilir
+                    quality = getQualityFromName(Qualities.Unknown.value.toString())
+                }
             )
         } else {
             loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
