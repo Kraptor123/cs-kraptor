@@ -1,10 +1,7 @@
 package recloudstream
 
 import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.getQualityFromName
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class TwitchProvider : MainAPI() {
@@ -132,14 +129,15 @@ class TwitchProvider : MainAPI() {
             response.urls?.forEach { (name, url) ->
                 val quality = getQualityFromName(name.substringBefore("p"))
                 callback.invoke(
-                    ExtractorLink(
+                    newExtractorLink(
                         this.name,
                         "${this.name} ${name.replace("${quality}p", "")}",
-                        url,
-                        "",
-                        quality,
-                        isM3u8 = true
-                ))
+                        url = ""
+                ) {
+                    this.quality = quality
+                    type = ExtractorLinkType.M3U8
+                }
+                )
             }
         }
     }
