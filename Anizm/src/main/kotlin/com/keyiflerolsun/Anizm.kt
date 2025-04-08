@@ -1,6 +1,8 @@
 package com.keyiflerolsun
 
 import android.util.Log
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.network.CloudflareKiller
@@ -45,12 +47,14 @@ class Anizm : MainAPI() {
         }
     }
 
+
     // JSON Data Class
+    @JsonIgnoreProperties(ignoreUnknown = true)
     data class AnimeSearchResult(
-        val infotitle: String,
-        val infoslug: String,
-        val infoposter: String?,
-        val infoyear: String?
+        @JsonProperty("info_title") val infotitle: String,
+        @JsonProperty("info_slug") val infoslug: String,
+        @JsonProperty("info_poster") val infoposter: String?,
+        @JsonProperty("info_year") val infoyear: String?
     )
 
     // Ana Sayfa
