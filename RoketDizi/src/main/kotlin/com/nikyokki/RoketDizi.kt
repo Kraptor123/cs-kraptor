@@ -205,14 +205,13 @@ class RoketDizi : MainAPI() {
                     val epSeason = eps
                     println("epSeason: $epSeason")
 
-                    episodeses.add(
-                        Episode(
-                            data = epHref,
-                            name = epName,
-                            season = epSeason,
-                            episode = epEpisode
-                        )
-                    )
+                    episodeses.add(newEpisode(epHref)
+                    {
+                            this.data = epHref
+                            this.name = epName
+                            this.season = epSeason
+                            this.episode = epEpisode
+                    })
                 }
             }
             println("Episodes : " + episodeses.size)
