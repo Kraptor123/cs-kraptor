@@ -4,13 +4,13 @@
 package com.keyiflerolsun
 
 import android.util.Log
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import okhttp3.Interceptor
 
 class RecTV : MainAPI() {
-    override var mainUrl              = "m.prectv45.lol"
+    override var mainUrl              = "https://m.prectv45.lol"
     override var name                 = "RecTV"
     override val hasMainPage          = true
     override var lang                 = "tr"
@@ -163,15 +163,14 @@ class RecTV : MainAPI() {
         for (source in veri.sources) {
             Log.d("RCTV", "source » $source")
             callback.invoke(
-                newExtractorLink(
+                ExtractorLink(
                     source  = this.name,
                     name    = "${this.name} - ${source.type}",
                     url     = source.url,
+                    referer = "https://twitter.com/",
+                    quality = Qualities.Unknown.value,
                     type    = if (source.type == "mp4") ExtractorLinkType.VIDEO else ExtractorLinkType.M3U8
-                ) {
-                    headers = mapOf("Referer" to "https://twitter.com/") // "Referer" ayarı burada yapılabilir
-                    quality = getQualityFromName(Qualities.Unknown.value.toString())
-                }
+                )
             )
         }
 
@@ -190,4 +189,3 @@ class RecTV : MainAPI() {
         return interceptor
     }
 }
-
