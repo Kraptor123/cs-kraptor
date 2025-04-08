@@ -5,9 +5,7 @@ package com.keyiflerolsun
 import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.Qualities
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class SuperFilmGeldi : MainAPI() {
@@ -131,14 +129,15 @@ class SuperFilmGeldi : MainAPI() {
             Log.d("SFG", "m3uLink » $m3uLink")
 
             callback.invoke(
-                ExtractorLink(
+                newExtractorLink(
                     source  = this.name,
                     name    = this.name,
                     url     = m3uLink,
-                    referer = iframe,
-                    quality = Qualities.Unknown.value,
-                    isM3u8  = true
-                )
+                    type = ExtractorLinkType.M3U8
+                ) {
+                    headers = mapOf("Referer" to iframe) // "Referer" ayarı burada yapılabilir
+                    quality = getQualityFromName(Qualities.Unknown.value.toString())
+                }
             )
         } else {
             loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)

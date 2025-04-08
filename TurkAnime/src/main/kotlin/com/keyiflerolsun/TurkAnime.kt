@@ -6,9 +6,7 @@ import android.util.Base64
 import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.extractors.helper.AesHelper
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.Qualities
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 
@@ -165,14 +163,15 @@ class TurkAnime : MainAPI() {
 
             if (m3uLink != null) {
                 callback.invoke(
-                    ExtractorLink(
+                    newExtractorLink(
                         source  = this.name,
                         name    = this.name,
                         url     = m3uLink,
-                        referer = mainVideo,
-                        quality = Qualities.Unknown.value,
-                        isM3u8  = true,
-                    )
+                        type = ExtractorLinkType.M3U8
+                    ) {
+                        headers = mapOf("Referer" to mainVideo) // "Referer" ayarı burada yapılabilir
+                        quality = getQualityFromName(Qualities.Unknown.value.toString())
+                    }
                 )
             }
         }
