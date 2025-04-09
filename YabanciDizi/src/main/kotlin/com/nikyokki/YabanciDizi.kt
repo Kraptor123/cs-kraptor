@@ -5,7 +5,10 @@ import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
+import com.lagradost.cloudstream3.network.CloudflareKiller
 import com.lagradost.cloudstream3.utils.*
+import okhttp3.Interceptor
+import okhttp3.Response
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
@@ -20,8 +23,24 @@ class YabanciDizi : MainAPI() {
     override val supportedTypes = setOf(TvType.TvSeries, TvType.Movie)
 
     // ! CloudFlare bypass
-    override var sequentialMainPage =
-        true        // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
+    private val cloudflareKiller by lazy { CloudflareKiller() }
+    private val interceptor by lazy { CloudflareInterceptor(cloudflareKiller) }
+
+    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller) : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request()
+            val response = chain.proceed(request)
+
+            // Cloudflare'ın tüm varyantlarını yakala
+            if (response.peekBody(1024).string().contains("Cloudflare")) {
+                return cloudflareKiller.intercept(chain).also {
+                    Log.d("YBD", "Cloudflare bypass yapıldı!")
+                }
+            }
+            return response
+        }
+    }
+    override var sequentialMainPage = true
     override var sequentialMainPageDelay = 250L  // ? 0.05 saniye
     override var sequentialMainPageScrollDelay = 250L  // ? 0.05 saniye
 
@@ -45,7 +64,7 @@ class YabanciDizi : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}/${page}").document
+        val document = app.get("${request.data}/${page}", interceptor = interceptor).document
         val home = document.select("div.mofy-movbox").mapNotNull { it.toSearchResult() }
 
         return newHomePageResponse(request.name, home)
@@ -104,7 +123,7 @@ class YabanciDizi : MainAPI() {
             "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
             "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
         )
-        val document = app.get(url, referer = mainUrl, headers = headers).document
+        val document = app.get(url, referer = mainUrl, headers = headers, interceptor = interceptor).document
 
         val title = document.selectFirst("h1.page-title")?.text()?.trim() ?: "Title"
         val poster = fixUrlNull(document.selectFirst("div#series-profile-wrapper img")?.attr("src"))
@@ -137,11 +156,14 @@ class YabanciDizi : MainAPI() {
                         fixUrlNull(episodeElement.selectFirst("h6 a")?.attr("href")) ?: return@ep
                     epEpisode++
                     episodes.add(
-                        Episode(
+                        newEpisode(
                             data = epHref,
-                            name = "${epSeason}. Sezon ${epEpisode}. Bölüm",
-                            season = epSeason,
-                            episode = epEpisode
+                            ({
+                                name = "${epSeason}. Sezon ${epEpisode}. Bölüm"
+                                season = epSeason
+                                episode = epEpisode
+                            }
+                        )
                         )
                     )
                 }
@@ -177,19 +199,22 @@ class YabanciDizi : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        Log.d("YBD", "data » ${data}")
+        Log.d("YBD", "data » $data")
         val document = app.get(data).document
-
         document.select("div.alternatives-for-this div").forEach {
             val name = it.text()
-            Log.d("YBD", name)
+            Log.d("YBD","name $name")
             val dataLink = it.attr("data-link")
-            Log.d("YBD", dataLink)
             if (name.contains("Mac")) {
-                val mac = app.post(
+                val mac = app.get(
                     "https://yabancidizi.tv/api/drive/" +
-                            dataLink.replace("/", "_").replace("+", "-"),
-                    referer = "$mainUrl/"
+                            dataLink.replace("/", "_").replace("+", "-"),headers = mapOf(
+                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0",
+                        "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                        "Referer" to "$mainUrl/",
+                        "Cookie" to "cf_clearance=SzcXE7kPi3ZEiEe7g5CIdusr1zh78qvvolE.gd7zXoE-1744138962-1.2.1.1-p2EURbN9Azg427t4V9cZVAqkCNIqn10vJgLdl3uLpmNulOlCxpneDAMr1esuz6n5kUDF3l9kDkoxxMqYpAGxBX5xx4LHJefJIKYbpRTTQrLa3EQm.esZbXpVYHM.XmTtyE5B9CSK_AIOJ0tvp1.4P9BvqHOGehu5eA3dEfQa1kIojFR1Kz3CsefgXVjCP5bPPBtRZGxWIAnbALrvvgWdIfHFte9NWarOXtZclr6sDlpqpA_empvpr6T2915Es9uyN.fbF0lxoC8v1WmRLlhtw3qln3y8uJR65aTRzLJCVciVWoJCaUV.fN_gqpP3Af1azDvqEPpa6dRiZ77Kc7oc0waEMv..5gz2BbI8rPhAIcg; ci_session=upqat5dadbda3algortaksra1f3bcalr; level=1; _ga_53GGW5VVJQ=GS1.1.1744106126.1.1.1744142896.0.0.0; _ga=GA1.1.1124796233.1744106126; _gid=GA1.2.2011384401.1744106126; udys=1744138960932; _gat_gtag_UA_274501025_1=1" // yukarıdaki gibi
+                    ),
+                    interceptor = interceptor
                 ).document
                 val subFrame = mac.selectFirst("iframe")?.attr("src") ?: return false
                 val iDoc = app.get(
@@ -206,27 +231,58 @@ class YabanciDizi : MainAPI() {
                 val vidUrl =
                     Regex("""file: '(.*)',""").find(decryptedDoc.html())?.groupValues?.get(1)
                         ?: ""
-                Log.d("YBD", vidUrl)
+                Log.d("YBD", "Extractor Link Olusturuluyor -> name: $name, url: $vidUrl")
                 callback.invoke(
                     newExtractorLink(
                         source = name,
                         name = name,
                         url = vidUrl,
-                        type = ExtractorLinkType.M3U8
+                        ExtractorLinkType.M3U8
                     ) {
-                        referer = mapOf("Referer" to mainUrl).toString() // "Referer" ayarı burada yapılabilir
-                        quality = getQualityFromName(Qualities.Unknown.value.toString())
-                        headers = mapOf(
-                            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0",
-                            "Referer" to mainUrl
+                        Log.d("YBD", "newExtractorLink blogu calisiyor")
+                        this.headers = mapOf("Accept" to "*/*",
+                            "Accept-Language" to "en-US,en;q=0.5",
+                            "Accept-Encoding" to "gzip, deflate, br",
+                            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                            "Host" to "dbx.molystream.org",
+                            "Origin" to "https://ydx.molystream.org",
+                            "Referer" to "https://ydx.molystream.org/",
+                            "Connection" to "keep-alive",
+                            "Cookie" to "cf_clearance=eUPznUmxg_OJx8gNki5eNuk04fegV0nSCT.i7spcuKo-1744155706-1.2.1.1-zkr9cMB7GVZOyVigJAT82TynRQcdtsb36VkUR_irm_48RJo1Q3AjC38ATLAWKhZiRFa7YyyHQXluqaJiqpxtFMopQdQuzhu1Atf6cOO.7889oVYHcaE086_9_3HeLhJSpoYgkJMFgs2RMiNm9W_v6NANnoQ_SRGAtFmhHR6R60OrMQdQe2qGmF0Tb3rUIvviU7d9Laq7rGsxAHmOwRq.YpgSsjB9aOJy978Y7Yf9qC5rlwmwi3LF_OmVOE1WXJkJEgpktvactcLZ4_AIGgdVXCYzp6IyiRugbDTNzCyQSmV3tvSBxQgSTVQzwqB9ZY95kFCnSszGMVpurDFoe5QGPYB53c9EnuG4wi0QliUTkkA; ci_session=rooob9u3tusi7u41de1rtugb9qs9gd1e; level=1; _ga_53GGW5VVJQ=GS1.1.1744106126.1.1.1744155716.0.0.0; _ga=GA1.2.1124796233.1744106126; _gid=GA1.2.2011384401.1744106126; udys=1744154022630; _gat_gtag_UA_274501025_1=1",
+                            "Sec-Fetch-Dest" to "empty",
+                            "Sec-Fetch-Mode" to "cors",
+                            "Sec-Fetch-Site" to "cross-site",
+                            "TE" to "trailers",
                         )
+                        Log.d("YBD", "headers ayarlandı")// "Referer" ayarı burada yapılabilir
+                        this.quality = Qualities.Unknown.value
+                        Log.d("YBD", "kalite ayarlandi")
                     }
                 )
+                Log.d("YBD", "callback.invoke çagrildi")
+                Log.d("YBD", "vidurl $vidUrl")
+
                 val aa = app.get(
-                    vidUrl, referer = "$mainUrl/", headers =
-                    mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0")
-                ).document.body().text()
+                    vidUrl,
+                    referer = "$mainUrl/",
+                    headers =
+                        mapOf(
+                            "Accept" to "*/*",
+                            "Accept-Language" to "en-US,en;q=0.9",
+                            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                            "Host" to "dbx.molystream.org",
+                            "Origin" to mainUrl,
+                            "Referer" to "$mainUrl/",
+                            "Connection" to "keep-alive",
+                            "Cookie" to "ud=1; Path=/",
+                            "Sec-Fetch-Dest" to "empty",
+                            "Sec-Fetch-Mode" to "cors",
+                            "Sec-Fetch-Site" to "cross-site",
+                            "TE" to "trailers",
+                            ), interceptor = interceptor).document.body().text()
+                Log.d("YBD", "aa $aa")
                 val urlList = extractStreamInfoWithRegex(aa)
+                Log.d("YBD", "urllist $urlList")
                 for (sonUrl in urlList) {
                     Log.d("YBD", "sonUrl: ${sonUrl.link} -- ${sonUrl.resolution}")
                     callback.invoke(
@@ -236,12 +292,9 @@ class YabanciDizi : MainAPI() {
                             url = sonUrl.link,
                             type = ExtractorLinkType.M3U8
                         ) {
-                            headers = mapOf("Referer" to vidUrl) // "Referer" ayarı burada yapılabilir
+                            headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0",
+                                "Referer" to vidUrl) // "Referer" ayarı burada yapılabilir
                             quality = getQualityFromName(sonUrl.resolution)
-                            headers = mapOf(
-                                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0",
-                                "Referer" to vidUrl
-                            )
                         }
                     )
                 }
@@ -249,14 +302,16 @@ class YabanciDizi : MainAPI() {
                 val mac = app.post(
                     "https://yabancidizi.tv/api/moly/" +
                             dataLink.replace("/", "_").replace("+", "-"), referer = "$mainUrl/"
-                ).document
+                            , interceptor = interceptor).document
+                Log.d("YBD", "vidmoly $mac")
                 val subFrame = mac.selectFirst("iframe")?.attr("src") ?: return false
+                Log.d("YBD", "subframe $subFrame")
                 loadExtractor(subFrame, "${mainUrl}/", subtitleCallback, callback)
             } else if (name.contains("Okru")) {
                 val mac = app.post(
                     "https://yabancidizi.tv/api/ruplay/" +
                             dataLink.replace("/", "_").replace("+", "-"), referer = "$mainUrl/"
-                ).document
+                            , interceptor = interceptor).document
                 val subFrame = mac.selectFirst("iframe")?.attr("src") ?: return false
                 loadExtractor(subFrame, "${mainUrl}/", subtitleCallback, callback)
             }
