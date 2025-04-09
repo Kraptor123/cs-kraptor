@@ -27,35 +27,28 @@ open class HDMomPlayer : ExtractorApi() {
             val bePlayerPass = bePlayer[1]
             val bePlayerData = bePlayer[2]
 
-            // 1. replace("\\", "") KALDIRILDI!
+            // Ters slash'ları silme işlemi KALDIRILDI
             val encrypted = AesHelper.cryptoAESHandler(bePlayerData, bePlayerPass.toByteArray(), false)
                 ?: throw ErrorLoadingException("failed to decrypt")
 
-            // 2. Jackson'ın Unicode'u otomatik çözmesine izin ver
+            // JSON'ı parse et
             val json = jacksonObjectMapper().readTree(encrypted)
             m3uLink = json["video_location"].asText()
 
-            // 3. Altyazı etiketlerini manuel olarak düzenle (Opsiyonel)
+            // Altyazıları işle (tüm diller dahil)
             val subtitles = json["strSubtitles"]
             if (subtitles != null && subtitles.isArray) {
                 for (sub in subtitles) {
-                    val label = sub["label"]?.asText() ?: continue // Jackson otomatik çözecek: "Tu00fcrkçe" → "Türkçe"
+                    val label = sub["label"]?.asText() ?: continue // Unicode otomatik çözülecek (ör: "Tu00fcrkçe" → "Türkçe")
                     val file = sub["file"]?.asText() ?: continue
                     val lang = sub["language"]?.asText()?.lowercase() ?: continue
 
-                    val langCode = lang.split("_").first()
-                    if (langCode !in listOf("tr", "tur", "en") || label.contains("Forced", true)) continue
-
-                    // 4. Son kullanıcıya gösterilecek dil etiketini özelleştir
-                    val displayLabel = when (langCode) {
-                        "tr", "tur" -> "Türkçe Altyazı"
-                        "en" -> "İngilizce Altyazı"
-                        else -> label // Bu satıra asla gelmez (filtre yukarıda)
-                    }
+                    // Forced altyazıları hariç tut (opsiyonel, isterseniz bu satırı kaldırın)
+                    if (label.contains("Forced", true)) continue
 
                     subtitleCallback.invoke(
                         SubtitleFile(
-                            lang = displayLabel, // Özelleştirilmiş etiket
+                            lang = label, // Orijinal etiket ("Türkçe Altyazı", "English Subtitle" vb.)
                             url = fixUrl(mainUrl + file)
                         )
                     )
