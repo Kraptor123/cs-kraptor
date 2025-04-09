@@ -121,7 +121,7 @@ class YabanciDizi : MainAPI() {
     override suspend fun load(url: String): LoadResponse {
         val headers = mapOf(
             "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
         )
         val document = app.get(url, referer = mainUrl, headers = headers, interceptor = interceptor).document
 
@@ -209,7 +209,7 @@ class YabanciDizi : MainAPI() {
                 val mac = app.get(
                     "https://yabancidizi.tv/api/drive/" +
                             dataLink.replace("/", "_").replace("+", "-"),headers = mapOf(
-                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0",
+                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
                         "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
                         "Referer" to "$mainUrl/",
                         "Cookie" to "cf_clearance=SzcXE7kPi3ZEiEe7g5CIdusr1zh78qvvolE.gd7zXoE-1744138962-1.2.1.1-p2EURbN9Azg427t4V9cZVAqkCNIqn10vJgLdl3uLpmNulOlCxpneDAMr1esuz6n5kUDF3l9kDkoxxMqYpAGxBX5xx4LHJefJIKYbpRTTQrLa3EQm.esZbXpVYHM.XmTtyE5B9CSK_AIOJ0tvp1.4P9BvqHOGehu5eA3dEfQa1kIojFR1Kz3CsefgXVjCP5bPPBtRZGxWIAnbALrvvgWdIfHFte9NWarOXtZclr6sDlpqpA_empvpr6T2915Es9uyN.fbF0lxoC8v1WmRLlhtw3qln3y8uJR65aTRzLJCVciVWoJCaUV.fN_gqpP3Af1azDvqEPpa6dRiZ77Kc7oc0waEMv..5gz2BbI8rPhAIcg; ci_session=upqat5dadbda3algortaksra1f3bcalr; level=1; _ga_53GGW5VVJQ=GS1.1.1744106126.1.1.1744142896.0.0.0; _ga=GA1.1.1124796233.1744106126; _gid=GA1.2.2011384401.1744106126; udys=1744138960932; _gat_gtag_UA_274501025_1=1" // yukarıdaki gibi

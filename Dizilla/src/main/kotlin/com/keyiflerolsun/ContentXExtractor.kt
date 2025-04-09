@@ -15,25 +15,39 @@ open class ContentX : ExtractorApi() {
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
         val extRef   = referer ?: ""
-        Log.d("Kekik_${this.name}", "url » $url")
+        Log.d("Dizilla", "url » $url")
 
-        val iSource  = app.get(url, referer=extRef).text
+        val iSource = app.get(url, referer = extRef).text
         val iExtract = Regex("""window\.openPlayer\('([^']+)'""").find(iSource)!!.groups[1]?.value ?: throw ErrorLoadingException("iExtract is null")
 
         val subUrls = mutableSetOf<String>()
-        Regex(""""file":"([^"]+)","label":"([^"]+)"""").findAll(iSource).forEach {
-            val (subUrl, subLang) = it.destructured
 
-            if (subUrl in subUrls) { return@forEach }
+// DÜZELTİLMİŞ REGEX (Unicode ve özel karakterleri düzgün yakalıyor)
+        Regex(""""file":"((?:\\\\\"|[^"])+)","label":"((?:\\\\\"|[^"])+)"""").findAll(iSource).forEach {
+            val (subUrlRaw, subLangRaw) = it.destructured
+
+            // URL ve Dil için escape karakterleri temizleme
+            val subUrl = subUrlRaw.replace("\\/", "/").replace("\\u0026", "&").replace("\\", "")
+            val subLang = subLangRaw
+                .replace("\\u0131", "ı")
+                .replace("\\u0130", "İ")
+                .replace("\\u00fc", "ü")
+                .replace("\\u00e7", "ç")
+                .replace("\\u011f", "ğ")
+                .replace("\\u015f", "ş")
+
+            if (subUrl in subUrls) return@forEach
             subUrls.add(subUrl)
 
             subtitleCallback.invoke(
                 SubtitleFile(
-                    lang = subLang.replace("\\u0131", "ı").replace("\\u0130", "İ").replace("\\u00fc", "ü").replace("\\u00e7", "ç"),
-                    url  = fixUrl(subUrl.replace("\\", ""))
+                    lang = subLang,
+                    url = fixUrl(subUrl)
                 )
             )
         }
+
+        Log.d("Dizilla", "subtitle » $subUrls -- subtitle diger $subtitleCallback")
 
         val vidSource  = app.get("${mainUrl}/source2.php?v=${iExtract}", referer=extRef).text
         val vidExtract = Regex("""file":"([^"]+)""").find(vidSource)!!.groups[1]?.value ?: throw ErrorLoadingException("vidExtract is null")
@@ -45,6 +59,7 @@ open class ContentX : ExtractorApi() {
                 name    = this.name,
                 url     = m3uLink,
                 type = ExtractorLinkType.M3U8
+
             ) {
                 headers = mapOf("Referer" to url) // "Referer" ayarı burada yapılabilir
                 quality = getQualityFromName(Qualities.Unknown.value.toString()) // Int değeri String'e dönüştürülüyor
