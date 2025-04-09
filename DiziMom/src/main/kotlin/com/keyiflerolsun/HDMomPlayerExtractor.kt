@@ -26,14 +26,47 @@ open class HDMomPlayer : ExtractorApi() {
         if (bePlayer != null) {
             val bePlayerPass = bePlayer[1]
             val bePlayerData = bePlayer[2]
-            val encrypted    = AesHelper.cryptoAESHandler(bePlayerData, bePlayerPass.toByteArray(), false)?.replace("\\", "") ?: throw ErrorLoadingException("failed to decrypt")
-            Log.d("Kekik_${this.name}", "encrypted » $encrypted")
 
-            m3uLink = Regex("""video_location":"([^"]+)""").find(encrypted)?.groupValues?.get(1)
+            // 1. replace("\\", "") KALDIRILDI!
+            val encrypted = AesHelper.cryptoAESHandler(bePlayerData, bePlayerPass.toByteArray(), false)
+                ?: throw ErrorLoadingException("failed to decrypt")
+
+            // 2. Jackson'ın Unicode'u otomatik çözmesine izin ver
+            val json = jacksonObjectMapper().readTree(encrypted)
+            m3uLink = json["video_location"].asText()
+
+            // 3. Altyazı etiketlerini manuel olarak düzenle (Opsiyonel)
+            val subtitles = json["strSubtitles"]
+            if (subtitles != null && subtitles.isArray) {
+                for (sub in subtitles) {
+                    val label = sub["label"]?.asText() ?: continue // Jackson otomatik çözecek: "Tu00fcrkçe" → "Türkçe"
+                    val file = sub["file"]?.asText() ?: continue
+                    val lang = sub["language"]?.asText()?.lowercase() ?: continue
+
+                    val langCode = lang.split("_").first()
+                    if (langCode !in listOf("tr", "tur", "en") || label.contains("Forced", true)) continue
+
+                    // 4. Son kullanıcıya gösterilecek dil etiketini özelleştir
+                    val displayLabel = when (langCode) {
+                        "tr", "tur" -> "Türkçe Altyazı"
+                        "en" -> "İngilizce Altyazı"
+                        else -> label // Bu satıra asla gelmez (filtre yukarıda)
+                    }
+
+                    subtitleCallback.invoke(
+                        SubtitleFile(
+                            lang = displayLabel, // Özelleştirilmiş etiket
+                            url = fixUrl(mainUrl + file)
+                        )
+                    )
+                }
+            }
         } else {
+
             m3uLink = Regex("""file:"([^"]+)""").find(iSource)?.groupValues?.get(1)
 
             val trackStr = Regex("""tracks:\[([^]]+)""").find(iSource)?.groupValues?.get(1)
+            Log.d("Dizimom", "trackstr » $trackStr")
             if (trackStr != null) {
                 val tracks:List<Track> = jacksonObjectMapper().readValue("[${trackStr}]")
 
@@ -50,6 +83,7 @@ open class HDMomPlayer : ExtractorApi() {
                 }
             }
         }
+        Log.d("Dizimom", "subtitlecall » $subtitleCallback")
 
         callback.invoke(
             newExtractorLink(
