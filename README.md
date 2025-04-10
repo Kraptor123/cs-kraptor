@@ -6,16 +6,7 @@ Eklenenler :
 
 Anizm sitesi eklenti olarak eklenmiştir.
 
-Düzeltilenler :
-
-Animecix,
-Dizipal,
-Dizibox,
-Dizilla,
-Setfilmizle,
-Türkanime,
-
-
+Düzeltilenler : bozuk eklentilerin bir çoğu düzeltilmiştir.
 
 ## 💾 Kurulum
 
@@ -31,7 +22,7 @@ Türkanime,
 - [Eklenti Listesi Wiki](https://cloudstream.miraheze.org/wiki/List_of_extensions)
 - [Open Subtitles Desteği (Torrent veya Yabancı Eklentiler İçin)](https://recloudstream.github.io/csdocs/integrations/opensubtitles/)
 - [anicompat (Fazlaca Anime Eklenti Desteği)](https://youtu.be/0Gl48lL7e9Y)
-- [Eklenti Kodlama](https://www.youtube.com/watch?v=gWECdddixyA) ------> Hiç kodlama bilmeden bu video sayesinde ilerleme katedebildim kekiğe sonsuz teşekkürler.
+- [Eklenti Kodlama](https://www.youtube.com/watch?v=gWECdddixyA) 
 
 ---
 
