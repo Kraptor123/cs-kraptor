@@ -262,6 +262,7 @@ class YabanciDizi : MainAPI() {
                             quality = getQualityFromName(sonUrl.resolution)
                         }
                     )
+                    return true
                 }
             } else if (name.contains("VidMoly")) {
                 val mac = app.post(
