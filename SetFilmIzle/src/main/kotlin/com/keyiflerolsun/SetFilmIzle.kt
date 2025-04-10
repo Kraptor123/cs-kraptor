@@ -212,9 +212,11 @@ class SetFilmIzle : MainAPI() {
             if (sourceId.contains("event")) return@forEach
             if (partKey == "" || sourceId == "") return@forEach
 
-            val nonce = document.selectFirst("script:contains(nonce)")?.data()
-                ?.let { Regex("""nonce["']?:["']([^"']+)""").find(it)?.groupValues?.get(1) }
-                ?: throw ErrorLoadingException("Nonce bulunamadı!")
+            val nonce = document.select("script")
+                .mapNotNull { it.data() }
+                .firstNotNullOfOrNull { data ->
+                    Regex("""PLAYER_CONFIG\s*=\s*[^;]*?nonce\s*:\s*['"]([^'"]+)['"]""").find(data)?.groupValues?.get(1)
+                } ?: throw ErrorLoadingException("Nonce bulunamadı!")
             val multiPart    = sendMultipartRequest(nonce, sourceId, name, partKey, data)
             val sourceBody   = multiPart.body.string()
             val sourceIframe = JSONObject(sourceBody).optJSONObject("data")?.optString("url") ?: return@forEach
