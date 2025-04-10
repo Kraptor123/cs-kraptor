@@ -49,7 +49,6 @@ class YabanciDizi : MainAPI() {
         "${mainUrl}/dizi/tur/aksiyon-izle-1" to "Aksiyon",
         "${mainUrl}/dizi/tur/bilim-kurgu-izle-1" to "Bilim Kurgu",
         "${mainUrl}/dizi/tur/belgesel" to "Belgesel",
-        "${mainUrl}/dizi/tur/bilim-kurgu-izle-1" to "Bilim Kurgu",
         "${mainUrl}/dizi/tur/dram-izle" to "Dram",
         "${mainUrl}/dizi/tur/fantastik-izle" to "Fantastik",
         "${mainUrl}/dizi/tur/gerilim-izle" to "Gerilim",
@@ -57,7 +56,7 @@ class YabanciDizi : MainAPI() {
         "${mainUrl}/dizi/tur/komedi-izle" to "Komedi",
         "${mainUrl}/dizi/tur/korku-izle" to "Korku",
         "${mainUrl}/dizi/tur/macera-izle" to "Macera",
-        "${mainUrl}/dizi/tur/romantik-izle-1" to "Dram",
+        "${mainUrl}/dizi/tur/romantik-izle-1" to "Romantik",
         "${mainUrl}/dizi/tur/suc" to "Suç",
         "${mainUrl}/dizi/tur/kore-dizileri" to "Kore Dizileri",
         "${mainUrl}/dizi/tur/stand-up" to "Stand Up",
@@ -199,11 +198,9 @@ class YabanciDizi : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        Log.d("YBD", "data » $data")
         val document = app.get(data).document
         document.select("div.alternatives-for-this div").forEach {
             val name = it.text()
-            Log.d("YBD","name $name")
             val dataLink = it.attr("data-link")
             if (name.contains("Mac")) {
                 val mac = app.get(
@@ -232,36 +229,6 @@ class YabanciDizi : MainAPI() {
                     Regex("""file: '(.*)',""").find(decryptedDoc.html())?.groupValues?.get(1)
                         ?: ""
                 Log.d("YBD", "Extractor Link Olusturuluyor -> name: $name, url: $vidUrl")
-                callback.invoke(
-                    newExtractorLink(
-                        source = name,
-                        name = name,
-                        url = vidUrl,
-                        ExtractorLinkType.M3U8
-                    ) {
-                        Log.d("YBD", "newExtractorLink blogu calisiyor")
-                        this.headers = mapOf("Accept" to "*/*",
-                            "Accept-Language" to "en-US,en;q=0.5",
-                            "Accept-Encoding" to "gzip, deflate, br",
-                            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-                            "Host" to "dbx.molystream.org",
-                            "Origin" to "https://ydx.molystream.org",
-                            "Referer" to "https://ydx.molystream.org/",
-                            "Connection" to "keep-alive",
-                            "Cookie" to "cf_clearance=eUPznUmxg_OJx8gNki5eNuk04fegV0nSCT.i7spcuKo-1744155706-1.2.1.1-zkr9cMB7GVZOyVigJAT82TynRQcdtsb36VkUR_irm_48RJo1Q3AjC38ATLAWKhZiRFa7YyyHQXluqaJiqpxtFMopQdQuzhu1Atf6cOO.7889oVYHcaE086_9_3HeLhJSpoYgkJMFgs2RMiNm9W_v6NANnoQ_SRGAtFmhHR6R60OrMQdQe2qGmF0Tb3rUIvviU7d9Laq7rGsxAHmOwRq.YpgSsjB9aOJy978Y7Yf9qC5rlwmwi3LF_OmVOE1WXJkJEgpktvactcLZ4_AIGgdVXCYzp6IyiRugbDTNzCyQSmV3tvSBxQgSTVQzwqB9ZY95kFCnSszGMVpurDFoe5QGPYB53c9EnuG4wi0QliUTkkA; ci_session=rooob9u3tusi7u41de1rtugb9qs9gd1e; level=1; _ga_53GGW5VVJQ=GS1.1.1744106126.1.1.1744155716.0.0.0; _ga=GA1.2.1124796233.1744106126; _gid=GA1.2.2011384401.1744106126; udys=1744154022630; _gat_gtag_UA_274501025_1=1",
-                            "Sec-Fetch-Dest" to "empty",
-                            "Sec-Fetch-Mode" to "cors",
-                            "Sec-Fetch-Site" to "cross-site",
-                            "TE" to "trailers",
-                        )
-                        Log.d("YBD", "headers ayarlandı")// "Referer" ayarı burada yapılabilir
-                        this.quality = Qualities.Unknown.value
-                        Log.d("YBD", "kalite ayarlandi")
-                    }
-                )
-                Log.d("YBD", "callback.invoke çagrildi")
-                Log.d("YBD", "vidurl $vidUrl")
-
                 val aa = app.get(
                     vidUrl,
                     referer = "$mainUrl/",
@@ -280,9 +247,7 @@ class YabanciDizi : MainAPI() {
                             "Sec-Fetch-Site" to "cross-site",
                             "TE" to "trailers",
                             ), interceptor = interceptor).document.body().text()
-                Log.d("YBD", "aa $aa")
                 val urlList = extractStreamInfoWithRegex(aa)
-                Log.d("YBD", "urllist $urlList")
                 for (sonUrl in urlList) {
                     Log.d("YBD", "sonUrl: ${sonUrl.link} -- ${sonUrl.resolution}")
                     callback.invoke(
@@ -303,9 +268,7 @@ class YabanciDizi : MainAPI() {
                     "https://yabancidizi.tv/api/moly/" +
                             dataLink.replace("/", "_").replace("+", "-"), referer = "$mainUrl/"
                             , interceptor = interceptor).document
-                Log.d("YBD", "vidmoly $mac")
                 val subFrame = mac.selectFirst("iframe")?.attr("src") ?: return false
-                Log.d("YBD", "subframe $subFrame")
                 loadExtractor(subFrame, "${mainUrl}/", subtitleCallback, callback)
             } else if (name.contains("Okru")) {
                 val mac = app.post(
@@ -321,7 +284,7 @@ class YabanciDizi : MainAPI() {
 
     private fun extractStreamInfoWithRegex(m3uString: String): List<StreamInfo> {
         val regex =
-            """#EXT-X-STREAM-INF:.*?RESOLUTION=([^\s,]+).*?(https?://[^\s]+)(?:\s|$)""".toRegex()
+            """#EXT-X-STREAM-INF:.*?RESOLUTION=([^\s,]+).*?(https?://\S+)(?:\s|$)""".toRegex()
         val streamInfoList = regex.findAll(m3uString)
             .map { matchResult ->
                 val resolution = matchResult.groupValues[1]
