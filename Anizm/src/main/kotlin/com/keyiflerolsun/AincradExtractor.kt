@@ -12,9 +12,7 @@ class AincradExtractor : ExtractorApi() {
     override val mainUrl     = "https://anizmplayer.com"
     override val requiresReferer = true
 
-    enum class Qualities(val qualityValue: Int) {
-        Unknown(0),
-    }
+
 
     override suspend fun getUrl(url: String, referer: String?): List<ExtractorLink> {
         val hash = URI(url).path.substringAfterLast("/")
@@ -41,7 +39,7 @@ class AincradExtractor : ExtractorApi() {
                     type = INFER_TYPE
                 ) {
                     headers = mapOf("Referer" to "$mainUrl/") // "Referer" ayarı burada yapılabilir
-                    quality = getQualityFromName(Qualities.Unknown.qualityValue.toString()) // Int değeri String'e dönüştürülüyor
+                    quality = Qualities.P1080.value
                 }
                 )
         } ?: emptyList()  // Return an empty list if response?.securedLink is null

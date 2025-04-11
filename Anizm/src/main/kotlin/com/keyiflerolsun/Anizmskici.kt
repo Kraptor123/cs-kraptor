@@ -7,30 +7,9 @@ import okhttp3.Request
 import org.json.JSONObject
 import org.jsoup.Jsoup
 
-class CloudflareKiller {
-    fun intercept(chain: okhttp3.Interceptor.Chain): okhttp3.Response {
-        Thread.sleep(5000)
-        return chain.proceed(chain.request())
-    }
-}
-
-class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller) : okhttp3.Interceptor {
-    override fun intercept(chain: okhttp3.Interceptor.Chain): okhttp3.Response {
-        val request = chain.request()
-        val response = chain.proceed(request)
-        val bodyString = response.peekBody(1024 * 1024).string()
-        val doc = Jsoup.parse(bodyString)
-        if (doc.text().contains("Attention Required!") ||
-            doc.text().contains("Güvenlik taramasından geçiriliyorsunuz. Lütfen bekleyiniz..")) {
-            return cloudflareKiller.intercept(chain)
-        }
-        return response
-    }
-}
 
 val client: OkHttpClient = OkHttpClient.Builder()
     .followRedirects(false)
-    .addInterceptor(CloudflareInterceptor(CloudflareKiller()))
     .addInterceptor { chain ->
         val newRequest = chain.request().newBuilder()
             .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")

@@ -5,14 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
-import com.lagradost.cloudstream3.network.CloudflareKiller
 import com.lagradost.cloudstream3.utils.AppUtils.parseJson
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.Interceptor
-import okhttp3.Response
 import org.jsoup.nodes.Element
 import java.net.URLEncoder
 import kotlin.coroutines.cancellation.CancellationException
@@ -22,30 +19,13 @@ class Anizm : MainAPI() {
     override var name = "Anizm"
     override val hasMainPage = true
     override var lang = "tr"
-    override val hasQuickSearch = false
+    override val hasQuickSearch = true
     override val supportedTypes = setOf(TvType.Anime)
     override var sequentialMainPage = true
     override var sequentialMainPageDelay = 50L
     override var sequentialMainPageScrollDelay = 50L
 
     // Cloudflare Bypass
-    private val cloudflareKiller by lazy { CloudflareKiller() }
-    private val interceptor by lazy { CloudflareInterceptor(cloudflareKiller) }
-
-    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller) : Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val request = chain.request()
-            val response = chain.proceed(request)
-
-            // Cloudflare'ın tüm varyantlarını yakala
-            if (response.peekBody(1024).string().contains("Cloudflare")) {
-                return cloudflareKiller.intercept(chain).also {
-                    Log.d("ANZM", "Cloudflare bypass yapıldı!")
-                }
-            }
-            return response
-        }
-    }
 
 
     // JSON Data Class
@@ -89,7 +69,7 @@ class Anizm : MainAPI() {
 
     // Ana Sayfa Yükleme
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}$page", interceptor = interceptor).document
+        val document = app.get("${request.data}$page").document
         val home = document.select("a.pfull").mapNotNull { it.toMainPageResult() }
         return newHomePageResponse(request.name, home)
     }
@@ -107,7 +87,7 @@ class Anizm : MainAPI() {
     override suspend fun search(query: String): List<SearchResponse> {
         return try {
             // 1. CSRF Token Al
-            val csrfToken = app.get(mainUrl, interceptor = interceptor)
+            val csrfToken = app.get(mainUrl)
                 .document
                 .selectFirst("meta[name='csrf-token']")
                 ?.attr("content")
@@ -128,14 +108,10 @@ class Anizm : MainAPI() {
                     "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
                 ),
                 params = mapOf("q" to encodedQuery),
-                interceptor = interceptor,
-                timeout = 60 // Timeout'u 60 saniye yap
+                timeout = 5 // Timeout'u 60 saniye yap
             )
 
             val responseBody = response.body.string()
-            Log.d("ANZM", "API Yanıtı: ${responseBody.take(200)}...") // Kısmi log
-
-            // 4. JSON Parse
             val results: List<AnimeSearchResult>? = try {
                 parseJson(responseBody)
             } catch (e: Exception) {
@@ -173,7 +149,7 @@ class Anizm : MainAPI() {
     // Detay sayfasından poster URL'si çekmek için yardımcı fonksiyon
     private suspend fun getPoster(url: String): String? {
         return try {
-            val doc = app.get(url, interceptor = interceptor).document
+            val doc = app.get(url).document
             fixUrlNull(
                 doc.selectFirst("img.anizm_shadow.anizm_round.infoPosterImgItem")?.attr("src")?.let { src ->
                     if (src.startsWith("http")) src else "$mainUrl/$src"
@@ -189,7 +165,7 @@ class Anizm : MainAPI() {
 
     // Detay Sayfası (Düzeltilmiş)
     override suspend fun load(url: String): LoadResponse? {
-        val document = app.get(url, interceptor = interceptor).document
+        val document = app.get(url).document
 
         val title = document.selectFirst("a.anizm_colorDefault")?.text()?.trim() ?: return null
         val poster = fixUrlNull(
@@ -229,18 +205,11 @@ class Anizm : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        Log.d("ANZM", "loadLinks - Başlangıç: data » $data")
-
         val videoLinks = getVideoUrls(data)
-        Log.d("ANZM", "loadLinks - Çözülen video link sayısı: ${videoLinks.size}")
-
         videoLinks.forEach { (name, url) ->
-            Log.d("ANZM", "loadLinks - İşlenen video: $name -> $url")
-
             when {
                 url.contains("anizmplayer.com") -> {
-                    AincradExtractor().getUrl(url, mainUrl)?.forEach(callback) // Process Aincrad first
-                    return@forEach // Skip other extractors for this URL
+                    AincradExtractor().getUrl(url, mainUrl).forEach(callback)
                 }
                 else -> {
                     loadExtractor(
@@ -252,8 +221,6 @@ class Anizm : MainAPI() {
                 }
             }
         }
-
-        Log.d("ANZM", "loadLinks - Sonuç: ${videoLinks.isNotEmpty()}")
         return videoLinks.isNotEmpty()
     }
 }
