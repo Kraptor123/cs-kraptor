@@ -1,7 +1,19 @@
-package com.kerimmkirac
-
-
-import com.lagradost.cloudstream3.*
+import com.lagradost.api.Log
+import com.lagradost.cloudstream3.Episode
+import com.lagradost.cloudstream3.HomePageList
+import com.lagradost.cloudstream3.HomePageResponse
+import com.lagradost.cloudstream3.LoadResponse
+import com.lagradost.cloudstream3.MainAPI
+import com.lagradost.cloudstream3.MainPageRequest
+import com.lagradost.cloudstream3.SearchResponse
+import com.lagradost.cloudstream3.SubtitleFile
+import com.lagradost.cloudstream3.TvType
+import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.mainPageOf
+import com.lagradost.cloudstream3.newHomePageResponse
+import com.lagradost.cloudstream3.newMovieLoadResponse
+import com.lagradost.cloudstream3.newMovieSearchResponse
+import com.lagradost.cloudstream3.newTvSeriesLoadResponse
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.ExtractorLinkType
 import com.lagradost.cloudstream3.utils.newExtractorLink
@@ -90,7 +102,7 @@ class Watch32Provider : MainAPI() {
             ?: throw NotImplementedError("Unable to find title")
 
         val image = doc.selectFirst(".film-poster-img")?.attr("src")
-        val regex = """url\((.*?)\);""".toRegex() 
+        val regex = """url\((.*?)\);""".toRegex() // regex for image url inside style attr
         val matchResult = regex.find(doc.select(".cover_follow").attr("style"))
         var coverImage = matchResult?.groups?.get(1)?.value
         if (coverImage == "")
@@ -189,7 +201,6 @@ class Watch32Provider : MainAPI() {
             val link = JSONObject(www.text).getString("link")
             val req =
                 app.get("https://ycngmn.fr/api/onstream/extract?url=$link&referrer=$mainUrl/")
-
             val m3u8 = JSONObject(req.text).getJSONArray("sources")
                 .getJSONObject(0).getString("file")
 
@@ -211,13 +222,15 @@ class Watch32Provider : MainAPI() {
                 newExtractorLink(
                     name,
                     vidDataId.text(),
+                    m3u8,
                     type = ExtractorLinkType.M3U8,
-                    url = "",
-                    initializer = TODO()
                 )
-            )
+                    {
+                        headers = mapOf("Referer" to "")
+                        quality = 0
+                    }
+                )
         }
-
         return true
     }
 
