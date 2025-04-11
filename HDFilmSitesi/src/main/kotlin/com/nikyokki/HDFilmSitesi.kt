@@ -112,7 +112,8 @@ class HDFilmSitesi : MainAPI() {
                         {
                         this.name = "${sz_num}. Sezon ${ep_num}. Bölüm"
                         this.season = sz_num
-                        this.episode = ep_num}
+                        this.episode = ep_num
+                        }
                     )
                 )
             }
