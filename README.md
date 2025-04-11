@@ -6,7 +6,8 @@ Eklenenler :
 
 Anizm sitesi eklenti olarak eklenmiştir.
 
-Düzeltilenler : bozuk eklentilerin bir çoğu düzeltilmiştir.
+An itibarı ile çalışmayan eklenti yoktur. 
+İyi seyirler.
 
 ## 💾 Kurulum
 
