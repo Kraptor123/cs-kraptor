@@ -3,7 +3,7 @@
 Kısa kod = kekikan
 
 Eklenenler :
-
+Diziyo sitesi eklenti olarak eklenmiştir.
 Anizm sitesi eklenti olarak eklenmiştir.
 
 An itibarı ile çalışmayan eklenti yoktur. 
