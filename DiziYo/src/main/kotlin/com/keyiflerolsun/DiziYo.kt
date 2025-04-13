@@ -219,22 +219,43 @@ class DiziYo : MainAPI() {
         val msheader = mapOf("Accept" to "*/*", "Origin" to "https://www.dzyco.site", "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0")
         val masterOriginal = app.get(url = masterLink, referer = "https://www.dzyco.site/", headers = msheader).toString()
         val baseUrl = masterLink.substringBefore("/cdn/")
-        val relativePath = masterOriginal.lines().firstOrNull { it.endsWith(".txt") } ?: ""
-        val finalUrl = if (relativePath.isNotEmpty()) "$baseUrl$relativePath" else null
-//        Log.d("dzyo", "masterlink = $masterLink")
-//        Log.d("dzyo", "masteroriginal = $masterOriginal")
-//        Log.d("dzyo", "finalurl = $finalUrl")
-        callback.invoke(
-            newExtractorLink(
-                source  = "diziyo",
-                name    = "diziyo",
-                url     = finalUrl!!,
-                type = ExtractorLinkType.M3U8
-            ) {
-                headers = mapOf("Referer" to "https://www.dzyco.site/") // Referer burada ayarlandı
-                quality = Qualities.Unknown.value // Kalite ayarlandı
+        val lines = masterOriginal.lines()
+
+        val streamInfos = mutableListOf<Pair<String, String>>() // Pair<resolution, .txt yolu>
+
+        for (i in lines.indices) {
+            val line = lines[i]
+            if (line.startsWith("#EXT-X-STREAM-INF") && i + 1 < lines.size) {
+                val resolutionMatch = Regex("RESOLUTION=(\\d+x\\d+)").find(line)
+                val resolution = resolutionMatch?.groupValues?.get(1) ?: "Bilinmeyen"
+
+                val nextLine = lines[i + 1]
+                if (nextLine.endsWith(".txt")) {
+                    streamInfos.add(Pair(resolution, nextLine))
+                }
             }
-        )
+        }
+        streamInfos.forEach { (resolution, relativePath) ->
+            val url = "$baseUrl$relativePath"
+            callback.invoke(
+                newExtractorLink(
+                    source  = "diziyo",
+                    name    = "diziyo",
+                    url     = url,
+                    type    = ExtractorLinkType.M3U8
+                ) {
+                    headers = mapOf("Referer" to "https://www.dzyco.site/")
+                    quality = when (resolution) {
+                        "1920x1080" -> Qualities.P1080.value
+                        "1280x720"  -> Qualities.P720.value
+                        "842x480", "854x480" -> Qualities.P480.value
+                        "640x360"   -> Qualities.P360.value
+                        "426x240"   -> Qualities.P240.value
+                        else        -> Qualities.Unknown.value
+                    }
+                }
+            )
+        }
 
         return true
     }
