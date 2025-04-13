@@ -1,4 +1,4 @@
-// ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
+// ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
 
 package com.keyiflerolsun
 
@@ -10,7 +10,7 @@ import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 
 class Temel : MainAPI() {
-    override var mainUrl              = "https://www.setfilmizle.lol"
+    override var mainUrl              = "https://"
     override var name                 = "Temel"
     override val hasMainPage          = true
     override var lang                 = "tr"
@@ -91,11 +91,11 @@ class Temel : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        Log.d("STF", "data » ${data}")
+        Log.d("Temel", "data » ${data}")
         val document = app.get(data).document
 
         // TODO:
-        // loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+        // newLoadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
 
         return true
     }
