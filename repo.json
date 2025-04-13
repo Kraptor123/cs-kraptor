@@ -1,6 +1,6 @@
 {
-  "name": "Turkish Providers Repo | @KekikAkademi",
-  "description": "Türkçe içerikli eklenti havuzu",
+  "name": "Turkish Providers Repo | @kraptor123",
+  "description": "Türkçe eklentiler",
   "manifestVersion": 1,
   "pluginLists": [
     "https://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/builds/plugins.json"
