@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import org.jsoup.nodes.Element
 
 class FullHDFilm : MainAPI() {
-    override var mainUrl              = "https://fullhdfilm.top"
+    override var mainUrl              = "https://fullhdfilm.cx"
     override var name                 = "FullHDFilm"
     override val hasMainPage          = true
     override var lang                 = "tr"
