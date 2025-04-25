@@ -23,7 +23,7 @@ open class CloseLoad : ExtractorApi() {
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
         val extRef = referer ?: ""
-        Log.d("Kekik_${this.name}", "url » $url")
+        Log.d("mak", "url » $url")
 
         val iSource = app.get(url, referer = extRef)
 
@@ -43,7 +43,7 @@ open class CloseLoad : ExtractorApi() {
         if (matchResult != null) {
             val extractedString = matchResult.groups[1]?.value?.trim()?.substringAfter("=\"")?.substringBefore("\"")
             val m3uLink = Base64.decode(extractedString, Base64.DEFAULT).toString(Charsets.UTF_8)
-            Log.d("Kekik_${this.name}", "m3uLink » $m3uLink")
+            Log.d("mak", "m3uLink » $m3uLink")
 
             callback.invoke(
                 newExtractorLink(
