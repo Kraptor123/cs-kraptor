@@ -27,6 +27,6 @@ An itibarı ile çalışmayan eklenti yoktur.
 
 ---
 
-<a href="https://github.com/ramazansancar/keyiflerolsun_Kekik-cloudstream/graphs/contributors?selectedMetric=additions" target="_blank">
-  <img src="https://contrib.rocks/image?repo=ramazansancar/keyiflerolsun_Kekik-cloudstream" />
+<a href="https://github.com/Kraptor123/cs-kekikanime/graphs/contributors?selectedMetric=additions" target="_blank">
+  <img src="https://contrib.rocks/image?repo=Kraptor123/cs-kekikanime" />
 </a>
