@@ -31,8 +31,6 @@ class InatBox : MainAPI() {
     private val urlToSearchResponse = mutableMapOf<String, SearchResponse>()
     private val aesKey = "ywevqtjrurkwtqgz" //Master secret and iv key (This is used for both secret key and iv. This is the embedded master key for loading categories like sport channels.)
 
-    //This urls come from ${categoryUrl}/ct.php | I assume they won't change in the near future
-    // Source: https://github.com/Kraptor123/cs-kekikanime/commit/b3f835a6556710597fce56becdfdfa4dc498b3e3
     override val mainPage = mainPageOf(
         "https://boxbc.sbs/CDN/001_STR/boxbc.sbs/spor_v2.php"  to "Spor Kanalları",
         "https://boxbc.sbs/CDN/001_STR/boxbc.sbs/derbiler.php" to "Derbiler",
