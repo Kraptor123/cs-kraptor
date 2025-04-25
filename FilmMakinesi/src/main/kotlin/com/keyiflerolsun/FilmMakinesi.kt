@@ -25,7 +25,7 @@ class FilmMakinesi : MainAPI() {
     override var sequentialMainPageScrollDelay = 50L  // ? 0.05 saniye
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/sayfa/"                                        to "Son Filmler",
+        "${mainUrl}/"                                        to "Son Filmler",
         "${mainUrl}/film-izle/olmeden-izlenmesi-gerekenler/" to "Ölmeden İzle",
         "${mainUrl}/film-izle/aksiyon-filmleri-izle/"        to "Aksiyon",
         "${mainUrl}/film-izle/bilim-kurgu-filmi-izle/"       to "Bilim Kurgu",
