@@ -23,7 +23,16 @@ An itibarı ile çalışmayan eklenti yoktur.
 - [Eklenti Listesi Wiki](https://cloudstream.miraheze.org/wiki/List_of_extensions)
 - [Open Subtitles Desteği (Torrent veya Yabancı Eklentiler İçin)](https://recloudstream.github.io/csdocs/integrations/opensubtitles/)
 - [anicompat (Fazlaca Anime Eklenti Desteği)](https://youtu.be/0Gl48lL7e9Y)
-- [Eklenti Kodlama](https://www.youtube.com/watch?v=gWECdddixyA) 
+- [Eklenti Kodlama](https://www.youtube.com/watch?v=gWECdddixyA)
+
+
+## ❗Uyarı
+
+DMCA
+
+İşbu bildirimle, bu uzantıların internetten video dosyalarını getiren ve işlevsel olarak sıradan bir tarayıcıdan (sizin tarayıcınız gibi) farkı olmadığını; bu nedenle Dijital Binyıl Telif Hakkı Yasası’nın (DMCA) hükümlerini ihlal etmediğini bildiririz. Bu uzantıların erişebileceği içerikler ne bizim tarafımızdan ne de Cloudstream 3 uygulaması tarafından barındırılmakta olup, uzantılar bu içeriklere özerk tarama modunda eriştikleri web siteleri üzerinden ulaşmaktadır. İçeriklerin kullanımı ve bununla ilgili tüm yasal sorumluluk tamamen kullanıcıya ve kullanıcının ülke ya da eyalet yasalarına aittir. Eğer herhangi bir fikri mülkiyet hakkı ihlali olduğunu düşünüyorsanız, lütfen bu depo sahipleri veya Cloudstream 3 uygulaması yerine içeriklerin barındırıldığı gerçek sunucularla iletişime geçiniz.
+
+Teşekkür ederiz.
 
 ---
 
