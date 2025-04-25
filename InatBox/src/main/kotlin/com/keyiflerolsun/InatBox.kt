@@ -1,25 +1,25 @@
 package com.keyiflerolsun
 
-import android.util.Base64
 import android.util.Log
 import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.ExtractorLinkType
-import com.lagradost.cloudstream3.utils.Qualities
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.*
 import okhttp3.Interceptor
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody
 import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 import java.net.URI
 import javax.crypto.Cipher
-import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
+import javax.crypto.spec.IvParameterSpec
+import android.util.Base64
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONException
+import org.json.JSONObject
+import okio.BufferedSource
 
 class InatBox : MainAPI() {
     private val contentUrl  = "https://dizibox.rest"
+    //private val categoryUrl = "https://dizilab.cfd"
 
     override var name                 = "InatBox"
     override val hasMainPage          = true
@@ -29,32 +29,41 @@ class InatBox : MainAPI() {
     override var sequentialMainPage   = false
 
     private val urlToSearchResponse = mutableMapOf<String, SearchResponse>()
-    private val aesKey = "ywevqtjrurkwtqgz" //Master secret and iv key
+    private val aesKey = "ywevqtjrurkwtqgz" //Master secret and iv key (This is used for both secret key and iv. This is the embedded master key for loading categories like sport channels.)
 
+    //This urls come from ${categoryUrl}/ct.php | I assume they won't change in the near future
+    // Source: https://github.com/ramazansancar/keyiflerolsun_Kekik-cloudstream/commit/b3f835a6556710597fce56becdfdfa4dc498b3e3
     override val mainPage = mainPageOf(
-        "https://boxbc.sbs/CDN/001_STR/boxbc.sbs/spor_v2.php" to "Spor Kanalları",
-        "${contentUrl}/tv/cable.php"                          to "Kanallar Liste 1",
-        "${contentUrl}/tv/list2.php"                          to "Kanallar Liste 2",
-        "${contentUrl}/tv/sinema.php"                         to "Sinema Kanalları",
-        "${contentUrl}/tv/belgesel.php"                       to "Belgesel Kanalları",
-        "${contentUrl}/tv/ulusal.php"                         to "Ulusal Kanallar",
-        "${contentUrl}/tv/haber.php"                          to "Haber Kanalları",
-        "${contentUrl}/tv/cocuk.php"                          to "Çocuk Kanalları",
-        "${contentUrl}/tv/dini.php"                           to "Dini Kanallar",
-        "${contentUrl}/ex/index.php"                          to "EXXEN",
-        "${contentUrl}/ga/index.php"                          to "Gain",
-        "${contentUrl}/blu/index.php"                         to "BluTV",
-        "${contentUrl}/nf/index.php"                          to "Netflix",
-        "${contentUrl}/dsny/index.php"                        to "Disney+",
-        "${contentUrl}/amz/index.php"                         to "Amazon Prime",
-        "${contentUrl}/hb/index.php"                          to "HBO Max",
-        "${contentUrl}/tbi/index.php"                         to "Tabii",
-        "${contentUrl}/film/mubi.php"                         to "Mubi",
-        "${contentUrl}/ccc/index.php"                         to "TOD",
-        "${contentUrl}/yabanci-dizi/index.php"                to "Yabancı Diziler",
-        "${contentUrl}/yerli-dizi/index.php"                  to "Yerli Diziler",
-        "${contentUrl}/film/yerli-filmler.php"                to "Yerli Filmler",
-        "${contentUrl}/film/4k-film-exo.php"                  to "4K Film İzle | Exo"
+        "https://boxbc.sbs/CDN/001_STR/boxbc.sbs/spor_v2.php"  to "Spor Kanalları",
+        "https://boxbc.sbs/CDN/001_STR/boxbc.sbs/derbiler.php" to "Derbiler",
+
+        "${contentUrl}/tv/list1.php"                           to "Kanallar Liste 1 - TR",
+        "${contentUrl}/tv/list2.php"                           to "Kanallar Liste 2 - GLB",
+        "${contentUrl}/tv/list3.php"                           to "Kanallar Liste 3 - TR",
+        "${contentUrl}/tv/sinema.php"                          to "Sinema Kanalları",
+        "${contentUrl}/tv/belgesel.php"                        to "Belgesel Kanalları",
+        "${contentUrl}/tv/ulusal.php"                          to "Ulusal Kanallar",
+        "${contentUrl}/tv/haber.php"                           to "Haber Kanalları",
+        "${contentUrl}/tv/eba.php"                             to "Eba Kanalları",
+        "${contentUrl}/tv/cocuk.php"                           to "Çocuk Kanalları",
+        "${contentUrl}/tv/dini.php"                            to "Dini Kanallar",
+
+        "${contentUrl}/ex/index.php"                           to "EXXEN",
+        "${contentUrl}/ga/index.php"                           to "Gain",
+        "${contentUrl}/blu/index.php"                          to "BluTV",
+        "${contentUrl}/nf/index.php"                           to "Netflix", // Burası şu an çalışmıyor.
+        "${contentUrl}/dsny/index.php"                         to "Disney+",
+        "${contentUrl}/amz/index.php"                          to "Amazon Prime",
+        "${contentUrl}/hb/index.php"                           to "HBO Max",
+        "${contentUrl}/tbi/index.php"                          to "Tabii",
+        "${contentUrl}/film/mubi.php"                          to "Mubi",
+        "${contentUrl}/ccc/index.php"                          to "TOD",
+
+        "${contentUrl}/yabanci-dizi/index.php"                 to "Yabancı Diziler",
+        "${contentUrl}/yerli-dizi/index.php"                   to "Yerli Diziler",
+        "${contentUrl}/film/yerli-filmler.php"                 to "Yerli Filmler",
+        "${contentUrl}/film/4k-film-exo.php"                   to "4K Film İzle | Exo",
+        "${contentUrl}/film/4k-film-web.php"                   to "4K Film İzle | Web"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
@@ -431,9 +440,17 @@ class InatBox : MainAPI() {
         )
 
         if (response.isSuccessful) {
-            val encryptedResponse = response.text
+            // val encryptedResponse = response.text
             // Log.d("InatBox", "Encrypted response: ${encryptedResponse}")
-            return getJsonFromEncryptedInatResponse(encryptedResponse)
+            // Akışı başlatır
+            val source = response.body?.source()
+            val encryptedResponse = source?.readByteArray()  // Akışı parçalara ayırarak okur
+
+            // Eğer byteArray varsa, onu String'e dönüştür
+            val encryptedResponseString = encryptedResponse?.let { String(it, Charsets.UTF_8) }
+
+            // Eğer response body boş değilse, şifresiz yanıtı al
+            return encryptedResponseString?.let { getJsonFromEncryptedInatResponse(it) }
         } else {
             Log.e("InatBox", "Request failed")
             return null
