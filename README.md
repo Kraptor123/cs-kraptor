@@ -2,7 +2,7 @@
 
 Kısa kod = kekikan
 
-Eklenenler :
+-Eklenenler :                                    
 -Diziyo sitesi eklenti olarak eklenmiştir.
 -Anizm sitesi eklenti olarak eklenmiştir.
 -DiziFun sitesi eklenti olarak eklenmiştir.
