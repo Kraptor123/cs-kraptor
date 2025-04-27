@@ -231,8 +231,6 @@ class DiziFun : MainAPI() {
                     val response = app.get(normalizedUrl, headers = mapOf("Referer" to movieReferer))
                     if (!response.isSuccessful) return@forEach
                     val content = response.text
-
-                    // M3U8 arama (JS içi veya HTML source)
                     val jsPath = m3u8Pattern.find(content)?.groups?.get(1)?.value
                     if (jsPath != null) {
                         videoBaseUrls.forEach { base ->
@@ -246,7 +244,6 @@ class DiziFun : MainAPI() {
                             )
                         }
                     } else {
-                        // HTML <video> tag'inden kaynak arama
                         htmlSourcePattern.find(content)?.groups?.get(1)?.value?.let { path ->
                             val fullUrl = if (path.startsWith("http")) path else videoBaseUrls.first() + path
                             callback.invoke(
@@ -258,11 +255,8 @@ class DiziFun : MainAPI() {
                             )
                         }
                     }
-
-                    // Altyazılar - birden fazla pattern deneme
                     val subtitleUrls = mutableSetOf<Pair<String, String>>() // URL ve dil çiftleri
 
-                    // Pattern 1: file: "url.vtt"
                     subtitlePattern.findAll(content)
                         .mapNotNull { it.groups[1]?.value }
                         .forEach { path ->
@@ -277,8 +271,6 @@ class DiziFun : MainAPI() {
                             subtitleUrls.add(Pair(fullUrl, lang))
                             foundAnySubtitles = true
                         }
-
-                    // Pattern 2: subtitle: "url.vtt"
                     altSubtitlePattern.findAll(content)
                         .mapNotNull { it.groups[1]?.value }
                         .forEach { path ->
@@ -293,8 +285,6 @@ class DiziFun : MainAPI() {
                             subtitleUrls.add(Pair(fullUrl, lang))
                             foundAnySubtitles = true
                         }
-
-                    // Pattern 3: <track src="url.vtt">
                     trackSubtitlePattern.findAll(content)
                         .mapNotNull { it.groups[1]?.value }
                         .forEach { path ->
@@ -309,20 +299,11 @@ class DiziFun : MainAPI() {
                             subtitleUrls.add(Pair(fullUrl, lang))
                             foundAnySubtitles = true
                         }
-
-                    // Bulunan tüm altyazıları callback ile bildir
-                    subtitleUrls.forEach { (url, lang) ->
-                        subtitleCallback(SubtitleFile(lang = lang, url = url))
-                        Log.d("Dfun", "Film altyazı: $lang → $url")
-                    }
-
                 } catch (e: Exception) {
                     Log.e("Dfun", "Film iframe hata: ${e.message}")
                 }
             }
         }
-
-        // Tüm hex decode kalıplarını arayalım
         decodeCallPatterns.forEach { pattern ->
             pattern.findAll(allScripts).forEach { match ->
                 // match.groupValues[1] = fonksiyon adı, match.groupValues[2] = hex değeri
@@ -343,7 +324,6 @@ class DiziFun : MainAPI() {
 
                 Log.d("Dfun", "$funcName → $normalizedUrl")
 
-                // Referer seçimi
                 val referer = when (funcName) {
                     "hexToStringLondon", "hexToStringArmony", "hexToStringVietnam" -> movieReferer
                     "hexToStringAlt" -> altReferer
@@ -354,8 +334,6 @@ class DiziFun : MainAPI() {
                     val response = app.get(normalizedUrl, headers = mapOf("Referer" to referer))
                     if (!response.isSuccessful) return@forEach
                     val content = response.text
-
-                    // M3U8
                     m3u8Pattern.find(content)?.groups?.get(1)?.value?.let { path ->
                         videoBaseUrls.forEach { base ->
                             val fullUrl = if (path.startsWith("http")) path else "$base$path"
@@ -368,8 +346,6 @@ class DiziFun : MainAPI() {
                             )
                         }
                     }
-
-                    // HTML video source araması
                     htmlSourcePattern.find(content)?.groups?.get(1)?.value?.let { path ->
                         val fullUrl = if (path.startsWith("http")) path else videoBaseUrls.first() + path
                         callback.invoke(
@@ -380,11 +356,7 @@ class DiziFun : MainAPI() {
                             ) { headers = mapOf("Referer" to referer); quality = Qualities.Unknown.value }
                         )
                     }
-
-                    // Altyazılar - birden fazla pattern deneme
                     val subtitleUrls = mutableSetOf<Pair<String, String>>() // URL ve dil çiftleri
-
-                    // Pattern 1: file: "url.vtt"
                     subtitlePattern.findAll(content)
                         .mapNotNull { it.groups[1]?.value }
                         .forEach { path ->
@@ -399,8 +371,6 @@ class DiziFun : MainAPI() {
                             subtitleUrls.add(Pair(fullUrl, lang))
                             foundAnySubtitles = true
                         }
-
-                    // Pattern 2: subtitle: "url.vtt"
                     altSubtitlePattern.findAll(content)
                         .mapNotNull { it.groups[1]?.value }
                         .forEach { path ->
@@ -415,8 +385,6 @@ class DiziFun : MainAPI() {
                             subtitleUrls.add(Pair(fullUrl, lang))
                             foundAnySubtitles = true
                         }
-
-                    // Pattern 3: <track src="url.vtt">
                     trackSubtitlePattern.findAll(content)
                         .mapNotNull { it.groups[1]?.value }
                         .forEach { path ->
@@ -431,22 +399,10 @@ class DiziFun : MainAPI() {
                             subtitleUrls.add(Pair(fullUrl, lang))
                             foundAnySubtitles = true
                         }
-
-                    // Bulunan tüm altyazıları callback ile bildir
-                    subtitleUrls.forEach { (url, lang) ->
-                        subtitleCallback(SubtitleFile(lang = lang, url = url))
-                        Log.d("Dfun", "Dizi altyazı: $lang → $url")
-                    }
-
                 } catch (e: Exception) {
                     Log.e("Dfun", "Hata: ${e.message}")
                 }
             }
-        }
-
-        // Hiç altyazı bulunamadıysa debug için bildirelim
-        if (!foundAnySubtitles) {
-            Log.d("Dfun", "UYARI: Hiç altyazı bulunamadı!")
         }
 
         return true
