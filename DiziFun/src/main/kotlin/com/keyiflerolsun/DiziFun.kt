@@ -22,6 +22,8 @@ class DiziFun : MainAPI() {
     override val supportedTypes = setOf(TvType.TvSeries, TvType.Movie)
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/diziler" to "Diziler",
+        "${mainUrl}/filmler" to "Filmler",
         "${mainUrl}/netflix" to "NetFlix Dizileri",
         "${mainUrl}/exxen" to "Exxen Dizileri",
         "${mainUrl}/disney" to "Disney+ Dizileri",
@@ -39,7 +41,6 @@ class DiziFun : MainAPI() {
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val document = app.get("${request.data}?p=${page}").document
         val home = document.select("div.uk-width-1-3").mapNotNull { it.toMainPageResult() }
-//        Log.d("Dfun", "home verisi = $home")
 
         return newHomePageResponse(request.name, home)
     }
@@ -64,7 +65,11 @@ class DiziFun : MainAPI() {
         val title = this.selectFirst("h5")?.text() ?: return null
         val href = fixUrlNull(this.selectFirst("a.uk-position-cover")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("div.uk-overlay img")?.attr("src"))
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+
+        // Tür kontrolü eklendi
+        val type = if (href.contains("/film/")) TvType.Movie else TvType.TvSeries
+
+        return newTvSeriesSearchResponse(title, href, type) { this.posterUrl = posterUrl }
     }
 
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
@@ -76,16 +81,16 @@ class DiziFun : MainAPI() {
         val poster = fixUrlNull(document.selectFirst("img.responsive-img")?.attr("src"))
         val description = document.selectFirst("p.text-muted")?.text()?.trim()
         val year = document.select("ul.subnav li")
-            .firstOrNull { it.text().contains("Dizi Yılı") }
-            ?.ownText() // sadece '2025' kısmını almak için
+            .firstOrNull { it.text().contains("Dizi Yılı") || it.text().contains("Film Yılı") }
+            ?.ownText()
             ?.filter { it.isDigit() }
             ?.toIntOrNull()
         val tags = document.select("div.series-info")
             .map { it.text() }
             .flatMap { text ->
-                text.removePrefix("Türü:") // baştaki "Türü:" yazısını kaldır
-                    .split(",")             // virgüle göre ayır
-                    .map { it.trim() }       // her bir parçanın başındaki ve sonundaki boşlukları temizle
+                text.removePrefix("Türü:")
+                    .split(",")
+                    .map { it.trim() }
             }
         val actors = document.select("div.actor-card").map { card ->
             val name = card.selectFirst("span.actor-name")?.text()?.trim() ?: return@map null
@@ -97,29 +102,12 @@ class DiziFun : MainAPI() {
         }.filterNotNull()
         val trailer = Regex("""embed/([^?"]+)""").find(document.html())?.groupValues?.get(1)
             ?.let { "https://www.youtube.com/embed/$it" }
-        val episodes = document.select("div.season-detail").flatMap { seasonDiv ->
-            val seasonId = seasonDiv.attr("id") // örnek: "season-1"
-            val season = seasonId.removePrefix("season-").toIntOrNull() ?: 1
-            seasonDiv.select("div.bolumtitle a").mapNotNull { aTag ->
-                val rawHref = aTag.attr("href")
-                val href = if (rawHref.startsWith("?")) "$url$rawHref"
-                else aTag.absUrl("href").ifBlank { fixUrl(rawHref) }
 
-                if (href.isBlank()) return@mapNotNull null
-                val episodeDiv = aTag.selectFirst("div.episode-button") ?: return@mapNotNull null
-                val name = episodeDiv.text().trim()
-                val episodeNumber = name.filter { it.isDigit() }.toIntOrNull() ?: 1
-                newEpisode(href) {
-                    this.name = name
-                    this.season = season
-                    this.episode = episodeNumber
-                }
-            }
-        }
-        Log.d("Dfun", "trailer = $trailer")
         val type = if (url.contains("/film/")) TvType.Movie else TvType.TvSeries
-        return if (type == TvType.Movie) {
-            newMovieLoadResponse(title, url, type, movies) {
+
+        if (type == TvType.Movie) {
+            val movieData = url
+            return newMovieLoadResponse(title, url, type, movieData) {
                 this.posterUrl = poster
                 this.year = year
                 this.tags = tags
@@ -128,7 +116,27 @@ class DiziFun : MainAPI() {
                 addTrailer(trailer)
             }
         } else {
-            newTvSeriesLoadResponse(title, url, type, episodes) {
+            val episodes = document.select("div.season-detail").flatMap { seasonDiv ->
+                val seasonId = seasonDiv.attr("id") // örnek: "season-1"
+                val season = seasonId.removePrefix("season-").toIntOrNull() ?: 1
+                seasonDiv.select("div.bolumtitle a").mapNotNull { aTag ->
+                    val rawHref = aTag.attr("href")
+                    val href = if (rawHref.startsWith("?")) "$url$rawHref"
+                    else aTag.absUrl("href").ifBlank { fixUrl(rawHref) }
+
+                    if (href.isBlank()) return@mapNotNull null
+                    val episodeDiv = aTag.selectFirst("div.episode-button") ?: return@mapNotNull null
+                    val name = episodeDiv.text().trim()
+                    val episodeNumber = name.filter { it.isDigit() }.toIntOrNull() ?: 1
+                    newEpisode(href) {
+                        this.name = name
+                        this.season = season
+                        this.episode = episodeNumber
+                    }
+                }
+            }
+
+            return newTvSeriesLoadResponse(title, url, type, episodes) {
                 this.posterUrl = poster
                 this.year = year
                 this.tags = tags
@@ -159,75 +167,89 @@ class DiziFun : MainAPI() {
             return URLDecoder.decode(result.toString(), "UTF-8")
         }
 
+        // Film ve dizi için özel hex çözme fonksiyonları
+        fun hexToStringLondon(hex: String): String = hexToString(hex)
+        fun hexToStringArmony(hex: String): String = hexToString(hex)
+        fun hexToStringVietnam(hex: String): String = hexToString(hex)
         fun hexToStringAlt(hex: String): String = hexToString(hex)
 
-        // Decode çağrı kalıbı
-        val decodeCallPattern = Regex(
-            """decodeURIComponent\(\s*(hexToStringAlt|hexToString)\(\s*['\"]([0-9A-Fa-f]+)['\"]\s*\)\s*\)"""
+        // Farklı decode çağrı kalıpları
+        val decodeCallPatterns = listOf(
+            // Dizi hex yakalama kalıpları
+            Regex("""decodeURIComponent\(\s*(hexToStringAlt|hexToString)\(\s*['\"]([0-9A-Fa-f]+)['\"]\s*\)\s*\)"""),
+            // Film hex yakalama kalıpları
+            Regex("""decodeURIComponent\(\s*(hexToStringLondon|hexToStringArmony|hexToStringVietnam)\(\s*['\"]([0-9A-Fa-f]+)['\"]\s*\)\s*\)"""),
+            // Genel hex yakalama
+            Regex("""(hexToString\w*)\(\s*['\"]([0-9A-Fa-f]+)['\"]\s*\)""")
+        )
+
+        // İframe URL'leri doğrudan da yakalayalım (film sayfaları için)
+        val iframeUrlPatterns = listOf(
+            Regex("""const\s+(londonIframeUrl|armonyIframeUrl|vietnamIframeUrl)\s*=\s*decodeURIComponent\(\s*\w+\(\s*['\"]([0-9A-Fa-f]+)['\"]\s*\)\s*\);""")
         )
 
         // M3U8 ve altyazı pattern'leri (JS içi)
-        val m3u8Pattern          = Regex("""file\s*:\s*['\"]([^'\"]+\.m3u8)['\"]""")
-        val subtitlePattern      = Regex("""file\s*:\s*['\"]([^'\"]+\.vtt)['\"]""")
+        val m3u8Pattern = Regex("""file\s*:\s*['\"]([^'\"]+\.m3u8)['\"]""")
+        val subtitlePattern = Regex("""file\s*:\s*['\"]([^'\"]+\.vtt)['\"]""")
         // HTML <video> içi M3U8 kaynak pattern'i
-        val htmlSourcePattern    = Regex("""<source\s+src=['\"]([^'\"]+\.m3u8)['\"]""")
+        val htmlSourcePattern = Regex("""<source\s+src=['\"]([^'\"]+\.m3u8)['\"]""")
 
         // Base URL'ler ve referer'lar
-        val videoBaseUrls    = listOf(
+        val videoBaseUrls = listOf(
             "https://ganadavay.click",
             "https://funnydavay.click",
             "https://donkeygrorup.click",
-            "https://gujan.premiumvideo.click"
+            "https://gujan.premiumvideo.click",
+            "https://playhouse.premiumvideo.click"
         )
         val subtitleBaseUrls = videoBaseUrls
-        val refererUrl       = "https://d1.premiumvideo.click/"
-        val altReferer       = "https://gujan.premiumvideo.click/"
+        val refererUrl = "https://d1.premiumvideo.click/"
+        val altReferer = "https://gujan.premiumvideo.click/"
+        val movieReferer = "https://playhouse.premiumvideo.click/"
 
-        // Tüm decode çağrılarını işle
-        decodeCallPattern.findAll(allScripts).forEach { match ->
-            val funcName   = match.groupValues[1]
-            val hexValue   = match.groupValues[2]
-            val rawDecoded = if (funcName == "hexToStringAlt") hexToStringAlt(hexValue) else hexToString(hexValue)
-            val partialUrl = rawDecoded
+        // Film player iframe URL'lerini doğrudan yakalama
+        iframeUrlPatterns.forEach { pattern ->
+            pattern.findAll(allScripts).forEach { match ->
+                val iframeType = match.groupValues[1]
+                val hexValue = match.groupValues[2]
+                val decodedUrl = hexToString(hexValue)
 
-            // Normalize URL
-            val normalizedUrl = when {
-                partialUrl.startsWith("//") -> "https:$partialUrl"
-                partialUrl.startsWith("/")  -> videoBaseUrls.first() + partialUrl
-                else                           -> partialUrl
-            }
-            Log.d("Dfun", "$funcName → $normalizedUrl")
+                Log.d("Dfun", "Film iframe: $iframeType → $decodedUrl")
 
-            // Alt iframe için özel işlemler (HTML <video> veya JS içi)
-            if (funcName == "hexToStringAlt") {
+                val normalizedUrl = when {
+                    decodedUrl.startsWith("//") -> "https:$decodedUrl"
+                    decodedUrl.startsWith("/") -> videoBaseUrls.first() + decodedUrl
+                    else -> decodedUrl
+                }
+
                 try {
-                    val response = app.get(normalizedUrl, headers = mapOf("Referer" to altReferer))
+                    val response = app.get(normalizedUrl, headers = mapOf("Referer" to movieReferer))
                     if (!response.isSuccessful) return@forEach
                     val content = response.text
 
-                    // Önce JS içinden m3u8Path ara
+                    // M3U8 arama (JS içi veya HTML source)
                     val jsPath = m3u8Pattern.find(content)?.groups?.get(1)?.value
                     if (jsPath != null) {
                         videoBaseUrls.forEach { base ->
-                            val fullUrl = "$base$jsPath"
+                            val fullUrl = if (jsPath.startsWith("http")) jsPath else "$base$jsPath"
                             callback.invoke(
                                 newExtractorLink(
-                                    source = "DiziFun (Alt IFrame)",
-                                    name   = name,
-                                    url    = fullUrl
-                                ) { headers = mapOf("Referer" to altReferer); quality = Qualities.Unknown.value }
+                                    source = "DiziFun ($iframeType)",
+                                    name = name,
+                                    url = fullUrl
+                                ) { headers = mapOf("Referer" to movieReferer); quality = Qualities.Unknown.value }
                             )
                         }
                     } else {
-                        // Eğer JS içi pattern yoksa, HTML <video> tag'i içerisinden al
+                        // HTML <video> tag'inden kaynak arama
                         htmlSourcePattern.find(content)?.groups?.get(1)?.value?.let { path ->
-                            val finalUrl = if (path.startsWith("http")) path else videoBaseUrls.first() + path
+                            val fullUrl = if (path.startsWith("http")) path else videoBaseUrls.first() + path
                             callback.invoke(
                                 newExtractorLink(
-                                    source = "DiziFun (Alt IFrame)",
-                                    name   = name,
-                                    url    = finalUrl
-                                ) { headers = mapOf("Referer" to altReferer); quality = Qualities.Unknown.value }
+                                    source = "DiziFun ($iframeType)",
+                                    name = name,
+                                    url = fullUrl
+                                ) { headers = mapOf("Referer" to movieReferer); quality = Qualities.Unknown.value }
                             )
                         }
                     }
@@ -242,35 +264,77 @@ class DiziFun : MainAPI() {
                                     lang = when {
                                         path.contains("eng") -> "Ingilizce"
                                         path.contains("tur") -> "Turkce"
-                                        else                  -> "Unknown"
+                                        else -> "Unknown"
                                     },
-                                    url = "$baseUrl$path"
+                                    url = if (path.startsWith("http")) path else "$baseUrl$path"
                                 )
                             )
                         }
                 } catch (e: Exception) {
-                    Log.e("Dfun", "Alt iframe hata: ${e.message}")
+                    Log.e("Dfun", "Film iframe hata: ${e.message}")
                 }
-            } else {
-                // Standart player hexToString çağrısı
+            }
+        }
+
+        // Tüm hex decode kalıplarını arayalım
+        decodeCallPatterns.forEach { pattern ->
+            pattern.findAll(allScripts).forEach { match ->
+                // match.groupValues[1] = fonksiyon adı, match.groupValues[2] = hex değeri
+                val funcName = match.groupValues[1]
+                val hexValue = match.groupValues[2]
+
+                if (hexValue.isEmpty()) return@forEach
+
+                val rawDecoded = hexToString(hexValue)
+                val partialUrl = rawDecoded
+
+                // Normalize URL
+                val normalizedUrl = when {
+                    partialUrl.startsWith("//") -> "https:$partialUrl"
+                    partialUrl.startsWith("/") -> videoBaseUrls.first() + partialUrl
+                    else -> partialUrl
+                }
+
+                Log.d("Dfun", "$funcName → $normalizedUrl")
+
+                // Referer seçimi
+                val referer = when (funcName) {
+                    "hexToStringLondon", "hexToStringArmony", "hexToStringVietnam" -> movieReferer
+                    "hexToStringAlt" -> altReferer
+                    else -> refererUrl
+                }
+
                 try {
-                    val response = app.get(normalizedUrl, headers = mapOf("Referer" to refererUrl))
+                    val response = app.get(normalizedUrl, headers = mapOf("Referer" to referer))
                     if (!response.isSuccessful) return@forEach
                     val content = response.text
 
                     // M3U8
                     m3u8Pattern.find(content)?.groups?.get(1)?.value?.let { path ->
                         videoBaseUrls.forEach { base ->
-                            val fullUrl = "$base$path"
+                            val fullUrl = if (path.startsWith("http")) path else "$base$path"
                             callback.invoke(
                                 newExtractorLink(
-                                    source = "DiziFun",
-                                    name   = name,
-                                    url    = fullUrl
-                                ) { headers = mapOf("Referer" to refererUrl); quality = Qualities.Unknown.value }
+                                    source = "DiziFun ($funcName)",
+                                    name = name,
+                                    url = fullUrl
+                                ) { headers = mapOf("Referer" to referer); quality = Qualities.Unknown.value }
                             )
                         }
                     }
+
+                    // HTML video source araması
+                    htmlSourcePattern.find(content)?.groups?.get(1)?.value?.let { path ->
+                        val fullUrl = if (path.startsWith("http")) path else videoBaseUrls.first() + path
+                        callback.invoke(
+                            newExtractorLink(
+                                source = "DiziFun ($funcName)",
+                                name = name,
+                                url = fullUrl
+                            ) { headers = mapOf("Referer" to referer); quality = Qualities.Unknown.value }
+                        )
+                    }
+
                     // Altyazılar
                     subtitlePattern.findAll(content)
                         .mapNotNull { it.groups[1]?.value }
@@ -281,9 +345,9 @@ class DiziFun : MainAPI() {
                                     lang = when {
                                         path.contains("eng") -> "Ingilizce"
                                         path.contains("tur") -> "Turkce"
-                                        else                  -> "Unknown"
+                                        else -> "Unknown"
                                     },
-                                    url = "$baseUrl$path"
+                                    url = if (path.startsWith("http")) path else "$baseUrl$path"
                                 )
                             )
                         }
