@@ -193,6 +193,9 @@ class DiziFun : MainAPI() {
         val subtitlePattern = Regex("""file\s*:\s*['\"]([^'\"]+\.vtt)['\"]""")
         // HTML <video> içi M3U8 kaynak pattern'i
         val htmlSourcePattern = Regex("""<source\s+src=['\"]([^'\"]+\.m3u8)['\"]""")
+        // Farklı altyazı kalıpları için ek pattern
+        val altSubtitlePattern = Regex("""subtitle\s*:\s*['\"]([^'\"]+\.vtt)['\"]""")
+        val trackSubtitlePattern = Regex("""<track\s+[^>]*src=['\"]([^'\"]+\.vtt)['\"][^>]*>""")
 
         // Base URL'ler ve referer'lar
         val videoBaseUrls = listOf(
@@ -208,6 +211,8 @@ class DiziFun : MainAPI() {
         val movieReferer = "https://playhouse.premiumvideo.click/"
 
         // Film player iframe URL'lerini doğrudan yakalama
+        var foundAnySubtitles = false
+
         iframeUrlPatterns.forEach { pattern ->
             pattern.findAll(allScripts).forEach { match ->
                 val iframeType = match.groupValues[1]
@@ -254,22 +259,63 @@ class DiziFun : MainAPI() {
                         }
                     }
 
-                    // Altyazılar
+                    // Altyazılar - birden fazla pattern deneme
+                    val subtitleUrls = mutableSetOf<Pair<String, String>>() // URL ve dil çiftleri
+
+                    // Pattern 1: file: "url.vtt"
                     subtitlePattern.findAll(content)
                         .mapNotNull { it.groups[1]?.value }
-                        .forEachIndexed { idx, path ->
-                            val baseUrl = subtitleBaseUrls.getOrNull(idx) ?: subtitleBaseUrls.first()
-                            subtitleCallback(
-                                SubtitleFile(
-                                    lang = when {
-                                        path.contains("eng") -> "Ingilizce"
-                                        path.contains("tur") -> "Turkce"
-                                        else -> "Unknown"
-                                    },
-                                    url = if (path.startsWith("http")) path else "$baseUrl$path"
-                                )
-                            )
+                        .forEach { path ->
+                            val lang = when {
+                                path.contains("eng") -> "Ingilizce"
+                                path.contains("tur") -> "Turkce"
+                                else -> "Unknown"
+                            }
+                            val fullUrl = if (path.startsWith("http")) path else {
+                                if (path.startsWith("/")) subtitleBaseUrls.first() + path else subtitleBaseUrls.first() + "/" + path
+                            }
+                            subtitleUrls.add(Pair(fullUrl, lang))
+                            foundAnySubtitles = true
                         }
+
+                    // Pattern 2: subtitle: "url.vtt"
+                    altSubtitlePattern.findAll(content)
+                        .mapNotNull { it.groups[1]?.value }
+                        .forEach { path ->
+                            val lang = when {
+                                path.contains("eng") -> "Ingilizce"
+                                path.contains("tur") -> "Turkce"
+                                else -> "Unknown"
+                            }
+                            val fullUrl = if (path.startsWith("http")) path else {
+                                if (path.startsWith("/")) subtitleBaseUrls.first() + path else subtitleBaseUrls.first() + "/" + path
+                            }
+                            subtitleUrls.add(Pair(fullUrl, lang))
+                            foundAnySubtitles = true
+                        }
+
+                    // Pattern 3: <track src="url.vtt">
+                    trackSubtitlePattern.findAll(content)
+                        .mapNotNull { it.groups[1]?.value }
+                        .forEach { path ->
+                            val lang = when {
+                                path.contains("eng") -> "Ingilizce"
+                                path.contains("tur") -> "Turkce"
+                                else -> "Unknown"
+                            }
+                            val fullUrl = if (path.startsWith("http")) path else {
+                                if (path.startsWith("/")) subtitleBaseUrls.first() + path else subtitleBaseUrls.first() + "/" + path
+                            }
+                            subtitleUrls.add(Pair(fullUrl, lang))
+                            foundAnySubtitles = true
+                        }
+
+                    // Bulunan tüm altyazıları callback ile bildir
+                    subtitleUrls.forEach { (url, lang) ->
+                        subtitleCallback(SubtitleFile(lang = lang, url = url))
+                        Log.d("Dfun", "Film altyazı: $lang → $url")
+                    }
+
                 } catch (e: Exception) {
                     Log.e("Dfun", "Film iframe hata: ${e.message}")
                 }
@@ -335,26 +381,72 @@ class DiziFun : MainAPI() {
                         )
                     }
 
-                    // Altyazılar
+                    // Altyazılar - birden fazla pattern deneme
+                    val subtitleUrls = mutableSetOf<Pair<String, String>>() // URL ve dil çiftleri
+
+                    // Pattern 1: file: "url.vtt"
                     subtitlePattern.findAll(content)
                         .mapNotNull { it.groups[1]?.value }
-                        .forEachIndexed { idx, path ->
-                            val baseUrl = subtitleBaseUrls.getOrNull(idx) ?: subtitleBaseUrls.first()
-                            subtitleCallback(
-                                SubtitleFile(
-                                    lang = when {
-                                        path.contains("eng") -> "Ingilizce"
-                                        path.contains("tur") -> "Turkce"
-                                        else -> "Unknown"
-                                    },
-                                    url = if (path.startsWith("http")) path else "$baseUrl$path"
-                                )
-                            )
+                        .forEach { path ->
+                            val lang = when {
+                                path.contains("eng") -> "Ingilizce"
+                                path.contains("tur") -> "Turkce"
+                                else -> "Unknown"
+                            }
+                            val fullUrl = if (path.startsWith("http")) path else {
+                                if (path.startsWith("/")) subtitleBaseUrls.first() + path else subtitleBaseUrls.first() + "/" + path
+                            }
+                            subtitleUrls.add(Pair(fullUrl, lang))
+                            foundAnySubtitles = true
                         }
+
+                    // Pattern 2: subtitle: "url.vtt"
+                    altSubtitlePattern.findAll(content)
+                        .mapNotNull { it.groups[1]?.value }
+                        .forEach { path ->
+                            val lang = when {
+                                path.contains("eng") -> "Ingilizce"
+                                path.contains("tur") -> "Turkce"
+                                else -> "Unknown"
+                            }
+                            val fullUrl = if (path.startsWith("http")) path else {
+                                if (path.startsWith("/")) subtitleBaseUrls.first() + path else subtitleBaseUrls.first() + "/" + path
+                            }
+                            subtitleUrls.add(Pair(fullUrl, lang))
+                            foundAnySubtitles = true
+                        }
+
+                    // Pattern 3: <track src="url.vtt">
+                    trackSubtitlePattern.findAll(content)
+                        .mapNotNull { it.groups[1]?.value }
+                        .forEach { path ->
+                            val lang = when {
+                                path.contains("eng") -> "Ingilizce"
+                                path.contains("tur") -> "Turkce"
+                                else -> "Unknown"
+                            }
+                            val fullUrl = if (path.startsWith("http")) path else {
+                                if (path.startsWith("/")) subtitleBaseUrls.first() + path else subtitleBaseUrls.first() + "/" + path
+                            }
+                            subtitleUrls.add(Pair(fullUrl, lang))
+                            foundAnySubtitles = true
+                        }
+
+                    // Bulunan tüm altyazıları callback ile bildir
+                    subtitleUrls.forEach { (url, lang) ->
+                        subtitleCallback(SubtitleFile(lang = lang, url = url))
+                        Log.d("Dfun", "Dizi altyazı: $lang → $url")
+                    }
+
                 } catch (e: Exception) {
                     Log.e("Dfun", "Hata: ${e.message}")
                 }
             }
+        }
+
+        // Hiç altyazı bulunamadıysa debug için bildirelim
+        if (!foundAnySubtitles) {
+            Log.d("Dfun", "UYARI: Hiç altyazı bulunamadı!")
         }
 
         return true
