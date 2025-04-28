@@ -47,7 +47,7 @@ class CanliTV : MainAPI() {
             hasNext = false
         )
     }
-
+//
     override suspend fun search(query: String): List<SearchResponse> {
         val kanallar = IptvPlaylistParser().parseM3U(app.get(mainUrl).text)
 
