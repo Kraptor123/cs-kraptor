@@ -10,7 +10,7 @@ import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import java.io.InputStream
 
 class CanliTV : MainAPI() {
-    override var mainUrl              = "https://raw.githubusercontent.com/ramazansancar/keyiflerolsun_IPTV_YenirMi/main/Kanallar/KekikAkademi.m3u"
+    override var mainUrl              = "https://raw.githubusercontent.com/Kraptor123/yaylink/refs/heads/main/channels.m3u"
     override var name                 = "CanliTV"
     override val hasMainPage          = true
     override var lang                 = "tr"
@@ -188,64 +188,68 @@ class IptvPlaylistParser {
      */
     @Throws(PlaylistParserException::class)
     fun parseM3U(input: InputStream): Playlist {
-        val reader = input.bufferedReader()
+        val lines = input.bufferedReader().lineSequence()
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .toList()
 
-        if (!reader.readLine().isExtendedM3u()) {
-            throw PlaylistParserException.InvalidHeader()
-        }
+        val items = mutableListOf<PlaylistItem>()
+        var pendingItem: PlaylistItem? = null
 
-        val playlistItems: MutableList<PlaylistItem> = mutableListOf()
-        var currentIndex = 0
-
-        var line: String? = reader.readLine()
-
-        while (line != null) {
-            if (line.isNotEmpty()) {
-                if (line.startsWith(EXT_INF)) {
-                    val title      = line.getTitle()
-                    val attributes = line.getAttributes()
-
-                    playlistItems.add(PlaylistItem(title, attributes))
-                } else if (line.startsWith(EXT_VLC_OPT)) {
-                    val item      = playlistItems[currentIndex]
-                    val userAgent = item.userAgent ?: line.getTagValue("http-user-agent")
-                    val referrer  = line.getTagValue("http-referrer")
-
-                    val headers = mutableMapOf<String, String>()
-
-                    if (userAgent != null) {
-                        headers["user-agent"] = userAgent
-                    }
-
-                    if (referrer != null) {
-                        headers["referrer"] = referrer
-                    }
-
-                    playlistItems[currentIndex] = item.copy(
-                        userAgent = userAgent,
-                        headers   = headers
+        for (line in lines) {
+            when {
+                // Yeni kanal tanımı
+                line.startsWith(EXT_INF, ignoreCase = true) -> {
+                    val title = line.getTitle()
+                    val attrs = line.getAttributes()
+                    pendingItem = PlaylistItem(
+                        title = title,
+                        attributes = attrs,
+                        headers = emptyMap(),
+                        url = null,
+                        userAgent = null
                     )
-                } else {
-                    if (!line.startsWith("#")) {
-                        val item       = playlistItems[currentIndex]
-                        val url        = line.getUrl()
-                        val userAgent  = line.getUrlParameter("user-agent")
-                        val referrer   = line.getUrlParameter("referer")
-                        val urlHeaders = if (referrer != null) {item.headers + mapOf("referrer" to referrer)} else item.headers
-
-                        playlistItems[currentIndex] = item.copy(
-                            url       = url,
-                            headers   = item.headers + urlHeaders,
-                            userAgent = userAgent ?: item.userAgent
-                        )
-                        currentIndex++
+                }
+                // Eklenti header satırı (ör. user-agent, referrer)
+                line.startsWith(EXT_VLC_OPT, ignoreCase = true) && pendingItem != null -> {
+                    val ua = pendingItem.userAgent ?: line.getTagValue("http-user-agent")
+                    val ref = line.getTagValue("http-referrer")
+                    val hdrs = mutableMapOf<String, String>()
+                    ua?.let  { hdrs["user-agent"] = it }
+                    ref?.let { hdrs["referrer"]    = it }
+                    pendingItem = pendingItem.copy(userAgent = ua, headers = hdrs)
+                }
+                // Yorum ya da bilinmeyen #EXT-… tag’ı, atla
+                line.startsWith("#") -> {
+                    // hiçbir şey yapma
+                }
+                // Kesinlikle URL satırı: pendingItem ile eşleştir
+                pendingItem != null -> {
+                    val streamUrl = line.getUrl()
+                    val uaParam   = line.getUrlParameter("user-agent")
+                    val refParam  = line.getUrlParameter("referer")
+                    val combinedHeaders = pendingItem.headers.toMutableMap().apply {
+                        uaParam?.let  { this["user-agent"] = it }
+                        refParam?.let { this["referrer"]   = it }
                     }
+                    // Listeye ekle ve pendingItem'ı temizle
+                    items.add(
+                        pendingItem.copy(
+                            url       = streamUrl,
+                            headers   = combinedHeaders,
+                            userAgent = pendingItem.userAgent ?: uaParam
+                        )
+                    )
+                    pendingItem = null
+                }
+                else -> {
+                    // format uymayan satır, atla
                 }
             }
-
-            line = reader.readLine()
         }
-        return Playlist(playlistItems)
+
+        // Eğer son pendingItem'ın URL'i okunmamışsa, hata da atılabilir ama burada yoksayıyoruz.
+        return Playlist(items)
     }
 
     /** Replace "" (quotes) from given string. */
