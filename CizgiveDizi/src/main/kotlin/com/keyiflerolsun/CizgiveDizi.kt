@@ -90,8 +90,9 @@ class CizgiveDizi : MainAPI() {
     }
 
     private fun fixImageFormat(url: String): String {
-        return url.replace(".avif", ".jpg")
-    }
+    val encodedUrl = URLEncoder.encode(url, "UTF-8")
+    return "https://res.cloudinary.com/demo/image/fetch/f_auto/$encodedUrl"
+}
 
     override suspend fun search(query: String): List<SearchResponse> {
         val normalizedQuery = normalizeString(query.lowercase().trim())
