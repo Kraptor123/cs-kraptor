@@ -1,3 +1,4 @@
+// ! Bu araç @kraptor123 tarafından yazılmıştır.
 package com.keyiflerolsun
 
 import android.util.Log
