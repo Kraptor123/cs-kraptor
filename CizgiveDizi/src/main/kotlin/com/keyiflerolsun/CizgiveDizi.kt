@@ -1,8 +1,6 @@
 package com.keyiflerolsun
 
-import android.os.Build
 import android.util.Log
-import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import kotlinx.coroutines.runBlocking
@@ -46,7 +44,7 @@ class CizgiveDizi : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        if (page > 1) return HomePageResponse(listOf())
+        if (page > 1) return newHomePageResponse(listOf())
         Log.d("CizgiVeDizi", "getMainPage çağrıldı: ${request.name}")
 
         // Etiket bazlı listeleme: hem dizi hem film
