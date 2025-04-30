@@ -7,8 +7,8 @@ Kısa kod = kekikan
 -Anizm sitesi eklenti olarak eklenmiştir.        
 -DiziFun sitesi eklenti olarak eklenmiştir.       
 -CizgiveDizi sitesi eklenti olarak eklenmiştir.
-=AsyaAnimeleri sitesi eklenti olarak eklenmiştir.
 (sitede cogu poster avif formatinda ve jpg alternatifi yoksa maalesef poster resimleri yuklenmiyor.)
+-AsyaAnimeleri sitesi eklenti olarak eklenmiştir.
 
 An itibarı ile çalışmayan eklenti yoktur. 
 İyi seyirler.
