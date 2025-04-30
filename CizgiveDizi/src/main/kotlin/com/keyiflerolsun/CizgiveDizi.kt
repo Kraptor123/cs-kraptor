@@ -1,5 +1,3 @@
-// ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-
 package com.keyiflerolsun
 
 import android.os.Build
@@ -19,299 +17,228 @@ class CizgiveDizi : MainAPI() {
     override val hasQuickSearch = false
     override val supportedTypes = setOf(TvType.Cartoon)
 
+    // Yönetilebilir filtreler
+    private val excludedTags = listOf("lgbt")
+
     // Kategori etiket kodları ve sıralaması
     private val categoryOrder = listOf(
         "çd","diz","ani","yans","pro","bel","kom","mac","çi","yi",
         "sih","yem","sav","ftb","pemd","müz","giz","kork","eği","dra","gh",
-        "tıp","yar","aks","spor","polis","doğa","suç","füt"
+        "tıp","yar","aks","bilkur","fant","spor","polis","doğa","suç","füt"
     )
 
-    // Kategori etiket kodu -> açıklama
+    // Etiket kodu -> açıklama
     private val tagLabels by lazy { runBlocking { loadTagLabels() } }
     // İçerik kodu -> etiket kodları
-    private val contentTags by lazy { runBlocking { loadContentTagMappings() } }
+    private val contentTags by lazy {
+        runBlocking {
+            val diziTags = loadContentTagMappings("dizi")
+            val filmTags = loadContentTagMappings("film")
+            diziTags + filmTags
+        }
+    }
 
-    // Ana sayfa: kategori listesi
-    override val mainPage = mainPageOf(*categoryOrder.map { code ->
-        "$mainUrl/etiket/$code" to tagLabels[code].orEmpty()
-    }.toTypedArray())
+    override val mainPage = mainPageOf(
+        "$mainUrl/dizi" to "Diziler",
+        *categoryOrder.map { code ->
+            "$mainUrl/etiket/$code" to tagLabels[code].orEmpty()
+        }.toTypedArray()
+    )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        // Sayfa kontrolü - Sadece ilk sayfayı gösterelim
-        if (page > 1) {
-            return HomePageResponse(listOf())
-        }
+        if (page > 1) return HomePageResponse(listOf())
+        Log.d("CizgiVeDizi", "getMainPage çağrıldı: ${request.name}")
 
-        // Eğer kategori isteği ise
+        // Etiket bazlı listeleme: hem dizi hem film
         val tagCode = tagLabels.entries.firstOrNull { it.value == request.name }?.key
         if (tagCode != null) {
-            val (kodList, isimMap) = loadIsimData("dizi")
-            val posterMap = loadPosterData("dizi")
-            // Filtreleme: bu tagCode içeren içerikler
-            val filtered = kodList.filter { (code, _) ->
-                contentTags[code]?.contains(tagCode) == true
-            }
-            return newHomePageResponse(request.name,
-                filtered.mapNotNull { (code, path) ->
-                    val title = isimMap[code] ?: return@mapNotNull null
-                    // LGBT içerik kontrolü - eğer içerik LGBT etiketine sahipse atla
-                    if (contentTags[code]?.contains("lgbt") == true) {
-                        return@mapNotNull null
+            val results = mutableListOf<SearchResponse>()
+
+            // Diziler
+            runCatching {
+                val (diziKodList, diziIsimMap) = loadIsimData("dizi")
+                val diziPosterMap = loadPosterData("dizi")
+                diziKodList.filter { (code, _) -> contentTags[code]?.contains(tagCode) == true }
+                    .forEach { (code, path) ->
+                        if (contentTags[code]?.any { it in excludedTags } == true) return@forEach
+                        val title = diziIsimMap[code] ?: return@forEach
+                        val url = "$mainUrl/dizi/$code/$path"
+                        val rawPoster = diziPosterMap[code]
+                        val poster = rawPoster?.let { fixImageFormat(it) }
+                        results += newTvSeriesSearchResponse(title, url, TvType.Cartoon) { this.posterUrl = poster }
                     }
-                    val url = "$mainUrl/dizi/$code/$path"
-                    val rawPoster = posterMap[code]
-                    val poster = rawPoster?.let { fixImageFormat(it) }
-                    newTvSeriesSearchResponse(title, url, TvType.Cartoon) {
-                        this.posterUrl = poster
+            }.onFailure { Log.e("CizgiVeDizi", "Dizi yükleme hatası", it) }
+
+            // Filmler
+            runCatching {
+                val (filmKodList, filmIsimMap) = loadIsimData("film")
+                val filmPosterMap = loadPosterData("film")
+                filmKodList.filter { (code, _) -> contentTags[code]?.contains(tagCode) == true }
+                    .forEach { (code, path) ->
+                        if (contentTags[code]?.any { it in excludedTags } == true) return@forEach
+                        val rawTitle = filmIsimMap[code] ?: return@forEach
+                        val title = "$rawTitle (film)"
+                        val url = "$mainUrl/film/$code/$path"
+                        val rawPoster = filmPosterMap[code]
+                        val poster = rawPoster?.let { fixImageFormat(it) }
+                        results += newMovieSearchResponse(title, url, TvType.Movie) { this.posterUrl = poster }
                     }
-                }
-            )
+            }.onFailure { Log.e("CizgiVeDizi", "Film yükleme hatası", it) }
+
+            // Karışık listeleme için karıştır
+            results.shuffle()
+
+            return newHomePageResponse(request.name, results)
         }
-        // Varsayılan: Diziler ve Filmler ana sayfası
-        val basePath = if (request.name == "Filmler") "film" else "dizi"
+
+    // Ana sayfa: sadece Diziler ana girdisi
+    val results = runCatching {
+        val (kodList, isimMap) = loadIsimData("dizi")
+        val posterMap = loadPosterData("dizi")
+        kodList.mapNotNull { (code, path) ->
+            if (contentTags[code]?.any { it in excludedTags } == true) return@mapNotNull null
+            val title = isimMap[code] ?: return@mapNotNull null
+            val url = "$mainUrl/dizi/$code/$path"
+            val rawPoster = posterMap[code]
+            val poster = rawPoster?.let { fixImageFormat(it) }
+            newTvSeriesSearchResponse(title, url, TvType.Cartoon) { this.posterUrl = poster }
+        }
+    }.getOrElse {
+        Log.e("CizgiVeDizi", "Ana sayfa yükleme hatası", it)
+        emptyList()
+    }
+
+    return newHomePageResponse("Diziler", results)
+}
+
+private suspend fun loadTagLabels(): Map<String,String> {
+    val text = app.get("$mainUrl/etiket.txt").text
+    return text.lineSequence().map { it.trim().removePrefix("|") }
+        .mapNotNull {
+            val parts = it.split('=', limit=2)
+            parts.getOrNull(1)?.let { code -> parts[0].lowercase() to code.trim() }
+        }.toMap()
+}
+
+private suspend fun loadContentTagMappings(basePath: String): Map<String,List<String>> {
+    val text = app.get("$mainUrl/$basePath/etiket.txt").text
+    return text.lineSequence().map { it.trim().removePrefix("|") }
+        .mapNotNull {
+            val parts = it.split('=', limit=2)
+            parts.getOrNull(1)?.let {
+                parts[0].lowercase() to it.split(';').map { tag -> tag.trim().lowercase() }
+            }
+        }.toMap()
+}
+
+private suspend fun loadIsimData(basePath: String): Pair<List<Pair<String,String>>, Map<String,String>> {
+    val resp = app.get("$mainUrl/$basePath/isim.txt")
+    val list = mutableListOf<Pair<String,String>>()
+    val map = mutableMapOf<String,String>()
+    resp.text.lineSequence().forEach { line ->
+        line.trim().removePrefix("|").split('=',limit=2).takeIf { it.size==2 }?.let {
+            val code = it[0].trim().lowercase()
+            val title = it[1].trim()
+            list += code to title.replace(" ", "_")
+            map[code] = title
+        }
+    }
+    return list to map
+}
+
+private suspend fun loadPosterData(basePath: String): Map<String,String> {
+    val resp = app.get("$mainUrl/$basePath/poster.txt")
+    return resp.text.lineSequence().map { it.trim().removePrefix("|") }
+        .mapNotNull {
+            val parts = it.split('=', limit=2)
+            parts.getOrNull(1)?.let { raw ->
+                val url = when {
+                    raw.startsWith("http") -> raw
+                    raw.startsWith("/") -> "$mainUrl$raw"
+                    else -> "$mainUrl/$raw"
+                }
+                parts[0].lowercase() to url
+            }
+        }.toMap()
+}
+
+private fun fixImageFormat(url: String): String {
+    if (url.isEmpty()) return ""
+    val encodedUrl = URLEncoder.encode(url, "UTF-8")
+    return try {
+        "https://res.cloudinary.com/djjnbig4t/image/fetch/f_auto/$encodedUrl"
+    } catch (e: Exception) {
+        url
+    }
+}
+
+override suspend fun search(query: String): List<SearchResponse> {
+    val normalizedQuery = normalizeString(query.lowercase().trim())
+    val results = mutableListOf<SearchResponse>()
+    for (basePath in listOf("dizi", "film")) {
         val (kodList, isimMap) = loadIsimData(basePath)
         val posterMap = loadPosterData(basePath)
-        return newHomePageResponse(request.name,
-            kodList.mapNotNull { (code, path) ->
-                val title = isimMap[code] ?: return@mapNotNull null
-                // LGBT içerik kontrolü - eğer içerik LGBT etiketine sahipse atla
-                if (contentTags[code]?.contains("lgbt") == true) {
-                    return@mapNotNull null
-                }
-                val url = "$mainUrl/$basePath/$code/$path"
-                val rawPoster = posterMap[code]
-                val poster = rawPoster?.let { fixImageFormat(it) }
-                newTvSeriesSearchResponse(title, url, TvType.Cartoon) {
-                    this.posterUrl = poster
-                }
-            }
-        )
-    }
-
-    private suspend fun loadTagLabels(): Map<String,String> {
-        val text = app.get("$mainUrl/etiket.txt").text
-        return text.lineSequence()
-            .map { it.trim().removePrefix("|") }
-            .mapNotNull {
-                val (code, label) = it.split('=', limit=2).takeIf { it.size==2 } ?: return@mapNotNull null
-                code.lowercase() to label.trim()
-            }.toMap()
-    }
-
-    private suspend fun loadContentTagMappings(): Map<String,List<String>> {
-        val text = app.get("$mainUrl/dizi/etiket.txt").text
-        return text.lineSequence()
-            .map { it.trim().removePrefix("|") }
-            .mapNotNull {
-                val (contentCode, tags) = it.split('=', limit=2).takeIf { it.size==2 } ?: return@mapNotNull null
-                contentCode.lowercase() to tags.split(';').map { it.trim().lowercase() }
-            }.toMap()
-    }
-
-    // Var olan fonksiyonlar
-    private suspend fun loadIsimData(basePath: String): Pair<List<Pair<String,String>>, Map<String,String>> {
-        val resp = app.get("$mainUrl/$basePath/isim.txt")
-        val list = mutableListOf<Pair<String,String>>()
-        val map = mutableMapOf<String,String>()
-        resp.text.split("\n").forEach { line ->
-            line.trim().removePrefix("|").split('=',limit=2).takeIf{it.size==2}?.let{
-                val code=it[0].trim().lowercase(); val title=it[1].trim();
-                list.add(code to title.replace(" ","_")); map[code]=title
-            }
-        }
-        return list to map
-    }
-
-    private suspend fun loadPosterData(basePath: String): Map<String,String> {
-        val resp = app.get("$mainUrl/$basePath/poster.txt")
-        return resp.text.lineSequence()
-            .map { it.trim().removePrefix("|") }
-            .mapNotNull {
-                val (code,urlRaw)=it.split('=',limit=2).takeIf{it.size==2}?:return@mapNotNull null
-                code.lowercase() to when {
-                    urlRaw.startsWith("http") -> urlRaw
-                    urlRaw.startsWith("/") -> "$mainUrl$urlRaw"
-                    else -> "$mainUrl/$urlRaw"
-                }
-            }.toMap()
-    }
-
-    private fun fixImageFormat(url: String): String {
-        if (url.isEmpty()) return ""
-        val encodedUrl = URLEncoder.encode(url, "UTF-8")
-        return "https://res.cloudinary.com/djjnbig4t/image/fetch/f_auto/$encodedUrl"
-    }
-
-    override suspend fun search(query: String): List<SearchResponse> {
-        val normalizedQuery = normalizeString(query.lowercase().trim())
-        val results = mutableListOf<SearchResponse>()
-
-        // Her iki içerik türü için arama yapalım
-        for (basePath in listOf("dizi", "film")) {
-            val (kodList, isimMap) = loadIsimData(basePath)
-            val posterMap = loadPosterData(basePath)
-
-            // isimMap içinde arama yap
-            isimMap.forEach { (code, title) ->
-                val normalizedTitle = normalizeString(title.lowercase())
-                if (normalizedTitle.contains(normalizedQuery)) {
-                    // LGBT içerik kontrolü - eğer içerik LGBT etiketine sahipse atla
-                    if (contentTags[code]?.contains("lgbt") == true) {
-                        return@forEach
-                    }
-
-                    val formattedTitle = title.replace(" ", "_")
-                    val url = "$mainUrl/${basePath}/$code/$formattedTitle"
-
-                    val rawPoster = posterMap[code]
-                    val poster = rawPoster?.let { fixImageFormat(it) }
-
-                    results.add(
-                        newTvSeriesSearchResponse(title, url, TvType.Movie) {
-                            this.posterUrl = poster
-                        }
-                    )
-                }
-            }
-        }
-
-        return results
-    }
-
-    /**
-     * Türkçe karakterleri ve özel karakterleri normalize eden yardımcı fonksiyon
-     */
-    private fun normalizeString(input: String): String {
-        return input
-            .replace('ı', 'i')
-            .replace('ğ', 'g')
-            .replace('ü', 'u')
-            .replace('ş', 's')
-            .replace('ö', 'o')
-            .replace('ç', 'c')
-            .replace('é', 'e')
-            .replace('è', 'e')
-            .replace('ê', 'e')
-            .replace('â', 'a')
-            .replace('î', 'i')
-            .replace('û', 'u')
-            .replace('ô', 'o')
-            .replace('-', ' ')
-            .replace('_', ' ')
-            .replace('.', ' ')
-    }
-
-    override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
-
-    private fun Element.toSearchResult(): SearchResponse? {
-        val title     = this.selectFirst("div.title a")?.text() ?: return null
-        val href      = fixUrl(this.selectFirst("div.title a")?.attr("href")) ?: return null
-        val rawPoster = this.selectFirst("backgroundImageEffect")?.attr("src")
-        val poster = rawPoster?.let { fixImageFormat(it) }
-        return newTvSeriesSearchResponse(title, href, TvType.Movie) {
-            this.posterUrl = poster
-        }
-    }
-
-    override suspend fun load(url: String): LoadResponse? {
-        val document = app.get(url).document
-
-        // Determine content type
-        val tvType = when {
-            url.contains("/dizi/", ignoreCase = true) -> TvType.TvSeries
-            url.contains("/film/", ignoreCase = true) -> TvType.Movie
-            else -> null
-        }
-
-        if (tvType == null) {
-            return null
-        }
-
-        // Process based on content type
-        if (tvType == TvType.TvSeries) {
-            // TV Series specific selectors
-            val title = document.selectFirst("div.infoLine h4")?.text() ?: return null
-            val rawPoster = fixUrlNull(document.selectFirst("picture img")?.attr("src")) ?: return null
-            val poster = fixImageFormat(rawPoster)
-            val description = document.selectFirst("div.col-12 p")?.text()?.trim()
-
-            val tagsRaw = document.select(".hero > div:nth-child(2) > div:nth-child(3) > p:nth-child(1)")
-                .mapNotNull { it.text()?.trim() }
-
-            val tags = tagsRaw.flatMap { it.split(",") }
-                .map { it.trim() }
-                .filter { it.isNotEmpty() }
-
-            val episodes = document.select(".bolum").mapNotNull {
-                val rawEpName = it.selectFirst(".card-title")?.text()?.trim() ?: return@mapNotNull null
-                val epName = rawEpName.substringAfter(")").trim()
-                val eprawHref = fixUrlNull(it.selectFirst("a.bolum")?.attr("href")) ?: return@mapNotNull null
-                val epHref = eprawHref
-                val epEpisode = Regex("""^(\d+)\)""").find(rawEpName)?.groupValues?.get(1)?.toIntOrNull()
-                newEpisode(epHref) {
-                    this.name = epName
-                    this.episode = epEpisode
-                }
-            }
-
-            return newTvSeriesLoadResponse(title, url, TvType.Cartoon, episodes) {
+        kodList.forEach { (code, _) ->
+            val titlePlain = isimMap[code] ?: return@forEach
+            if (!normalizeString(titlePlain.lowercase()).contains(normalizedQuery)) return@forEach
+            if (contentTags[code]?.any { it in excludedTags } == true) return@forEach
+            val title = if (basePath == "film") "$titlePlain (film)" else titlePlain
+            val formattedRaw = titlePlain.replace(" ", "_")
+            val url = "$mainUrl/$basePath/$code/$formattedRaw"
+            val rawPoster = posterMap[code]
+            val poster = rawPoster?.let { fixImageFormat(it) }
+            results += newTvSeriesSearchResponse(title, url, if (basePath=="film") TvType.Movie else TvType.Cartoon) {
                 this.posterUrl = poster
-                this.plot = description
-                this.tags = tags
-            }
-        } else {
-            // Movie specific processing
-            val movieTitle = document.selectFirst("h1.fw-light")?.text() ?: return null
-            val rawPoster = fixUrlNull(document.selectFirst("picture img")?.attr("src")) ?: return null
-            val poster = fixImageFormat(rawPoster)
-            val movieDescription = document.selectFirst(".lead")?.text()?.trim()
-
-            val tagsRaw = document.select(".hero > div:nth-child(2) > div:nth-child(3) > p:nth-child(1)")
-                .mapNotNull { it.text()?.trim() }
-
-            val tags = tagsRaw.flatMap { it.split(",") }
-                .map { it.trim() }
-                .filter { it.isNotEmpty() }
-
-            return newMovieLoadResponse(movieTitle, url, TvType.Cartoon, url) {
-                this.posterUrl = poster
-                this.plot = movieDescription
-                this.tags = tags
             }
         }
     }
+    return results
+}
 
-    private fun fixUrl(url: String?): String? {
-        if (url == null || url.isEmpty()) return null
+override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
-        try {
-            val fixedUrl = if (url.startsWith("http")) url else "$mainUrl${if (url.startsWith("/")) url else "/$url"}"
-            return fixedUrl
-        } catch (e: Exception) {
-            Log.e("Cfdz", "URL düzeltme hatası: $url", e)
-            return null
-        }
+override suspend fun load(url: String): LoadResponse? {
+    val doc = app.get(url).document
+    val isMovie = url.contains("/film/")
+    return if (!isMovie) loadSeries(doc, url) else loadMovie(doc, url)
+}
+
+private suspend fun loadSeries(doc: Document, url: String) = runCatching {
+    val title = doc.selectFirst("div.infoLine h4")!!.text()
+    val rawPoster = fixUrlNull(doc.selectFirst("picture img")!!.attr("src"))!!
+    val poster = fixImageFormat(rawPoster)
+    val plot = doc.selectFirst("div.col-12 p")!!.text().trim()
+    val tags = doc.select(".hero > div:nth-child(2) > div:nth-child(3) > p:nth-child(1)")
+        .flatMap { it.text().split(",") }.map { it.trim() }.filter { it.isNotEmpty() }
+    val episodes = doc.select(".bolum").mapNotNull {
+        val rawName = it.selectFirst(".card-title")!!.text().trim()
+        val epName = rawName.substringAfter(")").trim()
+        val href = fixUrlNull(it.selectFirst("a.bolum")!!.attr("href"))!!
+        val num = Regex("^(\\d+)").find(rawName)?.groupValues?.get(1)?.toInt()
+        newEpisode(href) { this.name=epName; this.episode=num }
     }
-
-    private fun fixUrlNull(url: String?): String? {
-        if (url.isNullOrEmpty()) return null
-        return try {
-            if (url.startsWith("http")) url else "$mainUrl${if (url.startsWith("/")) url else "/$url"}"
-        } catch (e: Exception) {
-            Log.e("Cfdz", "URL düzeltme hatası: $url", e)
-            null
-        }
+    newTvSeriesLoadResponse(title, url, TvType.Cartoon, episodes) {
+        this.posterUrl=poster; this.plot=plot; this.tags=tags
     }
+}.getOrNull()
 
-    override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        Log.d("Cfdz", "data =  $data")
-        val document = app.get(data).document
-        val videoLinki = document.selectFirst("iframe")?.attr("src")
-        Log.d("Cfdz", "videoLinki » $videoLinki")
-        val iframe = "$videoLinki"
-
-        loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
-
-        return true
+private suspend fun loadMovie(doc: Document, url: String) = runCatching {
+    val rawTitle = doc.selectFirst("h1.fw-light")!!.text()
+    val title = "$rawTitle (film)"
+    val rawPoster = fixUrlNull(doc.selectFirst("picture img")!!.attr("src"))!!
+    val poster = fixImageFormat(rawPoster)
+    val plot = doc.selectFirst(".lead")!!.text().trim()
+    val tags = doc.select(".hero > div:nth-child(2) > div:nth-child(3) > p:nth-child(1)")
+        .flatMap { it.text().split(",") }.map { it.trim() }.filter { it.isNotEmpty() }
+    newMovieLoadResponse(title, url, TvType.Movie, url) {
+        this.posterUrl=poster; this.plot=plot; this.tags=tags
     }
+}.getOrNull()
+
+private fun fixUrlNull(url: String?) = url?.let { if (it.startsWith("http")) it else "$mainUrl${if (it.startsWith("/")) it else "/$it"}" }
+
+private fun normalizeString(input: String) = input
+    .replace('ı','i').replace('ğ','g').replace('ü','u')
+    .replace('ş','s').replace('ö','o').replace('ç','c')
+    .replace('-',' ').replace('_',' ').replace('.',' ')
 }
