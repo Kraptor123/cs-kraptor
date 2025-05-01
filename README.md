@@ -9,7 +9,8 @@ Kısa kod = kekikan
 -CizgiveDizi sitesi eklenti olarak eklenmiştir.                                 
 -AsyaAnimeleri sitesi eklenti olarak eklenmiştir.
 
-An itibarı ile çalışmayan eklenti yoktur. 
+**Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için discussions bölümünde açtığım site istekleri sorusuna yanıt olarak istediğiniz siteleri söyleyebilirsiniz.**
+
 İyi seyirler.
 
 ## 💾 Kurulum
