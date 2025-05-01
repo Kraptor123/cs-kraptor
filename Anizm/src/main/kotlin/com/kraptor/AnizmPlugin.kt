@@ -1,12 +1,14 @@
-package com.keyiflerolsun
+// ! Bu araç @kraptor123 tarafından yazılmıştır.
 
+package com.kraptor
+
+import android.content.Context
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 import com.lagradost.cloudstream3.plugins.Plugin
-import android.content.Context
 
 @CloudstreamPlugin
-class DiziFunPlugin: Plugin() {
+class AnizmPlugin: Plugin() {
     override fun load(context: Context) {
-        registerMainAPI(DiziFun())
+        registerMainAPI(Anizm())
     }
 }

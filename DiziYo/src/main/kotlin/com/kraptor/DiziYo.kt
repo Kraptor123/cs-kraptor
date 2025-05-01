@@ -1,6 +1,6 @@
 // ! Bu araç @kraptor tarafından yazılmıştır.
 
-package com.keyiflerolsun
+package com.kraptor
 
 import android.util.Log
 import org.jsoup.nodes.Element

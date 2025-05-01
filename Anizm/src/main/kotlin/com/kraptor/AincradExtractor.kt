@@ -1,6 +1,6 @@
 // ! Bu araç @kraptor123 tarafından yazılmıştır.
 
-package com.keyiflerolsun
+package com.kraptor
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.app

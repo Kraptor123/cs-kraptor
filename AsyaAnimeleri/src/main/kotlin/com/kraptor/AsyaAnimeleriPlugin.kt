@@ -1,14 +1,12 @@
-// ! Bu araç @kraptor123 tarafından yazılmıştır.
+package com.kraptor
 
-package com.keyiflerolsun
-
-import android.content.Context
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 import com.lagradost.cloudstream3.plugins.Plugin
+import android.content.Context
 
 @CloudstreamPlugin
-class AnizmPlugin: Plugin() {
+class AsyaAnimeleriPlugin: Plugin() {
     override fun load(context: Context) {
-        registerMainAPI(Anizm())
+        registerMainAPI(AsyaAnimeleri())
     }
 }

@@ -1,6 +1,6 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
 
-package com.keyiflerolsun
+package com.kraptor
 
 import android.util.Log
 import com.lagradost.cloudstream3.*

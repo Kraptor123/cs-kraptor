@@ -1,6 +1,6 @@
 // ! Bu araç @kraptor123 tarafından yazılmıştır.
 
-package com.keyiflerolsun
+package com.kraptor
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
