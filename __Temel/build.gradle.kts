@@ -1,3 +1,4 @@
+// ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
 version = 0
 
 cloudstream {
