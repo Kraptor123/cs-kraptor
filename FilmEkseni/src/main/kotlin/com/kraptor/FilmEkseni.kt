@@ -227,7 +227,7 @@ class FilmEkseni : MainAPI() {
             type = ExtractorLinkType.M3U8
         ) {
             headers = mapOf("Referer" to mainUrl)
-            quality = Qualities.Unknown.value
+            quality = Qualities.P1080.value
         }
 
         if (link.url.isBlank()) {
