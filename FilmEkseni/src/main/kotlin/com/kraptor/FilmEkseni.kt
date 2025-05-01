@@ -18,35 +18,34 @@ class FilmEkseni : MainAPI() {
     override val supportedTypes = setOf(TvType.Movie)
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/tur/aile-filmleri/" to "Aile Filmleri",
-        "${mainUrl}/tur/aksiyon-filmleri/" to "Aksiyon Filmleri",
-        "${mainUrl}/tur/animasyon-filmleri/" to "Animasyon Filmleri",
-        "${mainUrl}/tur/belgesel-filmleri/" to "Belgesel Filmleri",
-        "${mainUrl}/tur/bilim-kurgu-filmleri/" to "Bilim Kurgu Filmleri",
-        "${mainUrl}/tur/biyografi-filmleri/" to "Biyografi Filmleri",
-        "${mainUrl}/tur/dram-filmleri/" to "Dram Filmleri",
-        "${mainUrl}/tur/fantastik-filmler/" to "Fantastik Filmleri",
-        "${mainUrl}/tur/gerilim-filmleri/" to "Gerilim Filmleri",
-        "${mainUrl}/tur/gizem-filmleri/" to "Gizem Filmleri",
-        "${mainUrl}/tur/komedi-filmleri/" to "Komedi Filmleri",
-        "${mainUrl}/tur/korku-filmleri/" to "Korku Filmleri",
-        "${mainUrl}/tur/macera-filmleri/" to "Macera Filmleri",
-        "${mainUrl}/tur/muzik-filmleri/" to "Müzik Filmleri",
-        "${mainUrl}/tur/muzikal/" to "Müzikal Filmleri",
-        "${mainUrl}/tur/romantik-filmler/" to "Romantik Filmleri",
-        "${mainUrl}/tur/savas-filmleri/" to "Savaş Filmleri",
-        "${mainUrl}/tur/spor-filmleri/" to "Spor Filmleri",
-        "${mainUrl}/tur/suc-filmleri/" to "Suç Filmleri",
-        "${mainUrl}/tur/tarih-filmleri/" to "Tarih Filmleri",
-        "${mainUrl}/tur/western-filmler/" to "Western Filmleri",
-        "${mainUrl}/diziler/" to "Diziler",
-        "${mainUrl}/en-cok-izlenenler/" to "En Çok İzlenenler",
-        "${mainUrl}/imdb-250/" to "IMDb 250",
-        "${mainUrl}/kategori/tavsiye-filmler" to "Tavsiye Filmler"
+        "${mainUrl}/tur/aile-filmleri/page"  to "Aile Filmleri",
+        "${mainUrl}/tur/aksiyon-filmleri/page"           to "Aksiyon Filmleri",
+        "${mainUrl}/tur/animasyon-filmleri/page"         to "Animasyon Filmleri",
+        "${mainUrl}/tur/belgesel-filmleri/page"          to "Belgesel Filmleri",
+        "${mainUrl}/tur/bilim-kurgu-filmleri/page"       to "Bilim Kurgu Filmleri",
+        "${mainUrl}/tur/biyografi-filmleri/page"         to "Biyografi Filmleri",
+        "${mainUrl}/tur/dram-filmleri/page"              to "Dram Filmleri",
+        "${mainUrl}/tur/fantastik-filmler/page"               to "Fantastik Filmleri",
+        "${mainUrl}/tur/gerilim-filmleri/page"           to "Gerilim Filmleri",
+        "${mainUrl}/tur/gizem-filmleri/page"             to "Gizem Filmleri",
+        "${mainUrl}/tur/komedi-filmleri/page"            to "Komedi Filmleri",
+        "${mainUrl}/tur/korku-filmleri/page"             to "Korku Filmleri",
+        "${mainUrl}/tur/macera-filmleri/page"            to "Macera Filmleri",
+        "${mainUrl}/tur/muzik-filmleri/page"             to "Müzik Filmleri",
+        "${mainUrl}/tur/muzikal/page"                         to "Müzikal Filmleri",
+        "${mainUrl}/tur/romantik-filmler/page"                to "Romantik Filmleri",
+        "${mainUrl}/tur/savas-filmleri/page"             to "Savaş Filmleri",
+        "${mainUrl}/tur/spor-filmleri/page"              to "Spor Filmleri",
+        "${mainUrl}/tur/suc-filmleri/page"               to "Suç Filmleri",
+        "${mainUrl}/tur/tarih-filmleri/page"             to "Tarih Filmleri",
+        "${mainUrl}/tur/western-filmler/page"            to "Western Filmleri",
+        "${mainUrl}/diziler/page"                        to "Diziler",
+        "${mainUrl}/en-cok-izlenenler/page"              to "En Çok İzlenenler",
+        "${mainUrl}/kategori/tavsiye-filmler/page"       to "Tavsiye Filmler"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}").document
+        val document = app.get("${request.data}/$page").document
         val home = document.select("div.poster").mapNotNull { it.toMainPageResult() }
 
         return newHomePageResponse(request.name, home)
@@ -171,38 +170,72 @@ class FilmEkseni : MainAPI() {
         Log.d("Eksen", "data » ${data}")
         val document = app.get(data).document
 
-        val iframeUrl = document.select("div.card-video iframe")
-            .attr("data-src")
-            .let { if (it.startsWith("//")) "https:$it" else it }
+        // Get iframe element
+        val iframeElement = document.select("div.card-video iframe").firstOrNull()
+        if (iframeElement == null) {
+            Log.d("Eksen", "No video iframe found")
+            return false
+        }
 
+        // Get and validate iframe URL
+        var iframeUrl = iframeElement.attr("data-src")
+        iframeUrl = when {
+            iframeUrl.startsWith("//") -> "https:$iframeUrl"
+            iframeUrl.isBlank() -> {
+                Log.d("Eksen", "Empty iframe URL")
+                return false
+            }
+
+            else -> iframeUrl
+        }
         Log.d("Eksen", "iframe = $iframeUrl")
 
+        // Extract and validate video ID
         val videoId = iframeUrl.substringAfterLast("/")
-        Log.d("Eksen", "videoId = $videoId")
+        if (videoId.isBlank() || videoId == iframeUrl) {
+            Log.d("Eksen", "Invalid video ID")
+            return false
+        }
 
+        // Validate master playlist URL
         val masterListe = "https://eksenload.site/uploads/encode/$videoId/master.m3u8"
+        if (!masterListe.startsWith("https://") || !masterListe.endsWith(".m3u8")) {
+            Log.d("Eksen", "Invalid master URL format")
+            return false
+        }
 
+        // Validate subtitles before sending
         val subtitleGetiren = listOf(
             SubtitleFile("Türkçe", "https://eksenload.site/uploads/encode/$videoId/${videoId}_tur.vtt"),
             SubtitleFile("İngilizce", "https://eksenload.site/uploads/encode/$videoId/${videoId}_en.vtt")
-        )
-
-        for (subtitle in subtitleGetiren) {
-            subtitleCallback(subtitle)
+        ).filter {
+            // Verify subtitle URLs have valid format
+            it.url.startsWith("https://") && it.url.endsWith(".vtt")
         }
 
-        callback(
-            newExtractorLink(
-                source = this.name,
-                name = this.name,
-                url = masterListe,
-                type = ExtractorLinkType.M3U8
-            ) {
-                headers = mapOf("Referer" to mainUrl)
-                quality = Qualities.Unknown.value
-            }
-        )
+        if (subtitleGetiren.isEmpty()) {
+            Log.d("Eksen", "No valid subtitles found")
+            return false
+        }
 
+        subtitleGetiren.forEach { subtitleCallback(it) }
+
+        val link = newExtractorLink(
+            source = this.name,
+            name = this.name,
+            url = masterListe,
+            type = ExtractorLinkType.M3U8
+        ) {
+            headers = mapOf("Referer" to mainUrl)
+            quality = Qualities.Unknown.value
+        }
+
+        if (link.url.isBlank()) {
+            Log.d("Eksen", "Empty extractor link")
+            return false
+        }
+
+        callback(link)
         return true
     }
 }
