@@ -9,7 +9,7 @@ import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class SuperFilmGeldi : MainAPI() {
-    override var mainUrl              = "https://www.superfilmgeldi.me"
+    override var mainUrl              = "https://www.superfilmgeldi.info"
     override var name                 = "SuperFilmGeldi"
     override val hasMainPage          = true
     override var lang                 = "tr"
