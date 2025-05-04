@@ -54,7 +54,9 @@ class HDFilmCehennemi : MainAPI() {
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         // URL'deki sayfa numarasını güncelle
-        val url = request.data.replace("/page/1/", "/page/${page}/")
+        val url = request.data
+            .replace("/page/1/", "/page/${page}/")
+            .replace("/page/2/", "/page/${page}/")
 
         // API isteği gönder
         val response = app.get(url, headers = standardHeaders, referer = mainUrl)
