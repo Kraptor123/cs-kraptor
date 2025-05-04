@@ -1,9 +1,9 @@
-version = 9
+version = 1
 
 cloudstream {
-    authors     = listOf("Adippe", "keyiflerolsun")
+    authors     = listOf("Kraptor123","Adippe", "keyiflerolsun")
     language    = "tr"
-    description = "Canlı TV"
+    description = "Canlı Televiyon Kanallari"
 
     /**
      * Status int as the following:

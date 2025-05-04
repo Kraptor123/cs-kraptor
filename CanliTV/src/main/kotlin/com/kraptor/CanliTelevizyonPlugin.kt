@@ -1,12 +1,12 @@
-package com.keyiflerolsun
+package com.kraptor
 
 import android.content.Context
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 import com.lagradost.cloudstream3.plugins.Plugin
 
 @CloudstreamPlugin
-class CanliTVPlugin: Plugin() {
+class CanliTelevizyonPlugin: Plugin() {
     override fun load(context: Context) {
-        registerMainAPI(CanliTV())
+        registerMainAPI(CanliTelevizyon())
     }
 }

@@ -1,6 +1,6 @@
 // ! https://codeberg.org/cloudstream/cloudstream-extensions-multilingual/src/branch/master/FreeTVProvider/src/main/kotlin/com/lagradost/FreeTVProvider.kt
 
-package com.keyiflerolsun
+package com.kraptor
 
 import android.util.Log
 import com.lagradost.cloudstream3.*
@@ -9,9 +9,9 @@ import com.lagradost.cloudstream3.utils.AppUtils.parseJson
 import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import java.io.InputStream
 
-class CanliTV : MainAPI() {
+class CanliTelevizyon : MainAPI() {
     override var mainUrl              = "https://raw.githubusercontent.com/Kraptor123/yaylink/refs/heads/main/channels.m3u"
-    override var name                 = "CanliTV"
+    override var name                 = "CanliTelevizyon"
     override val hasMainPage          = true
     override var lang                 = "tr"
     override val hasQuickSearch       = true
