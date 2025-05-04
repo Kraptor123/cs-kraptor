@@ -9,7 +9,7 @@ Kısa kod = kekikan
 -CizgiveDizi sitesi eklenti olarak eklenmiştir.                                 
 -AsyaAnimeleri sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                  
 -FilmEkseni sitesi eklenti olarak eklenmiştir.                                 
-
+-CanliTV eklentisi için maç kanalları eklenmiştir.                                                                                                                                                                                 
 **Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için discussions bölümünde açtığım site istekleri sorusuna yanıt olarak istediğiniz siteleri söyleyebilirsiniz.**
 
 
