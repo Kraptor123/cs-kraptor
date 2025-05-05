@@ -247,11 +247,7 @@ class AnimeIzlesene : MainAPI() {
                 val episodeNumber = episodeNumberText?.substringBefore(".")?.trim()?.toIntOrNull()
 
                 newEpisode(episodeUrl) {
-                    this.name = when {
-                        !episodeName.isNullOrEmpty() -> "Sezon $seasonNumber - $episodeName"
-                        episodeNumber != null -> "Sezon $seasonNumber Bölüm $episodeNumber"
-                        else -> "Sezon $seasonNumber Bilinmeyen Bölüm"
-                    }
+                    this.name = episodeName
                     this.episode = episodeNumber
                     this.season = seasonNumber
                 }
