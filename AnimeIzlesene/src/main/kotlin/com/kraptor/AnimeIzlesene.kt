@@ -309,6 +309,8 @@ class AnimeIzlesene : MainAPI() {
                     ).text
 
                     val regex = Regex("""src="([^"]+)"""")
+
+
                     val videoUrls = regex.findAll(response)
                         .mapNotNull { it.groups[1]?.value?.replace("&amp;", "&") }
                         .toList()
@@ -318,13 +320,20 @@ class AnimeIzlesene : MainAPI() {
                         foundLinks = true
                     }
 
-                    if (videoUrls.isNotEmpty()) {
+                    val fixedUrls = videoUrls.map { url ->
+                        if (url.startsWith("//")) {
+                            "https:$url"
+                        } else {
+                            url
+                        }
+                    }
+
+                    if (fixedUrls.isNotEmpty()) {
                         foundLinks = true
-                        Log.d("Animei", "Video: $videoUrls")
+                        Log.d("Animei", "Video: $fixedUrls")
 
-
-                       videoUrls.forEach { url ->
-                           loadExtractor(url, "$mainUrl/", subtitleCallback, callback)
+                        fixedUrls.forEach { url ->
+                            loadExtractor(url, "$mainUrl/", subtitleCallback, callback)
                         }
                     }
 
