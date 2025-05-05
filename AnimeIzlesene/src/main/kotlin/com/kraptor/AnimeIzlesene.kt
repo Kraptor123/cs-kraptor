@@ -7,10 +7,13 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
+import java.net.URLEncoder
+import com.lagradost.cloudstream3.DubStatus
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import kotlin.coroutines.cancellation.CancellationException
 
 
 class AnimeIzlesene : MainAPI() {
@@ -97,23 +100,64 @@ class AnimeIzlesene : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val document = app.get("${mainUrl}/search/${query}").document
+        return try {
+            // 1) Query’i encode et
+            val encodedQuery = URLEncoder.encode(query, "UTF-8")
+//            Log.d("arama", "Encoded Query = $encodedQuery")
 
-        return document.select("div.col").mapNotNull { it.toSearchResult() }
+            // 2) HTTP GET isteği
+            val httpResponse = app.get(
+                url     = "$mainUrl/ajax/posts",
+                params  = mapOf("q" to encodedQuery),
+                referer = mainUrl,
+                headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0",
+                    "Host"       to "www.animeizlesene.com"
+                )
+            )
+//            Log.d("arama", "HTTP ${httpResponse}")
+            val responseText = httpResponse.text
+//            Log.d("arama", "Raw JSON Response: $responseText")
+
+            // 3) JSON parse
+            val mapper   = jacksonObjectMapper()
+            val rootNode = mapper.readTree(responseText)
+            val dataNode = rootNode["data"] ?: return emptyList()
+
+            // 4) JsonNode listesini AnimeSearchResponse’a çevir
+            dataNode.mapNotNull { itemNode ->
+                val name     = itemNode["name"]?.asText()    ?: return@mapNotNull null
+                val imageUrl = itemNode["image"]?.asText().orEmpty()
+                val url      = itemNode["url"]?.asText()     ?: return@mapNotNull null
+                val typeStr  = itemNode["type"]?.asText().orEmpty()
+
+                val tvType = when {
+                    typeStr.contains("Serisi", ignoreCase = true) -> TvType.Anime
+                    typeStr.contains("Film",   ignoreCase = true) -> TvType.AnimeMovie
+                    else                                          -> TvType.Anime
+                }
+
+                newAnimeSearchResponse(
+                    name = name,
+                    url  = url,
+                    type = tvType,
+                    fix  = false
+                ) {
+                    this.posterUrl   = imageUrl
+                }
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (_: Exception) {
+//            Log.e("arama", "Search failed", e)
+            emptyList()
+        }
     }
 
-    private fun Element.toSearchResult(): SearchResponse? {
-        val title = this.selectFirst("div.col a.list-title")?.text() ?: return null
-        val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
-        val posterUrl =
-            fixUrlNull(this.selectFirst("div.media.media-cover.nightowl-daylight.nightowl-daylight")?.attr("data-src"))
-
-        val type = if (href.contains("/movie/")) TvType.AnimeMovie else TvType.Anime
-
-        return newAnimeSearchResponse(title, href, type) { this.posterUrl = posterUrl }
+    override suspend fun quickSearch(query: String): List<SearchResponse> {
+        // quickSearch, search()'e direkt yönlendiriyor
+        return search(query)
     }
-
-    override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
     @RequiresApi(Build.VERSION_CODES.N)
 
