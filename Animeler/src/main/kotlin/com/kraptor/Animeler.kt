@@ -255,8 +255,23 @@ class Animeler : MainAPI() {
         val link = linkContainer.select("iframe").attr("src")
         Log.d("Animeler", "link = $link")
 
+     val videoSource = linkContainer.select("video > source").attr("src")
+        
+        
+
         try {
-            // Determine which extractor to use based on the link
+            if (videoSource.isNotEmpty() && videoSource.endsWith(".m3u8")) {
+         callback(
+            ExtractorLink(
+               name = "Animeizlesene",
+               source = "Animeizlesene",
+               url = videoSource,
+               referer = mainUrl,
+               quality = Qualities.Unknown.value,
+               type = ExtractorLink.Type.M3U8
+               )
+              )
+            }
             when {
                 link.contains("anizmplayer.com") -> {
                     AincradExtractor().getUrl(link, mainUrl).forEach(callback)
