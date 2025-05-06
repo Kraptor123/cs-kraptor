@@ -22,9 +22,9 @@ class Anizm : MainAPI() {
     override var lang = "tr"
     override val hasQuickSearch = true
     override val supportedTypes = setOf(TvType.Anime)
-    override var sequentialMainPage = true
-    override var sequentialMainPageDelay = 50L
-    override var sequentialMainPageScrollDelay = 50L
+//    override var sequentialMainPage = true
+//    override var sequentialMainPageDelay = 50L
+//    override var sequentialMainPageScrollDelay = 50L
 
     // Cloudflare Bypass
 
@@ -40,37 +40,47 @@ class Anizm : MainAPI() {
 
     // Ana Sayfa
     override val mainPage = mainPageOf(
-        "${mainUrl}/harf?harf=a&sayfa=" to "a",
-        "${mainUrl}/harf?harf=b&sayfa=" to "b",
-        "${mainUrl}/harf?harf=c&sayfa=" to "c",
-        "${mainUrl}/harf?harf=d&sayfa=" to "d",
-        "${mainUrl}/harf?harf=e&sayfa=" to "e",
-        "${mainUrl}/harf?harf=f&sayfa=" to "f",
-        "${mainUrl}/harf?harf=g&sayfa=" to "g",
-        "${mainUrl}/harf?harf=h&sayfa=" to "h",
-        "${mainUrl}/harf?harf=i&sayfa=" to "i",
-        "${mainUrl}/harf?harf=j&sayfa=" to "j",
-        "${mainUrl}/harf?harf=k&sayfa=" to "k",
-        "${mainUrl}/harf?harf=l&sayfa=" to "l",
-        "${mainUrl}/harf?harf=m&sayfa=" to "m",
-        "${mainUrl}/harf?harf=n&sayfa=" to "n",
-        "${mainUrl}/harf?harf=o&sayfa=" to "o",
-        "${mainUrl}/harf?harf=p&sayfa=" to "p",
-        "${mainUrl}/harf?harf=q&sayfa=" to "q",
-        "${mainUrl}/harf?harf=r&sayfa=" to "r",
-        "${mainUrl}/harf?harf=s&sayfa=" to "s",
-        "${mainUrl}/harf?harf=t&sayfa=" to "t",
-        "${mainUrl}/harf?harf=u&sayfa=" to "u",
-        "${mainUrl}/harf?harf=v&sayfa=" to "v",
-        "${mainUrl}/harf?harf=w&sayfa=" to "w",
-        "${mainUrl}/harf?harf=x&sayfa=" to "x",
-        "${mainUrl}/harf?harf=y&sayfa=" to "y",
-        "${mainUrl}/harf?harf=z&sayfa=" to "z"
+        "${mainUrl}/harf?harf=a" to "a",
+        "${mainUrl}/harf?harf=b" to "b",
+        "${mainUrl}/harf?harf=c" to "c",
+        "${mainUrl}/harf?harf=d" to "d",
+        "${mainUrl}/harf?harf=e" to "e",
+        "${mainUrl}/harf?harf=f" to "f",
+        "${mainUrl}/harf?harf=g" to "g",
+        "${mainUrl}/harf?harf=h" to "h",
+        "${mainUrl}/harf?harf=i" to "i",
+        "${mainUrl}/harf?harf=j" to "j",
+        "${mainUrl}/harf?harf=k" to "k",
+        "${mainUrl}/harf?harf=l" to "l",
+        "${mainUrl}/harf?harf=m" to "m",
+        "${mainUrl}/harf?harf=n" to "n",
+        "${mainUrl}/harf?harf=o" to "o",
+        "${mainUrl}/harf?harf=p" to "p",
+        "${mainUrl}/harf?harf=q" to "q",
+        "${mainUrl}/harf?harf=r" to "r",
+        "${mainUrl}/harf?harf=s" to "s",
+        "${mainUrl}/harf?harf=t" to "t",
+        "${mainUrl}/harf?harf=u" to "u",
+        "${mainUrl}/harf?harf=v" to "v",
+        "${mainUrl}/harf?harf=w" to "w",
+        "${mainUrl}/harf?harf=x" to "x",
+        "${mainUrl}/harf?harf=y" to "y",
+        "${mainUrl}/harf?harf=z" to "z"
     )
 
     // Ana Sayfa Yükleme
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}$page").document
+        val refH = mapOf(
+            "Referer" to mainUrl,
+            "User-Agent" to "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15 (Applebot/0.1; +http://www.apple.com/go/applebot)",
+            "Sec-Fetch-Site" to "same-origin",
+            "Host" to "anizm.net"
+            )
+        val document = if (page == 1) {
+            app.get(request.data, headers = refH).document
+        } else {
+            app.get("${request.data}&sayfa=$page", headers = refH).document
+        }
         val home = document.select("a.pfull").mapNotNull { it.toMainPageResult() }
         return newHomePageResponse(request.name, home)
     }
