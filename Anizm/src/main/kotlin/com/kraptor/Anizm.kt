@@ -211,6 +211,7 @@ class Anizm : MainAPI() {
             when {
                 url.contains("anizmplayer.com") -> {
                     AincradExtractor().getUrl(url, mainUrl).forEach(callback)
+                    return true
                 }
                 else -> {
                     loadExtractor(
@@ -222,6 +223,6 @@ class Anizm : MainAPI() {
                 }
             }
         }
-        return videoLinks.isNotEmpty()
+        return true
     }
 }
