@@ -11,6 +11,7 @@ Kısa kod = kekikan
 -AnimeIzlesene sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                  
 -FilmEkseni sitesi eklenti olarak eklenmiştir.                                 
 -CanliTV eklentisi için maç kanalları eklenmiştir.                                                                                                                                                                                 
+-Animeler eklentisi eklenmiştir.(sitede sorun oldugu icin tum videolar dogru acilmiyor)                                                                                                                                            
 **Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için discussions bölümünde açtığım site istekleri sorusuna yanıt olarak istediğiniz siteleri söyleyebilirsiniz.**
 
 
