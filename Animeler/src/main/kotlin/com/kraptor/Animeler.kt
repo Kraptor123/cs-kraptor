@@ -255,23 +255,23 @@ class Animeler : MainAPI() {
         val link = linkContainer.select("iframe").attr("src")
         Log.d("Animeler", "link = $link")
 
-     val videoSource = linkContainer.select("video > source").attr("src")
+         val videoSource = linkContainer.select("video > source").attr("src")
         
-        
-
         try {
-            if (videoSource.isNotEmpty() && videoSource.endsWith(".m3u8")) {
+        
+        if (videoSource.isNotEmpty() && videoSource.endsWith(".m3u8")) {
          callback(
-            ExtractorLink(
+            newExtractorLink(
                name = "Animeizlesene",
                source = "Animeizlesene",
                url = videoSource,
-               referer = mainUrl,
-               quality = Qualities.Unknown.value,
-               type = ExtractorLink.Type.M3U8
+               referer = mainUrl,             
+               {
+               	this.type = ExtractorLink.Type.M3U8
+               	this.quality = Qualities.Unknown.value
+               	}
                )
               )
-            }
             when {
                 link.contains("anizmplayer.com") -> {
                     AincradExtractor().getUrl(link, mainUrl).forEach(callback)
@@ -292,4 +292,3 @@ class Animeler : MainAPI() {
             return false
         }
     }
-}
