@@ -202,8 +202,6 @@ class Animeler : MainAPI() {
             mutableMapOf(DubStatus.Subbed to list)
         }
 
-        Log.d("Animeler", "filmmi = $isMovie")
-
         return if (isMovie) {
             newMovieLoadResponse(title, url, TvType.AnimeMovie, url) {
                 this.posterUrl = poster
@@ -232,11 +230,11 @@ class Animeler : MainAPI() {
 
     private fun Element.toRecommendationResult(): SearchResponse? {
         val title = this.selectFirst("div.bg-gradient-to-t h3 span")?.attr("data-en-title") ?: return null
-        Log.d("Animeler", "title = $title")
+//        Log.d("Animeler", "title = $title")
         val href = fixUrlNull(this.selectFirst("div.bg-gradient-to-t h3")?.attr("href")) ?: return null
-        Log.d("Animeler", "href = $href")
+//        Log.d("Animeler", "href = $href")
         val posterUrl = fixUrlNull(this.selectFirst("img.absolute.inset-0")?.attr("src"))
-        Log.d("Animeler", "posterurl = $posterUrl")
+//        Log.d("Animeler", "posterurl = $posterUrl")
 
         return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
     }
@@ -248,18 +246,18 @@ class Animeler : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        Log.d("Animeler", "data = $data")
+//        Log.d("Animeler", "data = $data")
 
         val document = app.get(data).document
         val linkContainer = document.select("div.player")
         if (linkContainer.isEmpty()) {
-            Log.w("Animeler", "No player container found")
+//            Log.w("Animeler", "No player container found")
             return false
         }
 
         val videoSource = linkContainer.select("video > source").attr("src")
         val iframeUrl = linkContainer.select("iframe").attr("src")
-        Log.d("Animeler", "iframeUrl = $iframeUrl")
+//        Log.d("Animeler", "iframeUrl = $iframeUrl")
 
         try {
             if (videoSource.endsWith(".m3u8")) {
@@ -311,14 +309,14 @@ class Animeler : MainAPI() {
                     )
 
                     if (!initResp.isSuccessful) {
-                        Log.e("Animeler", "Initial POST failed: ${initResp.code}")
+//                        Log.e("Animeler", "Initial POST failed: ${initResp.code}")
                         return false
                     }
 
                     val responseJson = JSONObject(initResp.body.string())
                     val sourceList = responseJson.getJSONObject("sourceList")
 
-                    Log.d("Animeler", "Found ${sourceList.length()} sources")
+//                    Log.d("Animeler", "Found ${sourceList.length()} sources")
 
                     coroutineScope {
                         sourceList.keys().asSequence().map { key ->
