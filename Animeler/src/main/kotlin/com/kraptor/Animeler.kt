@@ -6,8 +6,14 @@ import android.util.Log
 import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
-import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
+import org.json.JSONObject
+import java.net.URI
+import java.net.URLEncoder
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+
 
 class Animeler : MainAPI() {
     override var mainUrl = "https://animeler.me"
@@ -18,109 +24,109 @@ class Animeler : MainAPI() {
     override val supportedTypes = setOf(TvType.Anime)
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/genre/action/" to "Action",
-        "${mainUrl}/genre/adult-cast/" to "Adult Cast",
-        "${mainUrl}/genre/adventure/" to "Adventure",
-        "${mainUrl}/genre/aksiyon/" to "Aksiyon",
-        "${mainUrl}/genre/antropomorfik/" to "Antropomorfik",
-        "${mainUrl}/genre/arabalar/" to "Arabalar",
-        "${mainUrl}/genre/ask-ucgeni/" to "Aşk Üçgeni",
-        "${mainUrl}/genre/military/" to "Askeri",
-        "${mainUrl}/genre/avangart/" to "Avangart",
-        "${mainUrl}/genre/avant-garde/" to "Avant Garde",
-        "${mainUrl}/genre/bilim-kurgu/" to "Bilim Kurgu",
-        "${mainUrl}/genre/boys-love/" to "Boys Love",
-        "${mainUrl}/genre/buyu/" to "Büyü",
+        "${mainUrl}/genre/action/"           to "Action",
+        "${mainUrl}/genre/adult-cast/"                   to "Adult Cast",
+        "${mainUrl}/genre/adventure/"                    to "Adventure",
+        "${mainUrl}/genre/aksiyon/"                      to "Aksiyon",
+        "${mainUrl}/genre/antropomorfik/"                to "Antropomorfik",
+        "${mainUrl}/genre/arabalar/"                     to "Arabalar",
+        "${mainUrl}/genre/ask-ucgeni/"                   to "Aşk Üçgeni",
+        "${mainUrl}/genre/military/"                     to "Askeri",
+        "${mainUrl}/genre/avangart/"                     to "Avangart",
+        "${mainUrl}/genre/avant-garde/"                  to "Avant Garde",
+        "${mainUrl}/genre/bilim-kurgu/"                  to "Bilim Kurgu",
+        "${mainUrl}/genre/boys-love/"                    to "Boys Love",
+        "${mainUrl}/genre/buyu/"                         to "Büyü",
         "${mainUrl}/genre/cute-girls-doing-cute-things/" to "CGDCT",
-        "${mainUrl}/genre/childcare/" to "Childcare",
-        "${mainUrl}/genre/cocuk-bakimi/" to "Çocuk Bakımı",
-        "${mainUrl}/genre/cocuklar/" to "Çocuklar",
-        "${mainUrl}/genre/comedy/" to "Comedy",
-        "${mainUrl}/genre/comic/" to "Comic",
-        "${mainUrl}/genre/cultivation/" to "Cultivation",
-        "${mainUrl}/genre/dedektif/" to "Dedektif",
-        "${mainUrl}/genre/delinquents/" to "Delinquents",
-        "${mainUrl}/genre/demons/" to "Demons",
-        "${mainUrl}/genre/dogaustu-gucler/" to "Doğaüstü Güçler",
-        "${mainUrl}/genre/dovus-sanatlari/" to "Dövüş Sanatları",
-        "${mainUrl}/genre/dram/" to "Dram",
-        "${mainUrl}/genre/drama/" to "Drama",
-        "${mainUrl}/genre/ecchi/" to "Ecchi",
-        "${mainUrl}/genre/fantastik/" to "Fantastik",
-        "${mainUrl}/genre/fantasy/" to "Fantasy",
-        "${mainUrl}/genre/gag-humor/" to "Gag Humor",
-        "${mainUrl}/genre/gerilim/" to "Gerilim",
-        "${mainUrl}/genre/girls-love/" to "Girls Love",
-        "${mainUrl}/genre/gizem/" to "Gizem",
-        "${mainUrl}/genre/gore/" to "Gore",
-        "${mainUrl}/genre/gourmet/" to "Gourmet",
-        "${mainUrl}/genre/harem/" to "Harem",
-        "${mainUrl}/genre/historical/" to "Historical",
-        "${mainUrl}/genre/horror/" to "Horror",
-        "${mainUrl}/genre/idol/" to "İdol",
-        "${mainUrl}/genre/idols-female/" to "Idols (Female)",
-        "${mainUrl}/genre/isekai-2/" to "Isekai",
-        "${mainUrl}/genre/iyashikei/" to "Iyashikei",
-        "${mainUrl}/genre/josei/" to "Josei",
-        "${mainUrl}/genre/komedi/" to "Komedi",
-        "${mainUrl}/genre/korku/" to "Korku",
-        "${mainUrl}/genre/kumar-oyunu/" to "Kumar Oyunu",
-        "${mainUrl}/genre/macera/" to "Macera",
-        "${mainUrl}/genre/mahou-shoujo/" to "Mahou Shoujo",
-        "${mainUrl}/genre/martial-arts/" to "Martial Arts",
-        "${mainUrl}/genre/mecha/" to "Mecha",
-        "${mainUrl}/genre/medikal/" to "Medikal",
-        "${mainUrl}/genre/military-2/" to "Military",
-        "${mainUrl}/genre/mitoloji/" to "Mitoloji",
-        "${mainUrl}/genre/music/" to "Music",
-        "${mainUrl}/genre/muzik/" to "Müzik",
-        "${mainUrl}/genre/mystery/" to "Mystery",
-        "${mainUrl}/genre/mythology/" to "Mythology",
-        "${mainUrl}/genre/okul/" to "Okul",
-        "${mainUrl}/genre/op-m-c/" to "OP M.C.",
-        "${mainUrl}/genre/oyun/" to "Oyun",
-        "${mainUrl}/genre/parodi/" to "Parodi",
-        "${mainUrl}/genre/polisiye/" to "Polisiye",
-        "${mainUrl}/genre/psikolojik/" to "Psikolojik",
-        "${mainUrl}/genre/psychological/" to "Psychological",
-        "${mainUrl}/genre/rebirth/" to "Rebirth",
-        "${mainUrl}/genre/reenkarnasyon/" to "Reenkarnasyon",
-        "${mainUrl}/genre/reincarnation/" to "Reincarnation",
-        "${mainUrl}/genre/revenge/" to "Revenge",
-        "${mainUrl}/genre/romance/" to "Romance",
-        "${mainUrl}/genre/romantic-subtext/" to "Romantic Subtext",
-        "${mainUrl}/genre/romantizm/" to "Romantizm",
-        "${mainUrl}/genre/sahne-sanatcilari/" to "Sahne Sanatçıları",
-        "${mainUrl}/genre/samuray/" to "Samuray",
-        "${mainUrl}/genre/school/" to "School",
-        "${mainUrl}/genre/sci-fi/" to "Sci-Fi",
-        "${mainUrl}/genre/seinen/" to "Seinen",
-        "${mainUrl}/genre/seytan/" to "Şeytan",
-        "${mainUrl}/genre/shoujo/" to "Shoujo",
-        "${mainUrl}/genre/shoujo-ai/" to "Shoujo Ai",
-        "${mainUrl}/genre/shounen/" to "Shounen",
-        "${mainUrl}/genre/shounen-ai/" to "Shounen Ai",
-        "${mainUrl}/genre/slice-of-life/" to "Slice of Life",
-        "${mainUrl}/genre/spor/" to "Spor",
-        "${mainUrl}/genre/sports/" to "Sports",
-        "${mainUrl}/genre/strategy-game/" to "Strategy Game",
-        "${mainUrl}/genre/strateji-oyunu/" to "Strateji Oyunu",
-        "${mainUrl}/genre/super-gucler/" to "Süper Güçler",
-        "${mainUrl}/genre/super-power/" to "Super Power",
-        "${mainUrl}/genre/supernatural/" to "Supernatural",
-        "${mainUrl}/genre/suspense/" to "Suspense",
-        "${mainUrl}/genre/tarihi/" to "Tarihi",
-        "${mainUrl}/genre/team-sports/" to "Team Sports",
-        "${mainUrl}/genre/time-travel/" to "Time Travel",
-        "${mainUrl}/genre/uzay/" to "Uzay",
-        "${mainUrl}/genre/vampir/" to "Vampir",
-        "${mainUrl}/genre/video-game/" to "Video Game",
-        "${mainUrl}/genre/visual-arts/" to "Visual Arts",
-        "${mainUrl}/genre/workplace/" to "Workplace",
-        "${mainUrl}/genre/yasamdan-kesitler/" to "Yaşamdan Kesitler",
-        "${mainUrl}/genre/yemek/" to "Yemek",
-        "${mainUrl}/genre/yetiskin-karakterler/" to "Yetişkin Karakterler",
-        "${mainUrl}/genre/zaman-yolculugu/" to "Zaman Yolculuğu"
+        "${mainUrl}/genre/childcare/"                    to "Childcare",
+        "${mainUrl}/genre/cocuk-bakimi/"                 to "Çocuk Bakımı",
+        "${mainUrl}/genre/cocuklar/"                     to "Çocuklar",
+        "${mainUrl}/genre/comedy/"                       to "Comedy",
+        "${mainUrl}/genre/comic/"                        to "Comic",
+        "${mainUrl}/genre/cultivation/"                  to "Cultivation",
+        "${mainUrl}/genre/dedektif/"                     to "Dedektif",
+        "${mainUrl}/genre/delinquents/"                  to "Delinquents",
+        "${mainUrl}/genre/demons/"                       to "Demons",
+        "${mainUrl}/genre/dogaustu-gucler/"              to "Doğaüstü Güçler",
+        "${mainUrl}/genre/dovus-sanatlari/"              to "Dövüş Sanatları",
+        "${mainUrl}/genre/dram/"                         to "Dram",
+        "${mainUrl}/genre/drama/"                        to "Drama",
+        "${mainUrl}/genre/ecchi/"                        to "Ecchi",
+        "${mainUrl}/genre/fantastik/"                    to "Fantastik",
+        "${mainUrl}/genre/fantasy/"                      to "Fantasy",
+        "${mainUrl}/genre/gag-humor/"                    to "Gag Humor",
+        "${mainUrl}/genre/gerilim/"                      to "Gerilim",
+        "${mainUrl}/genre/girls-love/"                   to "Girls Love",
+        "${mainUrl}/genre/gizem/"                        to "Gizem",
+        "${mainUrl}/genre/gore/"                         to "Gore",
+        "${mainUrl}/genre/gourmet/"                      to "Gourmet",
+        "${mainUrl}/genre/harem/"                        to "Harem",
+        "${mainUrl}/genre/historical/"                   to "Historical",
+        "${mainUrl}/genre/horror/"                       to "Horror",
+        "${mainUrl}/genre/idol/"                         to "İdol",
+        "${mainUrl}/genre/idols-female/"                 to "Idols (Female)",
+        "${mainUrl}/genre/isekai-2/"                     to "Isekai",
+        "${mainUrl}/genre/iyashikei/"                    to "Iyashikei",
+        "${mainUrl}/genre/josei/"                        to "Josei",
+        "${mainUrl}/genre/komedi/"                       to "Komedi",
+        "${mainUrl}/genre/korku/"                        to "Korku",
+        "${mainUrl}/genre/kumar-oyunu/"                  to "Kumar Oyunu",
+        "${mainUrl}/genre/macera/"                       to "Macera",
+        "${mainUrl}/genre/mahou-shoujo/"                 to "Mahou Shoujo",
+        "${mainUrl}/genre/martial-arts/"                 to "Martial Arts",
+        "${mainUrl}/genre/mecha/"                        to "Mecha",
+        "${mainUrl}/genre/medikal/"                      to "Medikal",
+        "${mainUrl}/genre/military-2/"                   to "Military",
+        "${mainUrl}/genre/mitoloji/"                     to "Mitoloji",
+        "${mainUrl}/genre/music/"                        to "Music",
+        "${mainUrl}/genre/muzik/"                        to "Müzik",
+        "${mainUrl}/genre/mystery/"                      to "Mystery",
+        "${mainUrl}/genre/mythology/"                    to "Mythology",
+        "${mainUrl}/genre/okul/"                         to "Okul",
+        "${mainUrl}/genre/op-m-c/"                       to "OP M.C.",
+        "${mainUrl}/genre/oyun/"                         to "Oyun",
+        "${mainUrl}/genre/parodi/"                       to "Parodi",
+        "${mainUrl}/genre/polisiye/"                     to "Polisiye",
+        "${mainUrl}/genre/psikolojik/"                   to "Psikolojik",
+        "${mainUrl}/genre/psychological/"                to "Psychological",
+        "${mainUrl}/genre/rebirth/"                      to "Rebirth",
+        "${mainUrl}/genre/reenkarnasyon/"                to "Reenkarnasyon",
+        "${mainUrl}/genre/reincarnation/"                to "Reincarnation",
+        "${mainUrl}/genre/revenge/"                      to "Revenge",
+        "${mainUrl}/genre/romance/"                      to "Romance",
+        "${mainUrl}/genre/romantic-subtext/"             to "Romantic Subtext",
+        "${mainUrl}/genre/romantizm/"                    to "Romantizm",
+        "${mainUrl}/genre/sahne-sanatcilari/"            to "Sahne Sanatçıları",
+        "${mainUrl}/genre/samuray/"                      to "Samuray",
+        "${mainUrl}/genre/school/"                       to "School",
+        "${mainUrl}/genre/sci-fi/"                       to "Sci-Fi",
+        "${mainUrl}/genre/seinen/"                       to "Seinen",
+        "${mainUrl}/genre/seytan/"                       to "Şeytan",
+        "${mainUrl}/genre/shoujo/"                       to "Shoujo",
+        "${mainUrl}/genre/shoujo-ai/"                    to "Shoujo Ai",
+        "${mainUrl}/genre/shounen/"                      to "Shounen",
+        "${mainUrl}/genre/shounen-ai/"                   to "Shounen Ai",
+        "${mainUrl}/genre/slice-of-life/"                to "Slice of Life",
+        "${mainUrl}/genre/spor/"                         to "Spor",
+        "${mainUrl}/genre/sports/"                       to "Sports",
+        "${mainUrl}/genre/strategy-game/"                to "Strategy Game",
+        "${mainUrl}/genre/strateji-oyunu/"               to "Strateji Oyunu",
+        "${mainUrl}/genre/super-gucler/"                 to "Süper Güçler",
+        "${mainUrl}/genre/super-power/"                  to "Super Power",
+        "${mainUrl}/genre/supernatural/"                 to "Supernatural",
+        "${mainUrl}/genre/suspense/"                     to "Suspense",
+        "${mainUrl}/genre/tarihi/"                       to "Tarihi",
+        "${mainUrl}/genre/team-sports/"                  to "Team Sports",
+        "${mainUrl}/genre/time-travel/"                  to "Time Travel",
+        "${mainUrl}/genre/uzay/"                         to "Uzay",
+        "${mainUrl}/genre/vampir/"                       to "Vampir",
+        "${mainUrl}/genre/video-game/"                   to "Video Game",
+        "${mainUrl}/genre/visual-arts/"                  to "Visual Arts",
+        "${mainUrl}/genre/workplace/"                    to "Workplace",
+        "${mainUrl}/genre/yasamdan-kesitler/"            to "Yaşamdan Kesitler",
+        "${mainUrl}/genre/yemek/"                        to "Yemek",
+        "${mainUrl}/genre/yetiskin-karakterler/"         to "Yetişkin Karakterler",
+        "${mainUrl}/genre/zaman-yolculugu/"              to "Zaman Yolculuğu"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
@@ -235,6 +241,7 @@ class Animeler : MainAPI() {
         return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
     }
 
+
     override suspend fun loadLinks(
         data: String,
         isCasting: Boolean,
@@ -243,7 +250,6 @@ class Animeler : MainAPI() {
     ): Boolean {
         Log.d("Animeler", "data = $data")
 
-        // Fetch and parse the document
         val document = app.get(data).document
         val linkContainer = document.select("div.player")
         if (linkContainer.isEmpty()) {
@@ -251,27 +257,127 @@ class Animeler : MainAPI() {
             return false
         }
 
-        // Extract the iframe source URL
-        val link = linkContainer.select("iframe").attr("src")
-        Log.d("Animeler", "link = $link")
+        val videoSource = linkContainer.select("video > source").attr("src")
+        val iframeUrl = linkContainer.select("iframe").attr("src")
+        Log.d("Animeler", "iframeUrl = $iframeUrl")
 
         try {
-            // Determine which extractor to use based on the link
+            if (videoSource.endsWith(".m3u8")) {
+                callback(
+                    newExtractorLink(
+                        name = "Animeizlesene",
+                        source = "Animeizlesene",
+                        url = videoSource,
+                        type = ExtractorLinkType.M3U8
+                    ) {
+                        this.quality = Qualities.Unknown.value
+                        referer = mainUrl
+                    }
+                )
+                return true
+            }
+
             when {
-                link.contains("anizmplayer.com") -> {
-                    AincradExtractor().getUrl(link, mainUrl).forEach(callback)
+                iframeUrl.contains("play.animeler.pw/fire-player/video") -> {
+                    val absoluteIframe = URI(mainUrl).resolve(iframeUrl).toString()
+                    val uri = URI(absoluteIframe)
+                    val postUrl = "${uri.scheme}://${uri.host}${uri.path}"
+                    val hashVid = iframeUrl.substringAfter("video/")
+                    val encodedReferer = URLEncoder.encode(mainUrl, "UTF-8")
+
+                    val headers = mapOf(
+                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0",
+                        "Accept" to "*/*",
+                        "Content-Type" to "application/x-www-form-urlencoded; charset=UTF-8",
+                        "X-Requested-With" to "XMLHttpRequest",
+                        "Origin" to "${uri.scheme}://${uri.host}",
+                        "Connection" to "keep-alive",
+                        "Sec-Fetch-Dest" to "empty",
+                        "Sec-Fetch-Mode" to "cors",
+                        "Sec-Fetch-Site" to "same-origin",
+                        "TE" to "trailers"
+                    )
+
+                    val formData = mapOf(
+                        "hash" to hashVid,
+                        "r" to encodedReferer
+                    )
+
+                    val initResp = app.post(
+                        url = "$postUrl?do=getVideo",
+                        headers = headers,
+                        referer = mainUrl,
+                        data = formData
+                    )
+
+                    if (!initResp.isSuccessful) {
+                        Log.e("Animeler", "Initial POST failed: ${initResp.code}")
+                        return false
+                    }
+
+                    val responseJson = JSONObject(initResp.body.string())
+                    val sourceList = responseJson.getJSONObject("sourceList")
+
+                    Log.d("Animeler", "Found ${sourceList.length()} sources")
+
+                    coroutineScope {
+                        sourceList.keys().asSequence().map { key ->
+                            async {
+                                try {
+                                    val sourceData = formData.toMutableMap()
+                                    sourceData["s"] = key
+
+                                    val resp2 = app.post(
+                                        url = "$postUrl?do=getVideo",
+                                        headers = headers,
+                                        referer = mainUrl,
+                                        data = sourceData
+                                    )
+
+                                    if (resp2.isSuccessful) {
+                                        val jsonResponse = resp2.body.string()
+                                        Log.d("Animeler", "Source $key response: $jsonResponse")
+
+                                        val videoObject = JSONObject(jsonResponse)
+                                        val videoSrc = videoObject.optString("videoSrc", "")
+
+                                        if (videoSrc.isNotEmpty()) {
+                                            Log.d("Animeler", "Found video source for $key: $videoSrc")
+
+                                            loadExtractor(
+                                                url = videoSrc,
+                                                referer = mainUrl,
+                                                subtitleCallback = subtitleCallback,
+                                                callback = callback
+                                            )
+                                        }
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e("Animeler", "Error loading video for key $key", e)
+                                }
+                            }
+                        }.toList().awaitAll()
+                    }
+
+                    return true
+                }
+
+                iframeUrl.contains("anizmplayer.com") -> {
+                    AincradExtractor().getUrl(iframeUrl, mainUrl).forEach(callback)
+                    return true
                 }
 
                 else -> {
                     loadExtractor(
-                        url = link,
+                        url = iframeUrl,
                         referer = mainUrl,
                         subtitleCallback = subtitleCallback,
                         callback = callback
                     )
+                    return true
                 }
             }
-            return true
+
         } catch (e: Exception) {
             Log.e("Animeler", "Error loading links", e)
             return false
