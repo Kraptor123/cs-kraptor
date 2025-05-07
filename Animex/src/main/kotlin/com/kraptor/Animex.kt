@@ -7,13 +7,8 @@ import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
-import org.json.JSONObject
-import java.nio.charset.StandardCharsets
-import java.security.MessageDigest
-import javax.crypto.Cipher
-import javax.crypto.spec.IvParameterSpec
-import javax.crypto.spec.SecretKeySpec
-import android.util.Base64
+import com.lagradost.cloudstream3.extractors.SibNet
+import com.lagradost.cloudstream3.extractors.YourUpload
 
 class Animex : MainAPI() {
     override var mainUrl = "https://animex.tr"
@@ -122,105 +117,52 @@ class Animex : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val document = app.get(data, referer = data).document
-        val iframeUrl = fixUrlNull(
-            document.selectFirst("div.play_top li.belink a")?.attr("data-frame")
-        )
-        Log.d("Animex", "iframeUrl: $iframeUrl")
-        iframeUrl ?: return false
 
-        if (iframeUrl.contains("animtube")) {
+        // Tüm alternatif linkleri al
+        val linkElements = document.select("div.play_top li.belink a")
+        if (linkElements.isEmpty()) return false
+
+        for (el in linkElements) {
+            val iframeUrl = fixUrlNull(el.attr("data-frame"))
+            Log.d("Animex", "iframeUrl: $iframeUrl")
+            if (iframeUrl == null) continue
+
             try {
-                val iframeDoc = app.get(iframeUrl, referer = mainUrl).document
-                val scriptNodes = iframeDoc.select("script").mapNotNull { it.html() }
-                val script = scriptNodes.firstOrNull { it.contains("bePlayer") }
-                    ?: throw Exception("bePlayer script bulunamadı")
-
-                val regex = Regex("""bePlayer\(\s*['"]([^'"]+)['"]\s*,\s*(['"]\{.*?\}['"])""")
-                val match = regex.find(script)
-                if (match == null) throw Exception("bePlayer parametreleri bulunamadı")
-
-                val hash = match.groupValues[1]
-                val setJsonRaw = match.groupValues[2]
-                    .removePrefix("\"")
-                    .removePrefix("'")
-                    .removeSuffix("\"")
-                    .removeSuffix("'")
-                val decrypted = decryptSetParams(setJsonRaw, hash)
-                val videoLocation = JSONObject(decrypted).getString("video_location")
-                callback.invoke(
-                    newExtractorLink(
-                        url = videoLocation,
-                        source = "animtube",
-                        name = "Animtube HLS",
-                        type = ExtractorLinkType.M3U8
-                    ) {
-                        quality = Qualities.Unknown.value
-                        referer = iframeUrl
+                when {
+                    iframeUrl.contains("animtube") -> {
+                        AnimTubeExtractor().getUrl(iframeUrl, iframeUrl)
+                            .forEach(callback)
+                        return true
                     }
-                )
-                return true
 
-            } catch (_: Exception) {
-                return false
+                    iframeUrl.contains("animeler.tr") -> {
+                        AnimelerExtractor().getUrl(iframeUrl, iframeUrl)
+                            .forEach(callback)
+                        return true
+                    }
+
+                    iframeUrl.contains("yourupload") -> {
+                        YourUpload().getUrl(iframeUrl, iframeUrl)
+                            .forEach(callback)
+                        return true
+                    }
+
+                    iframeUrl.contains("sibnet") -> {
+                        SibNet().getUrl(iframeUrl, iframeUrl)
+                            ?.forEach(callback)
+                        return true
+                    }
+
+                    else -> {
+                        loadExtractor(iframeUrl, data, subtitleCallback, callback)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.w("Animex", "Extractor hata: ${e.message}")
+                continue
             }
         }
 
-        loadExtractor(iframeUrl, data, subtitleCallback, callback)
         return true
     }
-
-    private fun hexStringToByteArray(hex: String): ByteArray {
-        val len = hex.length
-        val out = ByteArray(len / 2)
-        for (i in 0 until len step 2) {
-            out[i / 2] = ((Character.digit(hex[i], 16) shl 4)
-                    + Character.digit(hex[i+1], 16)).toByte()
-        }
-        return out
-    }
-
-    private fun evpBytesToKey(
-        password: ByteArray,
-        salt: ByteArray,
-        keyLen: Int,
-        ivLen: Int
-    ): Pair<ByteArray, ByteArray> {
-        val md5 = MessageDigest.getInstance("MD5")
-        var prev = ByteArray(0)
-        val result = mutableListOf<Byte>()
-        while (result.size < keyLen + ivLen) {
-            md5.reset()
-            md5.update(prev)
-            md5.update(password)
-            md5.update(salt)
-            val digest = md5.digest()
-            result += digest.toTypedArray()
-            prev = digest
-        }
-        val key = result.take(keyLen).toByteArray()
-        val iv  = result.drop(keyLen).take(ivLen).toByteArray()
-        return Pair(key, iv)
-    }
-
-    private fun decryptSetParams(setJson: String, hash: String): String {
-        try {
-            val obj = JSONObject(setJson)
-            val ctB64 = obj.getString("ct")
-            val ivHex = obj.getString("iv")
-            val sHex  = obj.getString("s")
-            val cipherText = Base64.decode(ctB64, Base64.DEFAULT)
-            val saltBytes  = hexStringToByteArray(sHex)
-            val password   = hash.toByteArray(StandardCharsets.UTF_8)
-            val (key, iv) = evpBytesToKey(password, saltBytes, 32, 16)
-            val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
-            cipher.init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"), IvParameterSpec(iv))
-            val plain = cipher.doFinal(cipherText)
-            val result = String(plain, StandardCharsets.UTF_8)
-            return result
-        } catch (e: Exception) {
-            throw e
-        }
-    }
 }
-
-
