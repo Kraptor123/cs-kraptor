@@ -1,8 +1,5 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
 version = 1
-dependencies {
-    implementation("androidx.annotation:annotation-jvm:1.9.1")
-}
 
 cloudstream {
     authors     = listOf("kraptor")
