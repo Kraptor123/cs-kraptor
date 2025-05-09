@@ -177,6 +177,7 @@ class DiziMore : MainAPI() {
                 }
                 else -> {
                     loadExtractor(iframelink, data, subtitleCallback, callback)
+                    return true
                 }
             }
         } catch (e: Exception) {
