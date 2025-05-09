@@ -13,6 +13,7 @@ Kısa kod = kekikan
 -CanliTV eklentisi için maç kanalları eklenmiştir.                                                                                                                                                                                 
 -Animeler sitesi eklenti olarak eklenmiştir.                                                                                                                                     
 -Animex sitesi eklenti olarak eklenmiştir.                                                                                                                                     
+-Dizimore sitesi eklenti olarak eklenmiştir.                                                                                                                                     
 **Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için discussions bölümünde açtığım site istekleri sorusuna yanıt olarak istediğiniz siteleri söyleyebilirsiniz.**
 
 
