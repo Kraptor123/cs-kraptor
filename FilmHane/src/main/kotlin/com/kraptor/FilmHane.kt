@@ -46,23 +46,32 @@ class FilmHane : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = if (mainUrl.contains("filmler") || mainUrl.contains("tum-diziler")) {
-            if (page == 1) {
+        val document = when (request.name) {
+            "Tüm Diziler" -> {
                 app.get(request.data).document
-            } else {
-                app.get("${request.data}/sayfa/$page/").document
             }
-        } else {
-            app.get("${request.data}/$page").document
+            "Tüm Filmler" -> {
+                if (page == 1) {
+                    app.get("${request.data}/sayfa").document
+                } else {
+                    app.get("${request.data}/sayfa/$page").document
+                }
+            }
+            else -> {
+                app.get("${request.data}/$page").document
+            }
         }
 
-        val home     = document.select("div.poster-long").mapNotNull { it.toMainPageResult() }
+        val home = buildList {
+            addAll(document.select("div.poster-long").mapNotNull { it.toMainPageResult() }) // Filmler
+            addAll(document.select("div.poster-md.relative").mapNotNull { it.toMainPageResult() }) // Diziler
+        }
 
         return newHomePageResponse(request.name, home)
     }
 
     private fun Element.toMainPageResult(): SearchResponse? {
-        val title     = this.selectFirst("h2")?.text() ?: return null
+        val title = this.selectFirst("h2")?.text() ?: this.selectFirst("h3")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 
