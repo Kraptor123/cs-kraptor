@@ -201,7 +201,7 @@ class FilmHane : MainAPI() {
 
         val iframeIlk = fixUrlNull(selectLi?.selectFirst("iframe")?.attr("src")).toString()
 
-        Log.d("fhane", "iframeilk = ${iframeIlk}")
+//        Log.d("fhane", "iframeilk = ${iframeIlk}")
 
         val gercekIframe = app.get(iframeIlk).document
 
@@ -214,39 +214,42 @@ class FilmHane : MainAPI() {
         val match = videoReg.find(gercekIframe.html())
         val videoLink = match?.value?.removePrefix("file:\"")?.removeSuffix("\"").toString()
 
-        Log.d("fhane", "videolinkim = ${videoLink}")
+//        Log.d("fhane", "videolinkim = ${videoLink}")
 
         val subReg = Regex("\"subtitle\":\"[^\"]*\"")
         val subtitleMatch = subReg.find(gercekIframe.html())
 
         subtitleMatch?.let {
-            val subtitleUrl = it.value.removePrefix("\"subtitle\":\"").removeSuffix("\"").substringAfter("]")
-            Log.d("fhane", "subtitle = ${subtitleUrl}")
-            if (subtitleUrl.isNotEmpty()) {
-                // Check for language indicators in the URL
-                val languageCode = when {
-                    subtitleUrl.contains("tur", ignoreCase = true) -> "tr"
-                    subtitleUrl.contains("turkish", ignoreCase = true) -> "tr"
-                    subtitleUrl.contains("turkce", ignoreCase = true) -> "tr"
-                    subtitleUrl.contains("eng", ignoreCase = true) -> "en"
-                    subtitleUrl.contains("english", ignoreCase = true) -> "en"
-                    subtitleUrl.contains("ingilizce", ignoreCase = true) -> "en"
-                    else -> "Bilinmiyor" // Default if language can't be determined
-                }
+            val rawValue = it.value.removePrefix("\"subtitle\":\"").removeSuffix("\"")
+            val fixedValue = fixUrlNull(rawValue)
 
-                val languageName = when (languageCode) {
-                    "tr" -> "Türkçe"
-                    "en" -> "İngilizce"
-                    else -> "Bilinmiyor"
-                }
+            if (!fixedValue.isNullOrEmpty()) {
+                val subtitleUrls = fixedValue.split(",")
 
-                // Invoke subtitle callback
-                subtitleCallback.invoke(
-                    SubtitleFile(
-                        lang =languageName,
-                        url = subtitleUrl
-                    )
-                )
+                for (part in subtitleUrls) {
+                    var subtitleUrl = part.trim()
+                    if (subtitleUrl.contains("[") && subtitleUrl.contains("]")) {
+                        subtitleUrl = subtitleUrl.substring(subtitleUrl.indexOf("]") + 1).trim()
+                    }
+
+                    // URL'nin içeriğine göre dili belirle (sadece "_eng." veya "_tur." kontrol et)
+                    val language = if (subtitleUrl.contains("_eng.", ignoreCase = true)) {
+                        "İngilizce"
+                    } else if (subtitleUrl.contains("_tur.", ignoreCase = true)) {
+                        "Türkçe"
+                    } else {
+                        "Bilinmiyor"
+                    }
+
+                    if (subtitleUrl.isNotEmpty()) {
+                        subtitleCallback.invoke(
+                            SubtitleFile(
+                                lang = language,
+                                url = subtitleUrl
+                            )
+                        )
+                    }
+                }
             }
         }
 
