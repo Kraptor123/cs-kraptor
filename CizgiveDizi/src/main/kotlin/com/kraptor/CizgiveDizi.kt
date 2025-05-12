@@ -3,6 +3,7 @@ package com.kraptor
 
 import android.util.Log
 import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.R.string.season
 import com.lagradost.cloudstream3.utils.*
 import kotlinx.coroutines.runBlocking
 import org.jsoup.nodes.Document
@@ -217,18 +218,24 @@ class CizgiveDizi : MainAPI() {
         val tags = doc.select(".hero > div:nth-child(2) > div:nth-child(3) > p:nth-child(1)")
             .flatMap { it.text().split(",") }.map { it.trim() }.filter { it.isNotEmpty() }
 
-        val episodes = doc.select(".bolum").mapNotNull {
-            val rawName = it.selectFirst(".card-title")!!.text().trim()
-            val epName = rawName.substringAfter(")").trim()
-            val href = fixUrlNull(it.selectFirst("a.bolum")!!.attr("href"))!!
-            val num = Regex("^(\\d+)").find(rawName)?.groupValues?.get(1)?.toInt()
-            newEpisode(href) { this.name = epName; this.episode = num }
+        val episodes = doc.select("div.container a.bolum").mapNotNull { el ->
+            val rawName = el.selectFirst(".card-title")!!.text().trim()
+            val epName  = rawName.substringAfter(")").trim()
+            val href    = fixUrlNull(el.attr("href"))!!
+            val num     = Regex("^(\\d+)").find(rawName)!!.groupValues[1].toInt()
+            val seasonN = el.attr("data-sezon").toInt()
+
+            newEpisode(href) {
+                this.name    = epName
+                this.episode = num
+                this.season  = seasonN      // ← this is fine here
+            }
         }
 
         newTvSeriesLoadResponse(title, url, TvType.Cartoon, episodes) {
             this.posterUrl = poster
-            this.plot = plot
-            this.tags = tags
+            this.plot      = plot
+            this.tags      = tags
         }
     }.getOrNull()
 
