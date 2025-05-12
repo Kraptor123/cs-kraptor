@@ -220,10 +220,17 @@ class CizgiveDizi : MainAPI() {
 
         val episodes = doc.select("div.container a.bolum").mapNotNull { el ->
             val rawName = el.selectFirst(".card-title")!!.text().trim()
+            Log.d("cfdz", "rawname = $rawName")
             val epName  = rawName.substringAfter(")").trim()
+            Log.d("cfdz", "epname = $epName")
             val href    = fixUrlNull(el.attr("href"))!!
+            Log.d("cfdz", "href = $href")
             val num     = Regex("^(\\d+)").find(rawName)!!.groupValues[1].toInt()
-            val seasonN = el.attr("data-sezon").toInt()
+            Log.d("cfdz", "num = $num")
+            val seasonN: Int = el.attr("data-sezon")
+                .toIntOrNull()
+                ?: 1
+            Log.d("cfdz", "seas = $seasonN")
 
             newEpisode(href) {
                 this.name    = epName
