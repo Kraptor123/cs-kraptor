@@ -61,7 +61,8 @@ open class ContentX : ExtractorApi() {
                 type = ExtractorLinkType.M3U8
 
             ) {
-                headers = mapOf("Referer" to url) // "Referer" ayarı burada yapılabilir
+                headers = mapOf("Referer" to url,
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Norton/124.0.0.0") // "Referer" ayarı burada yapılabilir
                 quality = getQualityFromName(Qualities.Unknown.value.toString()) // Int değeri String'e dönüştürülüyor
             }
         )
