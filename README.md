@@ -17,6 +17,7 @@ Kısa kod = kekikan
 -Filmhane sitesi eklenti olarak eklenmiştir.   
 -TrDiziİzle sitesi eklenti olarak eklenmiştir.                                                                                                                                      
 -GinikoCanli sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                    
+-IpTvPlayStream sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                 
 **Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için discussions bölümünde açtığım site istekleri sorusuna yanıt olarak istediğiniz siteleri söyleyebilirsiniz.**
 
 
