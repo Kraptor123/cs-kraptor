@@ -82,7 +82,6 @@ class Sinefy : MainAPI() {
 
     private fun Element.toMainPageResult(): SearchResponse? {
         val title     = this.selectFirst("h2")?.text() ?: return null
-        if (title.contains("429")) return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val srcset = this.selectFirst("img")?.attr("data-srcset")
         val posterUrl = srcset
@@ -228,7 +227,8 @@ class Sinefy : MainAPI() {
     override suspend fun load(url: String): LoadResponse? {
         val document = app.get(url).document
 
-        val title           = document.selectFirst("h1")?.text()?.trim() ?: return null
+        val title           = document.selectFirst("h1")?.text()?.trim()?.takeIf { !it.contains("429 Too Many Requests") }
+            ?: return null
         val srcset          = document.selectFirst("div.ui.items img")?.attr("data-srcset")
         val posterUrl = srcset
             ?.split(",")
