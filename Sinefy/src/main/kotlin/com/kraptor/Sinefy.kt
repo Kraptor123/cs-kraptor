@@ -82,6 +82,7 @@ class Sinefy : MainAPI() {
 
     private fun Element.toMainPageResult(): SearchResponse? {
         val title     = this.selectFirst("h2")?.text() ?: return null
+        if (title.contains("429")) return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val srcset = this.selectFirst("img")?.attr("data-srcset")
         val posterUrl = srcset
