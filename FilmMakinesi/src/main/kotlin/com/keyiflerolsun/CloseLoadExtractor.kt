@@ -28,9 +28,17 @@ open class CloseLoad : ExtractorApi() {
         val iSource = app.get(url, referer = extRef)
 
         iSource.document.select("track").forEach {
+            val lang = it.attr("label").let {
+                when (it) {
+                    "Turkish" -> "Türkçe"
+                    "English" -> "İngilizce"
+                    "French"  -> "Fransızca"
+                    else -> it
+                }
+            }
             subtitleCallback.invoke(
                 SubtitleFile(
-                    lang = it.attr("label"),
+                    lang = lang,
                     url  = fixUrl(it.attr("src"))
                 )
             )
@@ -52,7 +60,9 @@ open class CloseLoad : ExtractorApi() {
                     url     = m3uLink,
                     type = ExtractorLinkType.M3U8
                 ) {
-                    headers = mapOf("Referer" to mainUrl) // "Referer" ayarı burada yapılabilir
+                    headers = mapOf("Referer" to mainUrl,
+                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Norton/124.0.0.0"
+                        ) // "Referer" ayarı burada yapılabilir
                     quality = getQualityFromName(Qualities.Unknown.value.toString()) // Int değeri String'e dönüştürülüyor
                 }
             )
