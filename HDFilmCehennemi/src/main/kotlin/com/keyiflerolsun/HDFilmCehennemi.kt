@@ -123,6 +123,8 @@ class HDFilmCehennemi : MainAPI() {
     override suspend fun load(url: String): LoadResponse? {
         val document = app.get(url).document
 
+
+
         val title       = document.selectFirst("h1.section-title")?.text()?.substringBefore(" izle") ?: return null
         val poster      = fixUrlNull(document.select("aside.post-info-poster img.lazyload").lastOrNull()?.attr("data-src"))
         val tags        = document.select("div.post-info-genres a").map { it.text() }
@@ -191,14 +193,18 @@ class HDFilmCehennemi : MainAPI() {
     private suspend fun invokeLocalSource(
         source: String,
         url: String,
-        subtitleCallback: (SubtitleFile) -> Unit,
+//        subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
         val script    = app.get(url, referer = "${mainUrl}/").document.select("script")
             .find { it.data().contains("sources:") }?.data() ?: return
 
+        Log.d("fix","urlne $url")
+
         val videoData = getAndUnpack(script).substringAfter("file_link=\"").substringBefore("\";")
-        val subData   = script.substringAfter("tracks: [").substringBefore("]")
+//        val subData   = script.substringAfter("tracks: [").substringBefore("]")
+
+//        Log.d("fix","subdata $subData")
 
         callback.invoke(
             newExtractorLink(
@@ -212,12 +218,6 @@ class HDFilmCehennemi : MainAPI() {
                 this.quality = Qualities.Unknown.value
             }
         )
-
-        AppUtils.tryParseJson<List<SubSource>>("[${subData}]")?.filter { it.kind == "captions" }?.map {
-            subtitleCallback.invoke(
-                SubtitleFile(it.label.toString(), fixUrl(it.file.toString()))
-            )
-        }
     }
 
     override suspend fun loadLinks(
@@ -226,8 +226,53 @@ class HDFilmCehennemi : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        Log.d("HDCH", "data » $data")
         val document = app.get(data).document
+        val iframealak = fixUrlNull(
+            document.selectFirst(".close")?.attr("data-src")
+                ?: document.selectFirst(".rapidrame")?.attr("data-src")
+        ).toString()
+
+        // Process hdfilmcehennemi.mobi subtitles
+        if (iframealak.contains("hdfilmcehennemi.mobi")) {
+            val iframedoc = app.get(iframealak, referer = mainUrl).document
+            val baseUri = iframedoc.location().substringBefore("/", "https://www.hdfilmcehennemi.mobi")
+
+            iframedoc.select("track[kind=captions]")
+                .filter { it.attr("srclang") != "forced" }
+                .forEach { track ->
+                    val lang = track.attr("srclang").let {
+                        when (it) {
+                            "tr" -> "Türkçe"
+                            "en" -> "İngilizce"
+                            else -> it
+                        }
+                    }
+                    val subUrl = track.attr("src").let { src ->
+                        if (src.startsWith("http")) src else "$baseUri/$src".replace("//", "/")
+                    }
+                    subtitleCallback(SubtitleFile(lang, subUrl))
+                }
+        } else if (iframealak.contains("rplayer")) {
+            val iframeDoc = app.get(iframealak, referer = "$data/").document
+            val regex = Regex("\"file\":\"((?:[^\"]|\"\")*)\"", options = setOf(RegexOption.IGNORE_CASE))
+            val matches = regex.findAll(iframeDoc.toString())
+
+            for (match in matches) {
+                val fileUrlEscaped = match.groupValues[1]
+                val fileUrl = fileUrlEscaped.replace("\\/", "/")
+                val tamUrl = fixUrlNull(fileUrl).toString()
+                val sonUrl = "${tamUrl}/"
+                val langCode = when {
+                    fileUrl.contains("Turkish", ignoreCase = true) -> "Türkçe"
+                    fileUrl.contains("English", ignoreCase = true) -> "İngilizce"
+                    else -> "Unknown"
+                }
+                subtitleCallback.invoke(SubtitleFile(lang = langCode, url = sonUrl))
+            }
+        }
+
+
+        Log.d("fix", "iframegeldi mi $iframealak")
 
         document.select("div.alternative-links").map { element ->
             element to element.attr("data-lang").uppercase()
@@ -250,19 +295,13 @@ class HDFilmCehennemi : MainAPI() {
                 }
 
                 Log.d("HDCH", "$source » $videoID » $iframe")
-                invokeLocalSource(source, iframe, subtitleCallback, callback)
+                invokeLocalSource(source, iframe, callback)
             }
         }
 
         return true
     }
 
-    // Data models for JSON parsing
-    private data class SubSource(
-        @JsonProperty("file")  val file: String?  = null,
-        @JsonProperty("label") val label: String? = null,
-        @JsonProperty("kind")  val kind: String?  = null
-    )
 
     data class Results(
         @JsonProperty("results") val results: List<String> = arrayListOf()
