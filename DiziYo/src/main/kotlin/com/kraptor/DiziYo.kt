@@ -80,6 +80,8 @@ class DiziYo : MainAPI() {
 
     private fun Element.toMainPageResult(): SearchResponse? {
         val title     = this.selectFirst("div.data")?.text() ?: return null
+        val titleTemiz = title
+            .replace(" (Anime)","")
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(
             this.selectFirst("img")?.let { img ->
@@ -87,7 +89,7 @@ class DiziYo : MainAPI() {
                     ?: img.attr("src").takeIf { it.isNotBlank() }
             }
         )
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(titleTemiz, href, TvType.Movie) { this.posterUrl = posterUrl }
     }
 
 
@@ -101,6 +103,8 @@ class DiziYo : MainAPI() {
 
     private fun Element.toSearchResult(): SearchResponse? {
         val title     = this.selectFirst("div.title")?.text() ?: return null
+        val titleTemiz = title
+            .replace(" (Anime)","")
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(
             this.selectFirst("img")?.let { img ->
@@ -109,7 +113,7 @@ class DiziYo : MainAPI() {
             }
         )
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(titleTemiz, href, TvType.Movie) { this.posterUrl = posterUrl }
     }
 
 
@@ -117,6 +121,8 @@ class DiziYo : MainAPI() {
         val document = app.get(url).document
 
         val title = document.selectFirst("div.data h1")?.text()?.trim() ?: return null
+        val titleTemiz = title
+            .replace(" (Anime)","")
         val poster = fixUrlNull(document.selectFirst("div.poster img")?.attr("src"))
         val description = document.selectFirst("div.wp-content p")?.text()?.trim()
         val year = document.selectFirst("div.extra span.date")?.text()?.trim()?.toIntOrNull()
@@ -142,7 +148,7 @@ class DiziYo : MainAPI() {
                     this.name = it.selectFirst("div.episodiotitle a")?.text()
                 }
             }
-            newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
+            newTvSeriesLoadResponse(titleTemiz, url, TvType.TvSeries, episodes) {
                 this.posterUrl = poster
                 this.plot = description
                 this.year = year
@@ -157,19 +163,21 @@ class DiziYo : MainAPI() {
                 newEpisode(fixUrlNull(it.attr("href"))) {
                     this.name = it.selectFirst("div.episodiotitle a")?.text()
                 }
+            }.let { list ->
+                mutableMapOf(DubStatus.Subbed to list)
             }
-            newTvSeriesLoadResponse(title, url, TvType.Anime, episodes) {
+            newAnimeLoadResponse(titleTemiz, url, TvType.Anime, true) {
                 this.posterUrl = poster
+                this.episodes = episodes
                 this.plot = description
                 this.year = year
                 this.tags = tags
                 this.rating = rating
-                addActors(actors)
                 addTrailer(trailer)
 
             }
         } else {
-            newMovieLoadResponse(title, url, TvType.Movie, url) {
+            newMovieLoadResponse(titleTemiz, url, TvType.Movie, url) {
                 this.posterUrl = poster
                 this.plot = description
                 this.year = year
