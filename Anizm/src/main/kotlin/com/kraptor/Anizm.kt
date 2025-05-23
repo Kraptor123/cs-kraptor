@@ -199,8 +199,9 @@ class Anizm : MainAPI() {
                 }
             }
 
-        return newTvSeriesLoadResponse(title, url, TvType.Anime, episodes) {
+        return newAnimeLoadResponse(title, url, TvType.Anime, true) {
             this.posterUrl = poster
+            this.episodes = mutableMapOf(DubStatus.Subbed to episodes)
             this.plot = description
             this.year = year
             this.tags = tags

@@ -94,15 +94,16 @@ class AnimeciX : MainAPI() {
         }
 
 
-        return newTvSeriesLoadResponse(
+        return newAnimeLoadResponse(
             response.title.title,
             "${mainUrl}/secure/titles/${response.title.id}?titleId=${response.title.id}",
             TvType.Anime,
-            episodes
+            true
         ) {
             this.posterUrl = fixUrlNull(response.title.poster)
             this.year      = response.title.year
             this.plot      = response.title.description
+            this.episodes = mutableMapOf(DubStatus.Subbed to episodes)
             this.tags      = response.title.tags.map { it.name }
             this.rating    = response.title.rating.toRatingInt()
             addActors(response.title.actors.map { Actor(it.name, fixUrlNull(it.poster)) })

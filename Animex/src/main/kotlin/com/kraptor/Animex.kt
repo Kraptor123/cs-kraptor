@@ -86,7 +86,7 @@ class Animex : MainAPI() {
         }
 
         return if (url.contains("/film/"))
-            newMovieLoadResponse(title, url, type = TvType.AnimeMovie, url) {
+            newAnimeLoadResponse(title, url, type = TvType.AnimeMovie, true) {
                 this.posterUrl = poster
                 this.plot = description
                 this.year = year

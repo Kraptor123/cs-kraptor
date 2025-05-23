@@ -1,7 +1,7 @@
-version = 3
+version = 4
 
 cloudstream {
-    authors     = listOf("keyiflerolsun")
+    authors     = listOf("keyiflerolsun, kraptor123")
     language    = "tr"
     description = "Türk Anime TV - Türkiye'nin Online Anime izleme sitesi."
 
@@ -13,6 +13,6 @@ cloudstream {
      * 3: Beta only
     **/
     status  = 1 // will be 3 if unspecified
-    tvTypes = listOf("Anime")
+    tvTypes = listOf("Anime, AnimeMovie")
     iconUrl = "https://www.google.com/s2/favicons?domain=www.turkanime.co&sz=%size%"
 }

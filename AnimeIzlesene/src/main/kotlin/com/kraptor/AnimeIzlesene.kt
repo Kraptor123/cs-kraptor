@@ -213,7 +213,7 @@ class AnimeIzlesene : MainAPI() {
 
         // For movies, create a single episode
         if (isMovie) {
-            return newMovieLoadResponse(title, url, TvType.AnimeMovie, url) {
+            return newAnimeLoadResponse(title, url, TvType.AnimeMovie, true) {
                 this.posterUrl = poster
                 this.plot = description
                 this.year = year

@@ -115,14 +115,19 @@ class TurkAnime : MainAPI() {
                 this.season = epSeason
                 this.episode = epEpisode
             }
+        }.let { list ->
+            mutableMapOf(DubStatus.Subbed to list)
         }
 
-        return newTvSeriesLoadResponse(title, url, TvType.Anime, episodes) {
+
+
+        return newAnimeLoadResponse(title, url, TvType.Anime, true) {
             this.posterUrl = poster
             this.plot      = description
             this.year      = year
             this.tags      = tags
             this.rating    = rating
+            this.episodes  = episodes
         }
     }
 
@@ -153,12 +158,13 @@ class TurkAnime : MainAPI() {
                     "Sec-Fetch-Site"   to "same-origin",
                     "Pragma"           to "no-cache",
                     "Cache-Control"    to "no-cache",
+                    "Csrf-Token"       to "EqdGHqwZJvydjfbmuYsZeGvBxDxnQXeARRqUNbhRYnPEWqdDnYFEKVBaUPCAGTZA"
                 ),
                 referer = mainVideo,
                 cookies = mapOf("yasOnay" to "1")
             ).text
 
-            val m3uLink = fixUrlNull(Regex("""file\":\"([^\"]+)""").find(mainAPI)?.groupValues?.get(1)?.replace("\\", ""))
+            val m3uLink = Regex("""file\":\"([^\"]+)""").find(mainAPI)?.groupValues?.get(1)?.replace("\\", "")
             Log.d("TRANM", "m3uLink » ${m3uLink}")
 
             if (m3uLink != null) {
@@ -169,7 +175,16 @@ class TurkAnime : MainAPI() {
                         url     = m3uLink,
                         type = ExtractorLinkType.M3U8
                     ) {
-                        headers = mapOf("Referer" to mainVideo) // "Referer" ayarı burada yapılabilir
+                        this.headers = mapOf(
+                            "Accept" to "*/*",
+                            "Accept-Language" to "tr-TR,tr;q=0.8,en-US;q=0.5,en;q=0.3",
+                            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
+                            "Connection" to "keep-alive",
+                            "DNT" to "1",
+                            "Sec-Fetch-Dest" to "empty",
+                            "Sec-Fetch-Mode" to "cors",
+                            "Sec-Fetch-Site" to "cross-site"
+                        )
                         quality = getQualityFromName(Qualities.Unknown.value.toString())
                     }
                 )
