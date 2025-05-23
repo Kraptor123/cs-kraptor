@@ -205,7 +205,7 @@ class Animeler : MainAPI() {
         Log.d("Animeler", "filmmi = $isMovie")
 
         return if (isMovie) {
-            newAnimeLoadResponse(title, url, TvType.AnimeMovie, true) {
+            newMovieLoadResponse(title, url, TvType.AnimeMovie, url) {
                 this.posterUrl = poster
                 this.plot = description
                 this.year = year
