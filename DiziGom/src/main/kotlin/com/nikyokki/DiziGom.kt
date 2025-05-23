@@ -12,7 +12,7 @@ import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class DiziGom : MainAPI() {
-    override var mainUrl = "https://dizigom1.co"
+    override var mainUrl = "https://dizigom1.live"
     override var name = "DiziGom"
     override val hasMainPage = true
     override var lang = "tr"
