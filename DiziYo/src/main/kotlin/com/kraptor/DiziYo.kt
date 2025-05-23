@@ -82,6 +82,11 @@ class DiziYo : MainAPI() {
         val title     = this.selectFirst("div.data")?.text() ?: return null
         val titleTemiz = title
             .replace(" (Anime)","")
+            .replace("(Türkçe Dublaj)","\uD83C\uDDF9\uD83C\uDDF7")
+            .replace("Türkçe Dublaj izle","\uD83C\uDDF9\uD83C\uDDF7")
+            .replace("Türkçe Dublaj","\uD83C\uDDF9\uD83C\uDDF7")
+            .replace("(Asya Dizi)","⛩\uFE0F")
+            .replace("izle","")
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(
             this.selectFirst("img")?.let { img ->
@@ -105,6 +110,11 @@ class DiziYo : MainAPI() {
         val title     = this.selectFirst("div.title")?.text() ?: return null
         val titleTemiz = title
             .replace(" (Anime)","")
+            .replace("(Türkçe Dublaj)","\uD83C\uDDF9\uD83C\uDDF7")
+            .replace("Türkçe Dublaj izle","\uD83C\uDDF9\uD83C\uDDF7")
+            .replace("Türkçe Dublaj","\uD83C\uDDF9\uD83C\uDDF7")
+            .replace("(Asya Dizi)","⛩\uFE0F")
+            .replace("izle","")
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(
             this.selectFirst("img")?.let { img ->
@@ -123,6 +133,11 @@ class DiziYo : MainAPI() {
         val title = document.selectFirst("div.data h1")?.text()?.trim() ?: return null
         val titleTemiz = title
             .replace(" (Anime)","")
+            .replace("(Türkçe Dublaj)","\uD83C\uDDF9\uD83C\uDDF7")
+            .replace("Türkçe Dublaj izle","\uD83C\uDDF9\uD83C\uDDF7")
+            .replace("Türkçe Dublaj","\uD83C\uDDF9\uD83C\uDDF7")
+            .replace("(Asya Dizi)","⛩\uFE0F")
+            .replace("izle","")
         val poster = fixUrlNull(document.selectFirst("div.poster img")?.attr("src"))
         val description = document.selectFirst("div.wp-content p")?.text()?.trim()
         val year = document.selectFirst("div.extra span.date")?.text()?.trim()?.toIntOrNull()
