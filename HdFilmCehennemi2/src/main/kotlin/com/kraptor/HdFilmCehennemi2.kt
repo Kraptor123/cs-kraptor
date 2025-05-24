@@ -12,7 +12,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 class HdFilmCehennemi2 : MainAPI() {
-    override var mainUrl              = "https://hdfilmcehennemi2.rip"
+    override var mainUrl              = "https://hdfilmcehennemi2.to"
     override var name                 = "HdFilmCehennemi2"
     override val hasMainPage          = true
     override var lang                 = "tr"
@@ -21,31 +21,31 @@ class HdFilmCehennemi2 : MainAPI() {
 
     override val mainPage = mainPageOf(
         "${mainUrl}/" to "Yeni Eklenenler",
-        "${mainUrl}/tur/turkce-altyazili"      to  "Türkçe Altyazılı",
-        "${mainUrl}/tur/turkce-dublaj"         to  "Türkçe Dublaj",
-        "${mainUrl}/tur/aile-filmleri"         to  "Aile Filmleri",
-        "${mainUrl}/tur/aksiyon-filmleri"      to  "Aksiyon Filmleri",
-        "${mainUrl}/tur/animasyon-filmleri"    to  "Animasyon Filmleri",
-        "${mainUrl}/tur/belgesel"              to  "Belgesel",
-        "${mainUrl}/tur/bilim-kurgu-filmleri"  to  "Bilim Kurgu Filmleri",
-        "${mainUrl}/tur/biyografi-filmleri"    to  "Biyografi Filmleri",
-        "${mainUrl}/tur/dram-filmleri"         to  "Dram Filmleri",
-        "${mainUrl}/tur/fantastik-filmleri"    to  "Fantastik Filmleri",
-        "${mainUrl}/tur/genel"                 to  "Genel",
-        "${mainUrl}/tur/gerilim-filmleri"      to  "Gerilim Filmleri",
-        "${mainUrl}/tur/gizem-filmleri"        to  "Gizem Filmleri",
-        "${mainUrl}/tur/komedi-filmleri"       to  "Komedi Filmleri",
-        "${mainUrl}/tur/korku-filmleri"        to  "Korku Filmleri",
-        "${mainUrl}/tur/macera-filmleri"       to  "Macera Filmleri",
-        "${mainUrl}/tur/muzik-filmleri"        to  "Müzik Filmleri",
-        "${mainUrl}/tur/muzikal-fimleri"       to  "Müzikal Fimleri",
-        "${mainUrl}/tur/romantik-filmleri"     to  "Romantik Filmleri",
-        "${mainUrl}/tur/savas-filmleri"        to  "Savaş Filmleri",
-        "${mainUrl}/tur/soygun"                to  "Soygun",
-        "${mainUrl}/tur/spor-filmleri"         to  "Spor Filmleri",
-        "${mainUrl}/tur/suc-filmleri"          to  "Suç Filmleri",
-        "${mainUrl}/tur/tarih-filmleri"        to  "Tarih Filmleri",
-        "${mainUrl}/tur/western-filmleri"      to  "Western Filmleri"
+//        "${mainUrl}/tur/turkce-altyazili"      to  "Türkçe Altyazılı",
+//        "${mainUrl}/tur/turkce-dublaj"         to  "Türkçe Dublaj",
+//        "${mainUrl}/tur/aile-filmleri"         to  "Aile Filmleri",
+//        "${mainUrl}/tur/aksiyon-filmleri"      to  "Aksiyon Filmleri",
+//        "${mainUrl}/tur/animasyon-filmleri"    to  "Animasyon Filmleri",
+//        "${mainUrl}/tur/belgesel"              to  "Belgesel",
+//        "${mainUrl}/tur/bilim-kurgu-filmleri"  to  "Bilim Kurgu Filmleri",
+//        "${mainUrl}/tur/biyografi-filmleri"    to  "Biyografi Filmleri",
+//        "${mainUrl}/tur/dram-filmleri"         to  "Dram Filmleri",
+//        "${mainUrl}/tur/fantastik-filmleri"    to  "Fantastik Filmleri",
+//        "${mainUrl}/tur/genel"                 to  "Genel",
+//        "${mainUrl}/tur/gerilim-filmleri"      to  "Gerilim Filmleri",
+//        "${mainUrl}/tur/gizem-filmleri"        to  "Gizem Filmleri",
+//        "${mainUrl}/tur/komedi-filmleri"       to  "Komedi Filmleri",
+//        "${mainUrl}/tur/korku-filmleri"        to  "Korku Filmleri",
+//        "${mainUrl}/tur/macera-filmleri"       to  "Macera Filmleri",
+//        "${mainUrl}/tur/muzik-filmleri"        to  "Müzik Filmleri",
+//        "${mainUrl}/tur/muzikal-fimleri"       to  "Müzikal Fimleri",
+//        "${mainUrl}/tur/romantik-filmleri"     to  "Romantik Filmleri",
+//        "${mainUrl}/tur/savas-filmleri"        to  "Savaş Filmleri",
+//        "${mainUrl}/tur/soygun"                to  "Soygun",
+//        "${mainUrl}/tur/spor-filmleri"         to  "Spor Filmleri",
+//        "${mainUrl}/tur/suc-filmleri"          to  "Suç Filmleri",
+//        "${mainUrl}/tur/tarih-filmleri"        to  "Tarih Filmleri",
+//        "${mainUrl}/tur/western-filmleri"      to  "Western Filmleri"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
