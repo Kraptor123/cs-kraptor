@@ -144,8 +144,6 @@ class `4KFilmIzleme` : MainAPI() {
         return url
     }
 
-
-
     override suspend fun loadLinks(
         data: String,
         isCasting: Boolean,
@@ -155,15 +153,11 @@ class `4KFilmIzleme` : MainAPI() {
         Log.d("filmizlesene", "data » $data")
         for (page in 1..2) {
             val document = app.get("$data/$page").document
-            val iframe = fixUrlNull(document.selectFirst("iframe")?.attr("src")).toString()
+            val iframesec = document.selectFirst("iframe")?.attr("src")
+            val iframe = fixUrlNull(iframesec).toString()
             Log.d("filmizlesene", "iframe » $iframe")
 
-            if (!iframe.contains("vidmoxy") && !iframe.contains("turkeyplayer")) {
-                Log.d("filmizlesene", "hanigeldi mi amk")
-                loadExtractor(iframe, subtitleCallback, callback)
-                Log.d("filmizlesene", "geldi amk")
-            }
-
+            loadExtractor(iframe, referer = "${mainUrl}/", subtitleCallback = subtitleCallback, callback = callback)
 
             val iframeSayfa = app.get(
                 iframe,
@@ -172,7 +166,6 @@ class `4KFilmIzleme` : MainAPI() {
                     "Sec-Fetch-Dest" to "iframe"
                 )
             ).text
-
             // HLS veya m3u8 linklerini çıkar
             val extractedValue = Regex("""file: EE\.dd\("([^\"]*)"\)""").find(iframeSayfa)
                 ?.groupValues?.get(1)
@@ -234,7 +227,6 @@ class `4KFilmIzleme` : MainAPI() {
                         }
                     )
                 )
-                loadExtractor(iframe, subtitleCallback, callback)
             }
         }
         return true

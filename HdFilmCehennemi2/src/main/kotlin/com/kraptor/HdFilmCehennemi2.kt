@@ -12,7 +12,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 class HdFilmCehennemi2 : MainAPI() {
-    override var mainUrl              = "https://hdfilmcehennemi2.to"
+    override var mainUrl              = "https://hdfilmcehennemi2.rip"
     override var name                 = "HdFilmCehennemi2"
     override val hasMainPage          = true
     override var lang                 = "tr"

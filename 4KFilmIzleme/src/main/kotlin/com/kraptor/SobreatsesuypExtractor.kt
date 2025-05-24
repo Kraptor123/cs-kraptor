@@ -1,6 +1,6 @@
 // ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-package com.keyiflerolsun
+package com.kraptor
 
 import android.util.Log
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -8,58 +8,41 @@ import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.*
+import kotlin.collections.get
 
-open class TRsTX : ExtractorApi() {
-    override val name            = "TRsTX"
-    override val mainUrl         = "https://trstx.org"
+open class Sobreatsesuyp : ExtractorApi() {
+    override val name            = "Sobreatsesuyp"
+    override val mainUrl         = "https://sobreatsesuyp.com"
     override val requiresReferer = true
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
         val extRef = referer ?: ""
 
-        val videoReq = app.get(url, referer=extRef).text
+        val videoReq = app.get(url, referer = extRef).text
 
         val file     = Regex("""file":"([^"]+)""").find(videoReq)?.groupValues?.get(1) ?: throw ErrorLoadingException("File not found")
         val postLink = "${mainUrl}/" + file.replace("\\", "")
-        val rawList  = app.post(postLink, referer=extRef).parsedSafe<List<Any>>() ?: throw ErrorLoadingException("Post link not found")
+        val rawList  = app.post(postLink, referer = extRef).parsedSafe<List<Any>>() ?: throw ErrorLoadingException("Post link not found")
 
-        val postJson: List<TrstxVideoData> = rawList.drop(1).map { item ->
+        val postJson: List<SobreatsesuypVideoData> = rawList.drop(1).map { item ->
             val mapItem = item as Map<*, *>
-            TrstxVideoData(
+            SobreatsesuypVideoData(
                 title = mapItem["title"] as? String,
                 file  = mapItem["file"]  as? String
             )
         }
         Log.d("Kekik_${this.name}", "postJson » $postJson")
 
-        val vidLinks = mutableSetOf<String>()
-        val vidMap   = mutableListOf<Map<String, String>>()
         for (item in postJson) {
             if (item.file == null || item.title == null) continue
 
-            val fileUrl   = "${mainUrl}/playlist/" + item.file.substring(1) + ".txt"
-            val videoData = app.post(fileUrl, referer=extRef).text
-
-            if (videoData in vidLinks) { continue }
-            vidLinks.add(videoData)
-
-            vidMap.add(mapOf(
-                "title"     to item.title,
-                "videoData" to videoData
-            ))
-        }
-
-
-        for (mapEntry in vidMap) {
-            Log.d("Kekik_${this.name}", "mapEntry » $mapEntry")
-            val title    = mapEntry["title"] ?: continue
-            val m3uLink = mapEntry["videoData"] ?: continue
+            val videoData = app.post("${mainUrl}/playlist/${item.file.substring(1)}.txt", referer = extRef).text
 
             callback.invoke(
                 newExtractorLink(
                     source  = this.name,
-                    name    = "${this.name} - $title",
-                    url     = m3uLink,
+                    name    = "${this.name} - ${item.title}",
+                    url     = videoData,
                     type    = INFER_TYPE
                 ) {
                     headers = mapOf("Referer" to extRef) // "Referer" ayarı burada yapılabilir
@@ -69,7 +52,7 @@ open class TRsTX : ExtractorApi() {
         }
     }
 
-    data class TrstxVideoData(
+    data class SobreatsesuypVideoData(
         @JsonProperty("title") val title: String? = null,
         @JsonProperty("file")  val file: String?  = null
     )
