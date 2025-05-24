@@ -66,7 +66,7 @@ class HdFilmCehennemi2 : MainAPI() {
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/?s=${query}").document
 
-        return document.select("div.result-item article").mapNotNull { it.toSearchResult() }
+        return document.select("div.moviefilm").mapNotNull { it.toSearchResult() }
     }
 
     private fun Element.toSearchResult(): SearchResponse? {
