@@ -2,28 +2,36 @@
 
 Kısa kod = kekikan
 
--Eklenenler :                                    
--Diziyo sitesi eklenti olarak eklenmiştir.        
--Anizm sitesi eklenti olarak eklenmiştir.        
--DiziFun sitesi eklenti olarak eklenmiştir.       
--CizgiveDizi sitesi eklenti olarak eklenmiştir.                                 
--AsyaAnimeleri sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                  
--AnimeIzlesene sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                  
--FilmEkseni sitesi eklenti olarak eklenmiştir.                                 
--CanliTV eklentisi için maç kanalları eklenmiştir.                                                                                                                                                                                 
--Animeler sitesi eklenti olarak eklenmiştir.                                                                                                                                     
--Animex sitesi eklenti olarak eklenmiştir.                                                                                                                                     
--Dizimore sitesi eklenti olarak eklenmiştir.   
--Filmhane sitesi eklenti olarak eklenmiştir.   
--TrDiziİzle sitesi eklenti olarak eklenmiştir.                                                                                                                                      
--GinikoCanli sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                    
--IpTvPlayStream sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                 
--Sinefy sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                 
--FilmIzleCx sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                 
--AsyaFanatiklerim sitesi eklenti olarak eklenmiştir.                                                                                                                                                                               
--4KFilmIzleme sitesi eklenti olarak eklenmiştir.                                                                                                                                                                               
--HdFilmCehennemi2 sitesi eklenti olarak eklenmiştir.                                                                                                                                                                               
-**Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için discussions bölümünde açtığım site istekleri sorusuna yanıt olarak istediğiniz siteleri söyleyebilirsiniz.**
+## 🎬 Eklenti Listesi
+
+### 📺 Canlı TV
+- **CanliTV** (maç kanalları eklendi)
+- **GinikoCanli**
+- **IpTvPlayStream**
+
+### 📺 Diziler
+- **Diziyo**
+- **DiziFun**
+- **CizgiveDizi**
+- **Dizimore**
+- **TrDiziİzle**
+- **AsyaFanatiklerim**
+
+### 🍿 Filmler
+- **FilmEkseni**
+- **FilmHane**
+- **FilmIzleCx**
+- **Sinefy**
+- **4KFilmIzleme**
+- **HdFilmCehennemi2**
+
+### 🎥 Animeler
+- **Anizm**
+- **AsyaAnimeleri**
+- **AnimeIzlesene**
+- **Animeler**
+- **Animex**
+- **Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için discussions bölümünde açtığım site istekleri sorusuna yanıt olarak istediğiniz siteleri söyleyebilirsiniz.**
 
 
 **Çalışmayan canlı yayınlar için android cihazınıza [ByeDPI](https://github.com/dovecoteescapee/ByeDPIAndroid/releases/download/v1.2.0/byedpi-1.2.0.apk) kurabilirsiniz. [Kurulum talimatları](https://www.technopat.net/sosyal/konu/android-vpn-olmadan-sinirsiz-erisim-byedpi.3564707/)**                                                                                                                                                                        
