@@ -21,6 +21,8 @@ Kısa kod = kekikan
 -Sinefy sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                 
 -FilmIzleCx sitesi eklenti olarak eklenmiştir.                                                                                                                                                                                 
 -AsyaFanatiklerim sitesi eklenti olarak eklenmiştir.                                                                                                                                                                               
+-4KFilmIzleme sitesi eklenti olarak eklenmiştir.                                                                                                                                                                               
+-HdFilmCehennemi2 sitesi eklenti olarak eklenmiştir.                                                                                                                                                                               
 **Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için discussions bölümünde açtığım site istekleri sorusuna yanıt olarak istediğiniz siteleri söyleyebilirsiniz.**
 
 
