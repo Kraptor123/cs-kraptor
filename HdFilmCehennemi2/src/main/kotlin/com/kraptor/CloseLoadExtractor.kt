@@ -7,6 +7,7 @@ import android.util.Log
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.*
+import okio.ByteString.Companion.decodeBase64
 
 private fun getm3uLink(data: String): String {
     val first  = Base64.decode(data,Base64.DEFAULT).reversedArray()
@@ -26,6 +27,18 @@ open class CloseLoad : ExtractorApi() {
         Log.d("cehennem", "url » $url")
 
         val iSource = app.get(url, referer = extRef)
+
+        val regex = Regex("""\|Player\|\s*(.*?)\s*\|""", RegexOption.IGNORE_CASE)
+        val allMatches = regex.findAll(iSource.text).toList()
+
+        val rawUrl = allMatches.getOrNull(1)?.groupValues?.get(1)
+
+        val sonUrl = rawUrl?.decodeBase64()?.utf8()
+        val link = sonUrl.toString()
+
+        Log.d("cehennem", "rawurl » $rawUrl")
+        Log.d("cehennem", "urlbak » $sonUrl")
+
 
         iSource.document
             .select("track[kind=captions]")   // sadece altyazı içeren <track> etiketlerini al
@@ -49,20 +62,11 @@ open class CloseLoad : ExtractorApi() {
                 )
             }
 
-        val isimalak = iSource.document.selectFirst("video")?.attr("poster")?.replace("https://closeload.com/img/","")
-            ?.replace("jpg","mp4")
-
-        val urlOlustur = "https://balancehls8.playmix.uno/hls/$isimalak/master.txt"
-
-        Log.d("cehennem", "isimalak  = $isimalak")
-        Log.d("cehennem", "urlolustur  = $urlOlustur")
-
-
           callback.invoke(
            newExtractorLink(
                source = this.name,
                name = this.name,
-               url = urlOlustur,
+               url = link,
                type = ExtractorLinkType.M3U8,
                {
                    this.referer = "${mainUrl}/"
