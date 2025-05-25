@@ -361,11 +361,6 @@ class Animeler : MainAPI() {
                     return true
                 }
 
-                iframeUrl.contains("anizmplayer.com") -> {
-                    AincradExtractor().getUrl(iframeUrl, mainUrl).forEach(callback)
-                    return true
-                }
-
                 else -> {
                     loadExtractor(
                         url = iframeUrl,

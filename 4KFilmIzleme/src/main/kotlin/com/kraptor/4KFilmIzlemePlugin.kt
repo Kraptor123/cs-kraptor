@@ -14,5 +14,6 @@ class `4KFilmIzlemePlugin`: Plugin() {
         registerExtractorAPI(VidMoxy())
         registerExtractorAPI(Sobreatsesuyp())
         registerExtractorAPI(TurboImgz())
+        registerExtractorAPI(TurkeyPlayer())
     }
 }

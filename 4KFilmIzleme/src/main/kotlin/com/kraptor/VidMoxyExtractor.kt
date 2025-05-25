@@ -2,6 +2,7 @@
 
 package com.kraptor
 
+import android.util.Base64
 import android.util.Log
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
@@ -12,6 +13,34 @@ open class VidMoxy : ExtractorApi() {
     override val name            = "VidMoxy"
     override val mainUrl         = "https://vidmoxy.com"
     override val requiresReferer = true
+
+
+    fun String.rot13(): String = buildString {
+        for (c in this@rot13) {
+            when (c) {
+                in 'A'..'Z' -> append(((c - 'A' + 13) % 26 + 'A'.code).toChar())
+                in 'a'..'z' -> append(((c - 'a' + 13) % 26 + 'a'.code).toChar())
+                else         -> append(c)
+            }
+        }
+    }
+
+    fun decodeHlsLink(encoded: String): String {
+        // 2) Base64 → UTF-8
+        val decodedBytes = Base64.decode(encoded, Base64.DEFAULT)
+        val decoded     = decodedBytes.toString(Charsets.UTF_8)
+        Log.d("filmizlesene", "afterBase64 = $decoded")
+
+        // 3) String’i ters çevir
+        val reversed    = decoded.reversed()
+        Log.d("filmizlesene", "afterReverse = $reversed")
+
+        // 4) Rot13 uygula
+        val url         = reversed.rot13()
+        Log.d("filmizlesene", "finalUrl = $url")
+
+        return url
+    }
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
         val extRef   = referer ?: ""
@@ -32,27 +61,15 @@ open class VidMoxy : ExtractorApi() {
             )
         }
 
-        var extractedValue  = Regex("""file": "(.*)",""").find(videoReq)?.groupValues?.get(1)
-        val decoded: String?
-
-        if (extractedValue != null) {
-            val bytes = extractedValue.split("\\x").filter { it.isNotEmpty() }.map { it.toInt(16).toByte() }.toByteArray()
-            decoded   = String(bytes, Charsets.UTF_8)
-        } else {
-            val evaljwSetup = Regex("""\};\s*(eval\(function[\s\S]*?)var played = \d+;""").find(videoReq)?.groupValues?.get(1) ?: throw ErrorLoadingException("File not found")
-            val jwSetup     = getAndUnpack(getAndUnpack(evaljwSetup)).replace("\\\\", "\\")
-            extractedValue  = Regex("""file":"(.*)","label""").find(jwSetup)?.groupValues?.get(1)?.replace("\\\\x", "")
-
-            val bytes = extractedValue?.chunked(2)?.map { it.toInt(16).toByte() }?.toByteArray()
-            decoded   = bytes?.toString(Charsets.UTF_8) ?: throw ErrorLoadingException("File not found")
-        }
-        Log.d("Kekik_${this.name}", "decoded » $decoded")
+        val extractedValue = Regex("""file: EE\.dd\("([^\"]*)"\)""").find(videoReq)
+            ?.groupValues?.get(1)
+        val realUrl = decodeHlsLink(extractedValue.toString())
 
         callback.invoke(
             newExtractorLink(
                 source  = this.name,
                 name    = this.name,
-                url     = decoded,
+                url     = realUrl,
                 type = ExtractorLinkType.M3U8
                  ) {
                      headers = mapOf("Referer" to extRef) // "Referer" ayarı burada yapılabilir

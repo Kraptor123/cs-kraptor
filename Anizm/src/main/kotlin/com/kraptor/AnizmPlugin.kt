@@ -10,5 +10,6 @@ import com.lagradost.cloudstream3.plugins.Plugin
 class AnizmPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(Anizm())
+        registerExtractorAPI(AincradExtractor())
     }
 }

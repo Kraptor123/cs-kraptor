@@ -117,32 +117,6 @@ class `4KFilmIzleme` : MainAPI() {
         }
     }
 
-    fun String.rot13(): String = buildString {
-        for (c in this@rot13) {
-            when (c) {
-                in 'A'..'Z' -> append(((c - 'A' + 13) % 26 + 'A'.code).toChar())
-                in 'a'..'z' -> append(((c - 'a' + 13) % 26 + 'a'.code).toChar())
-                else         -> append(c)
-            }
-        }
-    }
-
-    fun decodeHlsLink(encoded: String): String {
-        // 2) Base64 → UTF-8
-        val decodedBytes = Base64.decode(encoded, Base64.DEFAULT)
-        val decoded     = decodedBytes.toString(Charsets.UTF_8)
-        Log.d("filmizlesene", "afterBase64 = $decoded")
-
-        // 3) String’i ters çevir
-        val reversed    = decoded.reversed()
-        Log.d("filmizlesene", "afterReverse = $reversed")
-
-        // 4) Rot13 uygula
-        val url         = reversed.rot13()
-        Log.d("filmizlesene", "finalUrl = $url")
-
-        return url
-    }
 
     override suspend fun loadLinks(
         data: String,
@@ -159,76 +133,8 @@ class `4KFilmIzleme` : MainAPI() {
 
             loadExtractor(iframe, referer = "${mainUrl}/", subtitleCallback = subtitleCallback, callback = callback)
 
-            val iframeSayfa = app.get(
-                iframe,
-                headers = mapOf(
-                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0",
-                    "Sec-Fetch-Dest" to "iframe"
-                )
-            ).text
-            // HLS veya m3u8 linklerini çıkar
-            val extractedValue = Regex("""file: EE\.dd\("([^\"]*)"\)""").find(iframeSayfa)
-                ?.groupValues?.get(1)
-            val realUrl = decodeHlsLink(extractedValue.toString())
 
-            val m3uMatch = Regex("""\"file\":\"([^\"]+)\"""").find(iframeSayfa)
-            val rawM3u = m3uMatch?.groupValues?.get(1)?.replace("\\", "")
-            val fixM3u = rawM3u?.replace("thumbnails.vtt", "master.txt")
-            fixM3u?.contains("master.txt")?.let {
-                if (!it) {
-                    val lang = when {
-                        fixM3u.contains("tur", ignoreCase = true) -> "Türkçe"
-                        fixM3u.contains("en", ignoreCase = true) -> "İngilizce"
-                        else -> "Bilinmeyen"
-                    }
-                        subtitleCallback.invoke(SubtitleFile(lang, fixM3u.toString()))
-                }
             }
-
-            Log.d("filmizlesene", "normalized m3u » $fixM3u")
-
-            val dublaj = if (page == 2) "Altyazı" else "Dublaj"
-
-
-            if (fixM3u.isNullOrEmpty()) {
-                callback.invoke(
-                    newExtractorLink(
-                        source = "Vidmoxy $dublaj",
-                        name = "Vidmoxy $dublaj",
-                        url = realUrl,
-                        type = ExtractorLinkType.M3U8,
-                        {
-                            this.referer = "${mainUrl}/"
-                            this.quality = Qualities.Unknown.value
-                        }
-                    )
-                )
-            } else {
-                val dil = Regex("""title\":\"([^\"]*)\"""").find(iframeSayfa)
-                    ?.groupValues?.get(1)
-                    ?: throw ErrorLoadingException("Dil bulunamadı")
-                val lang = when {
-                    dil.contains("SUB", ignoreCase = true) -> "Altyazılı"
-                    dil.contains("DUB", ignoreCase = true) -> "Dublaj"
-                    else -> ""
-                }
-                callback.invoke(
-                    newExtractorLink(
-                        source = "TurkeyPlayer $lang",
-                        name = "TurkeyPlayer $lang",
-                        url = fixM3u,
-                        type = ExtractorLinkType.M3U8,
-                         {
-                            this.quality = Qualities.Unknown.value
-                            this.referer = iframe
-                            this.headers = mapOf(
-                                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"
-                            )
-                        }
-                    )
-                )
-            }
+            return true
         }
-        return true
     }
-}

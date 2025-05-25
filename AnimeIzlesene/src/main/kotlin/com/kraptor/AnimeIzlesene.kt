@@ -13,6 +13,9 @@ import com.lagradost.cloudstream3.utils.loadExtractor
 import java.net.URLEncoder
 import com.lagradost.cloudstream3.DubStatus
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.lagradost.cloudstream3.utils.ExtractorLinkType
+import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import kotlin.coroutines.cancellation.CancellationException
 
 
@@ -311,18 +314,16 @@ class AnimeIzlesene : MainAPI() {
                         .mapNotNull { it.groups[1]?.value?.replace("&amp;", "&") }
                         .toList()
 
-                    videoUrls.find { it.contains("hdvid.tv") }?.let { url ->
-                        HdBestVidExtractor().getUrl(url, data).forEach(callback)
+                    val fixedUrls = videoUrls.map { url ->
+                        fixUrlNull(url).toString()
+
+                    }
+                    fixedUrls.find { it.contains("hdvid.tv") }?.let { url ->
+                        loadExtractor(url, referer = data, subtitleCallback, callback)
                         foundLinks = true
                     }
 
-                    val fixedUrls = videoUrls.map { url ->
-                        if (url.startsWith("//")) {
-                            "https:$url"
-                        } else {
-                            url
-                        }
-                    }
+
 
                     if (fixedUrls.isNotEmpty()) {
                         foundLinks = true
@@ -330,8 +331,19 @@ class AnimeIzlesene : MainAPI() {
 
                         fixedUrls.forEach { url ->
                             loadExtractor(url, "$mainUrl/", subtitleCallback, callback)
+
+                            callback.invoke(newExtractorLink(
+                                source = "AnimeIzlesene",
+                                name = "AnimeIzlesene",
+                                url = url,
+                                type = ExtractorLinkType.M3U8,
+                                {
+                                    this.quality = Qualities.Unknown.value
+//                                    this.referer = fixedUrls.toString()
+                                }
+                            ))
                         }
-                    }
+                        }
 
                 } catch (e: Exception) {
                     Log.e("Animei", "Hata oluştu: ${e.localizedMessage}")

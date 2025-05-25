@@ -9,5 +9,7 @@ import android.content.Context
 class AnimexPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(Animex())
+        registerExtractorAPI(AnimelerExtractor())
+        registerExtractorAPI(AnimTubeExtractor())
     }
 }

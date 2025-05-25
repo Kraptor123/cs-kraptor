@@ -219,12 +219,6 @@ class Anizm : MainAPI() {
     ): Boolean {
         val videoLinks = getVideoUrls(data)
         videoLinks.forEach { (name, url) ->
-            when {
-                url.contains("anizmplayer.com") -> {
-                    AincradExtractor().getUrl(url, mainUrl).forEach(callback)
-                    return true
-                }
-                else -> {
                     loadExtractor(
                         url = url,
                         referer = mainUrl,
@@ -232,8 +226,6 @@ class Anizm : MainAPI() {
                         callback = callback
                     )
                 }
-            }
-        }
         return true
     }
 }

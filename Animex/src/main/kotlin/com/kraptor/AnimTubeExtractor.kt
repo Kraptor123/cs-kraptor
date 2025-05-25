@@ -49,7 +49,7 @@ class AnimTubeExtractor : ExtractorApi() {
             links.add(
                 newExtractorLink(
                     source = name,
-                    name = "AnimTube HLS",
+                    name = "AnimTube",
                     url = videoLocation,
                     type = ExtractorLinkType.M3U8
                 ) {

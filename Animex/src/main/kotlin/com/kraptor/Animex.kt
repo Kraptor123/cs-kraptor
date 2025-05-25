@@ -123,46 +123,9 @@ class Animex : MainAPI() {
         if (linkElements.isEmpty()) return false
 
         for (el in linkElements) {
-            val iframeUrl = fixUrlNull(el.attr("data-frame"))
-            Log.d("Animex", "iframeUrl: $iframeUrl")
-            if (iframeUrl == null) continue
-
-            try {
-                when {
-                    iframeUrl.contains("animtube") -> {
-                        AnimTubeExtractor().getUrl(iframeUrl, iframeUrl)
-                            .forEach(callback)
-                        return true
-                    }
-
-                    iframeUrl.contains("animeler.tr") -> {
-                        AnimelerExtractor().getUrl(iframeUrl, iframeUrl)
-                            .forEach(callback)
-                        return true
-                    }
-
-                    iframeUrl.contains("yourupload") -> {
-                        YourUpload().getUrl(iframeUrl, iframeUrl)
-                            .forEach(callback)
-                        return true
-                    }
-
-                    iframeUrl.contains("sibnet") -> {
-                        SibNet().getUrl(iframeUrl, iframeUrl)
-                            ?.forEach(callback)
-                        return true
-                    }
-
-                    else -> {
-                        loadExtractor(iframeUrl, data, subtitleCallback, callback)
-                    }
-                }
-            } catch (e: Exception) {
-                Log.w("Animex", "Extractor hata: ${e.message}")
-                continue
-            }
+            val iframeUrl = fixUrlNull(el.attr("data-frame")).toString()
+            loadExtractor(iframeUrl, subtitleCallback, callback)
         }
-
         return true
     }
 }

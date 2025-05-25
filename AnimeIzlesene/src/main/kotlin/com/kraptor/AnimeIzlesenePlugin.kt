@@ -9,5 +9,6 @@ import android.content.Context
 class AnimeIzlesenePlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(AnimeIzlesene())
+        registerExtractorAPI(HdBestVidExtractor())
     }
 }
