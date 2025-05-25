@@ -1,10 +1,10 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-version = 4
+version = 5
 
 cloudstream {
     authors     = listOf("kraptor")
     language    = "tr"
-    description = "Full hd film izleme keyfini hdfilmcehennemi2.net ile yaşayın. Türkiye'nin en güncel yüksek hd kalitede film izleme sitesi."
+    description = "Full hd film izleme keyfini hdfilmcehennemi2 ile yaşayın. Türkiye'nin en güncel yüksek hd kalitede film izleme sitesi."
 
     /**
      * Status int as the following:
@@ -15,5 +15,5 @@ cloudstream {
     **/
     status  = 1 // will be 3 if unspecified
     tvTypes = listOf("Movie")
-    iconUrl = "https://hdfilmcehennemi2.to/favicon.ico"
+    iconUrl = "https://hdfilmcehennemi2.rip/wp-content/uploads/2023/07/favi.png"
 }
