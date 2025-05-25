@@ -16,8 +16,8 @@ private fun getm3uLink(data: String): String {
     return result
 }
 
-open class CloseLoad : ExtractorApi() {
-    override val name            = "CloseLoad"
+open class CloseLoadFm : ExtractorApi() {
+    override val name            = "CloseLoadFm"
     override val mainUrl         = "https://closeload.filmmakinesi.de"
     override val requiresReferer = true
 

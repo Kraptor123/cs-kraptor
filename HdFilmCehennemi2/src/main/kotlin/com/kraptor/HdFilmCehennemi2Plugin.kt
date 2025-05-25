@@ -9,5 +9,6 @@ import android.content.Context
 class HdFilmCehennemi2Plugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(HdFilmCehennemi2())
+        registerExtractorAPI(CloseLoad())
     }
 }
