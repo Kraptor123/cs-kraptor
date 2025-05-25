@@ -20,29 +20,36 @@ class HdFilmCehennemi2 : MainAPI() {
     override val supportedTypes       = setOf(TvType.Movie)
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/filmler/aile-filmleri/" to        "Aile",
-        "${mainUrl}/filmler/aksiyon-filmleri/"     to        "Aksiyon",
-        "${mainUrl}/filmler/animasyon-filmler/"    to        "Animasyon",
-        "${mainUrl}/filmler/belgesel-filmler/"     to        "Belgesel",
-        "${mainUrl}/filmler/bilim-kurgu-filmleri/" to        "Bilim Kurgu",
-        "${mainUrl}/filmler/biyografi-filmleri/"   to        "Biyografi",
-        "${mainUrl}/filmler/dram-filmleri/"        to        "Dram",
-        "${mainUrl}/filmler/fantastik-filmler/"    to        "Fantastik",
-        "${mainUrl}/filmler/gerilim-filmleri/"     to        "Gerilim",
-        "${mainUrl}/filmler/gizem-filmleri/"       to        "Gizem",
-        "${mainUrl}/filmler/komedi-filmleri/"      to        "Komedi",
-        "${mainUrl}/filmler/korku-filmleri/"       to        "Korku",
-        "${mainUrl}/filmler/macera-filmleri/"      to        "Macera",
-        "${mainUrl}/filmler/muzikal-filmler/"      to        "Müzikal",
-        "${mainUrl}/filmler/romantik-filmler/"     to        "Romantik",
-        "${mainUrl}/filmler/savas-filmleri/"       to        "Savaş",
-        "${mainUrl}/filmler/spor-filmleri/"        to        "Spor",
-        "${mainUrl}/filmler/suc-filmleri/"         to        "Suç",
-        "${mainUrl}/filmler/tarih-filmleri/"       to        "Tarih"
+        "${mainUrl}/film-arsivi/page/sayfa/?sort=imdb" to        "Yüksek Puanlılar",
+        "${mainUrl}/film-arsivi/page/sayfa/?sort=views"  to        "En Çok İzlenenler",
+        "${mainUrl}/film-arsivi/page/sayfa/?lang=tr"     to        "Türkçe Dublaj",
+        "${mainUrl}/filmler/aile-filmleri/"              to        "Aile",
+        "${mainUrl}/filmler/aksiyon-filmleri/"           to        "Aksiyon",
+        "${mainUrl}/filmler/animasyon-filmler/"          to        "Animasyon",
+        "${mainUrl}/filmler/belgesel-filmler/"           to        "Belgesel",
+        "${mainUrl}/filmler/bilim-kurgu-filmleri/"       to        "Bilim Kurgu",
+        "${mainUrl}/filmler/biyografi-filmleri/"         to        "Biyografi",
+        "${mainUrl}/filmler/dram-filmleri/"              to        "Dram",
+        "${mainUrl}/filmler/fantastik-filmler/"          to        "Fantastik",
+        "${mainUrl}/filmler/gerilim-filmleri/"           to        "Gerilim",
+        "${mainUrl}/filmler/gizem-filmleri/"             to        "Gizem",
+        "${mainUrl}/filmler/komedi-filmleri/"            to        "Komedi",
+        "${mainUrl}/filmler/korku-filmleri/"             to        "Korku",
+        "${mainUrl}/filmler/macera-filmleri/"            to        "Macera",
+        "${mainUrl}/filmler/muzikal-filmler/"            to        "Müzikal",
+        "${mainUrl}/filmler/romantik-filmler/"           to        "Romantik",
+        "${mainUrl}/filmler/savas-filmleri/"             to        "Savaş",
+        "${mainUrl}/filmler/spor-filmleri/"              to        "Spor",
+        "${mainUrl}/filmler/suc-filmleri/"               to        "Suç",
+        "${mainUrl}/filmler/tarih-filmleri/"             to        "Tarih"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}/page/$page").document
+        val document =
+            app.get(request.data.replace("sayfa", "$page")).document
+            app.get("${request.data}/page/$page").document
+
+
         val home     = document.select("div.movie-preview-content").mapNotNull { it.toMainPageResult() }
 
         return newHomePageResponse(request.name, home)
