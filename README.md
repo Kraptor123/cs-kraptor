@@ -34,6 +34,7 @@ Teşekkür ederiz.
 - **Sinefy**
 - **4KFilmIzleme**
 - **HdFilmCehennemi2**
+- **HDFilm**
 
 ### 🎥 Animeler
 - **Anizm**
