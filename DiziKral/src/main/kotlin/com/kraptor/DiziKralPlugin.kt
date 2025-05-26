@@ -10,5 +10,6 @@ class DiziKralPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(DiziKral())
         registerExtractorAPI(KralPlayOynat())
+        registerExtractorAPI(DosyaLoad())
     }
 }

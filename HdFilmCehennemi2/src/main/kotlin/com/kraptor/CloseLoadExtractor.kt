@@ -24,9 +24,11 @@ open class CloseLoad : ExtractorApi() {
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
         val extRef = referer ?: ""
-        Log.d("cehennem", "url » $url")
+        Log.d("dkral_closeload", "url » $url")
+
 
         val iSource = app.get(url, referer = extRef)
+        Log.d("dkral_closeload", "kaynak = $iSource")
 
         val regex = Regex("""\|Player\|\s*(.*?)\s*\|""", RegexOption.IGNORE_CASE)
         val allMatches = regex.findAll(iSource.text).toList()
@@ -36,8 +38,8 @@ open class CloseLoad : ExtractorApi() {
         val sonUrl = rawUrl?.decodeBase64()?.utf8()
         val link = sonUrl.toString()
 
-        Log.d("cehennem", "rawurl » $rawUrl")
-        Log.d("cehennem", "urlbak » $sonUrl")
+        Log.d("dkral_closeload", "rawurl » $rawUrl")
+        Log.d("dkral_closeload", "urlbak » $sonUrl")
 
 
         iSource.document

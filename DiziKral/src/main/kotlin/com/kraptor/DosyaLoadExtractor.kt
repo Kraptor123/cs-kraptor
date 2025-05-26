@@ -21,6 +21,8 @@ open class DosyaLoad : ExtractorApi() {
         val extRef  = referer ?: ""
         val iSource = app.get(url, referer=extRef).text
 
+        Log.d("dkral_DosyaLoad", "url » $url")
+
         val bePlayer = Regex("""bePlayer\('([^']+)',\s*'(\{[^}]+\})'\);""").find(iSource)?.groupValues
         if (bePlayer != null) {
             val bePlayerPass = bePlayer[1]
