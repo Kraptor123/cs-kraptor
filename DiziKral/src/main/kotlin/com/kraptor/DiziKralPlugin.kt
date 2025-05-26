@@ -6,9 +6,9 @@ import com.lagradost.cloudstream3.plugins.Plugin
 import android.content.Context
 
 @CloudstreamPlugin
-class DiziMorePlugin: Plugin() {
+class DiziKralPlugin: Plugin() {
     override fun load(context: Context) {
-        registerMainAPI(DiziMore())
-        registerExtractorAPI(DonilasPlay())
+        registerMainAPI(DiziKral())
+        registerExtractorAPI(KralPlayOynat())
     }
 }

@@ -1,26 +1,18 @@
-// ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-
 package com.kraptor
 
-import android.R.id.input
-import com.lagradost.cloudstream3.*
+import android.util.Base64
 import android.util.Log
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.extractors.helper.AesHelper
 import com.lagradost.cloudstream3.utils.*
-import org.json.JSONObject
-import java.nio.charset.StandardCharsets
-import java.security.MessageDigest
-import javax.crypto.Cipher
-import javax.crypto.spec.IvParameterSpec
-import javax.crypto.spec.SecretKeySpec
 
 
-class DonilasPlay : ExtractorApi() {
-    override val name = "DonilasPlay"
-    override val mainUrl = "https://donilasplay.com"
+open class KralPlayOynat : ExtractorApi() {
+    override val name = "KralPlay"
+    override val mainUrl = "https://kralplayoynat.com"
     override val requiresReferer = true
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {

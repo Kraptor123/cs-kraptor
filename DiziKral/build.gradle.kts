@@ -1,10 +1,10 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-version = 2
+version = 1
 
 cloudstream {
     authors     = listOf("kraptor")
     language    = "tr"
-    description = "Sadece Dizi izlemenin Tek Adresin yerli yabancı dizi izlemek için dizimore.com"
+    description = "DiziKRAL - ücretsiz yabancı dizi izle, film izle, anime izle."
 
     /**
      * Status int as the following:
@@ -14,6 +14,6 @@ cloudstream {
      * 3: Beta only
     **/
     status  = 1 // will be 3 if unspecified
-    tvTypes = listOf("TvSeries")
-    iconUrl = "view-source:https://dizimore.com/wp-content/uploads/2024/03/morefav.png"
+    tvTypes = listOf("Movie")
+    iconUrl = "https://dizikral.nl/mofy/img/192x192_.png"
 }

@@ -2,7 +2,6 @@
 
 package com.kraptor
 
-import com.kraptor.DonilasPlayExtractor
 import android.util.Log
 import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*
@@ -13,12 +12,12 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 class DiziMore : MainAPI() {
-    override var mainUrl              = "https://dizimore.com"
-    override var name                 = "DiziMore"
-    override val hasMainPage          = true
-    override var lang                 = "tr"
-    override val hasQuickSearch       = false
-    override val supportedTypes       = setOf(TvType.TvSeries)
+    override var mainUrl = "https://dizimore.com"
+    override var name = "DiziMore"
+    override val hasMainPage = true
+    override var lang = "tr"
+    override val hasQuickSearch = false
+    override val supportedTypes = setOf(TvType.TvSeries)
 
     override val mainPage = mainPageOf(
         "${mainUrl}/diziler?s_type=&tur%5B%5D=aile" to "Aile",
@@ -41,7 +40,7 @@ class DiziMore : MainAPI() {
         // "https://dizimore.com/diziler?s_type=&tur%5B%5D=aksiyon-macera"
         val parts = request.data.split("?", limit = 2)
         val baseUrl = parts[0].trimEnd('/')            // https://dizimore.com/diziler
-        val query   = parts.getOrNull(1)?.let { "?$it" } ?: ""
+        val query = parts.getOrNull(1)?.let { "?$it" } ?: ""
 
         // sayfa 1 ise orijinal, değilse /page/2 gibi ekle
         val pagedUrl = if (page <= 1) {
@@ -51,7 +50,7 @@ class DiziMore : MainAPI() {
         }
 
         val document = app.get(pagedUrl).document
-        val home     = document.select("div.poster.poster-md")
+        val home = document.select("div.poster.poster-md")
 
             .mapNotNull { it.toMainPageResult() }
 
@@ -59,8 +58,8 @@ class DiziMore : MainAPI() {
     }
 
     private fun Element.toMainPageResult(): SearchResponse? {
-        val title     = this.selectFirst("h2")?.text() ?: return null
-        val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+        val title = this.selectFirst("h2")?.text() ?: return null
+        val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 
         return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
@@ -123,22 +122,25 @@ class DiziMore : MainAPI() {
     override suspend fun load(url: String): LoadResponse? {
         val document = app.get(url).document
 
-        val rawTitle        = document.selectFirst("h1.page-title")?.text()?.trim() ?: return null
-        val title           = rawTitle.replace(Regex("""\s*\(\d{4}\)$"""), "").trim()
-        val poster          = fixUrlNull(document.selectFirst("div.ui.items.ui img")?.attr("data-src"))
-        val description     = document.selectFirst("div.series-summary-wrapper p")?.text()?.trim()
-        val yearText        = document.selectFirst("div.genre-item:nth-child(2)")?.text()?.trim()
-        val year            = Regex("""\d{4}""").find(yearText ?: "")?.value?.toIntOrNull()
-        val tags            = document.select("div.genre-item:nth-child(1) > a").map { it.text() }
-        val rating          = document.selectFirst("div.color-imdb")?.text()?.trim()?.toRatingInt()
-        val duration        = document.selectFirst("table.ui > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) > div:nth-child(2)")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
+        val rawTitle = document.selectFirst("h1.page-title")?.text()?.trim() ?: return null
+        val title = rawTitle.replace(Regex("""\s*\(\d{4}\)$"""), "").trim()
+        val poster = fixUrlNull(document.selectFirst("div.ui.items.ui img")?.attr("data-src"))
+        val description = document.selectFirst("div.series-summary-wrapper p")?.text()?.trim()
+        val yearText = document.selectFirst("div.genre-item:nth-child(2)")?.text()?.trim()
+        val year = Regex("""\d{4}""").find(yearText ?: "")?.value?.toIntOrNull()
+        val tags = document.select("div.genre-item:nth-child(1) > a").map { it.text() }
+        val rating = document.selectFirst("div.color-imdb")?.text()?.trim()?.toRatingInt()
+        val duration =
+            document.selectFirst("table.ui > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) > div:nth-child(2)")
+                ?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
 //        val recommendations = document.select("div.srelacionados article").mapNotNull { it.toRecommendationResult() }
-        val actors          = document.select("div.content h5").map { Actor(it.text()) }
-        val trailer         = Regex("""embed/(.*)\?rel""").find(document.html())?.groupValues?.get(1)?.let { "https://www.youtube.com/embed/$it" }
-        val episodes        = document.select("div.ajax_post").mapNotNull { bolumElemanlari ->
-            val epNumber    = bolumElemanlari.attr("data-epnumber").toIntOrNull()
-            val epHref      = fixUrlNull(bolumElemanlari.selectFirst("a")?.attr("href")) ?: return null
-            val seasonName  = bolumElemanlari.attr("season-name").toIntOrNull()
+        val actors = document.select("div.content h5").map { Actor(it.text()) }
+        val trailer = Regex("""embed/(.*)\?rel""").find(document.html())?.groupValues?.get(1)
+            ?.let { "https://www.youtube.com/embed/$it" }
+        val episodes = document.select("div.ajax_post").mapNotNull { bolumElemanlari ->
+            val epNumber = bolumElemanlari.attr("data-epnumber").toIntOrNull()
+            val epHref = fixUrlNull(bolumElemanlari.selectFirst("a")?.attr("href")) ?: return null
+            val seasonName = bolumElemanlari.attr("season-name").toIntOrNull()
             newEpisode(epHref) {
                 this.name = "bölüm"
                 this.episode = epNumber
@@ -149,41 +151,32 @@ class DiziMore : MainAPI() {
 
 
         return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
-            this.posterUrl       = poster
-            this.plot            = description
-            this.year            = year
-            this.tags            = tags
-            this.rating          = rating
-            this.duration        = duration
-            this.episodes        = episodes
+            this.posterUrl = poster
+            this.plot = description
+            this.year = year
+            this.tags = tags
+            this.rating = rating
+            this.duration = duration
+            this.episodes = episodes
 //            this.recommendations = recommendations
             addActors(actors)
             addTrailer(trailer)
         }
     }
 
-    override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
+    override suspend fun loadLinks(
+        data: String,
+        isCasting: Boolean,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
         Log.d("dzmo", "data » ${data}")
         val document = app.get(data).document
 
-        val iframelink      = fixUrlNull(document.selectFirst("li.belink a")?.attr("data-frame")).toString()
+        val iframelink = fixUrlNull(document.selectFirst("li.belink a")?.attr("data-frame")).toString()
 
-        try {
-            when {
-                iframelink.contains("donilas") -> {
-                    DonilasPlayExtractor().getUrl(iframelink, iframelink)
-                        .forEach(callback)
-                    return true
-                }
-                else -> {
-                    loadExtractor(iframelink, data, subtitleCallback, callback)
-                    return true
-                }
-            }
-        } catch (e: Exception) {
-            Log.w("Animex", "Extractor hata: ${e.message}")
 
-        }
-    return true
-}
+        loadExtractor(iframelink, data, subtitleCallback, callback)
+        return true
+    }
 }
