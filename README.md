@@ -25,6 +25,7 @@ Teşekkür ederiz.
 - **Dizimore**
 - **TrDiziİzle**
 - **AsyaFanatiklerim**
+- **DiziKral**
 
 ### 🍿 Filmler
 - **FilmEkseni**
