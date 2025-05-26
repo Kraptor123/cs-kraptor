@@ -11,9 +11,9 @@ import com.lagradost.cloudstream3.extractors.helper.AesHelper
 import com.lagradost.cloudstream3.utils.*
 
 
-open class KralPlayOynat : ExtractorApi() {
-    override val name = "KralPlay"
-    override val mainUrl = "https://kralplayoynat.com"
+open class DosyaLoad : ExtractorApi() {
+    override val name = "DosyaLoad"
+    override val mainUrl = "https://dosyaload.com"
     override val requiresReferer = true
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
