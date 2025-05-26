@@ -202,7 +202,7 @@ class FilmIzleCx : MainAPI() {
 
         if (data.contains("player.vidmody.com")) {
             try {
-                VidModyExtractor().getUrl(data, data).forEach(callback)
+                loadExtractor(data, subtitleCallback, callback)
                 return true
             } catch (e: Exception) {
             }

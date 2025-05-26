@@ -6,9 +6,8 @@ import com.lagradost.cloudstream3.plugins.Plugin
 import android.content.Context
 
 @CloudstreamPlugin
-class FilmIzleCxPlugin: Plugin() {
+class HDFilmPlugin: Plugin() {
     override fun load(context: Context) {
-        registerMainAPI(FilmIzleCx())
-        registerExtractorAPI(VidMody())
+        registerMainAPI(HDFilm())
     }
 }

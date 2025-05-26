@@ -12,7 +12,7 @@ import com.lagradost.cloudstream3.utils.newExtractorLink
 import kotlin.sequences.forEach
 
 
-class VidModyExtractor : ExtractorApi() {
+class VidMody : ExtractorApi() {
     override val name = "VidMody"
     override val mainUrl = "https://player.vidmody.com"
     override val requiresReferer = false

@@ -18,6 +18,8 @@ open class Sobreatsesuyp : ExtractorApi() {
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
         val extRef = referer ?: ""
 
+        Log.d("kraptor_${this.name}", "Sobreat url = $url")
+
         val videoReq = app.get(url, referer = extRef).text
 
         val file     = Regex("""file":"([^"]+)""").find(videoReq)?.groupValues?.get(1) ?: throw ErrorLoadingException("File not found")
@@ -31,7 +33,7 @@ open class Sobreatsesuyp : ExtractorApi() {
                 file  = mapItem["file"]  as? String
             )
         }
-        Log.d("Kekik_${this.name}", "postJson » $postJson")
+        Log.d("kraptor_${this.name}", "postJson » $postJson")
 
         for (item in postJson) {
             if (item.file == null || item.title == null) continue
