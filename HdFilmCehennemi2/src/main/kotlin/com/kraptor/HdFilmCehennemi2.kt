@@ -8,8 +8,6 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 
 class HdFilmCehennemi2 : MainAPI() {
     override var mainUrl              = "https://hdfilmcehennemi2.rip"
@@ -45,10 +43,13 @@ class HdFilmCehennemi2 : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document =
-            app.get(request.data.replace("sayfa", "$page")).document
-            app.get("${request.data}/page/$page").document
 
+        val document = if (request.data.contains("page")){
+            app.get(request.data.replace("sayfa", "$page")).document
+        }
+        else {
+            app.get("${request.data}/page/$page").document
+        }
 
         val home     = document.select("div.movie-preview-content").mapNotNull { it.toMainPageResult() }
 
