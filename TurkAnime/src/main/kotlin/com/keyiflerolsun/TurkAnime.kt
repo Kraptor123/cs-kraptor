@@ -150,15 +150,15 @@ class TurkAnime : MainAPI() {
             val mainAPI = app.get(
                 "${mainUrl}/sources/${mainKey}/true",
                 headers = mapOf(
-                    "Content-Type"     to "application/json",
+                    "Content-Type" to "application/json",
                     "X-Requested-With" to "XMLHttpRequest",
-                    "Connection"       to "keep-alive",
-                    "Sec-Fetch-Dest"   to "empty",
-                    "Sec-Fetch-Mode"   to "cors",
-                    "Sec-Fetch-Site"   to "same-origin",
-                    "Pragma"           to "no-cache",
-                    "Cache-Control"    to "no-cache",
-                    "Csrf-Token"       to "EqdGHqwZJvydjfbmuYsZeGvBxDxnQXeARRqUNbhRYnPEWqdDnYFEKVBaUPCAGTZA"
+                    "Connection" to "keep-alive",
+                    "Sec-Fetch-Dest" to "empty",
+                    "Sec-Fetch-Mode" to "cors",
+                    "Sec-Fetch-Site" to "same-origin",
+                    "Pragma" to "no-cache",
+                    "Cache-Control" to "no-cache",
+                    "Csrf-Token" to "EqdGHqwZJvydjfbmuYsZeGvBxDxnQXeARRqUNbhRYnPEWqdDnYFEKVBaUPCAGTZA"
                 ),
                 referer = mainVideo,
                 cookies = mapOf("yasOnay" to "1")
@@ -167,27 +167,37 @@ class TurkAnime : MainAPI() {
             val m3uLink = Regex("""file\":\"([^\"]+)""").find(mainAPI)?.groupValues?.get(1)?.replace("\\", "")
             Log.d("TRANM", "m3uLink » ${m3uLink}")
 
-            if (m3uLink != null) {
-                callback.invoke(
-                    newExtractorLink(
-                        source  = this.name,
-                        name    = this.name,
-                        url     = m3uLink,
-                        type = ExtractorLinkType.M3U8
-                    ) {
-                        this.headers = mapOf(
-                            "Accept" to "*/*",
-                            "Accept-Language" to "tr-TR,tr;q=0.8,en-US;q=0.5,en;q=0.3",
-                            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
-                            "Connection" to "keep-alive",
-                            "DNT" to "1",
-                            "Sec-Fetch-Dest" to "empty",
-                            "Sec-Fetch-Mode" to "cors",
-                            "Sec-Fetch-Site" to "cross-site"
-                        )
-                        quality = getQualityFromName(Qualities.Unknown.value.toString())
-                    }
+            val pageContent = app.get(m3uLink.toString()).text
+
+            val headers = mapOf(
+                "Accept" to "*/*",
+                "Accept-Language" to "tr-TR,tr;q=0.8,en-US;q=0.5,en;q=0.3",
+                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
+                "Connection" to "keep-alive",
+                "Origin" to "https://www.turkanime.co",
+                "Sec-Fetch-Dest" to "empty",
+                "Sec-Fetch-Mode" to "cors",
+                "Sec-Fetch-Site" to "cross-site"
+            )
+
+            val urlRegex = Regex("""https?://[^#\s'"]+""")
+
+            val links = urlRegex.findAll(pageContent)
+                .map { it.value }
+                .toSet()  // tekrar edenleri atmak için
+
+            links.forEach { link ->
+                val extractorLinks: List<ExtractorLink> = M3u8Helper2.generateM3u8(
+                    source = this.name,       // istersen kendi kaynağını yaz
+                    streamUrl = m3uLink.toString(),
+                    referer = mainUrl,
+                    headers = headers,
+                    name = this.name        // link’lere atanacak isim
                 )
+                extractorLinks.forEach { link ->
+                    Log.d("TRANM", "Variant stream found: ${link.url} (quality=${link.quality})")
+                    callback.invoke(link)
+                }
             }
         }
 

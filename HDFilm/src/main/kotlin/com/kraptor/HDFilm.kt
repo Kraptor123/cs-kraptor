@@ -78,7 +78,7 @@ class HDFilm : MainAPI() {
         return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
     }
 
-    fun String.rot13(): String = buildString {
+   private fun String.rot13(): String = buildString {
         for (c in this@rot13) {
             when (c) {
                 in 'A'..'Z' -> append(((c - 'A' + 13) % 26 + 'A'.code).toChar())
@@ -146,7 +146,6 @@ class HDFilm : MainAPI() {
             Log.d("HDFilm", "$type = $decodedB64")
 
             loadExtractor(decodedB64, "$mainUrl/", subtitleCallback, callback)
-
         }
         return true
     }
