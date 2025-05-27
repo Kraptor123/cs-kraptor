@@ -10,6 +10,7 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.TvType
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.mainPageOf
+import com.lagradost.cloudstream3.newEpisode
 import com.lagradost.cloudstream3.newHomePageResponse
 import com.lagradost.cloudstream3.newMovieLoadResponse
 import com.lagradost.cloudstream3.newMovieSearchResponse
@@ -146,9 +147,14 @@ class Watch32Provider : MainAPI() {
 
                 var numEpi = 0
                 episodes += web.select(".nav-item").map {
-                    Episode(
+                    newEpisode(
                         "$mainUrl/ajax/episode/servers/${it.select("a").attr("data-id")}",
-                        it.text().split(":")[1], numSeason + 1, ++numEpi, posterUrl = coverImage
+                        {
+                            this.name = it.text().split(":")[1]
+                            this.season = numSeason + 1
+                            this.episode = ++numEpi
+                            this.posterUrl = coverImage
+                        }
                     )
                 }.toMutableList()
             }

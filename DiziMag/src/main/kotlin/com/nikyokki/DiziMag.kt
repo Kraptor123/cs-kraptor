@@ -174,11 +174,13 @@ class DiziMag : MainAPI() {
                     val epEpisode = blm++
                     val epSeason = szn
                     episodeses.add(
-                        Episode(
-                            data = epHref,
-                            name = epName,
-                            season = epSeason,
-                            episode = epEpisode
+                        newEpisode(
+                            url = epHref,
+                            {
+                                name = epName
+                                season = epSeason
+                                episode = epEpisode
+                            }
                         )
                     )
                 }
