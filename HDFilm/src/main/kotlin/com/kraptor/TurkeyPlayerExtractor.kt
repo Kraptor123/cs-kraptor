@@ -2,7 +2,6 @@
 
 package com.kraptor
 
-import android.util.Base64
 import android.util.Log
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile

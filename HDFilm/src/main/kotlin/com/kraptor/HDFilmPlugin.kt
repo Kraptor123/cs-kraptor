@@ -9,5 +9,11 @@ import android.content.Context
 class HDFilmPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(HDFilm())
+        registerExtractorAPI(RapidVid())
+        registerExtractorAPI(TRsTX())
+        registerExtractorAPI(VidMoxy())
+        registerExtractorAPI(Sobreatsesuyp())
+        registerExtractorAPI(TurboImgz())
+        registerExtractorAPI(TurkeyPlayer())
     }
 }

@@ -4,10 +4,10 @@ package com.kraptor
 
 import android.util.Base64
 import android.util.Log
-import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.*
+import kotlin.text.iterator
 
 open class VidMoxy : ExtractorApi() {
     override val name            = "VidMoxy"
