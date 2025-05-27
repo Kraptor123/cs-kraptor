@@ -44,7 +44,7 @@ Teşekkür ederiz.
 - **Animex**
 
   
-**Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için discussions bölümünde açtığım site istekleri sorusuna yanıt olarak istediğiniz siteleri söyleyebilirsiniz.**
+**Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için de Issues bölümünü kullanabilirsiniz.**
 
 
 **Çalışmayan canlı yayınlar için android cihazınıza [ByeDPI](https://github.com/dovecoteescapee/ByeDPIAndroid/releases/download/v1.2.0/byedpi-1.2.0.apk) kurabilirsiniz. [Kurulum talimatları](https://www.technopat.net/sosyal/konu/android-vpn-olmadan-sinirsiz-erisim-byedpi.3564707/)**                                                                                                                                                                        
