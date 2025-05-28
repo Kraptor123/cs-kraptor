@@ -1,4 +1,4 @@
-version = 9
+version = 10
 
 cloudstream {
     authors     = listOf("keyiflerolsun, kraptor123")
@@ -13,6 +13,6 @@ cloudstream {
      * 3: Beta only
     **/
     status  = 1 // will be 3 if unspecified
-    tvTypes = listOf("Anime, AnimeMovie")
+    tvTypes = listOf("Anime", "AnimeMovie")
     iconUrl = "https://www.google.com/s2/favicons?domain=www.turkanime.co&sz=%size%"
 }

@@ -1,4 +1,4 @@
-version = 5
+version = 6
 
 cloudstream {
     authors     = listOf("kraptor")
@@ -13,6 +13,6 @@ cloudstream {
      * 3: Beta only
     **/
     status  = 1 // will be 3 if unspecified
-    tvTypes = listOf("TvSeries, Movie")
+    tvTypes = listOf("TvSeries", "Movie")
     iconUrl = "https://dizifun2.com/images/data/favicon.png"
 }
