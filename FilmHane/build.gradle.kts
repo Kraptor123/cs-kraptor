@@ -1,5 +1,5 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-version = 5
+version = 6
 
 cloudstream {
     authors     = listOf("kraptor")
@@ -14,6 +14,6 @@ cloudstream {
      * 3: Beta only
     **/
     status  = 1 // will be 3 if unspecified
-    tvTypes = listOf("Movie, TvSeries")
+    tvTypes = listOf("Movie", "TvSeries")
     iconUrl = "https://filmhane.net/uploads/logo/original/logo-7349.webp"
 }
