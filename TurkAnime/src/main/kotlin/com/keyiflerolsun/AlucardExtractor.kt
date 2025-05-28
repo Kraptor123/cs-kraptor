@@ -44,10 +44,9 @@ open class AlucardExtractor : ExtractorApi() {
                        type  = ExtractorLinkType.M3U8
                     ) {
                         this.quality = getQualityFromName(quality)
-                        this.extractorData = "Vlc Ile Oynatin"
                     }
 
-//            Log.d("tralucard", "extratorcuk $extractorcuk")
+            Log.d("tralucard", "extratorcuk $extractorcuk")
                 callback.invoke(extractorcuk)
             }
         }
