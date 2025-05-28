@@ -3,11 +3,9 @@
 package com.keyiflerolsun
 
 import android.util.Log
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.lagradost.cloudstream3.ErrorLoadingException
-import com.lagradost.cloudstream3.SubtitleFile
-import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
+import com.fasterxml.jackson.annotation.JsonProperty
 
 open class MailRu : ExtractorApi() {
     override val name            = "MailRu"
@@ -34,10 +32,9 @@ open class MailRu : ExtractorApi() {
                     source  = this.name,
                     name    = this.name,
                     url     = videoUrl,
-                    type = ExtractorLinkType.M3U8
                 ) {
-                    headers = mapOf("referer" to url) + mapOf("Cookie" to "video_key=${videoKey}")
-                    quality = getQualityFromName(video.key)
+                    this.headers = mapOf("Cookie" to "video_key=${videoKey}")
+                    this.quality = getQualityFromName(video.key)
                 }
             )
         }

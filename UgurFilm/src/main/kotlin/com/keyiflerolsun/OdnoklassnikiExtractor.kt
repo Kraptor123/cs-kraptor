@@ -3,11 +3,9 @@
 package com.keyiflerolsun
 
 import android.util.Log
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.lagradost.cloudstream3.ErrorLoadingException
-import com.lagradost.cloudstream3.SubtitleFile
-import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
+import com.fasterxml.jackson.annotation.JsonProperty
 
 open class Odnoklassniki : ExtractorApi() {
     override val name            = "Odnoklassniki"
@@ -31,7 +29,7 @@ open class Odnoklassniki : ExtractorApi() {
 
             val videoUrl = if (video.url.startsWith("//")) "https:${video.url}" else video.url
 
-            var quality   = video.name.uppercase()
+            val quality   = video.name.uppercase()
                 .replace("MOBILE", "144p")
                 .replace("LOWEST", "240p")
                 .replace("LOW",    "360p")
@@ -46,10 +44,9 @@ open class Odnoklassniki : ExtractorApi() {
                     source  = this.name,
                     name    = this.name,
                     url     = videoUrl,
-                    type = ExtractorLinkType.M3U8
                 ) {
-                    headers = mapOf("Referer" to url) // "Referer" ayarı burada yapılabilir
-                    quality = getQualityFromName(quality).toString()
+                    headers = mapOf("Referer" to "userAgent")
+                    this.quality = getQualityFromName(quality)
                 }
             )
         }
