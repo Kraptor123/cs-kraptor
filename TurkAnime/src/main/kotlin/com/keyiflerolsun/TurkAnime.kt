@@ -208,14 +208,60 @@ class TurkAnime : MainAPI() {
                     .substringBefore("'")
             ) ?: continue
             val butonName = button.ownText().trim()
-            val subDoc    = app.get(butonLink, headers = mapOf("X-Requested-With" to "XMLHttpRequest")).document
+            val subDoc = app.get(butonLink, headers = mapOf("X-Requested-With" to "XMLHttpRequest")).document
 
-            val subFrame  = fixUrlNull(subDoc.selectFirst("iframe")?.attr("src")) ?: continue
-            val subLink   = iframe2AesLink(subFrame) ?: continue
+            val subFrame = fixUrlNull(subDoc.selectFirst("iframe")?.attr("src")) ?: continue
+            val subLink = iframe2AesLink(subFrame) ?: continue
             Log.d("TRANM", "$butonName » $subLink")
-
-            loadExtractor(subLink, "${mainUrl}/", subtitleCallback, callback)
+            if (subLink.contains("https://www.turkanime.co/player/")) {
+                val analinkimiz = turkAnimePlayer(subLink).toString()
+                loadExtractor(analinkimiz, "$mainUrl/", subtitleCallback, callback)
+            } else {
+                loadExtractor(subLink, "${mainUrl}/", subtitleCallback, callback)
+            }
         }
+    }
+
+    private suspend fun turkAnimePlayer(subLink: String): String? {
+        val headerlar = mapOf(
+            "Host" to "www.turkanime.co",
+            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0",
+            "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            "Cookie" to "cf_clearance=; _ga=; _ga_X5VBMNE3D1=; _ga_2SSTLBYBZR=; PHPSESSID=;",
+            "Accept-Language" to "en-US,en;q=0.5",
+            "Referer" to "$mainUrl/embed/",
+            "Connection" to "keep-alive",
+            "Upgrade-Insecure-Requests" to "1",
+            "Sec-Fetch-Dest" to "iframe",
+            "Sec-Fetch-Mode" to "navigate",
+            "Sec-Fetch-Site" to "same-origin",
+            "TE" to "trailers"
+        )
+        val urlcek = app.get(subLink, referer = "$mainUrl/embed/", headers = headerlar).text
+        val regex = Regex("""const apiURL    = '([^']*)';""", RegexOption.IGNORE_CASE)
+        val regexLink = regex.find(urlcek)?.groupValues?.get(1).toString()
+        val headerlariki = mapOf(
+            "Host" to "www.turkanime.co",
+            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0",
+            "Accept" to "*/*",
+            "Cookie" to "cf_clearance=; _ga=; _ga_X5VBMNE3D1=; _ga_2SSTLBYBZR=; PHPSESSID=;",
+            "Accept-Language" to "en-US,en;q=0.5",
+            "Referer" to subLink,
+            "Connection" to "keep-alive",
+            "Content-Type" to "application/json",
+            "Sec-Fetch-Dest" to "empty",
+            "Sec-Fetch-Mode" to "cors",
+            "Sec-Fetch-Site" to "same-origin",
+            "Csrf-Token" to "EqdGHqwZJvydjfbmuYsZeGvBxDxnQXeARRqUNbhRYnPEWqdDnYFEKVBaUPCAGTZA",
+            "TE" to "trailers",
+            "X-Requested-With" to "XMLHttpRequest"
+        )
+        val regexLinkCek = app.get(regexLink, headers = headerlariki, cookies = mapOf("yasOnay" to "1")).text
+        val regexIki = Regex("""sources":\[\{"file":"([^"]*)""", RegexOption.IGNORE_CASE)
+        val regexLinkIki = regexIki.find(regexLinkCek)?.groupValues?.get(1).toString()
+        val sonLink = regexLinkIki.replace("\\","")
+        Log.d("TRANM","hani geldi mi link = ${sonLink}")
+        return sonLink
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
