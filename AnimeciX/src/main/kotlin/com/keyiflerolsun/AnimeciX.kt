@@ -7,6 +7,9 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.*
+import com.lagradost.cloudstream3.utils.AppUtils.toJson
+import org.json.JSONObject
+import kotlin.sequences.forEach
 
 class AnimeciX : MainAPI() {
     override var mainUrl              = "https://anm.cx"
@@ -21,9 +24,26 @@ class AnimeciX : MainAPI() {
     override var sequentialMainPageScrollDelay = 200L  // ? 0.20 saniye
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/secure/titles?type=series&onlyStreamable=true" to "seriler",
-        "${mainUrl}/secure/titles?type=movie&onlyStreamable=true"  to "filmler",
-    )
+        "${mainUrl}/secure/titles?type=series&onlyStreamable=true" to "Animeler",
+        "${mainUrl}/secure/titles?type=movie&onlyStreamable=true"  to "Anime Filmleri",
+        "${mainUrl}/secure/titles?genre=action&onlyStreamable=true" to "Aksiyon",
+        "${mainUrl}/secure/titles?keyword=military&onlyStreamable=true" to "Askeri",
+        "${mainUrl}/secure/titles?keyword=magic&onlyStreamable=true" to "Büyü",
+        "${mainUrl}/secure/titles?genre=drama&onlyStreamable=true" to "Dram",
+        "${mainUrl}/secure/titles?keyword=sport&onlyStreamable=true" to "Spor",
+        "${mainUrl}/secure/titles?genre=thriller&onlyStreamable=true" to "Gerilim",
+        "${mainUrl}/secure/titles?genre=mystery&onlyStreamable=true" to "Gizem",
+        "${mainUrl}/secure/titles?genre=comedy&onlyStreamable=true" to "Komedi",
+        "${mainUrl}/secure/titles?keyword=school&onlyStreamable=true" to "Okul",
+        "${mainUrl}/secure/titles?keyword=isekai&onlyStreamable=true" to "Isekai",
+        "${mainUrl}/secure/titles?keyword=shounen&onlyStreamable=true" to "Shounen",
+        "${mainUrl}/secure/titles?keyword=shoujo&onlyStreamable=true" to "Shoujo",
+        "${mainUrl}/secure/titles?keyword=seinen&onlyStreamable=true" to "Seinen",
+        "${mainUrl}/secure/titles?genre=romance&onlyStreamable=true" to "Romance",
+        "${mainUrl}/secure/titles?keyword=harem&onlyStreamable=true" to "Harem",
+        "${mainUrl}/secure/titles?keyword=ecchi&onlyStreamable=true" to "Ecchi",
+
+        )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val response = app.get(
@@ -71,6 +91,7 @@ class AnimeciX : MainAPI() {
         ).parsedSafe<Title>() ?: return null
         val episodes = mutableListOf<Episode>()
         val titleId  = url.substringAfter("?titleId=")
+        val titlename  = url.substringAfter("&titleName=")
 
         if (response.title.titleType == "anime") {
             for (sezon in response.title.seasons) {
@@ -85,11 +106,43 @@ class AnimeciX : MainAPI() {
             }
         } else {
             if (response.title.videos.isNotEmpty()) {
-                episodes.add(newEpisode(response.title.videos.first().url) {
-                    this.name    = "Filmi İzle"
-                    this.season  = 1
-                    this.episode = 1
-                })
+                val rawJson = app
+                    .get("$mainUrl/secure/titles/$titleId?titleId=$titleId&titleName=$titlename", headers = mapOf(
+                        "x-e-h" to "7Y2ozlO+QysR5w9Q6Tupmtvl9jJp7ThFH8SB+Lo7NvZjgjqRSqOgcT2v4ISM9sP10LmnlYI8WQ==.xrlyOBFS5BHjQ2Lk"
+                    ))
+                    .body
+                    .string()
+                Log.d("ACX", "rawjson: $rawJson")
+
+                val json = JSONObject(rawJson)
+                val videosArray = json.getJSONObject("title").getJSONArray("videos")
+
+                for (i in 0 until videosArray.length()) {
+                    val videoObj = videosArray.getJSONObject(i)
+                    val url = videoObj.getString("url")
+
+                    // Eğer tmdb, anm.cx veya youtube içeriyorsa geç
+                    if (url.contains("tmdb", ignoreCase = true)
+                        || url.contains("anm.cx", ignoreCase = true)
+                        || url.contains("youtube", ignoreCase = true)
+                    ) continue
+
+                    Log.d("ACX", "Video URL: $url")
+
+                    // URL'den kısa isim çıkar
+                    val name = url
+                        .substringAfter("/")
+                        .substringAfter("/")
+                        .substringBefore("/")
+
+                    val nextEpisodeNumber = episodes.size + 1
+
+                    episodes.add(newEpisode(url) {
+                        this.name = name
+                        this.season = 1
+                        this.episode = nextEpisodeNumber
+                    })
+                }
             }
         }
 
