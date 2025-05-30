@@ -8,24 +8,27 @@ import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.utils.AppUtils.toJson
+import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.collections.mapOf
 import kotlin.sequences.forEach
 
 class AnimeciX : MainAPI() {
-    override var mainUrl              = "https://anm.cx"
-    override var name                 = "AnimeciX"
-    override val hasMainPage          = true
-    override var lang                 = "tr"
-    override val hasQuickSearch       = false
-    override val supportedTypes       = setOf(TvType.Anime)
+    override var mainUrl = "https://anm.cx"
+    override var name = "AnimeciX"
+    override val hasMainPage = true
+    override var lang = "tr"
+    override val hasQuickSearch = false
+    override val supportedTypes = setOf(TvType.Anime)
 
-    override var sequentialMainPage = true        // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
-    override var sequentialMainPageDelay       = 200L  // ? 0.20 saniye
+    override var sequentialMainPage =
+        true        // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
+    override var sequentialMainPageDelay = 200L  // ? 0.20 saniye
     override var sequentialMainPageScrollDelay = 200L  // ? 0.20 saniye
 
     override val mainPage = mainPageOf(
         "${mainUrl}/secure/titles?type=series&onlyStreamable=true" to "Animeler",
-        "${mainUrl}/secure/titles?type=movie&onlyStreamable=true"  to "Anime Filmleri",
+        "${mainUrl}/secure/titles?type=movie&onlyStreamable=true" to "Anime Filmleri",
         "${mainUrl}/secure/titles?genre=action&onlyStreamable=true" to "Aksiyon",
         "${mainUrl}/secure/titles?keyword=military&onlyStreamable=true" to "Askeri",
         "${mainUrl}/secure/titles?keyword=magic&onlyStreamable=true" to "Büyü",
@@ -53,7 +56,7 @@ class AnimeciX : MainAPI() {
             )
         ).parsedSafe<Category>()
 
-        val home     = response?.pagination?.data?.map { anime ->
+        val home = response?.pagination?.data?.map { anime ->
             newAnimeSearchResponse(
                 anime.title,
                 "${mainUrl}/secure/titles/${anime.id}?titleId=${anime.id}",
@@ -90,62 +93,57 @@ class AnimeciX : MainAPI() {
             )
         ).parsedSafe<Title>() ?: return null
         val episodes = mutableListOf<Episode>()
-        val titleId  = url.substringAfter("?titleId=")
-        val titlename  = url.substringAfter("&titleName=")
+        val titleId = url.substringAfter("?titleId=")
 
         if (response.title.titleType == "anime") {
             for (sezon in response.title.seasons) {
-                val sezonResponse = app.get("${mainUrl}/secure/related-videos?episode=1&season=${sezon.number}&videoId=0&titleId=${titleId}").parsedSafe<TitleVideos>() ?: return null
-                for (video in sezonResponse.videos) {
-                    episodes.add(newEpisode(video.url) {
-                        this.name = "${video.seasonNum}. Sezon ${video.episodeNum}. Bölüm"
-                        this.season = video.seasonNum
-                        this.episode = video.episodeNum
+                val sezonJson = app.get(
+                    "$mainUrl/secure/related-videos?episode=1&season=${sezon.number}&videoId=0&titleId=$titleId",
+                    headers = mapOf(
+                        "x-e-h" to "7Y2ozlO+QysR5w9Q6Tupmtvl9jJp7ThFH8SB+Lo7NvZjgjqRSqOgcT2v4ISM9sP10LmnlYI8WQ==.xrlyOBFS5BHjQ2Lk"
+                    )
+                ).body.string()
+
+                // Gelen JSON: { "videos": [ {...}, {...}, ... ] }
+                val rootObj    = JSONObject(sezonJson)
+                val videosArray = rootObj.getJSONArray("videos")
+
+                for (i in 0 until videosArray.length()) {
+                    val videoObj   = videosArray.getJSONObject(i)
+                    val url        = videoObj.getString("url")
+                    val seasonNum  = videoObj.getInt("season_num")
+                    val episodeNum = videoObj.getInt("episode_num")
+                    val fansub     = videoObj.optString("extra")  // String olabildiği için optString
+
+                    if (listOf("tmdb", "anm.cx", "youtube").any { url.contains(it, ignoreCase = true) })
+                        continue
+
+                    episodes.add(newEpisode(url) {
+                        this.name = buildString {append("${seasonNum}. Sezon ${episodeNum}. Bölüm")
+                        }
+                        this.season  = seasonNum
+                        this.episode = episodeNum
                     })
                 }
             }
-        } else {
+        }else {
             if (response.title.videos.isNotEmpty()) {
-                val rawJson = app
-                    .get("$mainUrl/secure/titles/$titleId?titleId=$titleId&titleName=$titlename", headers = mapOf(
-                        "x-e-h" to "7Y2ozlO+QysR5w9Q6Tupmtvl9jJp7ThFH8SB+Lo7NvZjgjqRSqOgcT2v4ISM9sP10LmnlYI8WQ==.xrlyOBFS5BHjQ2Lk"
-                    ))
-                    .body
-                    .string()
-                Log.d("ACX", "rawjson: $rawJson")
-
-                val json = JSONObject(rawJson)
-                val videosArray = json.getJSONObject("title").getJSONArray("videos")
-
-                for (i in 0 until videosArray.length()) {
-                    val videoObj = videosArray.getJSONObject(i)
-                    val url = videoObj.getString("url")
-
-                    // Eğer tmdb, anm.cx veya youtube içeriyorsa geç
-                    if (url.contains("tmdb", ignoreCase = true)
-                        || url.contains("anm.cx", ignoreCase = true)
-                        || url.contains("youtube", ignoreCase = true)
-                    ) continue
-
-                    Log.d("ACX", "Video URL: $url")
-
-                    // URL'den kısa isim çıkar
-                    val name = url
-                        .substringAfter("/")
-                        .substringAfter("/")
-                        .substringBefore("/")
-
-                    val nextEpisodeNumber = episodes.size + 1
-
-                    episodes.add(newEpisode(url) {
-                        this.name = name
-                        this.season = 1
-                        this.episode = nextEpisodeNumber
-                    })
+                return newMovieLoadResponse(
+                    response.title.title,
+                    "${mainUrl}/secure/titles/${response.title.id}?titleId=${response.title.id}",
+                    TvType.AnimeMovie,
+                    "${mainUrl}/secure/titles/${response.title.id}?titleId=${response.title.id}"
+                ) {
+                    this.posterUrl = fixUrlNull(response.title.poster)
+                    this.year = response.title.year
+                    this.plot = response.title.description
+                    this.tags = response.title.tags.map { it.name }
+                    this.rating = response.title.rating.toRatingInt()
+                    addActors(response.title.actors.map { Actor(it.name, fixUrlNull(it.poster)) })
+                    addTrailer(response.title.trailer)
                 }
             }
         }
-
 
         return newAnimeLoadResponse(
             response.title.title,
@@ -154,25 +152,57 @@ class AnimeciX : MainAPI() {
             true
         ) {
             this.posterUrl = fixUrlNull(response.title.poster)
-            this.year      = response.title.year
-            this.plot      = response.title.description
+            this.year = response.title.year
+            this.plot = response.title.description
             this.episodes = mutableMapOf(DubStatus.Subbed to episodes)
-            this.tags      = response.title.tags.map { it.name }
-            this.rating    = response.title.rating.toRatingInt()
+            this.tags = response.title.tags.map { it.name }
+            this.rating = response.title.rating.toRatingInt()
             addActors(response.title.actors.map { Actor(it.name, fixUrlNull(it.poster)) })
             addTrailer(response.title.trailer)
         }
     }
 
-    override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
+    override suspend fun loadLinks(
+        data: String,
+        isCasting: Boolean,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
         Log.d("ACX", "data » $data")
 
         val iframeResponse = app.get(data, referer = "$mainUrl/", allowRedirects = true)
         val iframeLink = iframeResponse.url
         Log.d("ACX", "Final iframeLink » $iframeLink")
 
-        loadExtractor(iframeLink, "$mainUrl/", subtitleCallback, callback)
+        if (iframeLink.contains("anm.cx")) {
+            val rawJson = app
+                .get(
+                    data, headers = mapOf(
+                        "x-e-h" to "7Y2ozlO+QysR5w9Q6Tupmtvl9jJp7ThFH8SB+Lo7NvZjgjqRSqOgcT2v4ISM9sP10LmnlYI8WQ==.xrlyOBFS5BHjQ2Lk"
+                    )
+                )
+                .body
+                .string()
+            val json = JSONObject(rawJson)
+            val videosArray = json.getJSONObject("title").getJSONArray("videos")
+            for (i in 0 until videosArray.length()) {
+                val videoObj = videosArray.getJSONObject(i)
+                val url = videoObj.getString("url")
+                val videoName = videoObj.getString("extra")
 
+                // Eğer tmdb, anm.cx veya youtube içeriyorsa geç
+                if (url.contains("tmdb", ignoreCase = true)
+                    || url.contains("anm.cx", ignoreCase = true)
+                    || url.contains("youtube", ignoreCase = true)
+                ) continue
+
+                Log.d("ACX", "Video URL: $url")
+                loadExtractor(url = url, "$mainUrl/", subtitleCallback, callback)
+            }
+        }
+        else {
+            loadExtractor(iframeLink, "$mainUrl/", subtitleCallback, callback)
+        }
         return true
     }
 }
