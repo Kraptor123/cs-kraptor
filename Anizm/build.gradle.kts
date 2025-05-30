@@ -1,4 +1,4 @@
-version = 8
+version = 9
 
 cloudstream {
     authors = listOf("kraptor")
@@ -15,5 +15,5 @@ cloudstream {
 
     status = 1 // Will be 3 if unspecified
     tvTypes = listOf("Anime")
-    iconUrl = "https://anizm.net/upload/assets/favicon.ico"
+    iconUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQLGJxL_3l-lZofrxkC-vpKFzHzyKW-Z0lYg&s"
 }

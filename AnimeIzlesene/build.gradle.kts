@@ -1,5 +1,5 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-version = 9
+version = 10
 dependencies {
     implementation("androidx.annotation:annotation-jvm:1.9.1")
 }
@@ -22,5 +22,5 @@ cloudstream {
         "Anime",
         "Ova"
     )
-    iconUrl = "https://www.animeizlesene.com/public/assets/img/favicon-32x32.png"
+    iconUrl = "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.animeizlesene.com&size=128"
 }

@@ -1,5 +1,5 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-version = 5
+version = 6
 
 cloudstream {
     authors     = listOf("kraptor")
@@ -15,5 +15,5 @@ cloudstream {
     **/
     status  = 1 // will be 3 if unspecified
     tvTypes = listOf("TvSeries")
-    iconUrl = "https://dizikral.nl/mofy/img/192x192_.png"
+    iconUrl = "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizikral.nl/mofy/img/192x192_.png&size=128"
 }

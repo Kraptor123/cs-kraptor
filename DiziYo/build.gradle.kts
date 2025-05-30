@@ -1,4 +1,4 @@
-version = 5
+version = 6
 
 cloudstream {
     authors     = listOf("kraptor")
@@ -14,5 +14,5 @@ cloudstream {
     **/
     status  = 1 // will be 3 if unspecified
     tvTypes = listOf("TvSeries", "Movie", "Anime")
-    iconUrl = "https://www.diziyo.de/wp-content/uploads/2019/11/favicon-150x150.ico"
+    iconUrl = "https://icons.iconarchive.com/icons/yohproject/crayon-cute/256/movies-icon.png"
 }
