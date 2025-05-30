@@ -3,15 +3,17 @@
 package com.keyiflerolsun
 
 import android.util.Log
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.*
-import com.lagradost.cloudstream3.utils.AppUtils.toJson
-import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.collections.mapOf
-import kotlin.sequences.forEach
+import kotlin.*
+import kotlin.text.*
+
+
 
 class AnimeciX : MainAPI() {
     override var mainUrl = "https://anm.cx"
@@ -86,80 +88,84 @@ class AnimeciX : MainAPI() {
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
     override suspend fun load(url: String): LoadResponse? {
-        val response = app.get(
-            url,
-            headers = mapOf(
-                "x-e-h" to "7Y2ozlO+QysR5w9Q6Tupmtvl9jJp7ThFH8SB+Lo7NvZjgjqRSqOgcT2v4ISM9sP10LmnlYI8WQ==.xrlyOBFS5BHjQ2Lk"
-            )
-        ).parsedSafe<Title>() ?: return null
-        val episodes = mutableListOf<Episode>()
+        // Gerekli başlıkları ayarla
+        val headers = mapOf(
+            "x-e-h" to "7Y2ozlO+QysR5w9Q6Tupmtvl9jJp7ThFH8SB+Lo7NvZjgjqRSqOgcT2v4ISM9sP10LmnlYI8WQ==.xrlyOBFS5BHjQ2Lk"
+        )
+
+        // İlk isteği yapıp Title objesini al
+        val response = app.get(url, headers = headers)
+        val title: Title? = try {
+            response.parser?.parseSafe<Title>(response.text, Title::class)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+        if (title == null) return null
+
+        // URL'den titleId parametresini çıkar
         val titleId = url.substringAfter("?titleId=")
+        val episodes = mutableListOf<Episode>()
 
-        if (response.title.titleType == "anime") {
-            for (sezon in response.title.seasons) {
-                val sezonJson = app.get(
-                    "$mainUrl/secure/related-videos?episode=1&season=${sezon.number}&videoId=0&titleId=$titleId",
-                    headers = mapOf(
-                        "x-e-h" to "7Y2ozlO+QysR5w9Q6Tupmtvl9jJp7ThFH8SB+Lo7NvZjgjqRSqOgcT2v4ISM9sP10LmnlYI8WQ==.xrlyOBFS5BHjQ2Lk"
-                    )
-                ).body.string()
-
-                // Gelen JSON: { "videos": [ {...}, {...}, ... ] }
-                val rootObj    = JSONObject(sezonJson)
-                val videosArray = rootObj.getJSONArray("videos")
-
-                for (i in 0 until videosArray.length()) {
-                    val videoObj   = videosArray.getJSONObject(i)
-                    val url        = videoObj.getString("url")
-                    val seasonNum  = videoObj.getInt("season_num")
-                    val episodeNum = videoObj.getInt("episode_num")
-                    val fansub     = videoObj.optString("extra")  // String olabildiği için optString
-
-                    if (listOf("tmdb", "anm.cx", "youtube").any { url.contains(it, ignoreCase = true) })
-                        continue
-
-                    episodes.add(newEpisode(url) {
-                        this.name = buildString {append("${seasonNum}. Sezon ${episodeNum}. Bölüm")
+        // Eğer tür anime ise her sezon için ilgili videoları yükle
+        if (title.title.titleType == "anime") {
+            for (season in title.title.seasons) {
+                val relatedUrl = "$mainUrl/secure/related-videos" +
+                        "?episode=1&season=${season.number}&videoId=0&titleId=$titleId"
+                val relResp = app.get(relatedUrl)
+                // JSON'u doğrudan TitleVideos sınıfına çevir
+                val titleVideos: TitleVideos? = ObjectMapper()
+                    .readValue(relResp.body.string(), TitleVideos::class.java)
+                titleVideos?.videos?.forEach { video ->
+                    episodes.add(
+                        newEpisode(video.url)
+                        {
+                            this.name = "${video.seasonNum}. Sezon ${video.episodeNum}. Bölüm"
+                            this.season = video.seasonNum
+                            this.episode = video.episodeNum
                         }
-                        this.season  = seasonNum
-                        this.episode = episodeNum
-                    })
+                    )
                 }
             }
-        }else {
-            if (response.title.videos.isNotEmpty()) {
+
+            // Anime için LoadResponse oluştur
+            return newTvSeriesLoadResponse(
+                title.title.title,
+                "$mainUrl/secure/titles/${title.title.id}?titleId=${title.title.id}",
+                TvType.Anime,
+                episodes
+            ) {
+                this.posterUrl = fixUrlNull(title.title.poster)
+                this.year = title.title.year
+                this.plot = title.title.description
+                this.tags = title.title.tags.map { it.name }
+                this.rating = title.title.rating.toRatingInt()
+                this.addActors(
+                    title.title.actors.map { Actor(it.name, fixUrlNull(it.poster)) }
+                )
+                this.addTrailer(title.title.trailer)
+            }
+        } else {
+            // Film için eski kodun mantığını kullan
+            if (title.title.videos.isNotEmpty()) {
                 return newMovieLoadResponse(
-                    response.title.title,
-                    "${mainUrl}/secure/titles/${response.title.id}?titleId=${response.title.id}",
+                    title.title.title,
+                    "${mainUrl}/secure/titles/${title.title.id}?titleId=${title.title.id}",
                     TvType.AnimeMovie,
-                    "${mainUrl}/secure/titles/${response.title.id}?titleId=${response.title.id}"
+                    "${mainUrl}/secure/titles/${title.title.id}?titleId=${title.title.id}"
                 ) {
-                    this.posterUrl = fixUrlNull(response.title.poster)
-                    this.year = response.title.year
-                    this.plot = response.title.description
-                    this.tags = response.title.tags.map { it.name }
-                    this.rating = response.title.rating.toRatingInt()
-                    addActors(response.title.actors.map { Actor(it.name, fixUrlNull(it.poster)) })
-                    addTrailer(response.title.trailer)
+                    this.posterUrl = fixUrlNull(title.title.poster)
+                    this.year = title.title.year
+                    this.plot = title.title.description
+                    this.tags = title.title.tags.map { it.name }
+                    this.rating = title.title.rating.toRatingInt()
+                    addActors(title.title.actors.map { Actor(it.name, fixUrlNull(it.poster)) })
+                    addTrailer(title.title.trailer)
                 }
             }
         }
 
-        return newAnimeLoadResponse(
-            response.title.title,
-            "${mainUrl}/secure/titles/${response.title.id}?titleId=${response.title.id}",
-            TvType.Anime,
-            true
-        ) {
-            this.posterUrl = fixUrlNull(response.title.poster)
-            this.year = response.title.year
-            this.plot = response.title.description
-            this.episodes = mutableMapOf(DubStatus.Subbed to episodes)
-            this.tags = response.title.tags.map { it.name }
-            this.rating = response.title.rating.toRatingInt()
-            addActors(response.title.actors.map { Actor(it.name, fixUrlNull(it.poster)) })
-            addTrailer(response.title.trailer)
-        }
+        return null
     }
 
     override suspend fun loadLinks(
@@ -170,6 +176,7 @@ class AnimeciX : MainAPI() {
     ): Boolean {
         Log.d("ACX", "data » $data")
 
+        // Film için eski kodun mantığını kullan (data URL'si anm.cx içeriyorsa)
         val iframeResponse = app.get(data, referer = "$mainUrl/", allowRedirects = true)
         val iframeLink = iframeResponse.url
         Log.d("ACX", "Final iframeLink » $iframeLink")
@@ -199,9 +206,47 @@ class AnimeciX : MainAPI() {
                 Log.d("ACX", "Video URL: $url")
                 loadExtractor(url = url, "$mainUrl/", subtitleCallback, callback)
             }
-        }
-        else {
-            loadExtractor(iframeLink, "$mainUrl/", subtitleCallback, callback)
+        } else {
+            // Anime için yeni kodun mantığını kullan
+            val episodeVideosUrl = "${mainUrl}/secure/episode-videos"
+            val requestUrl = data.replaceBefore("?", episodeVideosUrl)
+
+            val response = app.get(
+                url = requestUrl,
+                referer = "${mainUrl}/"
+            )
+
+            val videoList = response.parsed<List<Map<String, Any>>>()
+
+            val videos = videoList.mapNotNull { videoData ->
+                val episodeNum = (videoData["episode_num"] as? Number)?.toInt()
+                val seasonNum = (videoData["season_num"] as? Number)?.toInt()
+                val videoUrl = videoData["url"] as? String
+                val extra = videoData["extra"] as? String
+
+                if (videoUrl != null) {
+                    Video(episodeNum, seasonNum, videoUrl, extra)
+                } else null
+            }
+
+            for (video in videos) {
+                val requestData = mapper.writeValueAsString(
+                    mapOf(
+                        "url" to video.url,
+                        "extra" to video.extra
+                    )
+                )
+                if (listOf("tau-video", "sibnet").any { video.url.contains(it) }) {
+                    loadExtractor(
+                        requestData,
+                        "${mainUrl}/",
+                        subtitleCallback,
+                        callback
+                    )
+                } else {
+                    loadExtractor(video.url, "${mainUrl}/", subtitleCallback, callback)
+                }
+            }
         }
         return true
     }

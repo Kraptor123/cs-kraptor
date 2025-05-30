@@ -3,6 +3,7 @@
 package com.keyiflerolsun
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 
 data class Category(
@@ -32,6 +33,8 @@ data class AnimeSearch(
     @JsonProperty("poster") val poster: String?,
 )
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Anime(
     @JsonProperty("id") val id: Int,
     @JsonProperty("title_type") val titleType: String,
@@ -57,10 +60,12 @@ data class Credit(
     @JsonProperty("poster") val poster: String?,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Video(
     @JsonProperty("episode_num") val episodeNum: Int?,
     @JsonProperty("season_num") val seasonNum: Int?,
     @JsonProperty("url") val url: String,
+    @JsonProperty("extra") val extra: String?
 )
 
 data class TitleVideos(
