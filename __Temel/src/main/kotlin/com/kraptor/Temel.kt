@@ -95,7 +95,7 @@ class Temel : MainAPI() {
         val document = app.get(data).document
 
         // TODO:
-        // newLoadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+        // loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
 
         return true
     }
