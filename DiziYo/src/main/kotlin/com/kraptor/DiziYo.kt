@@ -138,7 +138,7 @@ class DiziYo : MainAPI() {
             .replace("Türkçe Dublaj","\uD83C\uDDF9\uD83C\uDDF7")
             .replace("(Asya Dizi)","⛩\uFE0F")
             .replace("izle","")
-        val poster = fixUrlNull(document.selectFirst("div.poster img")?.attr("src"))
+        val poster = fixUrlNull(document.selectFirst("div.poster img")?.attr("data-wpfc-original-src"))
         val description = document.selectFirst("div.wp-content p")?.text()?.trim()
         val year = document.selectFirst("div.extra span.date")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("div.sgeneros a").map { it.text() }
