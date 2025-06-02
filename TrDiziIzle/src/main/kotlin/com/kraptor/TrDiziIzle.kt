@@ -281,7 +281,7 @@ class TrDiziIzle : MainAPI() {
                                 name = "TrDizi",
                                 source = "Yandex - TrDizi",
                                 url = resolvedUrl,
-                                type = ExtractorLinkType.VIDEO
+                                type = INFER_TYPE
                             ) {
                                 quality = Qualities.Unknown.value
                                 referer = videoUrl
@@ -305,7 +305,7 @@ class TrDiziIzle : MainAPI() {
                                 name = "TrDizi",
                                 source = "TrDizi",
                                 url = videoUrl,
-                                type = type
+                                type = INFER_TYPE
                             ) {
                                 quality = Qualities.Unknown.value
                                 referer = videoUrl
