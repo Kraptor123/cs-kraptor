@@ -54,7 +54,7 @@ class WFilmIzle : MainAPI() {
         Log.d("WFI", "Title: $title")
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: ""
         Log.d("WFI", "Href: $href")
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
         Log.d("WFI", "Poster: $posterUrl")
 
         return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }

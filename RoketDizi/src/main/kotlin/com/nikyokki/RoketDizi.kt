@@ -43,7 +43,6 @@ class RoketDizi : MainAPI() {
         "${mainUrl}/dizi/tur/korku" to "Korku",
         "${mainUrl}/dizi/tur/macera" to "Macera",
         "${mainUrl}/dizi/tur/suc" to "Suç",
-
         "${mainUrl}/film-kategori/animasyon" to "Aksiyon Film"
     )
 
@@ -71,15 +70,18 @@ class RoketDizi : MainAPI() {
         val mainReq = app.get("${request.data}?&page=${page}")
 
         val document = mainReq.document
-        val home = document.select("a.w-full").mapNotNull { it.diziler() }
+        val home = document.select("div.w-full.p-4 span.bg-\\[\\#232323\\]").mapNotNull { it.diziler() }
 
         return newHomePageResponse(request.name, home)
     }
 
     private fun Element.diziler(): SearchResponse? {
-        val title = this.selectFirst("h2")?.text() ?: return null
-        val href = fixUrlNull(this.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+        val title = this.selectFirst("span.font-normal.line-clamp-1")?.text() ?: return null
+//        Log.d("RKD","title = $title")
+        val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+//        Log.d("RKD","href = $href")
+        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+//        Log.d("RKD","posterUrl = $posterUrl")
 
         return if (href.contains("/dizi/")) {
             newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
@@ -124,11 +126,10 @@ class RoketDizi : MainAPI() {
         val veriler = mutableListOf<SearchResponse>()
 
         val searchReq = app.post(
-            "${mainUrl}/bg/searchcontent",
+            "${mainUrl}/api/bg/searchContent?searchterm=$query",
             data = mapOf(
                 "cKey" to cKey,
                 "cValue" to cValue,
-                "searchterm" to query
             ),
             headers = mapOf(
                 "Accept" to "application/json, text/javascript, */*; q=0.01",
@@ -172,19 +173,21 @@ class RoketDizi : MainAPI() {
         val phpCookie = mainReq.cookies["PHPSESSID"].toString()
         val cntCookie = "vakTR"
         if (url.contains("/dizi/")) {
-            val title = document.selectFirst("div.poster.hidden h2")?.text() ?: return null
-            val poster = fixUrlNull(document.selectFirst("img.object-cover")?.attr("src"))
+            val title = document.selectFirst("h1.text-white")?.text() ?: return null
+            val poster = fixUrlNull(document.selectFirst("div.w-full.page-top img")?.attr("src"))
             val year =
                 document.select("div.w-fit.min-w-fit")[1].selectFirst("span.text-sm.opacity-60")?.text()
                     ?.split(" ")?.last()?.toIntOrNull()
             val description = document.selectFirst("div.mt-2.text-sm")?.text()?.trim()
-            val tags = document.selectFirst("div.poster.hidden h3")?.text()?.split(",")?.map { it }
+            val tags = document.selectFirst("h3.text-white.opacity-60.text-sm.sm\\:text-md")?.text()?.split(",")?.map { it }
             val rating =
                 document.selectFirst("div.flex.items-center")?.selectFirst("span.text-white.text-sm")
                     ?.text()?.trim().toRatingInt()
             val actors = document.select("div.global-box h5").map {
                 Actor(it.text())
             }
+
+            val regex = Regex("\"url\":\"([^\"]*)\"")
 
             val episodeses = mutableListOf<Episode>()
 
