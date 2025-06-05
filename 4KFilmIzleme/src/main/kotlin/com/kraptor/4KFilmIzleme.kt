@@ -22,8 +22,6 @@ class `4KFilmIzleme` : MainAPI() {
     override val mainPage = mainPageOf(
         "${mainUrl}/turkce-dublaj-izle/" to "Türkçe Dublaj",
         "${mainUrl}/altyazili-film-izle/" to "Altyazılı Film",
-        "${mainUrl}/1080p-film-izle/" to "1080p",
-        "${mainUrl}/4k-film-izle/" to "4K",
         "${mainUrl}/aile-filmleri-izle/" to "Aile",
         "${mainUrl}/aksiyon-filmleri-izle/" to "Aksiyon",
         "${mainUrl}/animasyon-filmleri-izle/" to "Animasyon",
@@ -31,7 +29,6 @@ class `4KFilmIzleme` : MainAPI() {
         "${mainUrl}/bilim-kurgu-filmleri/" to "Bilim Kurgu",
         "${mainUrl}/dram-filmleri/" to "Dram",
         "${mainUrl}/fantastik-filmler-izle/" to "Fantastik",
-        "${mainUrl}/film-turu/" to "Film Türü",
         "${mainUrl}/gerilim-filmleri-izle/" to "Gerilim",
         "${mainUrl}/gizem/" to "Gizem",
         "${mainUrl}/komedi-filmleri-izle/" to "Komedi",
@@ -43,11 +40,8 @@ class `4KFilmIzleme` : MainAPI() {
         "${mainUrl}/savas/" to "Savaş",
         "${mainUrl}/suc/" to "Suç",
         "${mainUrl}/tarih/" to "Tarih",
-        "${mainUrl}/altyazili-film-izle/" to "Türkçe Altyazı",
-        "${mainUrl}/turkce-dublaj-izle/" to "Türkçe Dublaj",
         "${mainUrl}/tv-film/" to "TV film",
         "${mainUrl}/vahsi-bati/" to "Vahşi Batı",
-        "${mainUrl}/yabanci-film-izle/" to "Yabancı Filmler"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
@@ -127,13 +121,13 @@ class `4KFilmIzleme` : MainAPI() {
         Log.d("filmizlesene", "data » $data")
         for (page in 1..2) {
             val document = app.get("$data/$page").document
-            val iframesec = document.selectFirst("iframe")?.attr("src")
+            val iframesec = document.select("iframe").attr("src")
+            if (!iframesec.contains("youtube")) {
             val iframe = fixUrlNull(iframesec).toString()
             Log.d("filmizlesene", "iframe » $iframe")
-
-            loadExtractor(iframe, referer = "${mainUrl}/", subtitleCallback = subtitleCallback, callback = callback)
-
-
+                loadExtractor(iframe, referer = "${mainUrl}/", subtitleCallback = subtitleCallback, callback = callback)
+            }
+            else return false
             }
             return true
         }
