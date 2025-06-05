@@ -8,5 +8,11 @@ import android.content.Context
 class DiziYoPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(DiziYo())
+        registerExtractorAPI(RapidVid())
+        registerExtractorAPI(TRsTX())
+        registerExtractorAPI(VidMoxy())
+        registerExtractorAPI(Sobreatsesuyp())
+        registerExtractorAPI(TurboImgz())
+        registerExtractorAPI(TurkeyPlayer())
     }
 }
