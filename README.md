@@ -14,7 +14,6 @@ Teşekkür ederiz.
 ## 🎬 Eklenen Eklentiler
 
 ### 📺 Canlı TV
-- **CanliTelevizyon**
 - **GinikoCanli**
 - **IpTvPlayStream**
 
