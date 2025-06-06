@@ -6,11 +6,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
+import com.lagradost.cloudstream3.network.CloudflareKiller
 import com.lagradost.cloudstream3.utils.AppUtils.parseJson
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.Interceptor
+import okhttp3.Response
+import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.net.URLEncoder
 import kotlin.coroutines.cancellation.CancellationException
@@ -22,14 +26,28 @@ class Anizm : MainAPI() {
     override var lang = "tr"
     override val hasQuickSearch = true
     override val supportedTypes = setOf(TvType.Anime)
-//    override var sequentialMainPage = true
-//    override var sequentialMainPageDelay = 50L
-//    override var sequentialMainPageScrollDelay = 50L
 
-    // Cloudflare Bypass
+    override var sequentialMainPage = true        // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
+    override var sequentialMainPageDelay       = 50L  // ? 0.05 saniye
+    override var sequentialMainPageScrollDelay = 50L  // ? 0.05 saniye
 
+    // ! CloudFlare v2
+    private val cloudflareKiller by lazy { CloudflareKiller() }
+    private val interceptor      by lazy { CloudflareInterceptor(cloudflareKiller) }
 
-    // JSON Data Class
+    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller): Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request  = chain.request()
+            val response = chain.proceed(request)
+            val doc      = Jsoup.parse(response.peekBody(1024 * 1024).string())
+
+            if (doc.html().contains("Just a moment")) {
+                return cloudflareKiller.intercept(chain)
+            }
+
+            return response
+        }
+    }
     @JsonIgnoreProperties(ignoreUnknown = true)
     data class AnimeSearchResult(
         @JsonProperty("info_title") val infotitle: String,
@@ -113,7 +131,7 @@ class Anizm : MainAPI() {
                 "adcash_shown_count2" to "3",
                 "XSRF-TOKEN" to "eyJpdiI6IlNRNkVZNmtoVm9CTkRZT0hBM0NsT0E9PSIsInZhbHVlIjoiUWlPZjFERkpINFZYZnNNMm5sc3hHZG1BZDNxS1U4dGFGMkUxWEdPNkE2NVpaT0ZJZW9JZ1U4Z3h1QzJMWFVqRzB2endzb1R5cmpMUFFNcUNITEtvUjA0Q2Rzbll4K2xkTjBhb3pmOWozeDhETUhxSk9JVkpoNGxqZlY0NGk4ZzAiLCJtYWMiOiI3M2U0MzllNDZiOTJmZTc0OTE2OTk1YzJiODU0NzBiNWJiYWFmOWY4NjdkYTIyNzIzNWZiOTNmY2ExMjUwYWRlIn0",
                 "anizm_session" to "eyJpdiI6Im1qc1wvdzViWVp5dVc4M3hqYVo5dU9BPT0iLCJ2YWx1ZSI6InNmVkNmTjFrZnFHZyttUXdTc2NJS2NcL0NCRFE2MlFLUlVvc2F0RmVUU3c1N2poc21QUUxLbmRFNTFLalJVa1AwTmlLSmZTTnhwbXI3STNwZ1wvSnE2d3lCbWFweUFQTkNLYWN4ZGFXRWhGM1dESXUrdUFFK1pjVzlheXJNQnBHVEwiLCJtYWMiOiIzNGRkMmU3NGMxODUxOTU3MDkzNmQ2YzFkZmI0OTI2NDg3YjYzZjdlMGViZjllYjk5ODIwMzM4NjEwOGJkNzI3In0="
-                )
+                ), interceptor = interceptor
         ).document
 //        Log.d("Anizm","document = $document")
 
