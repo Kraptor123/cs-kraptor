@@ -169,7 +169,7 @@ class CizgiveDizi : MainAPI() {
         if (url.isEmpty()) return ""
         val encodedUrl = URLEncoder.encode(url, "UTF-8")
         return try {
-            "https://res.cloudinary.com/djjnbig4t/image/fetch/f_auto/$encodedUrl"
+            "https://res.cloudinary.com/di0j4jsa8/image/fetch/f_auto/$encodedUrl"
         } catch (e: Exception) {
             url
         }
