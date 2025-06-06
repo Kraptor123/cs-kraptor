@@ -10,6 +10,7 @@ import com.lagradost.cloudstream3.network.CloudflareKiller
 import com.lagradost.cloudstream3.utils.AppUtils.parseJson
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.nicehttp.NiceResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
@@ -27,27 +28,6 @@ class Anizm : MainAPI() {
     override val hasQuickSearch = true
     override val supportedTypes = setOf(TvType.Anime)
 
-//    override var sequentialMainPage = true        // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
-//    override var sequentialMainPageDelay       = 50L  // ? 0.05 saniye
-//    override var sequentialMainPageScrollDelay = 50L  // ? 0.05 saniye
-
-    // ! CloudFlare v2
-    private val cloudflareKiller by lazy { CloudflareKiller() }
-    private val interceptor      by lazy { CloudflareInterceptor(cloudflareKiller) }
-
-    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller): Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val request  = chain.request()
-            val response = chain.proceed(request)
-            val doc      = Jsoup.parse(response.peekBody(1024 * 1024).string())
-
-            if (doc.html().contains("Just a moment")) {
-                return cloudflareKiller.intercept(chain)
-            }
-
-            return response
-        }
-    }
     @JsonIgnoreProperties(ignoreUnknown = true)
     data class AnimeSearchResult(
         @JsonProperty("info_title") val infotitle: String,
@@ -83,7 +63,6 @@ class Anizm : MainAPI() {
         "57" to "Kızların Aşkı",
         "3"  to "Komedi",
         "20" to "Korku",
-//        "51" to "Live Action",
         "1"  to "Macera",
         "21" to "Mecha",
         "22" to "Movie",
@@ -94,7 +73,6 @@ class Anizm : MainAPI() {
         "27" to "Oyun",
         "48" to "Parodi",
         "53" to "Polisiye",
-//        "28" to "Politik",
         "29" to "Psikolojik",
         "5"  to "Romantizm",
         "47" to "Samuray",
@@ -108,7 +86,6 @@ class Anizm : MainAPI() {
         "37" to "Spor",
         "38" to "Süper-Güç",
         "39" to "Tarihi",
-//        "40" to "Tuhaf",
         "41" to "Uzay",
         "42" to "Vampir",
         "43" to "Yaoi",
@@ -116,10 +93,8 @@ class Anizm : MainAPI() {
         "44" to "Yuri",
     )
 
-    // Ana Sayfa Yükleme
-    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document =
-            app.post("${mainUrl}/tavsiyeRobotuResult",
+    private suspend fun cfKiller(request: MainPageRequest): NiceResponse {
+        var doc = app.post("${mainUrl}/tavsiyeRobotuResult",
             headers = mapOf(
                 "X-CSRF-TOKEN" to "qi5SteotzukwLBcWpAQeka3IaqD3Bj2tpL547aEW",
                 "X-Requested-With" to "XMLHttpRequest",
@@ -128,12 +103,33 @@ class Anizm : MainAPI() {
                 "kategoriler%5B%5D" to request.data
             ),
             cookies = mapOf(
-                "adcash_shown_count2" to "3",
-                "XSRF-TOKEN" to "eyJpdiI6IlNRNkVZNmtoVm9CTkRZT0hBM0NsT0E9PSIsInZhbHVlIjoiUWlPZjFERkpINFZYZnNNMm5sc3hHZG1BZDNxS1U4dGFGMkUxWEdPNkE2NVpaT0ZJZW9JZ1U4Z3h1QzJMWFVqRzB2endzb1R5cmpMUFFNcUNITEtvUjA0Q2Rzbll4K2xkTjBhb3pmOWozeDhETUhxSk9JVkpoNGxqZlY0NGk4ZzAiLCJtYWMiOiI3M2U0MzllNDZiOTJmZTc0OTE2OTk1YzJiODU0NzBiNWJiYWFmOWY4NjdkYTIyNzIzNWZiOTNmY2ExMjUwYWRlIn0",
+                "adcash_shown_count2" to "",
+                "XSRF-TOKEN" to "eyJpdiI6Ik1ZN0h2djQyU0JKblg3azF2ZmNVUWc9PSIsInZhbHVlIjoieDBKSEtKZFIyOTEyR0xJUHNKMGkxa2Q3WGE2dkZrZVNQZ1wvYWFcL3Irc3JLRndxNk5FSlhtTEpzYWZJa1JTNThuREZQUEpxVU9MUldPMDMyS2JxdlpBY2k0UHBIT1g5UWJmWmg1TCtSZWpHTFJsOGYrUGJURnVya1M4cHBoY1RkZyIsIm1hYyI6ImE0NGJkMDY2ZGQ3NjRlZGQ4ZWM1NTA3MzNhMmIyODA2MDE3NDUwZjFkMWNhZmExNDJhZWFjZjU2M2Q3ODAxNzMifQ==",
                 "anizm_session" to "eyJpdiI6Im1qc1wvdzViWVp5dVc4M3hqYVo5dU9BPT0iLCJ2YWx1ZSI6InNmVkNmTjFrZnFHZyttUXdTc2NJS2NcL0NCRFE2MlFLUlVvc2F0RmVUU3c1N2poc21QUUxLbmRFNTFLalJVa1AwTmlLSmZTTnhwbXI3STNwZ1wvSnE2d3lCbWFweUFQTkNLYWN4ZGFXRWhGM1dESXUrdUFFK1pjVzlheXJNQnBHVEwiLCJtYWMiOiIzNGRkMmU3NGMxODUxOTU3MDkzNmQ2YzFkZmI0OTI2NDg3YjYzZjdlMGViZjllYjk5ODIwMzM4NjEwOGJkNzI3In0="
-                ), interceptor = interceptor, timeout = 10000
-        ).document
-//        Log.d("Anizm","document = $document")
+            )
+        )
+        if (doc.document.select("title").text() == "Just a moment...") {
+            doc = app.post("${mainUrl}/tavsiyeRobotuResult",
+                headers = mapOf(
+                    "X-CSRF-TOKEN" to "qi5SteotzukwLBcWpAQeka3IaqD3Bj2tpL547aEW",
+                    "X-Requested-With" to "XMLHttpRequest",
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"),
+                data = mapOf(
+                    "kategoriler%5B%5D" to request.data
+                ),
+                cookies = mapOf(
+                    "adcash_shown_count2" to "",
+                    "XSRF-TOKEN" to "eyJpdiI6Ik1ZN0h2djQyU0JKblg3azF2ZmNVUWc9PSIsInZhbHVlIjoieDBKSEtKZFIyOTEyR0xJUHNKMGkxa2Q3WGE2dkZrZVNQZ1wvYWFcL3Irc3JLRndxNk5FSlhtTEpzYWZJa1JTNThuREZQUEpxVU9MUldPMDMyS2JxdlpBY2k0UHBIT1g5UWJmWmg1TCtSZWpHTFJsOGYrUGJURnVya1M4cHBoY1RkZyIsIm1hYyI6ImE0NGJkMDY2ZGQ3NjRlZGQ4ZWM1NTA3MzNhMmIyODA2MDE3NDUwZjFkMWNhZmExNDJhZWFjZjU2M2Q3ODAxNzMifQ==",
+                    "anizm_session" to "eyJpdiI6Im1qc1wvdzViWVp5dVc4M3hqYVo5dU9BPT0iLCJ2YWx1ZSI6InNmVkNmTjFrZnFHZyttUXdTc2NJS2NcL0NCRFE2MlFLUlVvc2F0RmVUU3c1N2poc21QUUxLbmRFNTFLalJVa1AwTmlLSmZTTnhwbXI3STNwZ1wvSnE2d3lCbWFweUFQTkNLYWN4ZGFXRWhGM1dESXUrdUFFK1pjVzlheXJNQnBHVEwiLCJtYWMiOiIzNGRkMmU3NGMxODUxOTU3MDkzNmQ2YzFkZmI0OTI2NDg3YjYzZjdlMGViZjllYjk5ODIwMzM4NjEwOGJkNzI3In0="
+                )
+            , interceptor = CloudflareKiller())
+        }
+        return doc
+    }
+
+    // Ana Sayfa Yükleme
+    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+        val document = cfKiller(request).document
 
         val home = document.select("div.aramaSonucItem").mapNotNull { it.toMainPageResult() }
         return newHomePageResponse(request.name, home, hasNext = false)
