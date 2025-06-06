@@ -131,7 +131,7 @@ class Anizm : MainAPI() {
                 "adcash_shown_count2" to "3",
                 "XSRF-TOKEN" to "eyJpdiI6IlNRNkVZNmtoVm9CTkRZT0hBM0NsT0E9PSIsInZhbHVlIjoiUWlPZjFERkpINFZYZnNNMm5sc3hHZG1BZDNxS1U4dGFGMkUxWEdPNkE2NVpaT0ZJZW9JZ1U4Z3h1QzJMWFVqRzB2endzb1R5cmpMUFFNcUNITEtvUjA0Q2Rzbll4K2xkTjBhb3pmOWozeDhETUhxSk9JVkpoNGxqZlY0NGk4ZzAiLCJtYWMiOiI3M2U0MzllNDZiOTJmZTc0OTE2OTk1YzJiODU0NzBiNWJiYWFmOWY4NjdkYTIyNzIzNWZiOTNmY2ExMjUwYWRlIn0",
                 "anizm_session" to "eyJpdiI6Im1qc1wvdzViWVp5dVc4M3hqYVo5dU9BPT0iLCJ2YWx1ZSI6InNmVkNmTjFrZnFHZyttUXdTc2NJS2NcL0NCRFE2MlFLUlVvc2F0RmVUU3c1N2poc21QUUxLbmRFNTFLalJVa1AwTmlLSmZTTnhwbXI3STNwZ1wvSnE2d3lCbWFweUFQTkNLYWN4ZGFXRWhGM1dESXUrdUFFK1pjVzlheXJNQnBHVEwiLCJtYWMiOiIzNGRkMmU3NGMxODUxOTU3MDkzNmQ2YzFkZmI0OTI2NDg3YjYzZjdlMGViZjllYjk5ODIwMzM4NjEwOGJkNzI3In0="
-                ), interceptor = interceptor
+                ), interceptor = interceptor, timeout = 10000
         ).document
 //        Log.d("Anizm","document = $document")
 
