@@ -94,9 +94,21 @@ class Anizm : MainAPI() {
     )
 
     private suspend fun cfKiller(request: MainPageRequest): NiceResponse {
+        var csrftoken = app.get("${mainUrl}/",
+            headers = mapOf(
+                "X-Requested-With" to "XMLHttpRequest",
+                "Referer" to "${mainUrl}/tavsiyeRobotu",
+                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"),
+            cookies = mapOf(
+            "XSRF-TOKEN"    to "eyJpdiI6Ik1ZN0h2djQyU0JKblg3azF2ZmNVUWc9PSIsInZhbHVlIjoieDBKSEtKZFIyOTEyR0xJUHNKMGkxa2Q3WGE2dkZrZVNQZ1wvYWFcL3Irc3JLRndxNk5FSlhtTEpzYWZJa1JTNThuREZQUEpxVU9MUldPMDMyS2JxdlpBY2k0UHBIT1g5UWJmWmg1TCtSZWpHTFJsOGYrUGJURnVya1M4cHBoY1RkZyIsIm1hYyI6ImE0NGJkMDY2ZGQ3NjRlZGQ4ZWM1NTA3MzNhMmIyODA2MDE3NDUwZjFkMWNhZmExNDJhZWFjZjU2M2Q3ODAxNzMifQ==",
+            "anizm_session" to "eyJpdiI6Im1qc1wvdzViWVp5dVc4M3hqYVo5dU9BPT0iLCJ2YWx1ZSI6InNmVkNmTjFrZnFHZyttUXdTc2NJS2NcL0NCRFE2MlFLUlVvc2F0RmVUU3c1N2poc21QUUxLbmRFNTFLalJVa1AwTmlLSmZTTnhwbXI3STNwZ1wvSnE2d3lCbWFweUFQTkNLYWN4ZGFXRWhGM1dESXUrdUFFK1pjVzlheXJNQnBHVEwiLCJtYWMiOiIzNGRkMmU3NGMxODUxOTU3MDkzNmQ2YzFkZmI0OTI2NDg3YjYzZjdlMGViZjllYjk5ODIwMzM4NjEwOGJkNzI3In0="
+        )).document
+
+        val csrfToken = csrftoken.selectFirst("meta[name=csrf-token]")?.attr("content")
+
         var doc = app.post("${mainUrl}/tavsiyeRobotuResult",
             headers = mapOf(
-                "X-CSRF-TOKEN" to "qi5SteotzukwLBcWpAQeka3IaqD3Bj2tpL547aEW",
+                "X-CSRF-TOKEN" to "$csrfToken",
                 "X-Requested-With" to "XMLHttpRequest",
                 "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"),
             data = mapOf(
@@ -111,7 +123,7 @@ class Anizm : MainAPI() {
         if (doc.document.select("title").text() == "Just a moment...") {
             doc = app.post("${mainUrl}/tavsiyeRobotuResult",
                 headers = mapOf(
-                    "X-CSRF-TOKEN" to "qi5SteotzukwLBcWpAQeka3IaqD3Bj2tpL547aEW",
+                    "X-CSRF-TOKEN" to "$csrfToken",
                     "X-Requested-With" to "XMLHttpRequest",
                     "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"),
                 data = mapOf(
