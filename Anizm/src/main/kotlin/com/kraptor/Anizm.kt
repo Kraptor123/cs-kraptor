@@ -146,7 +146,7 @@ class Anizm : MainAPI() {
                     headers = mapOf(
                         "Referer" to "${mainUrl}/",
                         "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"
-                    ),
+                    ), interceptor = interceptor,
                     timeout = 10
                 )
 
@@ -176,6 +176,7 @@ class Anizm : MainAPI() {
                         "Referer" to "${mainUrl}/tavsiyeRobotu",
                         "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"
                     ),
+                    interceptor = interceptor,
                     cookies = processedCookies,
                     timeout = 10
                 )
