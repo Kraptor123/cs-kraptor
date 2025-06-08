@@ -1,6 +1,5 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 name: CloudStream Derleyici
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
@@ -39,24 +38,28 @@ jobs:
         uses: actions/setup-java@v4.6.0
         with:
           distribution: adopt
-          java-version: 23
+          java-version: 17
 
       - name: Android SDK Ayarla
         uses: android-actions/setup-android@v3.2.2
 
       - name: Eklentileri Derle
         run: |
-           cd $GITHUB_WORKSPACE/src
-           chmod +x gradlew
-           ./gradlew make makePluginsJson --stacktrace --info
-           cp **/build/*.cs3 $GITHUB_WORKSPACE/builds
-           cp build/plugins.json $GITHUB_WORKSPACE/builds
-           
+          cd $GITHUB_WORKSPACE/src
+          chmod +x gradlew
+          ./gradlew make makePluginsJson
+          cp **/build/*.cs3 $GITHUB_WORKSPACE/builds
+          cp build/plugins.json $GITHUB_WORKSPACE/builds
+
+      - name: '@KekikAkademi ifadesini değiştir'
+        run: |
+          sed -i 's/@KekikAkademi/@feroxxcs3/g' $GITHUB_WORKSPACE/builds/repo.json
+
       - name: Derlemeleri Yükle
         run: |
           cd $GITHUB_WORKSPACE/builds
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add .
-          git commit --amend -m "$GITHUB_SHA 'nın Derlenmesi" || exit 0   # eğer commit edilecek bir şey yoksa hata verme
-          git push --force
+           git add .
+           git commit --amend -m "$GITHUB_SHA 'nın Derlenmesi" || exit 0   # eğer commit edilecek bir şey yoksa hata verme
+           git push --force
