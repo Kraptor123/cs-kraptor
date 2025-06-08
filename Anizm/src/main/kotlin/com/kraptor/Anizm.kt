@@ -15,10 +15,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import okhttp3.Cookie
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
+import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -91,154 +95,42 @@ class Anizm : MainAPI() {
         "44" to "Yuri",
     )
 
-    // ! CloudFlare v2
-    private val cloudflareKiller by lazy { CloudflareKiller() }
-    private val interceptor      by lazy { CloudflareInterceptor(cloudflareKiller) }
+    // Sabit saklanan cookie ve CSRF token
+    private var sessionCookies: Map<String, String>? = null
+    private var csrfToken: String? = null
+    private val initMutex = Mutex()
 
-    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller): Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val request  = chain.request()
-            val response = chain.proceed(request)
-            val doc      = Jsoup.parse(response.peekBody(1024 * 1024).string())
-
-            if (doc.html().contains("Just a moment")) {
-                return cloudflareKiller.intercept(chain)
-            }
-
-            return response
+    /** Sadece tek sefer init için, concurrent çağrılarda kilit kullanır */
+    private suspend fun initSession() {
+        if (sessionCookies != null && csrfToken != null) return
+        initMutex.withLock {
+            if (sessionCookies != null && csrfToken != null) return@withLock
+            Log.d("Anizm", "🔄 Oturum başlatılıyor: cookie ve CSRF alınıyor")
+            val resp = app.get(mainUrl)
+            sessionCookies = resp.cookies.mapValues { (_, v) -> URLDecoder.decode(v, "UTF-8") }
+            csrfToken = resp.document.selectFirst("meta[name=csrf-token]")?.attr("content")
+            Log.d("Anizm", "✅ Cookie sayısı: ${sessionCookies?.size}, CSRF: $csrfToken")
         }
     }
 
-    companion object {
-        private var cachedCookies: Map<String, String>? = null
-        private var cachedCsrfToken: String? = null
-        private val cookieMutex = Mutex()
-        private var lastCookieTime = 0L
-        private const val COOKIE_TIMEOUT = 30 * 60 * 1000L // 30 dakika
-    }
-
-    // Cookie decode fonksiyonu
-    private fun decodeCookie(cookieValue: String): String {
-        return try {
-            java.net.URLDecoder.decode(cookieValue, "UTF-8")
-        } catch (e: Exception) {
-            Log.w("Anizm", "Cookie decode hatası: ${e.message}")
-            cookieValue // Decode edilemezse orijinal değeri döndür
-        }
-    }
-
-    // Cookies ve CSRF Token'ı beraber alma fonksiyonu
-    private suspend fun getCookiesAndCsrf(): Pair<Map<String, String>, String?> {
-        cookieMutex.withLock {
-            val now = System.currentTimeMillis()
-
-            // Cookie'ler ve CSRF token var ve henüz geçerli mi?
-            if (cachedCookies != null && cachedCsrfToken != null && (now - lastCookieTime) < COOKIE_TIMEOUT) {
-                Log.d("Anizm", "🔄 Mevcut cookies ve CSRF token kullanılıyor")
-                return Pair(cachedCookies!!, cachedCsrfToken)
-            }
-
-            try {
-                Log.d("Anizm", "🚀 Yeni cookies ve CSRF token alınıyor...")
-
-                // İlk olarak cookie'leri almak için istek
-                val cookieResponse = app.get("${mainUrl}/tavsiyeRobotuResult",
-                    headers = mapOf(
-                        "Referer" to "${mainUrl}/",
-                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"
-                    ), interceptor = interceptor,
-                    timeout = 10
-                )
-
-                // Ham cookie'leri al ve decode et
-                val rawCookies = cookieResponse.cookies
-                val processedCookies = mutableMapOf<String, String>()
-
-                rawCookies.forEach { (key, value) ->
-                    val decodedValue = if (key == "anizm_session") {
-                        // Özellikle anizm_session cookie'sini decode et
-                        val decoded = decodeCookie(value)
-                        Log.d("Anizm", "anizm_session decoded:")
-                        Log.d("Anizm", "Raw: $value")
-                        Log.d("Anizm", "Decoded: $decoded")
-                        decoded
-                    } else {
-                        // Diğer cookie'ler için de decode dene, başarısızsa orijinal değeri kullan
-                        decodeCookie(value)
-                    }
-                    processedCookies[key] = decodedValue
-                }
-
-                // Şimdi CSRF token'ı almak için ana sayfaya istek (aldığımız cookie'lerle)
-                val csrfResponse = app.get("${mainUrl}/",
-                    headers = mapOf(
-                        "X-Requested-With" to "XMLHttpRequest",
-                        "Referer" to "${mainUrl}/tavsiyeRobotu",
-                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"
-                    ),
-                    interceptor = interceptor,
-                    cookies = processedCookies,
-                    timeout = 10
-                )
-
-                val csrfToken = csrfResponse.document.selectFirst("meta[name=csrf-token]")?.attr("content")
-
-                cachedCookies = processedCookies
-                cachedCsrfToken = csrfToken
-                lastCookieTime = now
-
-                Log.d("Anizm", "✅ Cookies ve CSRF token başarıyla alındı")
-                Log.d("Anizm", "Cookies: ${cachedCookies!!.size} adet")
-                Log.d("Anizm", "CSRF Token: ${csrfToken?.take(20)}...")
-
-                cachedCookies!!.forEach { (key, value) ->
-                    Log.d("Anizm", "Final Cookie: $key = ${value.take(50)}...")
-                }
-
-                return Pair(cachedCookies!!, cachedCsrfToken)
-
-            } catch (e: Exception) {
-                Log.e("Anizm", "❌ Cookie ve CSRF token alma hatası: ${e.message}")
-                return Pair(cachedCookies ?: emptyMap(), cachedCsrfToken)
-            }
-        }
-    }
-
-    // Sadece cookie'leri almak için wrapper fonksiyon
-    private suspend fun getCookies(): Map<String, String> {
-        return getCookiesAndCsrf().first
-    }
-
-    // Sadece CSRF token'ı almak için wrapper fonksiyon
-    private suspend fun getCsrfToken(): String? {
-        return getCookiesAndCsrf().second
-    }
-
-
-
-    // Ana Sayfa Yükleme
+    // Ana Sayfa
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val cookies = getCookies()
-        Log.d("Anizm","cookies = $cookies")
-        val csrftoken = getCsrfToken().toString()
-        Log.d("Anizm","csrftoken = $csrftoken")
-
-        val document =
-            app.post("${mainUrl}/tavsiyeRobotuResult",
-                headers = mapOf(
-                    "X-CSRF-TOKEN" to csrftoken,
-                    "X-Requested-With" to "XMLHttpRequest",
-                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"),
-                data = mapOf(
-                    "kategoriler%5B%5D" to request.data
-                ),
-                cookies = cookies, interceptor = interceptor
-            ).document
-//        Log.d("Anizm","document = $document")
-
+        initSession()
+        val document = app.post(
+            "$mainUrl/tavsiyeRobotuResult",
+            headers = mapOf(
+                "User-Agent" to USER_AGENT,
+                "Referer" to mainUrl,
+                "X-Requested-With" to "XMLHttpRequest",
+                "X-CSRF-TOKEN" to (csrfToken ?: "")
+            ),
+            data = mapOf("kategoriler[]" to request.data),
+            cookies = sessionCookies!!
+        ).document
         val home = document.select("div.aramaSonucItem").mapNotNull { it.toMainPageResult() }
         return newHomePageResponse(request.name, home, hasNext = false)
     }
+
     private fun Element.toMainPageResult(): SearchResponse? {
         val title = this.selectFirst("a.titleLink")?.text() ?: return null
         val href = fixUrlNull(this.selectFirst("a.imgWrapperLink")?.attr("href")) ?: return null
@@ -273,7 +165,7 @@ class Anizm : MainAPI() {
                     "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
                 ),
                 params = mapOf("q" to encodedQuery),
-                timeout = 5 // Timeout'u 60 saniye yap
+                timeout = 30 // Timeout'u 60 saniye yap
             )
 
             val responseBody = response.body.string()
