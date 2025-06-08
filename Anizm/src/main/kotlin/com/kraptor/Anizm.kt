@@ -12,6 +12,8 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.nicehttp.NiceResponse
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -20,6 +22,7 @@ import org.jsoup.nodes.Element
 import java.net.URLEncoder
 import kotlin.coroutines.cancellation.CancellationException
 
+
 class Anizm : MainAPI() {
     override var mainUrl = "https://anizm.net"
     override var name = "Anizm"
@@ -27,14 +30,6 @@ class Anizm : MainAPI() {
     override var lang = "tr"
     override val hasQuickSearch = true
     override val supportedTypes = setOf(TvType.Anime)
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    data class AnimeSearchResult(
-        @JsonProperty("info_title") val infotitle: String,
-        @JsonProperty("info_slug") val infoslug: String,
-        @JsonProperty("info_poster") val infoposter: String?,
-        @JsonProperty("info_year") val infoyear: String?
-    )
 
     // Ana Sayfa
     override val mainPage = mainPageOf(
@@ -63,6 +58,7 @@ class Anizm : MainAPI() {
         "57" to "Kızların Aşkı",
         "3"  to "Komedi",
         "20" to "Korku",
+//        "51" to "Live Action",
         "1"  to "Macera",
         "21" to "Mecha",
         "22" to "Movie",
@@ -73,6 +69,7 @@ class Anizm : MainAPI() {
         "27" to "Oyun",
         "48" to "Parodi",
         "53" to "Polisiye",
+//        "28" to "Politik",
         "29" to "Psikolojik",
         "5"  to "Romantizm",
         "47" to "Samuray",
@@ -86,6 +83,7 @@ class Anizm : MainAPI() {
         "37" to "Spor",
         "38" to "Süper-Güç",
         "39" to "Tarihi",
+//        "40" to "Tuhaf",
         "41" to "Uzay",
         "42" to "Vampir",
         "43" to "Yaoi",
@@ -93,60 +91,153 @@ class Anizm : MainAPI() {
         "44" to "Yuri",
     )
 
-    private suspend fun cfKiller(request: MainPageRequest): NiceResponse {
-        var csrftoken = app.get("${mainUrl}/",
-            headers = mapOf(
-                "X-Requested-With" to "XMLHttpRequest",
-                "Referer" to "${mainUrl}/tavsiyeRobotu",
-                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"),
-            cookies = mapOf(
-            "XSRF-TOKEN"    to "eyJpdiI6Ik1ZN0h2djQyU0JKblg3azF2ZmNVUWc9PSIsInZhbHVlIjoieDBKSEtKZFIyOTEyR0xJUHNKMGkxa2Q3WGE2dkZrZVNQZ1wvYWFcL3Irc3JLRndxNk5FSlhtTEpzYWZJa1JTNThuREZQUEpxVU9MUldPMDMyS2JxdlpBY2k0UHBIT1g5UWJmWmg1TCtSZWpHTFJsOGYrUGJURnVya1M4cHBoY1RkZyIsIm1hYyI6ImE0NGJkMDY2ZGQ3NjRlZGQ4ZWM1NTA3MzNhMmIyODA2MDE3NDUwZjFkMWNhZmExNDJhZWFjZjU2M2Q3ODAxNzMifQ==",
-            "anizm_session" to "eyJpdiI6Im1qc1wvdzViWVp5dVc4M3hqYVo5dU9BPT0iLCJ2YWx1ZSI6InNmVkNmTjFrZnFHZyttUXdTc2NJS2NcL0NCRFE2MlFLUlVvc2F0RmVUU3c1N2poc21QUUxLbmRFNTFLalJVa1AwTmlLSmZTTnhwbXI3STNwZ1wvSnE2d3lCbWFweUFQTkNLYWN4ZGFXRWhGM1dESXUrdUFFK1pjVzlheXJNQnBHVEwiLCJtYWMiOiIzNGRkMmU3NGMxODUxOTU3MDkzNmQ2YzFkZmI0OTI2NDg3YjYzZjdlMGViZjllYjk5ODIwMzM4NjEwOGJkNzI3In0="
-        )).document
+    // ! CloudFlare v2
+    private val cloudflareKiller by lazy { CloudflareKiller() }
+    private val interceptor      by lazy { CloudflareInterceptor(cloudflareKiller) }
 
-        val csrfToken = csrftoken.selectFirst("meta[name=csrf-token]")?.attr("content")
+    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller): Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request  = chain.request()
+            val response = chain.proceed(request)
+            val doc      = Jsoup.parse(response.peekBody(1024 * 1024).string())
 
-        var doc = app.post("${mainUrl}/tavsiyeRobotuResult",
-            headers = mapOf(
-                "X-CSRF-TOKEN" to "$csrfToken",
-                "X-Requested-With" to "XMLHttpRequest",
-                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"),
-            data = mapOf(
-                "kategoriler%5B%5D" to request.data
-            ),
-            cookies = mapOf(
-                "adcash_shown_count2" to "",
-                "XSRF-TOKEN" to "eyJpdiI6Ik1ZN0h2djQyU0JKblg3azF2ZmNVUWc9PSIsInZhbHVlIjoieDBKSEtKZFIyOTEyR0xJUHNKMGkxa2Q3WGE2dkZrZVNQZ1wvYWFcL3Irc3JLRndxNk5FSlhtTEpzYWZJa1JTNThuREZQUEpxVU9MUldPMDMyS2JxdlpBY2k0UHBIT1g5UWJmWmg1TCtSZWpHTFJsOGYrUGJURnVya1M4cHBoY1RkZyIsIm1hYyI6ImE0NGJkMDY2ZGQ3NjRlZGQ4ZWM1NTA3MzNhMmIyODA2MDE3NDUwZjFkMWNhZmExNDJhZWFjZjU2M2Q3ODAxNzMifQ==",
-                "anizm_session" to "eyJpdiI6Im1qc1wvdzViWVp5dVc4M3hqYVo5dU9BPT0iLCJ2YWx1ZSI6InNmVkNmTjFrZnFHZyttUXdTc2NJS2NcL0NCRFE2MlFLUlVvc2F0RmVUU3c1N2poc21QUUxLbmRFNTFLalJVa1AwTmlLSmZTTnhwbXI3STNwZ1wvSnE2d3lCbWFweUFQTkNLYWN4ZGFXRWhGM1dESXUrdUFFK1pjVzlheXJNQnBHVEwiLCJtYWMiOiIzNGRkMmU3NGMxODUxOTU3MDkzNmQ2YzFkZmI0OTI2NDg3YjYzZjdlMGViZjllYjk5ODIwMzM4NjEwOGJkNzI3In0="
-            )
-        )
-        if (doc.document.select("title").text() == "Just a moment...") {
-            doc = app.post("${mainUrl}/tavsiyeRobotuResult",
+            if (doc.html().contains("Just a moment")) {
+                return cloudflareKiller.intercept(chain)
+            }
+
+            return response
+        }
+    }
+
+    companion object {
+        private var cachedCookies: Map<String, String>? = null
+        private var cachedCsrfToken: String? = null
+        private val cookieMutex = Mutex()
+        private var lastCookieTime = 0L
+        private const val COOKIE_TIMEOUT = 30 * 60 * 1000L // 30 dakika
+    }
+
+    // Cookie decode fonksiyonu
+    private fun decodeCookie(cookieValue: String): String {
+        return try {
+            java.net.URLDecoder.decode(cookieValue, "UTF-8")
+        } catch (e: Exception) {
+            Log.w("Anizm", "Cookie decode hatası: ${e.message}")
+            cookieValue // Decode edilemezse orijinal değeri döndür
+        }
+    }
+
+    // Cookies ve CSRF Token'ı beraber alma fonksiyonu
+    private suspend fun getCookiesAndCsrf(): Pair<Map<String, String>, String?> {
+        cookieMutex.withLock {
+            val now = System.currentTimeMillis()
+
+            // Cookie'ler ve CSRF token var ve henüz geçerli mi?
+            if (cachedCookies != null && cachedCsrfToken != null && (now - lastCookieTime) < COOKIE_TIMEOUT) {
+                Log.d("Anizm", "🔄 Mevcut cookies ve CSRF token kullanılıyor")
+                return Pair(cachedCookies!!, cachedCsrfToken)
+            }
+
+            try {
+                Log.d("Anizm", "🚀 Yeni cookies ve CSRF token alınıyor...")
+
+                // İlk olarak cookie'leri almak için istek
+                val cookieResponse = app.get("${mainUrl}/tavsiyeRobotuResult",
+                    headers = mapOf(
+                        "Referer" to "${mainUrl}/",
+                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"
+                    ),
+                    timeout = 10
+                )
+
+                // Ham cookie'leri al ve decode et
+                val rawCookies = cookieResponse.cookies
+                val processedCookies = mutableMapOf<String, String>()
+
+                rawCookies.forEach { (key, value) ->
+                    val decodedValue = if (key == "anizm_session") {
+                        // Özellikle anizm_session cookie'sini decode et
+                        val decoded = decodeCookie(value)
+                        Log.d("Anizm", "anizm_session decoded:")
+                        Log.d("Anizm", "Raw: $value")
+                        Log.d("Anizm", "Decoded: $decoded")
+                        decoded
+                    } else {
+                        // Diğer cookie'ler için de decode dene, başarısızsa orijinal değeri kullan
+                        decodeCookie(value)
+                    }
+                    processedCookies[key] = decodedValue
+                }
+
+                // Şimdi CSRF token'ı almak için ana sayfaya istek (aldığımız cookie'lerle)
+                val csrfResponse = app.get("${mainUrl}/",
+                    headers = mapOf(
+                        "X-Requested-With" to "XMLHttpRequest",
+                        "Referer" to "${mainUrl}/tavsiyeRobotu",
+                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"
+                    ),
+                    cookies = processedCookies,
+                    timeout = 10
+                )
+
+                val csrfToken = csrfResponse.document.selectFirst("meta[name=csrf-token]")?.attr("content")
+
+                cachedCookies = processedCookies
+                cachedCsrfToken = csrfToken
+                lastCookieTime = now
+
+                Log.d("Anizm", "✅ Cookies ve CSRF token başarıyla alındı")
+                Log.d("Anizm", "Cookies: ${cachedCookies!!.size} adet")
+                Log.d("Anizm", "CSRF Token: ${csrfToken?.take(20)}...")
+
+                cachedCookies!!.forEach { (key, value) ->
+                    Log.d("Anizm", "Final Cookie: $key = ${value.take(50)}...")
+                }
+
+                return Pair(cachedCookies!!, cachedCsrfToken)
+
+            } catch (e: Exception) {
+                Log.e("Anizm", "❌ Cookie ve CSRF token alma hatası: ${e.message}")
+                return Pair(cachedCookies ?: emptyMap(), cachedCsrfToken)
+            }
+        }
+    }
+
+    // Sadece cookie'leri almak için wrapper fonksiyon
+    private suspend fun getCookies(): Map<String, String> {
+        return getCookiesAndCsrf().first
+    }
+
+    // Sadece CSRF token'ı almak için wrapper fonksiyon
+    private suspend fun getCsrfToken(): String? {
+        return getCookiesAndCsrf().second
+    }
+
+
+
+    // Ana Sayfa Yükleme
+    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+        val cookies = getCookies()
+        Log.d("Anizm","cookies = $cookies")
+        val csrftoken = getCsrfToken().toString()
+        Log.d("Anizm","csrftoken = $csrftoken")
+
+        val document =
+            app.post("${mainUrl}/tavsiyeRobotuResult",
                 headers = mapOf(
-                    "X-CSRF-TOKEN" to "$csrfToken",
+                    "X-CSRF-TOKEN" to csrftoken,
                     "X-Requested-With" to "XMLHttpRequest",
                     "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0"),
                 data = mapOf(
                     "kategoriler%5B%5D" to request.data
                 ),
-                cookies = mapOf(
-                    "adcash_shown_count2" to "",
-                    "XSRF-TOKEN" to "eyJpdiI6Ik1ZN0h2djQyU0JKblg3azF2ZmNVUWc9PSIsInZhbHVlIjoieDBKSEtKZFIyOTEyR0xJUHNKMGkxa2Q3WGE2dkZrZVNQZ1wvYWFcL3Irc3JLRndxNk5FSlhtTEpzYWZJa1JTNThuREZQUEpxVU9MUldPMDMyS2JxdlpBY2k0UHBIT1g5UWJmWmg1TCtSZWpHTFJsOGYrUGJURnVya1M4cHBoY1RkZyIsIm1hYyI6ImE0NGJkMDY2ZGQ3NjRlZGQ4ZWM1NTA3MzNhMmIyODA2MDE3NDUwZjFkMWNhZmExNDJhZWFjZjU2M2Q3ODAxNzMifQ==",
-                    "anizm_session" to "eyJpdiI6Im1qc1wvdzViWVp5dVc4M3hqYVo5dU9BPT0iLCJ2YWx1ZSI6InNmVkNmTjFrZnFHZyttUXdTc2NJS2NcL0NCRFE2MlFLUlVvc2F0RmVUU3c1N2poc21QUUxLbmRFNTFLalJVa1AwTmlLSmZTTnhwbXI3STNwZ1wvSnE2d3lCbWFweUFQTkNLYWN4ZGFXRWhGM1dESXUrdUFFK1pjVzlheXJNQnBHVEwiLCJtYWMiOiIzNGRkMmU3NGMxODUxOTU3MDkzNmQ2YzFkZmI0OTI2NDg3YjYzZjdlMGViZjllYjk5ODIwMzM4NjEwOGJkNzI3In0="
-                )
-            , interceptor = CloudflareKiller())
-        }
-        return doc
-    }
-
-    // Ana Sayfa Yükleme
-    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = cfKiller(request).document
+                cookies = cookies, interceptor = interceptor
+            ).document
+//        Log.d("Anizm","document = $document")
 
         val home = document.select("div.aramaSonucItem").mapNotNull { it.toMainPageResult() }
         return newHomePageResponse(request.name, home, hasNext = false)
     }
-
     private fun Element.toMainPageResult(): SearchResponse? {
         val title = this.selectFirst("a.titleLink")?.text() ?: return null
         val href = fixUrlNull(this.selectFirst("a.imgWrapperLink")?.attr("href")) ?: return null
@@ -291,3 +382,11 @@ class Anizm : MainAPI() {
         return true
     }
 }
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class AnimeSearchResult(
+    @JsonProperty("info_title") val infotitle: String,
+    @JsonProperty("info_slug") val infoslug: String,
+    @JsonProperty("info_poster") val infoposter: String?,
+    @JsonProperty("info_year") val infoyear: String?
+)
