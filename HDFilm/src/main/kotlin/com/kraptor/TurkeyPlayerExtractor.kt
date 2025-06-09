@@ -29,8 +29,8 @@ open class TurkeyPlayer : ExtractorApi() {
         fixM3u?.contains("master.txt")?.let {
             if (!it) {
                 val lang = when {
-                    fixM3u.contains("tur", ignoreCase = true) -> "Türkçe"
-                    fixM3u.contains("en", ignoreCase = true) -> "İngilizce"
+                    fixM3u.contains("tur", ignoreCase = true) -> "Turkish"
+                    fixM3u.contains("en", ignoreCase = true) -> "English"
                     else -> "Bilinmeyen"
                 }
                 subtitleCallback.invoke(SubtitleFile(lang, fixM3u.toString()))

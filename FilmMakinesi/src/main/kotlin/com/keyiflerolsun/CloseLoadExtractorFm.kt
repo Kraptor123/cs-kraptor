@@ -30,9 +30,9 @@ open class CloseLoadFm : ExtractorApi() {
         iSource.document.select("track").forEach {
             val lang = it.attr("label").let {
                 when (it) {
-                    "Turkish" -> "Türkçe"
-                    "English" -> "İngilizce"
-                    "French"  -> "Fransızca"
+                    "Turkish" -> "Turkish"
+                    "English" -> "English"
+                    "French"  -> "French"
                     else -> it
                 }
             }

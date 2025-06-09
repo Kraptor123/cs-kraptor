@@ -309,8 +309,8 @@ class HDFilmCehennemi : MainAPI() {
                 val tamUrl = fixUrlNull(fileUrl).toString()
                 val sonUrl = "${tamUrl}/"
                 val langCode = when {
-                    fileUrl.contains("Turkish", ignoreCase = true) -> "Türkçe"
-                    fileUrl.contains("English", ignoreCase = true) -> "İngilizce"
+                    fileUrl.contains("Turkish", ignoreCase = true) -> "Turkish"
+                    fileUrl.contains("English", ignoreCase = true) -> "English"
                     else -> "Unknown"
                 }
                 subtitleCallback.invoke(SubtitleFile(lang = langCode, url = sonUrl))

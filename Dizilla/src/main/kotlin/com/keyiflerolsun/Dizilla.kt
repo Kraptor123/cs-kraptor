@@ -49,10 +49,6 @@ class Dizilla : MainAPI() {
     override val hasQuickSearch = true
     override val supportedTypes = setOf(TvType.TvSeries)
 
-    override var sequentialMainPage = true        // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
-    override var sequentialMainPageDelay       = 50L  // ? 0.05 saniye
-    override var sequentialMainPageScrollDelay = 50L  // ? 0.05 saniye
-
 
     override val mainPage = mainPageOf(
         "15" to   "Aile",
@@ -84,9 +80,7 @@ class Dizilla : MainAPI() {
                 "Connection" to "keep-alive",
                 "Host" to "dizilla.club",
             ),
-            interceptor = interceptor,
-            cacheTime = 15,
-            timeout = 40
+            interceptor = interceptor
         ).document.text()
 
         val decoded = JSONObject(raw)
@@ -137,39 +131,46 @@ class Dizilla : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val searchReq = app.post(
-            "${mainUrl}/api/bg/searchcontent?searchterm=$query",
-            headers = mapOf(
-                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-                "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-                "Accept" to "application/json, text/plain, */*",
-                "Accept-Language" to "en-US,en;q=0.5",
-                "X-Requested-With" to "XMLHttpRequest",
-                "Sec-Fetch-Site" to "same-origin",
-                "Sec-Fetch-Mode" to "cors",
-                "Sec-Fetch-Dest" to "empty",
-                "Referer" to "${mainUrl}/"
-            ),
-            referer = "${mainUrl}/",
-            interceptor = interceptor
-        )
-        val objectMapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        val searchResult: SearchResult = objectMapper.readValue(searchReq.toString())
-        val decodedSearch = base64Decode(searchResult.response.toString())
-        val contentJson: SearchData = objectMapper.readValue(decodedSearch)
-        if (contentJson.state != true) {
-            throw ErrorLoadingException("Invalid Json response")
+        return try {
+            val response = app.post(
+                "${mainUrl}/api/bg/searchcontent?searchterm=$query",
+                headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+                    "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+                    "Accept" to "application/json, text/plain, */*",
+                    "Accept-Language" to "en-US,en;q=0.5",
+                    "X-Requested-With" to "XMLHttpRequest",
+                    "Sec-Fetch-Site" to "same-origin",
+                    "Sec-Fetch-Mode" to "cors",
+                    "Sec-Fetch-Dest" to "empty",
+                    "Referer" to "${mainUrl}/"
+                ),
+                interceptor = interceptor,
+                referer = "${mainUrl}/"
+            )
+            val responseBody = response.body.string()
+            val objectMapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            val searchResult: SearchResult = objectMapper.readValue(responseBody)
+            val decodedSearch = base64Decode(searchResult.response.toString())
+            val contentJson: SearchData = objectMapper.readValue(decodedSearch)
+            if (contentJson.state != true) {
+                throw ErrorLoadingException("Invalid Json response")
+            }
+            val results = mutableListOf<SearchResponse>()
+            contentJson.result?.forEach {
+                val name = it.title.toString()
+                val link = fixUrl(it.slug.toString())
+                val posterLink = it.poster.toString()
+                results.add(newTvSeriesSearchResponse(name, link, TvType.TvSeries) {
+                    this.posterUrl = posterLink
+                })
+            }
+            results
+        } catch (e: Exception) {
+            Log.e("Dizilla", "Search error: ${e.message}")
+            emptyList()
         }
-        val veriler = mutableListOf<SearchResponse>()
-        contentJson.result?.forEach {
-            val name = it.title.toString()
-            val link = fixUrl(it.slug.toString())
-            val posterLink = it.poster.toString()
-            val toSearchResponse = toSearchResponse(name, link, posterLink)
-            veriler.add(toSearchResponse)
-        }
-        return veriler
     }
 
     private fun toSearchResponse(ad: String, link: String, posterLink: String): SearchResponse {
