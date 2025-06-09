@@ -10,13 +10,33 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
+import com.lagradost.cloudstream3.network.CloudflareKiller
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
+import okhttp3.Interceptor
+import okhttp3.Response
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.util.*
 import kotlin.coroutines.cancellation.CancellationException
 
+
+private val cloudflareKiller by lazy { CloudflareKiller() }
+private val interceptor      by lazy { CloudflareInterceptor(cloudflareKiller) }
+
+class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller): Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request  = chain.request()
+        val response = chain.proceed(request)
+        val doc      = Jsoup.parse(response.peekBody(1024 * 1024).string())
+
+        if (doc.html().contains("Just a moment")) {
+            return cloudflareKiller.intercept(chain)
+        }
+
+        return response
+    }
+}
 
 class Dizilla : MainAPI() {
     override var mainUrl = "https://dizilla.club"
@@ -43,7 +63,7 @@ class Dizilla : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        var document = app.get(request.data).document
+        var document = app.get(request.data, interceptor = interceptor).document
         val home = if (request.data.contains("dizi-turu")) {
             document.select("span.watchlistitem-").mapNotNull { it.diziler() }
         } else if (request.data.contains("/arsiv")) {
@@ -85,7 +105,7 @@ class Dizilla : MainAPI() {
 
         val title = "$name - $epName"
 
-        val epDoc = fixUrlNull(this.attr("href"))?.let { app.get(it).document }
+        val epDoc = fixUrlNull(this.attr("href"))?.let { app.get(it, interceptor = interceptor).document }
 
         val href = fixUrlNull(epDoc?.selectFirst("div.poster a")?.attr("href")) ?: "return null"
 
@@ -121,6 +141,7 @@ class Dizilla : MainAPI() {
                     "Sec-Fetch-Dest" to "empty",
                     "Referer" to "${mainUrl}/"
                 ),
+                interceptor = interceptor,
                 referer = "${mainUrl}/"
             )
             val responseBody = response.body.string()
@@ -162,7 +183,7 @@ class Dizilla : MainAPI() {
 
     override suspend fun load(url: String): LoadResponse? {
         try {
-            val response = app.get(url)
+            val response = app.get(url, interceptor = interceptor)
             val bodyString = response.body.string()
             val document = org.jsoup.Jsoup.parse(bodyString)
 
@@ -205,7 +226,7 @@ class Dizilla : MainAPI() {
             val seasonElements = document.select("div.flex.items-center.flex-wrap.gap-2.mb-4 a")
             for (sezon in seasonElements) {
                 val sezonHref = fixUrl(sezon.attr("href"))
-                val sezonResponse = app.get(sezonHref)
+                val sezonResponse = app.get(sezonHref, interceptor = interceptor)
                 val sezonBody = sezonResponse.body.string()
                 val sezonDoc = org.jsoup.Jsoup.parse(sezonBody)
                 val split = sezonHref.split("-")
@@ -250,7 +271,7 @@ class Dizilla : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         try {
-            val response = app.get(data)
+            val response = app.get(data, interceptor = interceptor)
             val bodyString = response.body.string()
             val document = Jsoup.parse(bodyString)
 
