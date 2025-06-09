@@ -4,9 +4,12 @@ package com.keyiflerolsun
 
 import android.util.Base64
 import android.util.Log
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.jsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
@@ -15,8 +18,8 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
 import okhttp3.Interceptor
 import okhttp3.Response
+import org.json.JSONObject
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
 import java.util.*
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -46,127 +49,127 @@ class Dizilla : MainAPI() {
     override val hasQuickSearch = true
     override val supportedTypes = setOf(TvType.TvSeries)
 
+    override var sequentialMainPage = true        // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
+    override var sequentialMainPageDelay       = 50L  // ? 0.05 saniye
+    override var sequentialMainPageScrollDelay = 50L  // ? 0.05 saniye
+
 
     override val mainPage = mainPageOf(
-        //"${mainUrl}/tum-bolumler" to "Altyazılı Bölümler",
-        "${mainUrl}/arsiv" to "Yeni Eklenen Diziler",
-        "${mainUrl}/dizi-turu/aile" to "Aile",
-        "${mainUrl}/dizi-turu/aksiyon" to "Aksiyon",
-        "${mainUrl}/dizi-turu/bilim-kurgu" to "Bilim Kurgu",
-        "${mainUrl}/dizi-turu/dram" to "Dram",
-        "${mainUrl}/dizi-turu/fantastik" to "Fantastik",
-        "${mainUrl}/dizi-turu/gerilim" to "Gerilim",
-        "${mainUrl}/dizi-turu/komedi" to "Komedi",
-        "${mainUrl}/dizi-turu/korku" to "Korku",
-        "${mainUrl}/dizi-turu/macera" to "Macera",
-        "${mainUrl}/dizi-turu/romantik" to "Romantik",
+        "15" to   "Aile",
+        "9"  to   "Aksiyon",
+        "17" to   "Animasyon",
+        "5"  to   "Bilim Kurgu",
+        "2"  to   "Dram",
+        "12" to   "Fantastik",
+        "18" to   "Gerilim",
+        "3"  to   "Gizem",
+        "4"  to   "Komedi",
+        "8"  to   "Korku",
+        "24" to   "Macera",
+        "7"  to   "Romantik",
+        "26" to   "Savaş",
+        "1"  to   "Suç",
+        "11" to   "Western",
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        var document = app.get(request.data, interceptor = interceptor).document
-        val home = if (request.data.contains("dizi-turu")) {
-            document.select("span.watchlistitem-").mapNotNull { it.diziler() }
-        } else if (request.data.contains("/arsiv")) {
-            val yil = Calendar.getInstance().get(Calendar.YEAR)
-            val sayfa = "?page=sayi&tab=1&sort=date_desc&filterType=2&imdbMin=5&imdbMax=10&yearMin=1900&yearMax=$yil"
-            val replace = sayfa.replace("sayi", page.toString())
-            document = app.get("${request.data}${replace}").document
-            document.select("a.w-full").mapNotNull { it.yeniEklenenler() }
+        // Decode Base64 response
+        val raw = app.post(
+            "${mainUrl}/api/bg/findSeries?releaseYearStart=1900&releaseYearEnd=2025&imdbPointMin=5&imdbPointMax=10&categoryIdsComma=${request.data}&countryIdsComma=&orderType=date_desc&languageId=-1&currentPage=${page}&currentPageCount=24&queryStr=&categorySlugsComma=&countryCodesComma=",
+            referer = "${mainUrl}/",
+            headers = mapOf(
+                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+                "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                "Alt-Used" to "dizilla.club",
+                "Connection" to "keep-alive",
+                "Host" to "dizilla.club",
+            ),
+            interceptor = interceptor,
+            cacheTime = 15,
+            timeout = 40
+        ).document.text()
+
+        val decoded = JSONObject(raw)
+            .getString("response")
+            .let { String(Base64.decode(it, Base64.DEFAULT)) }
+        Log.d("dizillayeni", "decoded = $decoded")
+
+        // Parse JSON tree and pick result array
+        val mapper = jsonMapper()
+        val rootNode = mapper.readTree(decoded)
+        val itemsNode = if (rootNode.isArray) {
+            rootNode
         } else {
-            document.select("div.col-span-3 a").mapNotNull { it.sonBolumler() }
+            // Try 'items' field first, then 'result'
+            rootNode.get("items")?.takeIf { it.isArray } ?: rootNode.get("result")?.takeIf { it.isArray }
+            ?: error("Unexpected JSON structure: $decoded")
+        }
+
+        // Convert to list of dizillaJson
+        val items: List<dizillaJson> = mapper.convertValue(
+            itemsNode,
+            object : com.fasterxml.jackson.core.type.TypeReference<List<dizillaJson>>() {}
+        )
+
+        // Map to SearchResponse
+        val home = items.map { item ->
+            val slug = item.infoslug ?: error("Missing slug for ${item.infotitle}")
+            val type = when {
+                slug.startsWith("dizi/") -> TvType.TvSeries
+                slug.startsWith("film/") -> TvType.Movie
+                else -> TvType.TvSeries
+            }
+            val href = fixUrlNull("${mainUrl}/$slug")
+                ?: error("Invalid slug URL: $slug")
+
+            when (type) {
+                TvType.TvSeries -> newTvSeriesSearchResponse(item.infotitle, href, type) {
+                    posterUrl = fixUrlNull(item.infoposter?.replace("images-macellan-online.cdn.ampproject.org/i/s/", ""))
+                }
+                TvType.Movie -> newMovieSearchResponse(item.infotitle, href, type) {
+                    posterUrl = fixUrlNull(item.infoposter?.replace("images-macellan-online.cdn.ampproject.org/i/s/", ""))
+                }
+                else -> error("Unsupported type for slug=$slug")
+            }
         }
 
         return newHomePageResponse(request.name, home)
     }
 
-    private fun Element.diziler(): SearchResponse {
-        val title = this.selectFirst("span.font-normal")?.text() ?: "return null"
-        val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: "return null"
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
-
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
-            this.posterUrl = posterUrl
-        }
-    }
-
-    private fun Element.yeniEklenenler(): SearchResponse {
-        val title = this.selectFirst("h2")?.text() ?: "return null"
-        val href = fixUrlNull(this.attr("href")) ?: "return null"
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
-
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
-            this.posterUrl = posterUrl
-        }
-    }
-    private suspend fun Element.sonBolumler(): SearchResponse {
-        val name = this.selectFirst("h2")?.text() ?: ""
-        val epName = this.selectFirst("div.opacity-80")!!.text().replace(". Sezon ", "x")
-            .replace(". Bölüm", "")
-
-        val title = "$name - $epName"
-
-        val epDoc = fixUrlNull(this.attr("href"))?.let { app.get(it, interceptor = interceptor).document }
-
-        val href = fixUrlNull(epDoc?.selectFirst("div.poster a")?.attr("href")) ?: "return null"
-
-        val posterUrl = fixUrlNull(epDoc?.selectFirst("div.poster img")?.attr("src"))
-
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
-            this.posterUrl = posterUrl
-        }
-    }
-
-    private fun SearchItem.toSearchResponse(): SearchResponse? {
-        return newTvSeriesSearchResponse(
-            title ?: return null,
-            "${mainUrl}/${slug}",
-            TvType.TvSeries,
-        ) {
-            this.posterUrl = poster
-        }
-    }
-
     override suspend fun search(query: String): List<SearchResponse> {
-        return try {
-            val response = app.post(
-                "${mainUrl}/api/bg/searchcontent?searchterm=$query",
-                headers = mapOf(
-                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-                    "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-                    "Accept" to "application/json, text/plain, */*",
-                    "Accept-Language" to "en-US,en;q=0.5",
-                    "X-Requested-With" to "XMLHttpRequest",
-                    "Sec-Fetch-Site" to "same-origin",
-                    "Sec-Fetch-Mode" to "cors",
-                    "Sec-Fetch-Dest" to "empty",
-                    "Referer" to "${mainUrl}/"
-                ),
-                interceptor = interceptor,
-                referer = "${mainUrl}/"
-            )
-            val responseBody = response.body.string()
-            val objectMapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            val searchResult: SearchResult = objectMapper.readValue(responseBody)
-            val decodedSearch = base64Decode(searchResult.response.toString())
-            val contentJson: SearchData = objectMapper.readValue(decodedSearch)
-            if (contentJson.state != true) {
-                throw ErrorLoadingException("Invalid Json response")
-            }
-            val results = mutableListOf<SearchResponse>()
-            contentJson.result?.forEach {
-                val name = it.title.toString()
-                val link = fixUrl(it.slug.toString())
-                val posterLink = it.poster.toString()
-                results.add(newTvSeriesSearchResponse(name, link, TvType.TvSeries) {
-                    this.posterUrl = posterLink
-                })
-            }
-            results
-        } catch (e: Exception) {
-            Log.e("Dizilla", "Search error: ${e.message}")
-            emptyList()
+        val searchReq = app.post(
+            "${mainUrl}/api/bg/searchcontent?searchterm=$query",
+            headers = mapOf(
+                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+                "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+                "Accept" to "application/json, text/plain, */*",
+                "Accept-Language" to "en-US,en;q=0.5",
+                "X-Requested-With" to "XMLHttpRequest",
+                "Sec-Fetch-Site" to "same-origin",
+                "Sec-Fetch-Mode" to "cors",
+                "Sec-Fetch-Dest" to "empty",
+                "Referer" to "${mainUrl}/"
+            ),
+            referer = "${mainUrl}/",
+            interceptor = interceptor
+        )
+        val objectMapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        val searchResult: SearchResult = objectMapper.readValue(searchReq.toString())
+        val decodedSearch = base64Decode(searchResult.response.toString())
+        val contentJson: SearchData = objectMapper.readValue(decodedSearch)
+        if (contentJson.state != true) {
+            throw ErrorLoadingException("Invalid Json response")
         }
+        val veriler = mutableListOf<SearchResponse>()
+        contentJson.result?.forEach {
+            val name = it.title.toString()
+            val link = fixUrl(it.slug.toString())
+            val posterLink = it.poster.toString()
+            val toSearchResponse = toSearchResponse(name, link, posterLink)
+            veriler.add(toSearchResponse)
+        }
+        return veriler
     }
 
     private fun toSearchResponse(ad: String, link: String, posterLink: String): SearchResponse {
@@ -320,3 +323,11 @@ class Dizilla : MainAPI() {
         }
     }
 }
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class dizillaJson(
+    @JsonProperty("original_title")  val infotitle:   String,
+    @JsonProperty("description")     val infodesc:   String,
+    @JsonProperty("poster_url")      val infoposter: String?,
+    @JsonProperty("used_slug")       val infoslug:   String?
+)
