@@ -9,15 +9,11 @@ import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.network.CloudflareKiller
 import com.lagradost.cloudstream3.utils.AppUtils.parseJson
 import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.loadExtractor
-import com.lagradost.nicehttp.NiceResponse
+import com.lagradost.cloudstream3.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import okhttp3.Cookie
-import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.jsoup.Jsoup
@@ -26,6 +22,23 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.coroutines.cancellation.CancellationException
 
+private val cloudflareKiller by lazy { CloudflareKiller() }
+private val interceptor      by lazy { CloudflareInterceptor(cloudflareKiller) }
+
+class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller): Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request  = chain.request()
+        val response = chain.proceed(request)
+        val doc      = Jsoup.parse(response.peekBody(1024 * 1024).string())
+
+        if (doc.html().contains("Just a moment") || doc.html().contains("verifying")) {
+            Log.d("Anizm", "!!cloudflare geldi!!")
+            return cloudflareKiller.intercept(chain)
+        }
+
+        return response
+    }
+}
 
 class Anizm : MainAPI() {
     override var mainUrl = "https://anizm.net"
@@ -96,24 +109,23 @@ class Anizm : MainAPI() {
     )
 
     // Sabit saklanan cookie ve CSRF token
+
     private var sessionCookies: Map<String, String>? = null
     private var csrfToken: String? = null
     private val initMutex = Mutex()
 
-    /** Sadece tek sefer init için, concurrent çağrılarda kilit kullanır */
     private suspend fun initSession() {
         if (sessionCookies != null && csrfToken != null) return
         initMutex.withLock {
             if (sessionCookies != null && csrfToken != null) return@withLock
             Log.d("Anizm", "🔄 Oturum başlatılıyor: cookie ve CSRF alınıyor")
-            val resp = app.get(mainUrl)
+            val resp = app.get(mainUrl, interceptor = interceptor, timeout = 120)
             sessionCookies = resp.cookies.mapValues { (_, v) -> URLDecoder.decode(v, "UTF-8") }
             csrfToken = resp.document.selectFirst("meta[name=csrf-token]")?.attr("content")
             Log.d("Anizm", "✅ Cookie sayısı: ${sessionCookies?.size}, CSRF: $csrfToken")
         }
     }
 
-    // Ana Sayfa
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         initSession()
         val document = app.post(
@@ -125,7 +137,9 @@ class Anizm : MainAPI() {
                 "X-CSRF-TOKEN" to (csrfToken ?: "")
             ),
             data = mapOf("kategoriler[]" to request.data),
-            cookies = sessionCookies!!
+            cookies = sessionCookies!!,
+            interceptor = interceptor,
+            timeout = 120
         ).document
         val home = document.select("div.aramaSonucItem").mapNotNull { it.toMainPageResult() }
         return newHomePageResponse(request.name, home, hasNext = false)
@@ -264,7 +278,7 @@ class Anizm : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val videoLinks = getVideoUrls(data)
-        videoLinks.forEach { (name, url) ->
+        videoLinks.forEach { (url) ->
                     loadExtractor(
                         url = url,
                         referer = mainUrl,
