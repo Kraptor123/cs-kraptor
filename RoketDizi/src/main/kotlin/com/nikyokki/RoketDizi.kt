@@ -6,13 +6,16 @@ import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.network.CloudflareKiller
+import com.lagradost.cloudstream3.utils.AppContextUtils.html
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.nicehttp.cookies
 import okhttp3.Interceptor
 import okhttp3.Response
+import org.json.JSONObject
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
+import kotlin.collections.mapNotNull
 
 class RoketDizi : MainAPI() {
     override var mainUrl = "https://roketdizi.nl"
@@ -170,56 +173,49 @@ class RoketDizi : MainAPI() {
     override suspend fun load(url: String): LoadResponse? {
         val mainReq = app.get(url)
         val document = mainReq.document
-        val phpCookie = mainReq.cookies["PHPSESSID"].toString()
-        val cntCookie = "vakTR"
-        if (url.contains("/dizi/")) {
-            val title = document.selectFirst("h1.text-white")?.text() ?: return null
-            val poster = fixUrlNull(document.selectFirst("div.w-full.page-top img")?.attr("src"))
-            val year =
-                document.select("div.w-fit.min-w-fit")[1].selectFirst("span.text-sm.opacity-60")?.text()
-                    ?.split(" ")?.last()?.toIntOrNull()
-            val description = document.selectFirst("div.mt-2.text-sm")?.text()?.trim()
-            val tags = document.selectFirst("h3.text-white.opacity-60.text-sm.sm\\:text-md")?.text()?.split(",")?.map { it }
-            val rating =
-                document.selectFirst("div.flex.items-center")?.selectFirst("span.text-white.text-sm")
-                    ?.text()?.trim().toRatingInt()
-            val actors = document.select("div.global-box h5").map {
-                Actor(it.text())
-            }
+        val title = document.selectFirst("h1.text-white")?.text() ?: return null
+        val poster = fixUrlNull(document.selectFirst("div.w-full.page-top img")?.attr("src"))
+        val year =
+            document.select("div.w-fit.min-w-fit")[1].selectFirst("span.text-sm.opacity-60")?.text()
+                ?.split(" ")?.last()?.toIntOrNull()
+        val description = document.selectFirst("div.mt-2.text-sm")?.text()?.trim()
+        val tags =
+            document.selectFirst("h3.text-white.opacity-60.text-sm.sm\\:text-md")?.text()?.split(",")?.map { it }
+        val rating =
+            document.selectFirst("div.flex.items-center")?.selectFirst("span.text-white.text-sm")
+                ?.text()?.trim().toRatingInt()
+        val actors = document.select("div.global-box h5").map {
+            Actor(it.text())
+        }
+        val regex = Regex("""url":"([^"]*)""", RegexOption.IGNORE_CASE)
+        val urls = regex.findAll(document.html())
+            .map { it.groupValues[1] }
+            .toList()
 
-            val regex = Regex("\"url\":\"([^\"]*)\"")
+// URL'lerin içinde "/dizi/" geçiyorsa dizi sayalım
+        val isSeries = urls.any { it.contains("bolum-", ignoreCase = true) }
 
-            val episodeses = mutableListOf<Episode>()
-
-            for (sezon in document.select("div.hideComments.p-4 a")) {
-                val sezonhref = sezon.attr("href")
-                val sezonReq = app.get(sezonhref)
-                val eps = sezonhref.lastOrNull()?.digitToInt()
-                val sezonDoc = sezonReq.document
-                val episodes = sezonDoc.select("div.episodes")
-                for (bolum in episodes.select("div.cursor-pointer")) {
-                    val epName = bolum.select("a").last()?.text() ?: continue
-                    println("epName: $epName")
-                    val epHref = fixUrlNull(bolum.select("a").last()?.attr("href")) ?: continue
-                    println("epHref: $epHref")
-                    val epEpisode = bolum.selectFirst("a")?.text()?.trim()?.toIntOrNull()
-                    println("epEpisode: $epEpisode")
-                    //val epSeason  = bolum.selectFirst("div.seasons-menu")?.text()?.substringBefore(".Sezon")?.trim()?.toIntOrNull()
-                    val epSeason = eps
-                    println("epSeason: $epSeason")
-
-                    episodeses.add(newEpisode(epHref)
-                    {
-                            this.data = epHref
-                            this.name = epName
-                            this.season = epSeason
-                            this.episode = epEpisode
-                    })
+        return if (isSeries) {
+            // Her URL için episode objesi yarat
+            val episodes = urls
+                .filter { it.contains("bolum") }
+                .map { epUrl ->
+                    val epNames = epUrl.substringAfterLast("/").replace("-c26", "")
+                    val epName = if (epNames.contains("bolum")) {
+                        "Bölüm"
+                    } else {
+                        epNames
+                    }
+                    val seasonNumber = epUrl
+                        .substringAfter("/sezon-")
+                        .substringBefore("/")
+                    newEpisode(epUrl) {
+                        name = epName
+                        this.season = seasonNumber.toInt()
+                    }
                 }
-            }
-            println("Episodes : " + episodeses.size)
-
-            return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodeses) {
+            // Dizi yanıtı
+            newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
                 this.posterUrl = poster
                 this.year = year
                 this.plot = description
@@ -228,35 +224,16 @@ class RoketDizi : MainAPI() {
                 addActors(actors)
             }
         } else {
-            var yil: Int? = null;
-            val title = document.selectFirst("div.poster.hidden h2")?.text() ?: return null
-            val poster = fixUrlNull(document.selectFirst("div.flex.items-start.gap-4.slider-top img")?.attr("src"))
-            val description = document.selectFirst("div.mt-2.text-md")?.text()?.trim()
-            document.select("div.flex.items-center").forEach { item ->
-                if (item.selectFirst("span")?.text()?.contains("tarih") == true) {
-                   yil  = item.selectFirst("div.w-fit.rounded-lg")?.text()?.toIntOrNull()
-                }
-            }
-            val tags = document.select("div.text-white.text-md.opacity-90.flex.items-center.gap-2.overflow-auto.mt-1 a").map { it.text() }
-            val rating =
-                document.selectFirst("div.flex.items-center")?.selectFirst("span.text-white.text-sm")
-                    ?.text()?.trim().toRatingInt()
-            val actors = mutableListOf<Actor>()
-            document.select("div.w-fit.min-w-fit.rounded-lg") .forEach { a ->
-                if (a.selectFirst("span")?.text()?.contains("Aktör") == true) {
-                    actors.add(Actor(a.selectFirst("a")?.text()!!))
-                }
-            }
-            return newMovieLoadResponse(title, url, TvType.Movie, url) {
-                this.posterUrl       = poster
-                this.year            = yil
-                this.plot            = description
-                this.rating          = rating
-                this.tags            = tags
+            // Film yanıtı
+            newMovieLoadResponse(title, url, TvType.Movie, url) {
+                this.posterUrl = poster
+                this.year = year
+                this.plot = description
+                this.tags = tags
+                this.rating = rating
                 addActors(actors)
             }
         }
-
     }
 
     override suspend fun loadLinks(
@@ -267,11 +244,26 @@ class RoketDizi : MainAPI() {
     ): Boolean {
         Log.d("RKD", "data » ${data}")
         val document = app.get(data).document
-        var iframe =
-            fixUrlNull(document.selectFirst("div.bg-prm iframe")?.attr("src")) ?: return false
-        Log.d("RKD", "iframe » ${iframe}")
+//            Log.d("RKD", "document » ${document}")
+        val jsonElement = document.getElementById("__NEXT_DATA__")?.data()
 
-        loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+        val secureData = JSONObject(jsonElement.toString())
+            .getJSONObject("props")
+            .getJSONObject("pageProps")
+            .getString("secureData")
+
+        val sifreCoz = base64Decode(secureData)
+
+        val regex = Regex(pattern = "iframe src=\\\\\"([^\"]*)\"", options = setOf(RegexOption.IGNORE_CASE))
+
+        val matches = regex.findAll(sifreCoz)
+        for (match in matches) {
+//            Log.d("RKD", "sifreCoz » $sifreCoz")
+            var iframe = fixUrlNull( match.groupValues[1])?.replace("\\","").toString()
+            Log.d("RKD", "iframe » ${iframe}")
+
+            loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+        }
         return true
     }
 }

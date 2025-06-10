@@ -1,7 +1,7 @@
-version = 9
+version = 10
 
 cloudstream {
-    authors     = listOf("nikyokki")
+    authors     = listOf("nikyokki","kraptor")
     language    = "tr"
     description = "Türkiye'nin en tatlış yabancı dizi izleme sitesi. Türkçe dublaj, altyazılı, eski ve yeni yabancı dizilerin yanı sıra kore (asya) dizileri izleyebilirsiniz."
 
