@@ -26,10 +26,6 @@ class RoketDizi : MainAPI() {
     override val hasChromecastSupport = true
     override val hasDownloadSupport = true
     override val supportedTypes = setOf(TvType.TvSeries, TvType.Movie)
-    var cf_clearance = ""
-    var ci_session = ""
-    var level = ""
-    var udys = ""
 
     // ! CloudFlare bypass
     override var sequentialMainPage =
@@ -52,20 +48,17 @@ class RoketDizi : MainAPI() {
     private val cloudflareKiller by lazy { CloudflareKiller() }
     private val interceptor by lazy { CloudflareInterceptor(cloudflareKiller) }
 
-    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller) : Interceptor {
+    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller): Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
-            println("Chain: $chain")
-            val request = chain.request()
-            println("Request: $request")
+            val request  = chain.request()
             val response = chain.proceed(request)
-            println("Request: $response")
-            val doc = Jsoup.parse(response.peekBody(1024 * 1024).string())
-            val intercept = cloudflareKiller.intercept(chain)
-            println("Saved Cookies: ${cloudflareKiller.savedCookies}")
-            println("Cookies: ${intercept.cookies}")
-            return intercept
+            val doc      = Jsoup.parse(response.peekBody(1024 * 1024).string())
 
-            //return response
+            if (doc.html().contains("Just a moment")) {
+                return cloudflareKiller.intercept(chain)
+            }
+
+            return response
         }
     }
 
@@ -242,27 +235,29 @@ class RoketDizi : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        Log.d("RKD", "data » ${data}")
         val document = app.get(data).document
-//            Log.d("RKD", "document » ${document}")
         val jsonElement = document.getElementById("__NEXT_DATA__")?.data()
-
         val secureData = JSONObject(jsonElement.toString())
             .getJSONObject("props")
             .getJSONObject("pageProps")
             .getString("secureData")
-
         val sifreCoz = base64Decode(secureData)
 
-        val regex = Regex(pattern = "iframe src=\\\\\"([^\"]*)\"", options = setOf(RegexOption.IGNORE_CASE))
+        val seenUrls = mutableSetOf<String>()
+
+        val regex = Regex("iframe src=\\\\\"([^\"]*)\"", RegexOption.IGNORE_CASE)
 
         val matches = regex.findAll(sifreCoz)
-        for (match in matches) {
-//            Log.d("RKD", "sifreCoz » $sifreCoz")
-            var iframe = fixUrlNull( match.groupValues[1])?.replace("\\","").toString()
-            Log.d("RKD", "iframe » ${iframe}")
 
-            loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+        for (match in matches) {
+            val rawUrl = match.groupValues[1].substringBeforeLast("\\")
+            val iframe = fixUrlNull(rawUrl).toString()
+
+            if (seenUrls.add(iframe)) {
+                loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+            } else {
+                null
+            }
         }
         return true
     }
