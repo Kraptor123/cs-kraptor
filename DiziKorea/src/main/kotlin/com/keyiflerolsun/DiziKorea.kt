@@ -12,7 +12,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class DiziKorea : MainAPI() {
-    override var mainUrl              = "https://dizikorea.pro"
+    override var mainUrl              = "https://dizikorea.pw"
     override var name                 = "DiziKorea"
     override val hasMainPage          = true
     override var lang                 = "tr"
