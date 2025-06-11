@@ -58,7 +58,7 @@ class FilmModu : MainAPI() {
     private fun Element.toMainPageResult(): SearchResponse? {
         val title     = this.selectFirst("a")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("picture img")?.attr("src"))
+        val posterUrl = fixUrlNull(this.selectFirst("picture img")?.attr("data-src"))
 
         return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
     }
@@ -97,19 +97,23 @@ class FilmModu : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        Log.d("FLMMD", "data » $data")
+//        Log.d("kraptor_$name", "data = $data")
         val document = app.get(data).document
 
         document.select("div.alternates a").forEach {
             val altLink = fixUrlNull(it.attr("href")) ?: return@forEach
+//            Log.d("kraptor_$name", "altLink = $altLink")
             val altName = it.text()
             if (altName == "Fragman") return@forEach
 
             val altReq  = app.get(altLink)
             val vidId   = Regex("""var videoId = '(.*)'""").find(altReq.text)?.groupValues?.get(1) ?: return@forEach
+//            Log.d("kraptor_$name", "altLink = $vidId")
             val vidType = Regex("""var videoType = '(.*)'""").find(altReq.text)?.groupValues?.get(1) ?: return@forEach
+//            Log.d("kraptor_$name", "vidType = $vidType")
 
             val vidReq = app.get("${mainUrl}/get-source?movie_id=${vidId}&type=${vidType}").parsedSafe<GetSource>() ?: return@forEach
+//            Log.d("kraptor_$name", "vidReq = $vidReq")
 
             if (vidReq.subtitle != null) {
                 subtitleCallback.invoke(
@@ -126,7 +130,7 @@ class FilmModu : MainAPI() {
                         source  = "${this.name} - $altName",
                         name    = "${this.name} - $altName",
                         url     = fixUrl(source.src),
-                        type    = INFER_TYPE
+                        type    = ExtractorLinkType.M3U8
                     ) {
                         headers = mapOf("Referer" to "${mainUrl}/") // "Referer" ayarı burada yapılabilir
                         quality = getQualityFromName(source.label)
