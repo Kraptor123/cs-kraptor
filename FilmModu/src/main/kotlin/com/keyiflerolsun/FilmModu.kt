@@ -10,7 +10,7 @@ import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class FilmModu : MainAPI() {
-    override var mainUrl              = "https://www.filmmodu.io"
+    override var mainUrl              = "https://www.filmmodu.nl"
     override var name                 = "FilmModu"
     override val hasMainPage          = true
     override var lang                 = "tr"
