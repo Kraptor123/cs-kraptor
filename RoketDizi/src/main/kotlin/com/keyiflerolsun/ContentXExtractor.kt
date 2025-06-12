@@ -19,7 +19,11 @@ open class ContentX : ExtractorApi() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
-        val extRef = referer ?: ""
+        val extRef = if (url.contains("https://four.pichive.online/iframe.php?")) {
+           "https://dizilla.club/"
+        }else {
+            referer ?: ""
+        }
         Log.d("Kekik_${this.name}", "url » $url")
 
         val iSource = app.get(url, referer = extRef, headers = mapOf("User-Agent" to "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36")).text

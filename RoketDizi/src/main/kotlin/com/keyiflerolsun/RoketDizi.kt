@@ -250,7 +250,7 @@ class RoketDizi : MainAPI() {
             val iframe = fixUrlNull(rawUrl).toString()
 
             if (seenUrls.add(iframe)) {
-                loadExtractor(iframe, "https://dizilla.club/", subtitleCallback, callback)
+                loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
             } else {
                 null
             }
