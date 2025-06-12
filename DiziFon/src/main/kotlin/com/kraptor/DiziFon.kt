@@ -135,23 +135,35 @@ class DiziFon : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        Log.d("kraptor_", "data = ${data}")
-        val document = app.get(data).document
+        Log.d("kraptor_$name", "data = $data")
+        val document1 = app.get(data).document
 
-        // video URL'ini saklayacak değişkeni fonksiyon içinde tanımlıyoruz
-        var video: String? = null
+        // İlk iframe’i buradan alıyoruz
+        val iframe1 = fixUrlNull(document1.select("iframe").attr("vdo-src"))
+        Log.d("kraptor_$name", "iframe1 = $iframe1")
 
-        // Tüm iframe'leri dolaşıp sonuncusunu (veya isterseniz ilkini) alabilirsiniz
-        document.select("iframe").forEach { iframe ->
-            video = fixUrlNull(iframe.attr("vdo-src")).toString()
+        // İkinci part linki boş değilse ikinci dokümanı al, yoksa boş string
+        val ikinciPart = document1
+            .selectFirst("li.parttab:nth-child(2) > a:nth-child(1)")
+            ?.attr("href")
+            .orEmpty()
+        Log.d("kraptor_$name", "ikinciPart = $ikinciPart")
+
+        // İkinci iframe’i ancak ikinciPart varsa al
+        val iframe2 = if (ikinciPart.isNotEmpty()) {
+            val document2 = app.get(ikinciPart).document
+            val src = fixUrlNull(document2.select("iframe").attr("vdo-src"))
+            Log.d("kraptor_$name", "iframe2 = $src")
+            src
+        } else {
+            Log.d("kraptor_$name", "ikinciPart boş, iframe2 atlanıyor")
+            null
         }
 
-        if (video != null) {
-            Log.d("kraptor_", "video = $video")
-            loadExtractor(video, "$mainUrl/", subtitleCallback, callback)
-
-        } else {
-            Log.d("kraptor_", "iframe bulunamadı veya vdo-src boş")
+        // Null olmayan tüm iframe URL’lerini sırayla loadExtractor’a yolla
+        listOfNotNull(iframe1, iframe2).forEach { url ->
+            Log.d("kraptor_$name", "loading iframe: $url")
+            loadExtractor(url, mainUrl, subtitleCallback, callback)
         }
 
         return true
