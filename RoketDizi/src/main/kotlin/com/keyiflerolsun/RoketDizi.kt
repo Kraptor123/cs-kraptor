@@ -182,7 +182,6 @@ class RoketDizi : MainAPI() {
             .map { it.groupValues[1] }
             .toList()
 
-// URL'lerin içinde "/dizi/" geçiyorsa dizi sayalım
         val isSeries = urls.any { it.contains("bolum-", ignoreCase = true) }
 
         return if (isSeries) {
@@ -251,7 +250,7 @@ class RoketDizi : MainAPI() {
             val iframe = fixUrlNull(rawUrl).toString()
 
             if (seenUrls.add(iframe)) {
-                loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+                loadExtractor(iframe, "https://dizilla.club/", subtitleCallback, callback)
             } else {
                 null
             }
