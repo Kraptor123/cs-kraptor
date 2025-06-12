@@ -1,13 +1,18 @@
 // ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-package com.keyiflerolsun
+package com.kraptor
 
-import android.util.Log
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
+import com.lagradost.cloudstream3.USER_AGENT
 import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.*
+import com.lagradost.cloudstream3.utils.AppUtils
+import com.lagradost.cloudstream3.utils.ExtractorApi
+import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.INFER_TYPE
+import com.lagradost.cloudstream3.utils.getQualityFromName
+import com.lagradost.cloudstream3.utils.newExtractorLink
 
 open class Odnoklassniki : ExtractorApi() {
     override val name            = "Odnoklassniki"
@@ -15,11 +20,17 @@ open class Odnoklassniki : ExtractorApi() {
     override val requiresReferer = false
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
-        Log.d("Kekik_${this.name}", "url » $url")
-
-        val userAgent = mapOf("User-Agent" to "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36")
-
-        val videoReq  = app.get(url, headers=userAgent).text.replace("\\&quot;", "\"").replace("\\\\", "\\")
+        val headers = mapOf(
+            "Accept" to "*/*",
+            "Connection" to "keep-alive",
+            "Sec-Fetch-Dest" to "empty",
+            "Sec-Fetch-Mode" to "cors",
+            "Sec-Fetch-Site" to "cross-site",
+            "Origin" to mainUrl,
+            "User-Agent" to USER_AGENT,
+        )
+        val embedUrl = url.replace("/video/","/videoembed/")
+        val videoReq  = app.get(embedUrl, headers=headers).text.replace("\\&quot;", "\"").replace("\\\\", "\\")
             .replace(Regex("\\\\u([0-9A-Fa-f]{4})")) { matchResult ->
                 Integer.parseInt(matchResult.groupValues[1], 16).toChar().toString()
             }
@@ -27,11 +38,10 @@ open class Odnoklassniki : ExtractorApi() {
         val videos    = AppUtils.tryParseJson<List<OkRuVideo>>(videosStr) ?: throw ErrorLoadingException("Video not found")
 
         for (video in videos) {
-            Log.d("Kekik_${this.name}", "video » $video")
 
-            val videoUrl = if (video.url.startsWith("//")) "https:${video.url}" else video.url
+            val videoUrl  = if (video.url.startsWith("//")) "https:${video.url}" else video.url
 
-            var quality   = video.name.uppercase()
+            val quality   = video.name.uppercase()
                 .replace("MOBILE", "144p")
                 .replace("LOWEST", "240p")
                 .replace("LOW",    "360p")
@@ -48,8 +58,9 @@ open class Odnoklassniki : ExtractorApi() {
                     url     = videoUrl,
                     type    = INFER_TYPE
                 ) {
-                    headers = userAgent + mapOf("Referer" to url) // "Referer" ayarı burada yapılabilir
-                    quality = getQualityFromName(quality).toString()
+                    this.referer = "$mainUrl/"
+                    this.quality = getQualityFromName(quality)
+                    this.headers = headers
                 }
             )
         }
