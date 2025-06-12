@@ -1,6 +1,6 @@
 
 
-package com.nikyokki
+package com.keyiflerolsun
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

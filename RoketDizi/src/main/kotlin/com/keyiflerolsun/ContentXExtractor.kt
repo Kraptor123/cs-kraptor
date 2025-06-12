@@ -1,6 +1,6 @@
 // ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-package com.nikyokki
+package com.keyiflerolsun
 
 import android.util.Log
 import com.lagradost.cloudstream3.ErrorLoadingException
