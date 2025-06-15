@@ -38,7 +38,7 @@ class Sinezy : MainAPI() {
         "${mainUrl}/izle/spor-filmleri/"            to  "Spor",
         "${mainUrl}/izle/suc-filmleri/"             to  "Suç",
         "${mainUrl}/izle/tarih-filmleri/"           to  "Tarih",
-        "${mainUrl}/izle/turkce-altyazili-promo/"   to  "Altyazılı Pr",
+ //       "${mainUrl}/izle/turkce-altyazili-promo/"   to  "Altyazılı Pr",
         "${mainUrl}/izle/yabanci-dizi/"             to  "Yabancı Dizi",
         "${mainUrl}/izle/en-iyi-filmler/"           to  "En İyi Filmler",
         "${mainUrl}/izle/en-yeni-filmler/"          to  "Yeni Filmler",
