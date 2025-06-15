@@ -43,8 +43,8 @@ class Sinezy : MainAPI() {
         "${mainUrl}/izle/en-iyi-filmler/"           to  "En İyi Filmler",
         "${mainUrl}/izle/en-yeni-filmler/"          to  "Yeni Filmler",
         "${mainUrl}/izle/yerli-filmler/"            to  "Yerli Filmler",
-        "${mainUrl}/izle/erotik-film-izle/"         to  "Erotik",
-        "${mainUrl}/izle/yetiskin-film/"            to  "Yetişkin +18",
+ //       "${mainUrl}/izle/erotik-film-izle/"         to  "Erotik",
+ //       "${mainUrl}/izle/yetiskin-film/"            to  "Yetişkin +18",
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
