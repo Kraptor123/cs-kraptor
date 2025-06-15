@@ -25,6 +25,7 @@ Teşekkür ederiz.
 - **TrDiziİzle**
 - **AsyaFanatiklerim**
 - **DiziKral**
+- **DiziFon**
 
 ### 🍿 Filmler
 - **FilmEkseni**
@@ -34,6 +35,7 @@ Teşekkür ederiz.
 - **4KFilmIzleme**
 - **HdFilmCehennemi2**
 - **HDFilm**
+- **FilmIzyon**
 
 ### 🎥 Animeler
 - **Anizm**
