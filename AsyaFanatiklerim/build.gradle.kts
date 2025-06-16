@@ -1,5 +1,5 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-version = 2
+version = 3
 
 cloudstream {
     authors     = listOf("kraptor")
@@ -14,6 +14,6 @@ cloudstream {
      * 3: Beta only
     **/
     status  = 1 // will be 3 if unspecified
-    tvTypes = listOf("TvSeries")
+    tvTypes = listOf("AsianDrama")
     iconUrl = "https://asyafanatiklerim.com/wp-content/uploads/2018/08/md_5aaeb1de75bea.png"
 }
