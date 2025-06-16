@@ -36,6 +36,7 @@ Teşekkür ederiz.
 - **HdFilmCehennemi2**
 - **HDFilm**
 - **FilmIzyon**
+- **Sinezy**
 
 ### 🎥 Animeler
 - **Anizm**
