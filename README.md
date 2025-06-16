@@ -30,7 +30,7 @@ Teşekkür ederiz.
 ### 🍿 Filmler
 - **FilmEkseni**
 - **FilmHane**
-- **FilmIzleCx**
+- **FilmIzle**
 - **Sinefy**
 - **4KFilmIzleme**
 - **HdFilmCehennemi2**
