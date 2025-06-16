@@ -164,7 +164,7 @@ class Sinefy : MainAPI() {
                         t.equals("MovieSeries", true) -> TvType.TvSeries
                 else                           -> TvType.Movie
             }
-            val year      = item.optInt("object_release_year", 0).takeIf { it > 0 }
+            val year      = item.optInt("object_release_year").takeIf { it > 0 }
             val rawPosterUrl = item.optString("object_poster_url", null)
                 // Eğer AMP cache URL geldiyse, kendi sunucuna çevir; değilse orijinali kullan
                val posterUrl = rawPosterUrl.let { url ->
