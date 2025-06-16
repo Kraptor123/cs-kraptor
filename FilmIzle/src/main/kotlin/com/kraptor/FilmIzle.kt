@@ -13,7 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
 
-class FilmIzleCx : MainAPI() {
+class FilmIzle : MainAPI() {
     override var mainUrl = "https://filmizle.cx"
     override var name = "FilmIzleCx"
     override val hasMainPage = true
