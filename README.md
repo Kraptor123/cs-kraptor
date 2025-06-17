@@ -2,6 +2,8 @@
 
 **Kısa kod** = **kekikan**
 
+telegram = [kekikanime](https://t.me/+udbKEudlYwpkMWJk)
+
 ## ❗Uyarı
 
 DMCA
