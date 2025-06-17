@@ -21,6 +21,7 @@ import org.jsoup.nodes.Element
 import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.math.log
 
 private val cloudflareKiller by lazy { CloudflareKiller() }
 private val interceptor      by lazy { CloudflareInterceptor(cloudflareKiller) }
@@ -278,7 +279,7 @@ class Anizm : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val videoLinks = getVideoUrls(data)
-        videoLinks.forEach { (url) ->
+        videoLinks.forEach { (name, url) ->
                     loadExtractor(
                         url = url,
                         referer = mainUrl,

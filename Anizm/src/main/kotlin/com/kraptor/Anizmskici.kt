@@ -2,6 +2,7 @@
 
 package com.kraptor
 
+import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
@@ -37,6 +38,7 @@ fun getVideoUrls(data: String): Map<String, String> {
     val mainHtml = mainResponse.body.string()
     val doc = Jsoup.parse(mainHtml)
     val translatorLinks = doc.select("div#fansec.fansubSecimKutucugu a[translator]").map { it.attr("translator") }
+
     val allPlayerLinks = mutableMapOf<String, String>()
     translatorLinks.forEach { translatorLink ->
         var jsonText: String
@@ -102,6 +104,9 @@ fun getVideoUrls(data: String): Map<String, String> {
         } catch (_: Exception) {
         }
     }
+
+//    Log.d("kraptor_anizmskici", "realVideoUrls = $realVideoUrls")
+
 
     return realVideoUrls
 }
