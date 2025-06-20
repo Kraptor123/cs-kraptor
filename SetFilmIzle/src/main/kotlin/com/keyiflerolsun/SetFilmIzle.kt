@@ -7,7 +7,10 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.ExtractorLinkType
+import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -199,7 +202,7 @@ class SetFilmIzle : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        Log.d("set", "data » $data")
+        Log.d("SetFilm", "data = $data")
         val document = app.get(data).document
 
         document.select("nav.player a").map { element ->
@@ -210,17 +213,32 @@ class SetFilmIzle : MainAPI() {
             Triple(name, sourceId, partKey)
         }.forEach { (name, sourceId, partKey) ->
             if (sourceId.contains("event")) return@forEach
-            if (partKey == "" || sourceId == "") return@forEach
+            if (sourceId == "") return@forEach
 
-            val nonce = document.select("script")
-                .mapNotNull { it.data() }
-                .firstNotNullOfOrNull { data ->
-                    Regex("""PLAYER_CONFIG\s*=\s*[^;]*?nonce\s*:\s*['"]([^'"]+)['"]""").find(data)?.groupValues?.get(1)
-                } ?: throw ErrorLoadingException("Nonce bulunamadı!")
+            val nonce        = document.selectFirst("div#playex")?.attr("data-nonce") ?: ""
+            Log.d("SetFilm", "nonce -> $nonce")
+
             val multiPart    = sendMultipartRequest(nonce, sourceId, name, partKey, data)
             val sourceBody   = multiPart.body.string()
+            Log.d("SetFilm", "sourceBody -> $sourceBody")
             val sourceIframe = JSONObject(sourceBody).optJSONObject("data")?.optString("url") ?: return@forEach
-            Log.d("set", "iframe » $sourceIframe")
+            Log.d("SetFilm", "iframe » $sourceIframe")
+
+            if (sourceIframe.contains("vctplay.site")) {
+                val vctId = sourceIframe.split("/").last()
+                val masterUrl = "https://vctplay.site/manifests/$vctId/master.txt"
+                callback.invoke(
+                    newExtractorLink(
+                        source = "FastPlay",
+                        name = "FastPlay",
+                        url = masterUrl,
+                        ExtractorLinkType.M3U8
+                    ) {
+                        referer = "https://vctplay.site/"
+                        quality = Qualities.Unknown.value
+                    }
+                )
+            }
 
             if (sourceIframe.contains("explay.store") || sourceIframe.contains("setplay.site")) {
                 loadExtractor("${sourceIframe}?partKey=${partKey}", "${mainUrl}/", subtitleCallback, callback)
