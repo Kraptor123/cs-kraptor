@@ -15,31 +15,11 @@ open class VidMoxy : ExtractorApi() {
     override val requiresReferer = true
 
 
-    fun String.rot13(): String = buildString {
-        for (c in this@rot13) {
-            when (c) {
-                in 'A'..'Z' -> append(((c - 'A' + 13) % 26 + 'A'.code).toChar())
-                in 'a'..'z' -> append(((c - 'a' + 13) % 26 + 'a'.code).toChar())
-                else         -> append(c)
-            }
+    fun decodeHexEscapes(input: String): String {
+        return input.replace(Regex("""\\x([0-9A-Fa-f]{2})""")) {
+            val byte = it.groupValues[1].toInt(16).toByte()
+            byte.toChar().toString()
         }
-    }
-
-    fun decodeHlsLink(encoded: String): String {
-        // 2) Base64 → UTF-8
-        val decodedBytes = Base64.decode(encoded, Base64.DEFAULT)
-        val decoded     = decodedBytes.toString(Charsets.UTF_8)
-        Log.d("filmizlesene", "afterBase64 = $decoded")
-
-        // 3) String’i ters çevir
-        val reversed    = decoded.reversed()
-        Log.d("filmizlesene", "afterReverse = $reversed")
-
-        // 4) Rot13 uygula
-        val url         = reversed.rot13()
-        Log.d("filmizlesene", "finalUrl = $url")
-
-        return url
     }
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
@@ -61,9 +41,15 @@ open class VidMoxy : ExtractorApi() {
             )
         }
 
-        val extractedValue = Regex("""file: EE\.dd\("([^\"]*)"\)""").find(videoReq)
-            ?.groupValues?.get(1)
-        val realUrl = decodeHlsLink(extractedValue.toString())
+        val extractedValue = Regex(""""file": "([^"]*)"""").find(videoReq)
+            ?.groupValues?.get(1).toString()
+
+        Log.d("filmizlesene", "extractedValue = $extractedValue")
+
+        val realUrl = decodeHexEscapes(extractedValue)
+        Log.d("filmizlesene", "realUrl = $realUrl")
+
+
 
         callback.invoke(
             newExtractorLink(
