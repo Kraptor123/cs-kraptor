@@ -71,13 +71,12 @@ class HdFilmCehennemi2 : MainAPI() {
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/?s=${query}").document
 
-        return document.select("span.movie-title").mapNotNull { it.toSearchResult() }
+        return document.select("div.movie-preview-content").mapNotNull { it.toSearchResult() }
     }
 
     private fun Element.toSearchResult(): SearchResponse? {
-        val title     = this.selectFirst("span.movie-title")?.text()
+        val title     = this.selectFirst("img")?.attr("alt")
             ?.replace("izle","")
-            ?.replace(Regex("\\([0-9]+\\).*"), "")
             ?.trim()
             ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
