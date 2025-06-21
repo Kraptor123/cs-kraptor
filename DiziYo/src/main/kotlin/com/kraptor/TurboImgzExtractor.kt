@@ -30,6 +30,6 @@ open class TurboImgz : ExtractorApi() {
                 headers = mapOf("Referer" to extRef) // "Referer" ayarı burada yapılabilir
                 quality = getQualityFromName(Qualities.Unknown.value.toString())
             }
-            )
+        )
     }
 }

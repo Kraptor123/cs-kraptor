@@ -71,11 +71,11 @@ open class RapidVid : ExtractorApi() {
         }
 
         // 4) Sonuç callback ile dön
-        callback(
+        callback.invoke(
             newExtractorLink(
                 source = name,
                 name = name,
-                url = decodedUrl ?: throw ErrorLoadingException("Decoded URL yok"),
+                url = decodedUrl,
                 type = ExtractorLinkType.M3U8
             ) {
                 headers = mapOf("Referer" to extRef)

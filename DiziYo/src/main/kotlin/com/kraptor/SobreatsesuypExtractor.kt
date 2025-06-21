@@ -16,7 +16,7 @@ open class Sobreatsesuyp : ExtractorApi() {
     override val requiresReferer = true
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
-        val extRef = referer ?: ""
+        val extRef = url
 
         Log.d("kraptor_${this.name}", "Sobreat url = $url")
 
