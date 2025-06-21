@@ -7,6 +7,7 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.*
 import android.util.Base64
+import android.util.Log
 import java.nio.charset.Charset
 
 open class RapidVid : ExtractorApi() {
@@ -23,9 +24,13 @@ open class RapidVid : ExtractorApi() {
         val extRef = referer ?: ""
         val videoReq = app.get(url, referer = extRef).text
 
+//        Log.d("kraptor_${this.name}", "url » $url")
+
+//        Log.d("kraptor_${this.name}", "videoReq » $videoReq")
+
         // 1) Altyazıları çekelim
         val subUrls = mutableSetOf<String>()
-        Regex("""captions","file":"([^"]+)","label":"([^"]+)"""").findAll(videoReq).forEach {
+        Regex(""""captions","file":"([^"]*)","label":"([^"]*)"\}""").findAll(videoReq).forEach {
             val (subUrl, subLang) = it.destructured
             if (subUrls.add(subUrl)) {
                 subtitleCallback(
@@ -71,11 +76,11 @@ open class RapidVid : ExtractorApi() {
         }
 
         // 4) Sonuç callback ile dön
-        callback(
+        callback.invoke(
             newExtractorLink(
                 source = name,
                 name = name,
-                url = decodedUrl ?: throw ErrorLoadingException("Decoded URL yok"),
+                url = decodedUrl,
                 type = ExtractorLinkType.M3U8
             ) {
                 headers = mapOf("Referer" to extRef)
