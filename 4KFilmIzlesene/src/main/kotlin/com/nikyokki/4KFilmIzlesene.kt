@@ -21,7 +21,7 @@ class `4KFilmIzlesene` : MainAPI() {
     override val supportedTypes = setOf(TvType.Movie)
 
     override val mainPage = mainPageOf(
-        "${mainUrl}"             to "Yeni Eklenenler",
+        "${mainUrl}/"                   to "Yeni Eklenenler",
         "${mainUrl}/tur/aile-filmleri/"             to "Aile",
         "${mainUrl}/tur/aksiyon-filmleri/"          to "Aksiyon",
         "${mainUrl}/tur/animasyon-filmleri/"        to "Animasyon",
