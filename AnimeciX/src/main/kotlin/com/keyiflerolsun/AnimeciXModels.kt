@@ -33,6 +33,17 @@ data class AnimeSearch(
     @JsonProperty("poster") val poster: String?,
 )
 
+data class LastEpisodesResponse(
+    @JsonProperty("data") val data: List<LastEpisode>
+)
+
+data class LastEpisode(
+    @JsonProperty("title_id") val titleId: Int,
+    @JsonProperty("title_name") val titleName: String,
+    @JsonProperty("title_poster") val titlePoster: String?,
+    @JsonProperty("season_number") val seasonNumber: Int,
+    @JsonProperty("episode_number") val episodeNumber: Int
+)
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Anime(
