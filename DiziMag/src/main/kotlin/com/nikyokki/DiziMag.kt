@@ -21,12 +21,13 @@ class DiziMag : MainAPI() {
     override val supportedTypes = setOf(TvType.TvSeries, TvType.Movie)
 
     // ! CloudFlare bypass
-    override var sequentialMainPage =
-        true        // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
-    override var sequentialMainPageDelay = 250L  // ? 0.05 saniye
-    override var sequentialMainPageScrollDelay = 250L  // ? 0.05 saniye
+    override var sequentialMainPage            = true        // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
+    override var sequentialMainPageDelay       = 50L  // ? 0.05 saniye
+    override var sequentialMainPageScrollDelay = 50L  // ? 0.05 saniye
+
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/kesfet/eyJ0eXBlIjoic2VyaWVzIn0=" to "Yeni Eklenenler",
         "${mainUrl}/dizi/tur/aile" to "Aile",
         "${mainUrl}/dizi/tur/aksiyon-macera" to "Aksiyon-Macera",
         "${mainUrl}/dizi/tur/animasyon" to "Animasyon",
@@ -37,7 +38,6 @@ class DiziMag : MainAPI() {
         "${mainUrl}/dizi/tur/komedi" to "Komedi",
         "${mainUrl}/dizi/tur/savas-politik" to "Savaş Politik",
         "${mainUrl}/dizi/tur/suc" to "Suç",
-
         "${mainUrl}/film/tur/aile" to "Aile Film",
         "${mainUrl}/film/tur/animasyon" to "Animasyon Film",
         "${mainUrl}/film/tur/bilim-kurgu" to "Bilim-Kurgu Film",
@@ -56,23 +56,35 @@ class DiziMag : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val mainReq = app.get("${request.data}/${page}")
-
+        var sonraki = false
+        val mainReq = if (request.name.contains("Yeni Eklenenler")) {
+            sonraki = true
+            app.get(
+                "${request.data}/${page}",
+                headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0")
+            )
+        } else {
+            app.get(
+                request.data,
+                headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0")
+            )
+        }
         //val document = mainReq.document.body()
         val document = Jsoup.parse(mainReq.body.string())
-        val home = document.select("div.poster-long").mapNotNull { it.diziler() }
+        val home = if (request.name.contains("Yeni Eklenenler")) {
+            document.select("div.filter-result-box").mapNotNull { it.diziler() }
+        } else {
+            document.select("li.w-1\\/2").mapNotNull { it.diziler() }
+        }
 
-        return newHomePageResponse(request.name, home)
+        return newHomePageResponse(request.name, home, hasNext = sonraki)
     }
 
     private fun Element.diziler(): SearchResponse? {
-        val title =
-            this.selectFirst("div.poster-long-subject h2")?.text() ?: return null
-        val href =
-            fixUrlNull(this.selectFirst("div.poster-long-subject a")?.attr("href"))
+        val title = this.selectFirst("h2")?.text() ?: return null
+        val href = fixUrlNull(this.selectFirst("a")?.attr("href"))
                 ?: return null
-        val posterUrl =
-            fixUrlNull(this.selectFirst("div.poster-long-image img")?.attr("data-src"))
+        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 
         return if (href.contains("/dizi/")) {
             newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
