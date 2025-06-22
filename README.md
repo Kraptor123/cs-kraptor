@@ -4,7 +4,7 @@
 
 [kekikanime telegram](https://t.me/kekikanime)
 
-## ❗Uyarı
+## ❗Yasal Uyarı
 
 DMCA
 
