@@ -74,7 +74,7 @@ class Sinefy : MainAPI() {
             app.get("${request.data}/$page").document
             }
         else if (request.name.contains("Son Eklenenler")){
-            app.get("${request.data}/$page").document
+            app.get("${request.data}$page").document
         }
         else {
             app.get("${request.data}&page=${page}").document
