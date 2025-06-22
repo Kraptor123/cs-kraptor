@@ -18,7 +18,7 @@ class Sinezy : MainAPI() {
     override val supportedTypes       = setOf(TvType.Movie)
 
     override val mainPage = mainPageOf(
-//        "${mainUrl}/"                    to  "Yeni Eklenenler",
+        "${mainUrl}/"                    to  "Yeni Eklenenler",
         "${mainUrl}/izle/aksiyon-filmleri/"         to  "Aksiyon",
         "${mainUrl}/izle/animasyon-filmleri/"       to  "Animasyon",
         "${mainUrl}/izle/belgesel-izle/"            to  "Belgesel",
@@ -49,7 +49,7 @@ class Sinezy : MainAPI() {
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val document = app.get("${request.data}page/$page/").document
-        val home     = document.select("div.movie_box.move_k").mapNotNull { it.toMainPageResult() }
+        val home     = document.select("div.container div.content div.movie_box.move_k").mapNotNull { it.toMainPageResult() }
 
         return newHomePageResponse(request.name, home)
     }

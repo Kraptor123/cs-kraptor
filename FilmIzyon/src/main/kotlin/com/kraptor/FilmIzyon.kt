@@ -18,6 +18,7 @@ class FilmIzyon : MainAPI() {
     override val supportedTypes       = setOf(TvType.Movie)
 
     override val mainPage = mainPageOf(
+        "${mainUrl}"                   to "Yeni Filmler",
         "${mainUrl}/tur/aile-filmleri-izle"        to "Aile",
         "${mainUrl}/tur/aksiyon-filmleri-izle"     to "Aksiyon",
         "${mainUrl}/tur/animasyon-filmleri-izle"   to "Animasyon",

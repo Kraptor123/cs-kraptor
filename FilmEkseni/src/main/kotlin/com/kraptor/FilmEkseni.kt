@@ -18,34 +18,35 @@ class FilmEkseni : MainAPI() {
     override val supportedTypes = setOf(TvType.Movie)
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/tur/aile-filmleri/page"  to "Aile Filmleri",
-        "${mainUrl}/tur/aksiyon-filmleri/page"           to "Aksiyon Filmleri",
-        "${mainUrl}/tur/animasyon-filmleri/page"         to "Animasyon Filmleri",
-        "${mainUrl}/tur/belgesel-filmleri/page"          to "Belgesel Filmleri",
-        "${mainUrl}/tur/bilim-kurgu-filmleri/page"       to "Bilim Kurgu Filmleri",
-        "${mainUrl}/tur/biyografi-filmleri/page"         to "Biyografi Filmleri",
-        "${mainUrl}/tur/dram-filmleri/page"              to "Dram Filmleri",
-        "${mainUrl}/tur/fantastik-filmler/page"               to "Fantastik Filmleri",
-        "${mainUrl}/tur/gerilim-filmleri/page"           to "Gerilim Filmleri",
-        "${mainUrl}/tur/gizem-filmleri/page"             to "Gizem Filmleri",
-        "${mainUrl}/tur/komedi-filmleri/page"            to "Komedi Filmleri",
-        "${mainUrl}/tur/korku-filmleri/page"             to "Korku Filmleri",
-        "${mainUrl}/tur/macera-filmleri/page"            to "Macera Filmleri",
-        "${mainUrl}/tur/muzik-filmleri/page"             to "Müzik Filmleri",
-        "${mainUrl}/tur/muzikal/page"                         to "Müzikal Filmleri",
-        "${mainUrl}/tur/romantik-filmler/page"                to "Romantik Filmleri",
-        "${mainUrl}/tur/savas-filmleri/page"             to "Savaş Filmleri",
-        "${mainUrl}/tur/spor-filmleri/page"              to "Spor Filmleri",
-        "${mainUrl}/tur/suc-filmleri/page"               to "Suç Filmleri",
-        "${mainUrl}/tur/tarih-filmleri/page"             to "Tarih Filmleri",
-        "${mainUrl}/tur/western-filmler/page"            to "Western Filmleri",
-        "${mainUrl}/diziler/page"                        to "Diziler",
-        "${mainUrl}/en-cok-izlenenler/page"              to "En Çok İzlenenler",
-        "${mainUrl}/kategori/tavsiye-filmler/page"       to "Tavsiye Filmler"
+        "${mainUrl}/page"                to "Yeni Eklenenler",
+        "${mainUrl}/tur/aile-filmleri/page"          to "Aile Filmleri",
+        "${mainUrl}/tur/aksiyon-filmleri/page"       to "Aksiyon Filmleri",
+        "${mainUrl}/tur/animasyon-filmleri/page"     to "Animasyon Filmleri",
+        "${mainUrl}/tur/belgesel-filmleri/page"      to "Belgesel Filmleri",
+        "${mainUrl}/tur/bilim-kurgu-filmleri/page"   to "Bilim Kurgu Filmleri",
+        "${mainUrl}/tur/biyografi-filmleri/page"     to "Biyografi Filmleri",
+        "${mainUrl}/tur/dram-filmleri/page"          to "Dram Filmleri",
+        "${mainUrl}/tur/fantastik-filmler/page"      to "Fantastik Filmleri",
+        "${mainUrl}/tur/gerilim-filmleri/page"       to "Gerilim Filmleri",
+        "${mainUrl}/tur/gizem-filmleri/page"         to "Gizem Filmleri",
+        "${mainUrl}/tur/komedi-filmleri/page"        to "Komedi Filmleri",
+        "${mainUrl}/tur/korku-filmleri/page"         to "Korku Filmleri",
+        "${mainUrl}/tur/macera-filmleri/page"        to "Macera Filmleri",
+        "${mainUrl}/tur/muzik-filmleri/page"         to "Müzik Filmleri",
+        "${mainUrl}/tur/muzikal/page"                to "Müzikal Filmleri",
+        "${mainUrl}/tur/romantik-filmler/page"       to "Romantik Filmleri",
+        "${mainUrl}/tur/savas-filmleri/page"         to "Savaş Filmleri",
+        "${mainUrl}/tur/spor-filmleri/page"          to "Spor Filmleri",
+        "${mainUrl}/tur/suc-filmleri/page"           to "Suç Filmleri",
+        "${mainUrl}/tur/tarih-filmleri/page"         to "Tarih Filmleri",
+        "${mainUrl}/tur/western-filmler/page"        to "Western Filmleri",
+        "${mainUrl}/diziler/page"                    to "Diziler",
+        "${mainUrl}/en-cok-izlenenler/page"          to "En Çok İzlenenler",
+        "${mainUrl}/kategori/tavsiye-filmler/page"   to "Tavsiye Filmler"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}/$page").document
+        val document = app.get("${request.data}/$page/").document
         val home = document.select("div.poster").mapNotNull { it.toMainPageResult() }
 
         return newHomePageResponse(request.name, home)

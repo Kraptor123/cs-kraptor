@@ -19,6 +19,7 @@ class FullHDIzle : MainAPI() {
     override val supportedTypes       = setOf(TvType.Movie)
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/"                         to "Yeni Filmler",
         "${mainUrl}/kategori/aile-filmi-izle/"            to "Aile",
         "${mainUrl}/kategori/aksiyon-filmi-izle-hd/"      to "Aksiyon",
         "${mainUrl}/kategori/animasyon-filmi-izle/"       to "Animasyon",

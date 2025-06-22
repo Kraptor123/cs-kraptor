@@ -21,6 +21,7 @@ class DiziYou : MainAPI() {
     override val supportedTypes       = setOf(TvType.TvSeries)
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/dizi-arsivi/page/SAYFA/?filtrele=tarih&sirala=DESC#038;sirala=DESC"                 to "Yeni Eklenenler",
         "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Aile"                 to "Aile",
         "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Aksiyon"              to "Aksiyon",
         "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Animasyon"            to "Animasyon",

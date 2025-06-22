@@ -22,6 +22,7 @@ class FilmIzle : MainAPI() {
     override val supportedTypes = setOf(TvType.Movie)
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/" to "Yeni Filmler",
         "${mainUrl}/en-cok-izlenen-filmler-izle/" to "En Çok İzlenenler",
         "${mainUrl}/tur/aile/" to "Aile",
         "${mainUrl}/tur/aksiyon/" to "Aksiyon",

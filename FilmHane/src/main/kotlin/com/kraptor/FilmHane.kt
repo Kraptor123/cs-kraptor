@@ -22,7 +22,8 @@ class FilmHane : MainAPI() {
     override val supportedTypes       = setOf(TvType.Movie, TvType.TvSeries)
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/tum-diziler" to "Tüm Diziler",
+        "${mainUrl}/diziler"  to  "Yeni Diziler",
+        "${mainUrl}/tum-diziler"          to  "Tüm Diziler",
         "${mainUrl}/filmler"              to  "Tüm Filmler",
         "${mainUrl}/film/tur/aile"        to  "Aile",
         "${mainUrl}/film/tur/aksiyon"     to  "Aksiyon",
@@ -50,7 +51,7 @@ class FilmHane : MainAPI() {
             "Tüm Diziler" -> {
                 app.get(request.data).document
             }
-            "Tüm Filmler" -> {
+            "Tüm Filmler", "Yeni Diziler" -> {
                 if (page == 1) {
                     app.get("${request.data}/sayfa").document
                 } else {

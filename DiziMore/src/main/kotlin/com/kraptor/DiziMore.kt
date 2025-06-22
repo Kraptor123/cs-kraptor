@@ -20,6 +20,7 @@ class DiziMore : MainAPI() {
     override val supportedTypes = setOf(TvType.TvSeries)
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/diziler?tarih=2025" to "Yeni Diziler",
         "${mainUrl}/diziler?s_type=&tur%5B%5D=aile" to "Aile",
         "${mainUrl}/diziler?s_type=&tur%5B%5D=animasyon" to "Animasyon",
         "${mainUrl}/diziler?s_type=&tur%5B%5D=belgesel" to "Belgesel",

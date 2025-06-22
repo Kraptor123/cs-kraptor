@@ -18,7 +18,8 @@ class HdFilmCehennemi2 : MainAPI() {
     override val supportedTypes       = setOf(TvType.Movie)
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/film-arsivi/page/sayfa/?sort=imdb" to        "Yüksek Puanlılar",
+        "${mainUrl}"                         to        "Yeni Eklenenler",
+        "${mainUrl}/film-arsivi/page/sayfa/?sort=imdb"   to        "Yüksek Puanlılar",
         "${mainUrl}/film-arsivi/page/sayfa/?sort=views"  to        "En Çok İzlenenler",
         "${mainUrl}/film-arsivi/page/sayfa/?lang=tr"     to        "Türkçe Dublaj",
         "${mainUrl}/filmler/aile-filmleri/"              to        "Aile",
