@@ -24,7 +24,7 @@ class Sinefy : MainAPI() {
     override var sequentialMainPageScrollDelay = 50L  // ? 0.05 saniye
 
     override val mainPage = mainPageOf(
-        "${mainUrl}"                to  "Son Eklenenler",
+        "${mainUrl}/page/"          to  "Son Eklenenler",
         "${mainUrl}/en-yenifilmler"             to  "Yeni Filmler",
         "${mainUrl}/netflix-filmleri-izle"      to  "Netflix Filmleri",
         "${mainUrl}/dizi-izle/netflix"          to   "Netflix Dizileri",
@@ -73,6 +73,9 @@ class Sinefy : MainAPI() {
         ) {
             app.get("${request.data}/$page").document
             }
+        else if (request.name.contains("Son Eklenenler")){
+            app.get("${request.data}/$page").document
+        }
         else {
             app.get("${request.data}&page=${page}").document
         }
