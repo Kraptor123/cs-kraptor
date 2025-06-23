@@ -16,7 +16,7 @@ import org.json.JSONObject
 import org.jsoup.Jsoup
 
 class Dizist : MainAPI() {
-    override var mainUrl = "https://dizist.club/"
+    override var mainUrl = "https://dizist.club"
     override var name = "Dizist"
     override val hasMainPage = true
     override var lang = "tr"
@@ -67,7 +67,7 @@ class Dizist : MainAPI() {
 //            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0",
 //            "Accept" to "application/json, text/javascript, */*; q=0.01",
 //            "Accept-Language" to "en-US,en;q=0.5",
-//            "Referer" to "https://dizist.club/",
+//            "Referer" to "https://dizist.club",
 //            "Content-Type" to "application/x-www-form-urlencoded; charset=UTF-8",
 //            "Connection" to "keep-alive",
 //        )
