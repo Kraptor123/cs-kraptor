@@ -29,6 +29,7 @@ Teşekkür ederiz.
 - **DiziKral**
 - **DiziFon**
 - **BirAsyaDizi**
+- **Dizist**
 
 ### 🍿 Filmler
 - **FilmEkseni**
