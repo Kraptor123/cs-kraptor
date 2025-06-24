@@ -158,14 +158,7 @@ class Anizm : MainAPI() {
     // Arama Fonksiyonu (Düzeltilmiş)
     override suspend fun search(query: String): List<SearchResponse> {
         return try {
-            // 1. CSRF Token Al
-            val csrfToken = app.get(mainUrl)
-                .document
-                .selectFirst("meta[name='csrf-token']")
-                ?.attr("content")
-                ?: throw Exception("CSRF Token alınamadı")
-
-            // 2. Sorguyu Encode Et
+            initSession()
             val encodedQuery = withContext(Dispatchers.IO) {
                 URLEncoder.encode(query, "UTF-8")
             }
@@ -176,7 +169,7 @@ class Anizm : MainAPI() {
                 headers = mapOf(
                     "Referer" to mainUrl,
                     "X-Requested-With" to "XMLHttpRequest",
-                    "X-CSRF-TOKEN" to csrfToken,
+                    "X-CSRF-TOKEN" to (csrfToken ?: ""),
                     "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
                 ),
                 params = mapOf("q" to encodedQuery),
