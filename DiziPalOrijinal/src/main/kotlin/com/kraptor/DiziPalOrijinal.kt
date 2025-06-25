@@ -132,7 +132,7 @@ class DiziPalOrijinal : MainAPI() {
                 "currentPage" to "$page",
                 "categoryIdsComma[]" to request.data,
                 "releaseYearStart" to "1923",
-                "releaseYearEnd"  to "2024",
+                "releaseYearEnd"  to "2025",
                 "orderType" to "imdb_desc"
             )
             )
