@@ -180,11 +180,12 @@ class Dizist : MainAPI() {
                 val sezonSayisi = href
                     ?.substringBefore("-sezon")
                     ?.substringAfterLast("-")
+                    ?.replace("-","")
                     ?.toIntOrNull()
                 newEpisode(href) {
                     episode = bolumSayisi
                     name = "Bölüm"
-//                    season  = sezonSayisi
+                    season  = sezonSayisi
                 }
             }
             .toList()
