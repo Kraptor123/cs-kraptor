@@ -30,6 +30,7 @@ Teşekkür ederiz.
 - **DiziFon**
 - **BirAsyaDizi**
 - **Dizist**
+- **DiziPalOrijinal**
 
 ### 🍿 Filmler
 - **FilmEkseni**
