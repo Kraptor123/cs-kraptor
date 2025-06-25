@@ -14,7 +14,7 @@ Teşekkür ederiz.
 
 
 ## Altyazılar Çalışmıyor Mu?
-**Sorun Çözümü için tıklayın -> Çözüm(https://github.com/Kraptor123/cs-kekikanime/issues/19#issuecomment-3006398821)
+**Sorun Çözümü için tıklayın -> Çözüm(https://github.com/Kraptor123/cs-kekikanime/issues/19#issuecomment-3006398821)**
 
 ## 🎬 Eklenen Eklentiler
 
