@@ -16,5 +16,7 @@ class DiziPalOrijinalPlugin: Plugin() {
         registerExtractorAPI(FourPichive())
         registerExtractorAPI(Pichive())
         registerExtractorAPI(FourDplayer())
+        registerExtractorAPI(SNDplayer())
+        registerExtractorAPI(ORGDplayer())
     }
 }
