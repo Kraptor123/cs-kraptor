@@ -13,7 +13,7 @@ import java.util.Locale
 import kotlin.collections.mapNotNull
 
 class DiziKral : MainAPI() {
-    override var mainUrl              = "https://dizikral.nl"
+    override var mainUrl              = "https://dizikral.club"
     override var name                 = "DiziKral"
     override val hasMainPage          = true
     override var lang                 = "tr"
@@ -148,7 +148,7 @@ class DiziKral : MainAPI() {
         Log.d("dkral","iframe $iframe")
 
 
-        loadExtractor(url, "https://dizikral.nl/", subtitleCallback, callback)
+        loadExtractor(url, "https://dizikral.club/", subtitleCallback, callback)
 
         return true
     }
