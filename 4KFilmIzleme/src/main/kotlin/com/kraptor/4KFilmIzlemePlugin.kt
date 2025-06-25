@@ -21,5 +21,6 @@ class `4KFilmIzlemePlugin`: Plugin() {
         registerExtractorAPI(FourPlayRu())
         registerExtractorAPI(FourPichive())
         registerExtractorAPI(Pichive())
+        registerExtractorAPI(FourDplayer())
     }
 }

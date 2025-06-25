@@ -15,7 +15,7 @@ open class ContentX : ExtractorApi() {
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
         val extRef   = referer ?: ""
-        Log.d("Kekik_$name", "url » $url")
+        Log.d("kraptor_$name", "url » $url")
 
         val iSource = app.get(url, referer = extRef).text
         val iExtract = Regex("""window\.openPlayer\('([^']+)'""").find(iSource)!!.groups[1]?.value ?: throw ErrorLoadingException("iExtract is null")
