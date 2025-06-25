@@ -9,6 +9,8 @@ import android.content.Context
 class HDFilmPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(HDFilm())
+        registerExtractorAPI(ContentX())
+        registerExtractorAPI(Hotlinger())
         registerExtractorAPI(RapidVid())
         registerExtractorAPI(TRsTX())
         registerExtractorAPI(VidMoxy())
@@ -21,5 +23,8 @@ class HDFilmPlugin: Plugin() {
         registerExtractorAPI(FourPlayRu())
         registerExtractorAPI(FourPichive())
         registerExtractorAPI(Pichive())
+        registerExtractorAPI(FourDplayer())
+        registerExtractorAPI(SNDplayer())
+        registerExtractorAPI(ORGDplayer())
     }
 }

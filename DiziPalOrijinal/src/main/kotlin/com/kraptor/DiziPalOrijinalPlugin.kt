@@ -9,6 +9,14 @@ import android.content.Context
 class DiziPalOrijinalPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(DiziPalOrijinal())
+        registerExtractorAPI(ContentX())
+        registerExtractorAPI(Hotlinger())
+        registerExtractorAPI(RapidVid())
+        registerExtractorAPI(TRsTX())
+        registerExtractorAPI(VidMoxy())
+        registerExtractorAPI(Sobreatsesuyp())
+        registerExtractorAPI(TurboImgz())
+        registerExtractorAPI(TurkeyPlayer())
         registerExtractorAPI(Hotlinger())
         registerExtractorAPI(FourCX())
         registerExtractorAPI(PlayRu())

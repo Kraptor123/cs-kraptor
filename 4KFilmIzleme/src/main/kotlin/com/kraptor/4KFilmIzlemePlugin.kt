@@ -9,6 +9,8 @@ import android.content.Context
 class `4KFilmIzlemePlugin`: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(`4KFilmIzleme`())
+        registerExtractorAPI(ContentX())
+        registerExtractorAPI(Hotlinger())
         registerExtractorAPI(RapidVid())
         registerExtractorAPI(TRsTX())
         registerExtractorAPI(VidMoxy())
@@ -22,5 +24,8 @@ class `4KFilmIzlemePlugin`: Plugin() {
         registerExtractorAPI(FourPichive())
         registerExtractorAPI(Pichive())
         registerExtractorAPI(FourDplayer())
+        registerExtractorAPI(SNDplayer())
+        registerExtractorAPI(ORGDplayer())
+
     }
 }

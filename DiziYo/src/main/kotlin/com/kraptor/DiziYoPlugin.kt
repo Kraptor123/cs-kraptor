@@ -8,6 +8,8 @@ import android.content.Context
 class DiziYoPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(DiziYo())
+        registerExtractorAPI(ContentX())
+        registerExtractorAPI(Hotlinger())
         registerExtractorAPI(RapidVid())
         registerExtractorAPI(TRsTX())
         registerExtractorAPI(VidMoxy())
@@ -20,5 +22,8 @@ class DiziYoPlugin: Plugin() {
         registerExtractorAPI(FourPlayRu())
         registerExtractorAPI(FourPichive())
         registerExtractorAPI(Pichive())
+        registerExtractorAPI(FourDplayer())
+        registerExtractorAPI(SNDplayer())
+        registerExtractorAPI(ORGDplayer())
     }
 }
