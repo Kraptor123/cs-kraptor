@@ -55,7 +55,8 @@ class DiziPalOrijinal : MainAPI() {
 
 
     override val mainPage = mainPageOf(
-        ""   to "Yabancı Diziler",
+        ""   to "Yeni Eklenenler",
+        ""   to "Yüksek Imdb Puanlı Diziler",
         "1"   to "Exxen Dizileri",
         "6"   to "Disney+ Dizileri",
         "10"  to "Netflix Dizileri",
@@ -87,7 +88,7 @@ class DiziPalOrijinal : MainAPI() {
             cKey = document.selectFirst("input[name=cKey]")?.`val`()
             cValue = document.selectFirst("input[name=cValue]")?.`val`()
 
-            Log.d("kraptor_Dizipal", "✅ Cookie sayısı: ${sessionCookies?.size}, cKey: $cKey, cValue: ${cValue}")
+            Log.d("kraptor_Dizipal", "cKey: $cKey, cValue: ${cValue}")
         }
     }
 
@@ -105,13 +106,25 @@ class DiziPalOrijinal : MainAPI() {
             "Tabii Dizileri")
 
         val response = if (kanallarliste.any { request.name.contains(it) }) {
-            app.post("${mainUrl}/bg/getserielistbychannel", data = mapOf(
-                "cKey" to "$cKey", "cValue" to "$cValue",
-                "curPage" to "$page",
-                "channelId" to request.data,
-                "languageId" to "2,3,4"
-            ))
+            app.post(
+                "${mainUrl}/bg/getserielistbychannel", data = mapOf(
+                    "cKey" to "$cKey", "cValue" to "$cValue",
+                    "curPage" to "$page",
+                    "channelId" to request.data,
+                    "languageId" to "2,3,4"
+                )
+            )
 
+        } else if (request.name.contains("Yeni Eklenenler")) {
+         app.post("${mainUrl}/bg/findseries",data = mapOf(
+             "cKey" to "$cKey",
+             "cValue" to "$cValue",
+             "currentPage" to "$page",
+             "categoryIdsComma[]" to request.data,
+             "releaseYearStart" to "1923",
+             "releaseYearEnd"  to "2025",
+             "orderType" to "date_asc")
+         )
         }else {
             app.post("${mainUrl}/bg/findseries",data = mapOf(
                 "cKey" to "$cKey",
@@ -119,7 +132,8 @@ class DiziPalOrijinal : MainAPI() {
                 "currentPage" to "$page",
                 "categoryIdsComma[]" to request.data,
                 "releaseYearStart" to "1923",
-                "releaseYearEnd"  to "2024"
+                "releaseYearEnd"  to "2024",
+                "orderType" to "imdb_desc"
             )
             )
         }
@@ -153,17 +167,38 @@ class DiziPalOrijinal : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val document = app.get("${mainUrl}/?s=${query}").document
+        initSession()
+        val responseBody = app.post("$mainUrl/bg/searchcontent", data = mapOf(
+            "cKey"       to cKey!!,
+            "cValue"     to cValue!!,
+            "searchterm" to query
+        )).text
 
-        return document.select("div.result-item article").mapNotNull { it.toSearchResult() }
-    }
+        // 2) JSONObject ile parse
+        val json       = JSONObject(responseBody)
+        Log.d("kraptor_Dizipal", "json: $json")
+        val data       = json.getJSONObject("data")
+        val resultList = data.optJSONArray("result") ?: return emptyList()
 
-    private fun Element.toSearchResult(): SearchResponse? {
-        val title     = this.selectFirst("div.title a")?.text() ?: return null
-        val href      = fixUrlNull(this.selectFirst("div.title a")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        // 3) Her bir sonucu map edip SearchResponse’a çeviriyoruz
+        return (0 until resultList.length()).mapNotNull { i ->
+            val item = resultList.getJSONObject(i)
 
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+            // Sadece Series tipinde olanları almak istersen burayı açabilirsin:
+            // if (item.optString("used_type") != "Series") return@mapNotNull null
+
+            val title     = item.optString("object_name").takeIf { it.isNotBlank() } ?: return@mapNotNull null
+            Log.d("kraptor_Dizipal", "title: $title")
+            val slug      = item.optString("used_slug").takeIf { it.isNotBlank() } ?: return@mapNotNull null
+            Log.d("kraptor_Dizipal", "slug: $slug")
+            val href      = fixUrlNull("$mainUrl/$slug") ?: return@mapNotNull null
+            Log.d("kraptor_Dizipal", "href: $href")
+            val posterUrl = item.optString("object_poster_url").takeIf { it.isNotBlank() }
+
+            newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+                this.posterUrl = posterUrl
+            }
+        }
     }
 
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
