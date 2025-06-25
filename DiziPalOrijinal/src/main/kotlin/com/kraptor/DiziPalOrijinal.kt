@@ -230,9 +230,6 @@ class DiziPalOrijinal : MainAPI() {
             return false
         }
 
-        // TODO:
-
-
         return true
     }
 }
