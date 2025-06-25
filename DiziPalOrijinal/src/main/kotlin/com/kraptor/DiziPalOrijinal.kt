@@ -55,6 +55,7 @@ class DiziPalOrijinal : MainAPI() {
 
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/"   to "Yeni Eklenen Bölümler",
         ""   to "Yeni Eklenenler",
         ""   to "Yüksek Imdb Puanlı Diziler",
         "1"   to "Exxen Dizileri",
@@ -125,6 +126,13 @@ class DiziPalOrijinal : MainAPI() {
              "releaseYearEnd"  to "2025",
              "orderType" to "date_asc")
          )
+        } else if (request.name.contains("Yeni Eklenen Bölümler")) {
+         val yeniEklenen =   app.get(request.data).document
+            val home = yeniEklenen.select("div.overflow-auto a")
+                .mapNotNull { it.toMainPageResult() }
+
+            return newHomePageResponse(request.name, home)
+
         }else {
             app.post("${mainUrl}/bg/findseries",data = mapOf(
                 "cKey" to "$cKey",
@@ -159,8 +167,29 @@ class DiziPalOrijinal : MainAPI() {
     }
 
     private fun Element.toMainPageResult(): SearchResponse? {
-        val title     = this.selectFirst("img")?.attr("alt") ?: return null
-        val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+        val textElement = this.selectFirst("div.text.block div.text-white.text-sm")
+        val title = if (textElement != null && textElement.text().isNotBlank()) {
+            // textElement var ve içinde boş olmayan bir metin var:
+            val alt = this.selectFirst("img")?.attr("alt") ?: ""
+            alt + " ${textElement.text()}"
+        } else {
+            this.selectFirst("img")?.attr("alt") ?: return null
+        }
+        val aEl = this.selectFirst("a") ?: return null
+
+// 2. href değerini al:
+        val rawHref = aEl.attr("href")
+
+// 3. Dönüştürme:
+        val href = if (rawHref.contains("/bolum/")) {
+            // "/bolum/" varsa önce URL'i düzelt, sonra "bolum"ü "series" yap, sonundaki "-" sonrası kısmı at
+            fixUrlNull(rawHref)
+                ?.replace("/bolum/", "/series/")
+                ?.replace(Regex("-[0-9]+.*$"), "")
+        } else {
+            // yoksa sadece düzelt
+            fixUrlNull(rawHref)
+        } ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 
         return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
