@@ -14,7 +14,7 @@ import com.lagradost.cloudstream3.utils.newExtractorLink
 import java.net.URLDecoder
 
 class DiziFun : MainAPI() {
-    override var mainUrl = "https://dizifun3.com"
+    override var mainUrl = "https://dizifun4.com"
     override var name = "DiziFun"
     override val hasMainPage = true
     override var lang = "tr"
