@@ -117,10 +117,12 @@ class FullHDIzle : MainAPI() {
 
         val iframe = base64Decode(iframeb64).substringAfter("src=\"").substringBefore("\"")
 
-//        Log.d("kraptor_$name", "iframe » ${iframe}")
+        val iframelink = fixUrlNull(iframe).toString()
+
+        Log.d("kraptor_$name", "iframe » ${iframelink}")
 
 
-         loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+         loadExtractor(iframelink, "${mainUrl}/", subtitleCallback, callback)
 
         return true
     }
