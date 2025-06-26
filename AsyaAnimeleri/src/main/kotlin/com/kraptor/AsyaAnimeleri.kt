@@ -24,6 +24,8 @@ class AsyaAnimeleri : MainAPI() {
     override val supportedTypes = setOf(TvType.Anime)
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/series/?page=sayfa&status=&type=&order=update" to "Son Eklenenler",
+        "${mainUrl}/series/?page=sayfa&status=&type=&order=popular" to "Popüler",
         "${mainUrl}/genres/aksiyon/page/sayfa/" to "Aksiyon",
         "${mainUrl}/genres/askeri/page/sayfa/" to "Askeri",
         "${mainUrl}/genres/bilim-kurgu/page/sayfa/" to "Bilim-kurgu",
@@ -87,7 +89,7 @@ class AsyaAnimeleri : MainAPI() {
     }
 
     private fun Element.toMainPageResult(): SearchResponse? {
-        val title = this.selectFirst("div.tt.tts")?.text() ?: return null
+        val title = this.selectFirst("div.tt.tts h2")?.text() ?: return null
         val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
 
