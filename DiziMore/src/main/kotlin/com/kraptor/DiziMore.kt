@@ -12,7 +12,7 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 class DiziMore : MainAPI() {
-    override var mainUrl = "https://dizimore.com"
+    override var mainUrl = "https://dizimore.net"
     override var name = "DiziMore"
     override val hasMainPage = true
     override var lang = "tr"
@@ -38,9 +38,9 @@ class DiziMore : MainAPI() {
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         // request.data şu anda örneğin:
-        // "https://dizimore.com/diziler?s_type=&tur%5B%5D=aksiyon-macera"
+        // "https://dizimore.net/diziler?s_type=&tur%5B%5D=aksiyon-macera"
         val parts = request.data.split("?", limit = 2)
-        val baseUrl = parts[0].trimEnd('/')            // https://dizimore.com/diziler
+        val baseUrl = parts[0].trimEnd('/')            // https://dizimore.net/diziler
         val query = parts.getOrNull(1)?.let { "?$it" } ?: ""
 
         // sayfa 1 ise orijinal, değilse /page/2 gibi ekle
