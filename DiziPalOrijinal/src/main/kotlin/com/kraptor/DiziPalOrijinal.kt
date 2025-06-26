@@ -45,7 +45,7 @@ class DiziPalOrijinal : MainAPI() {
             val response = chain.proceed(request)
             val doc = Jsoup.parse(response.peekBody(1024 * 1024).string())
 
-            if (doc.html().contains("Just a moment") || doc.html().contains("verifying")) {
+            if (doc.html().contains("Just a moment")) {
                 Log.d("kraptor_Dizipal", "!!cloudflare geldi!!")
                 return cloudflareKiller.intercept(chain)
             }
@@ -132,7 +132,7 @@ class DiziPalOrijinal : MainAPI() {
                 )
             )
         } else if (request.name.contains("Yeni Eklenen Bölümler")) {
-            val yeniEklenen = app.get(request.data).document
+            val yeniEklenen = app.get(request.data, interceptor = interceptor).document
             val home = yeniEklenen.select("div.overflow-auto a")
                 .mapNotNull { it.toMainPageResult() }
 
@@ -140,7 +140,7 @@ class DiziPalOrijinal : MainAPI() {
 
         } else if (request.name.contains("Yeni Filmler")) {
             app.post(
-                "${mainUrl}/bg/findmovies", data = mapOf(
+                "${mainUrl}/bg/findmovies", interceptor = interceptor, data = mapOf(
                     "cKey" to "$cKey",
                     "cValue" to "$cValue",
                     "currentPage" to "$page",
@@ -152,7 +152,7 @@ class DiziPalOrijinal : MainAPI() {
             )
         } else {
             app.post(
-                "${mainUrl}/bg/findseries", data = mapOf(
+                "${mainUrl}/bg/findseries", interceptor = interceptor, data = mapOf(
                     "cKey" to "$cKey",
                     "cValue" to "$cValue",
                     "currentPage" to "$page",
@@ -220,7 +220,7 @@ class DiziPalOrijinal : MainAPI() {
     override suspend fun search(query: String): List<SearchResponse> {
         initSession()
         val responseBody = app.post(
-            "$mainUrl/bg/searchcontent", data = mapOf(
+            "$mainUrl/bg/searchcontent", interceptor = interceptor, data = mapOf(
                 "cKey" to cKey!!,
                 "cValue" to cValue!!,
                 "searchterm" to query
@@ -261,7 +261,7 @@ class DiziPalOrijinal : MainAPI() {
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
     override suspend fun load(url: String): LoadResponse? {
-        val getUrl = app.get(url)
+        val getUrl = app.get(url, interceptor = interceptor)
         val document = getUrl.document
         val text = getUrl.text
         val title = document.selectFirst("h1")?.text()?.trim() ?: return null
@@ -323,7 +323,7 @@ class DiziPalOrijinal : MainAPI() {
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         Log.d("kraptor_$name", "data = ${data}")
-        val document = app.get(data).document
+        val document = app.get(data, interceptor = interceptor).document
         val hiddenJson = document.selectFirst("div[data-rm-k]")!!.text()
         val key = "3hPn4uCjTVtfYWcjIcoJQ4cL1WWk1qxXI39egLYOmNv6IblA7eKJz68uU3eLzux1biZLCms0quEjTYniGv5z1JcKbNIsDQFSeIZOBZJz4is6pD7UyWDggWWzTLBQbHcQFpBQdClnuQaMNUHtLHTpzCvZy33p6I7wFBvL4fnXBYH84aUIyWGTRvM2G5cfoNf4705tO2kv"
         val obj = JSONObject(hiddenJson)
