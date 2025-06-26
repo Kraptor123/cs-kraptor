@@ -185,7 +185,7 @@ class DiziPalOrijinal : MainAPI() {
             // "/bolum/" varsa önce URL'i düzelt, sonra "bolum"ü "series" yap, sonundaki "-" sonrası kısmı at
             fixUrlNull(rawHref)
                 ?.replace("/bolum/", "/series/")
-                ?.replace(Regex("-[0-9]+.*$"), "")
+                ?.replace(Regex("-[0-9]+x.*$"), "")
         } else {
             // yoksa sadece düzelt
             fixUrlNull(rawHref)
