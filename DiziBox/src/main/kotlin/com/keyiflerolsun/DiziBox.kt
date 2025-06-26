@@ -16,7 +16,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class DiziBox : MainAPI() {
-    override var mainUrl              = "https://www.dizibox.live"
+    override var mainUrl              = "https://www.dizibox.so"
     override var name                 = "DiziBox"
     override val hasMainPage          = true
     override var lang                 = "tr"
