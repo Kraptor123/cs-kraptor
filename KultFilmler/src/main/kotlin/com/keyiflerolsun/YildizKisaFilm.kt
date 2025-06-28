@@ -16,13 +16,27 @@ open class YildizKisaFilm : ExtractorApi() {
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
         val extRef  = referer ?: ""
+//        Log.d("kraptor_${this.name}", "url » $url")
+
+        val videoSite = app.get(url, referer = extRef).text
+
+        val subRegex = Regex(pattern = "playerjsSubtitle = \"([^\"]*)\"", options = setOf(RegexOption.IGNORE_CASE))
+
+        val subMatch = subRegex.find(videoSite)?.groupValues[1].toString()
+
+        subtitleCallback.invoke(
+            SubtitleFile(
+                lang = subMatch.substringBefore("]").substringAfter("["),
+                url = fixUrl(subMatch.substringAfter("]"))
+            )
+        )
+
         val vidId   = if (url.contains("video/")) {
             url.substringAfter("video/")
         } else {
             url.substringAfter("?data=")
         }
         val postUrl = "${mainUrl}/player/index.php?data=${vidId}&do=getVideo"
-        Log.d("Kekik_${this.name}", "postUrl » $postUrl")
 
         val response = app.post(
             postUrl,
@@ -36,6 +50,8 @@ open class YildizKisaFilm : ExtractorApi() {
                 "X-Requested-With" to "XMLHttpRequest"
             )
         )
+
+//        Log.d("kraptor_${this.name}", "response » $response")
 
         val videoResponse = response.parsedSafe<SystemResponse>() ?: throw ErrorLoadingException("failed to parse response")
         val m3uLink       = videoResponse.securedLink
