@@ -19,6 +19,7 @@ class JetFilmizle : MainAPI() {
 
     override val mainPage = mainPageOf(
             "${mainUrl}"                                         to "Son Filmler",
+    "${mainUrl}/imdb-puanina-gore"                                         to "Imdb Puanına Göre",
     "${mainUrl}/netflix"                                 to "Netflix",
     "${mainUrl}/editorun-secimi"                         to "Editörün Seçimi",
     "${mainUrl}/turk-film-full-hd-izle"                  to "Türk Filmleri",
@@ -65,7 +66,7 @@ class JetFilmizle : MainAPI() {
             headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0")
         ).document
 
-        return document.select("div.col-md-24 article").mapNotNull { it.toSearchResult() }
+        return document.select("article.movie.jet").mapNotNull { it.toSearchResult() }
     }
 
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
