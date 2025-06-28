@@ -22,21 +22,21 @@ class DiziYou : MainAPI() {
 
     override val mainPage = mainPageOf(
         "${mainUrl}/dizi-arsivi/page/SAYFA/?filtrele=tarih&sirala=DESC#038;sirala=DESC"                 to "Yeni Eklenenler",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Aile"                 to "Aile",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Aksiyon"              to "Aksiyon",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Animasyon"            to "Animasyon",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Belgesel"             to "Belgesel",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Bilim+Kurgu"          to "Bilim Kurgu",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Dram"                 to "Dram",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Fantazi"              to "Fantazi",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Gerilim"              to "Gerilim",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Gizem"                to "Gizem",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Komedi"               to "Komedi",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Korku"                to "Korku",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Macera"               to "Macera",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Sava%C5%9F"           to "Savaş",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Su%C3%A7"             to "Suç",
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Vah%C5%9Fi+Bat%C4%B1" to "Vahşi Batı"
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Aile"                 to "Aile",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Aksiyon"              to "Aksiyon",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Animasyon"            to "Animasyon",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Belgesel"             to "Belgesel",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Bilim+Kurgu"          to "Bilim Kurgu",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Dram"                 to "Dram",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Fantazi"              to "Fantazi",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Gerilim"              to "Gerilim",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Gizem"                to "Gizem",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Komedi"               to "Komedi",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Korku"                to "Korku",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Macera"               to "Macera",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Sava%C5%9F"           to "Savaş",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Su%C3%A7"             to "Suç",
+//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Vah%C5%9Fi+Bat%C4%B1" to "Vahşi Batı"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {

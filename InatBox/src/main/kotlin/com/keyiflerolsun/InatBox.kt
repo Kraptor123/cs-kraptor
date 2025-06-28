@@ -45,10 +45,9 @@ class InatBox : MainAPI() {
         "${contentUrl}/tv/eba.php"                             to "Eba Kanalları",
         "${contentUrl}/tv/cocuk.php"                           to "Çocuk Kanalları",
         "${contentUrl}/tv/dini.php"                            to "Dini Kanallar",
-
         "${contentUrl}/ex/index.php"                           to "EXXEN",
         "${contentUrl}/ga/index.php"                           to "Gain",
-        "${contentUrl}/blu/index.php"                          to "BluTV",
+//        "${contentUrl}/blu/index.php"                          to "BluTV",
         "${contentUrl}/nf/index.php"                           to "Netflix", // Burası şu an çalışmıyor.
         "${contentUrl}/dsny/index.php"                         to "Disney+",
         "${contentUrl}/amz/index.php"                          to "Amazon Prime",
@@ -56,12 +55,10 @@ class InatBox : MainAPI() {
         "${contentUrl}/tbi/index.php"                          to "Tabii",
         "${contentUrl}/film/mubi.php"                          to "Mubi",
         "${contentUrl}/ccc/index.php"                          to "TOD",
-
         "${contentUrl}/yabanci-dizi/index.php"                 to "Yabancı Diziler",
         "${contentUrl}/yerli-dizi/index.php"                   to "Yerli Diziler",
         "${contentUrl}/film/yerli-filmler.php"                 to "Yerli Filmler",
-        "${contentUrl}/film/4k-film-exo.php"                   to "4K Film İzle | Exo",
-        "${contentUrl}/film/4k-film-web.php"                   to "4K Film İzle | Web"
+        "${contentUrl}/film/4k-film-exo.php"                   to "4K Film İzle",
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
