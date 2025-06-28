@@ -132,7 +132,7 @@ class Animeler : MainAPI() {
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val url = if (page == 1) {
             app.get(request.data).document
-        } else {
+        }else {
             app.get("${request.data}/page/$page/").document
         }
         val home =
@@ -142,7 +142,7 @@ class Animeler : MainAPI() {
     }
 
     private fun Element.toMainPageResult(): SearchResponse? {
-        val title = this.selectFirst("h2 a")?.text() ?: return null
+        val title = this.selectFirst("h2 a span.show")?.text() ?: return null
         val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
 
@@ -182,30 +182,55 @@ class Animeler : MainAPI() {
                 .mapNotNull { it.toRecommendationResult() }
         val trailer = Regex("""embed/(.*)\?rel""").find(document.html())?.groupValues?.get(1)
             ?.let { "https://www.youtube.com/embed/$it" }
-
-        val episodeElements = document.select("div.swiper-slide a")
+        val episodeElements = document.select("div.swiper-slide a.w-full")
         val isMovie = episodeElements.any { it.attr("href").contains("-movie", ignoreCase = true) }
 
-        val episodeList = episodeElements.mapNotNull { episodeElement ->
-            val epHref = fixUrlNull(episodeElement.attr("href")) ?: return@mapNotNull null
-            val titleText = episodeElement.attr("title").trim()
-            val match = Regex("^(\\d+)\\. Bölüm\\s*-\\s*(.*)$").find(titleText)
+        val seasonLinks = document
+            .select("section.mbe-5 div.relative div.swiper-slide a")
+            .map { it.attr("href") }
+            .distinct()
+            .filter { it.contains("-sezon", ignoreCase = true) }
 
-            val epNumber = match?.groups?.get(1)?.value?.toInt()
-            val epTitle = match?.groups?.get(2)?.value?.trim()
-
+        val firstSeasonEpisodes: List<Episode> = episodeElements.mapNotNull { episodeElement ->
+            val epHref    = fixUrlNull(episodeElement.attr("href")) ?: return@mapNotNull null
+            val epNumber  = episodeElement.selectFirst("span.absolute")
+                ?.text()?.substringAfterLast(" ")
+                ?.toIntOrNull()
             newEpisode(epHref) {
-                this.name = epTitle
-                this.episode = epNumber
+                name    = " Bölüm"
+                episode = epNumber
+                season  = 1
             }
-        }.let { list ->
-            mutableMapOf(DubStatus.Subbed to list)
         }
+
+        val otherSeasons: List<List<Episode>> = seasonLinks.map { sezonUrl ->
+            val doc = app.get(sezonUrl).document
+            doc.select("div.swiper-slide a.w-full").mapNotNull { episodeElement ->
+                val epHref   = fixUrlNull(episodeElement.attr("href")) ?: return@mapNotNull null
+                val epSeason = epHref.substringBeforeLast("-sezon")
+                    .substringAfterLast("-")
+                    .toIntOrNull()
+                val epNumber = episodeElement.selectFirst("span.absolute")
+                    ?.text()?.substringAfterLast(" ")
+                    ?.toIntOrNull()
+                newEpisode(epHref) {
+                    name    = " Bölüm"
+                    episode = epNumber
+                    season  = epSeason
+                }
+            }
+        }
+
+        val allEpisodes: List<Episode> = firstSeasonEpisodes + otherSeasons.flatten()
+
+        val episodeMap: MutableMap<DubStatus, List<Episode>> =
+            mutableMapOf(DubStatus.Subbed to allEpisodes)
 
         Log.d("Animeler", "filmmi = $isMovie")
 
+
         return if (isMovie) {
-            newMovieLoadResponse(title, url, TvType.AnimeMovie, url) {
+            newAnimeLoadResponse(title, url, TvType.AnimeMovie, true) {
                 this.posterUrl = poster
                 this.plot = description
                 this.year = year
@@ -224,7 +249,7 @@ class Animeler : MainAPI() {
                 this.rating = rating
                 this.duration = duration
                 this.recommendations = recommendations
-                this.episodes = episodeList
+                this.episodes = episodeMap
                 addTrailer(trailer)
             }
         }
