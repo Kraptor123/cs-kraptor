@@ -4,8 +4,12 @@ package com.keyiflerolsun
 
 import android.util.Log
 import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.network.CloudflareKiller
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
+import okhttp3.Interceptor
+import okhttp3.Response
+import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class CizgiMax : MainAPI() {
@@ -15,6 +19,28 @@ class CizgiMax : MainAPI() {
     override var lang                 = "tr"
     override val hasQuickSearch       = true
     override val supportedTypes       = setOf(TvType.Cartoon)
+    override var sequentialMainPage =
+        true        // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
+    override var sequentialMainPageDelay = 250L // ? 0.25 saniye
+    override var sequentialMainPageScrollDelay = 250L // ? 0.25 saniye
+
+    private val cloudflareKiller by lazy { CloudflareKiller() }
+    private val interceptor by lazy { CloudflareInterceptor(cloudflareKiller) }
+
+    class CloudflareInterceptor(private val cloudflareKiller: CloudflareKiller) : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request()
+            val response = chain.proceed(request)
+            val doc = Jsoup.parse(response.peekBody(1024 * 1024).string())
+
+            if (doc.html().contains("Just a moment")) {
+                Log.d("kraptor_Dizipal", "!!cloudflare geldi!!")
+                return cloudflareKiller.intercept(chain)
+            }
+
+            return response
+        }
+    }
 
     override val mainPage = mainPageOf(
         "?orderby=date&order=DESC"                                   to "Son Eklenenler",
@@ -26,8 +52,9 @@ class CizgiMax : MainAPI() {
         "?s_type&tur[0]=komedi&orderby=date&order=DESC"              to "Komedi",
     )
 
+
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${mainUrl}/diziler/page/${page}${request.data}").document
+        val document = app.get("${mainUrl}/diziler/page/${page}${request.data}", interceptor = interceptor).document
         val home     = document.select("ul.filter-results li").mapNotNull { it.toSearchResult() }
 
         return newHomePageResponse(request.name, home)
@@ -42,7 +69,7 @@ class CizgiMax : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val response = app.get("${mainUrl}/ajaxservice/index.php?qr=${query}").parsedSafe<SearchResult>()?.data?.result ?: return listOf()
+        val response = app.get("${mainUrl}/ajaxservice/index.php?qr=${query}", interceptor = interceptor).parsedSafe<SearchResult>()?.data?.result ?: return listOf()
 
         return response.mapNotNull { result ->
             if (result.sName.contains(".Bölüm") || result.sName.contains(".Sezon") || result.sName.contains("-Sezon") || result.sName.contains("-izle")) {
@@ -62,7 +89,7 @@ class CizgiMax : MainAPI() {
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
     override suspend fun load(url: String): LoadResponse? {
-        val document = app.get(url).document
+        val document = app.get(url, interceptor = interceptor).document
 
         val title       = document.selectFirst("h1.page-title")?.text() ?: return null
         val poster      = fixUrlNull(document.selectFirst("img.series-profile-thumb")?.attr("src")) ?: return null
@@ -95,7 +122,7 @@ class CizgiMax : MainAPI() {
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         Log.d("CZGM", "data » $data")
-        val document = app.get(data).document
+        val document = app.get(data, interceptor = interceptor).document
 
         document.select("ul.linkler li").forEach {
             val iframe = fixUrlNull(it.selectFirst("a")?.attr("data-frame")) ?: return@forEach
