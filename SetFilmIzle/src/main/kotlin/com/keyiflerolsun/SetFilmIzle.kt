@@ -75,7 +75,9 @@ class SetFilmIzle : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val mainPage = app.get(mainUrl).document
-        val nonce    = Regex("""nonce: '(.*)'""").find(mainPage.html())?.groupValues?.get(1) ?: ""
+        val nonce    = Regex("""search: "([^"]*)"""").find(mainPage.html())?.groupValues?.get(1) ?: ""
+//        Log.d("kraptor_$name","mainPage = $mainPage")
+//        Log.d("kraptor_$name","nonce = $nonce")
         val search   = app.post(
             url     = "${mainUrl}/wp-admin/admin-ajax.php",
             headers = mapOf("X-Requested-With" to "XMLHttpRequest"),
@@ -86,14 +88,18 @@ class SetFilmIzle : MainAPI() {
             )
         )
         val document = Jsoup.parse(JSONObject(search.text).getString("html"))
+//        Log.d("kraptor_$name","document = $document")
 
-        return document.select("div.items article").mapNotNull { it.toSearchResult() }
+        return document.select("div.poster").mapNotNull { it.toSearchResult() }
     }
 
     private fun Element.toSearchResult(): SearchResponse? {
         val title     = this.selectFirst("h2")?.text() ?: return null
+        Log.d("kraptor_$name","title = $title")
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+        Log.d("kraptor_$name","href = $href")
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+        Log.d("kraptor_$name","posterUrl = $posterUrl")
 
         return if (href.contains("/dizi/")) {
             newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
