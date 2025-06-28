@@ -95,10 +95,13 @@ class DiziKorea : MainAPI() {
             val episodes    = mutableListOf<Episode>()
             document.select("div.series-profile-episode-list").forEach {
                 val epSeason = it.parent()!!.id().split("-").last().toIntOrNull()
+//                Log.d("kraptor_$name", "season = $epSeason")
 
                 it.select("li").forEach ep@ { episodeElement ->
                     val epHref    = fixUrlNull(episodeElement.selectFirst("h6 a")?.attr("href")) ?: return@ep
+//                    Log.d("kraptor_$name", "epHref = $epHref")
                     val epEpisode = episodeElement.selectFirst("a.truncate data")?.text()?.trim()?.toIntOrNull()
+//                    Log.d("kraptor_$name", "epEpisode = $epEpisode")
 
                     episodes.add(newEpisode(epHref) {
                         this.name = "${epSeason}. Sezon ${epEpisode}. Bölüm"
@@ -133,13 +136,13 @@ class DiziKorea : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        Log.d("DZK", "data » $data")
+        Log.d("kraptor_${this.name}", "data » $data")
         val document = app.get(data).document
 
 
         document.select("div.series-watch-alternatives button").forEach {
             val iframe = fixUrlNull(it.attr("data-hhs")) ?: return@forEach
-            Log.d("DZK", "iframe » $iframe")
+            Log.d("kraptor_${this.name}", "iframe » $iframe")
 
             loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
         }

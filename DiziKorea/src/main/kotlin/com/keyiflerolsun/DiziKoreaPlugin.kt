@@ -9,5 +9,6 @@ class DiziKoreaPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(DiziKorea())
         registerExtractorAPI(VideoSeyred())
+        registerExtractorAPI(PlayerKorea())
     }
 }
