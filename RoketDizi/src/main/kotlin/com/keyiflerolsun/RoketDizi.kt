@@ -39,7 +39,7 @@ class RoketDizi : MainAPI() {
         "${mainUrl}/dizi/tur/korku" to "Korku",
         "${mainUrl}/dizi/tur/macera" to "Macera",
         "${mainUrl}/dizi/tur/suc" to "Suç",
-        "${mainUrl}/film-kategori/animasyon" to "Aksiyon Film"
+//        "${mainUrl}/film-kategori/animasyon" to "Aksiyon Film"
     )
 
     private val cloudflareKiller by lazy { CloudflareKiller() }
