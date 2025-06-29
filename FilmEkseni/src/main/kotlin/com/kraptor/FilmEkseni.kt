@@ -19,6 +19,9 @@ class FilmEkseni : MainAPI() {
 
     override val mainPage = mainPageOf(
         "${mainUrl}/page"                to "Yeni Eklenenler",
+        "${mainUrl}/kategori/netflix-yapimlari/page" to "Netflix Yapımları",
+        "${mainUrl}/kategori/dc-yapimlari/page"      to "DC yapımları",
+        "${mainUrl}/kategori/marvel-yapimlari/page"  to "Marvel Yapımları",
         "${mainUrl}/tur/aile-filmleri/page"          to "Aile Filmleri",
         "${mainUrl}/tur/aksiyon-filmleri/page"       to "Aksiyon Filmleri",
         "${mainUrl}/tur/animasyon-filmleri/page"     to "Animasyon Filmleri",
