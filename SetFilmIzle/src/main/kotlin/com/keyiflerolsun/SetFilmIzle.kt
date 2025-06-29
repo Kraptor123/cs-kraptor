@@ -29,6 +29,7 @@ class SetFilmIzle : MainAPI() {
 
     override val mainPage = mainPageOf(
         "${mainUrl}/film/" to "Yeni Filmler",
+        "${mainUrl}/dizi/"            to "Son Eklenen Diziler",
         "${mainUrl}/tur/aile/"        to "Aile",
         "${mainUrl}/tur/aksiyon/"     to "Aksiyon",
         "${mainUrl}/tur/animasyon/"   to "Animasyon",
