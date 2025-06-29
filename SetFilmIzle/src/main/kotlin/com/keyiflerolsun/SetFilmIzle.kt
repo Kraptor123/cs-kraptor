@@ -28,6 +28,7 @@ class SetFilmIzle : MainAPI() {
     override val supportedTypes       = setOf(TvType.Movie, TvType.TvSeries)
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/film/" to "Yeni Filmler",
         "${mainUrl}/tur/aile/"        to "Aile",
         "${mainUrl}/tur/aksiyon/"     to "Aksiyon",
         "${mainUrl}/tur/animasyon/"   to "Animasyon",
@@ -58,7 +59,7 @@ class SetFilmIzle : MainAPI() {
         val document = app.get(request.data).document
         val home     = document.select("div.items article").mapNotNull { it.toMainPageResult() }
 
-        return newHomePageResponse(request.name, home)
+        return newHomePageResponse(request.name, home, hasNext = false)
     }
 
     private fun Element.toMainPageResult(): SearchResponse? {
