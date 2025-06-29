@@ -46,6 +46,7 @@ class DiziBox : MainAPI() {
     }
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/tum-bolumler/page/SAYFA/?tip=populer"   to "Popüler Dizilerden Son Bölümler",
         "${mainUrl}/dizi-arsivi/page/SAYFA/?ulke[]=turkiye&yil=&imdb"   to "Yerli",
         "${mainUrl}/dizi-arsivi/page/SAYFA/?tur[0]=aile&yil&imdb"       to "Aile",
         "${mainUrl}/dizi-arsivi/page/SAYFA/?tur[0]=aksiyon&yil&imdb"    to "Aksiyon",
@@ -84,15 +85,19 @@ class DiziBox : MainAPI() {
             ),
             interceptor = interceptor
         ).document
-        val home     = document.select("article.detailed-article").mapNotNull { it.toMainPageResult() }
+        val home = document.select("article.detailed-article, article.article-episode-card a.figure-link")
+            .mapNotNull { it.toMainPageResult() }
 
         return newHomePageResponse(request.name, home)
     }
 
     private fun Element.toMainPageResult(): SearchResponse? {
-        val title     = this.selectFirst("h3 a")?.text() ?: return null
-        val href      = fixUrlNull(this.selectFirst("h3 a")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val title     = this.selectFirst("h3 a")?.text() ?: this.selectFirst("img")?.attr("alt") ?: return null
+        val posterUrl    = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val href      = fixUrlNull(this.selectFirst("h3 a")?.attr("href")) ?: (this.selectFirst("a.figure-link")?.attr("href")
+            ?.replace(Regex(pattern = """-[0-9]+-.*""", options = setOf(RegexOption.IGNORE_CASE)),"/")
+            ?.replace("$mainUrl/","$mainUrl/diziler/") ?: return null)
+
 
         return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
     }
