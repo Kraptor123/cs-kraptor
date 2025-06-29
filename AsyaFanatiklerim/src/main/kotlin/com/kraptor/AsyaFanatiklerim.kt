@@ -17,7 +17,9 @@ class AsyaFanatiklerim : MainAPI() {
     override val hasQuickSearch       = false
     override val supportedTypes       = setOf(TvType.TvSeries)
 
-    override val mainPage = mainPageOf("${mainUrl}/film/" to "Filmler",
+    override val mainPage = mainPageOf(
+        "${mainUrl}/film/"      to   "Filmler",
+        "${mainUrl}/dizi/"                  to   "Diziler",
         "${mainUrl}/tur/aile/"              to   "Aile",
         "${mainUrl}/tur/aksiyon/"           to   "Aksiyon",
         "${mainUrl}/tur/dram/"              to   "Dram",
