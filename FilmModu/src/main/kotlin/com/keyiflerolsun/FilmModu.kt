@@ -18,6 +18,7 @@ class FilmModu : MainAPI() {
     override val supportedTypes       = setOf(TvType.Movie)
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/hd-populer-filmler"          to "En Çok İzlenen Filmler",
         "${mainUrl}/hd-film-kategori/4k-film-izle"          to "4K",
         "${mainUrl}/hd-film-kategori/aile-filmleri"         to "Aile",
         "${mainUrl}/hd-film-kategori/aksiyon"               to "Aksiyon",
