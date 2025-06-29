@@ -27,6 +27,7 @@ class AnimeIzlesene : MainAPI() {
     override val hasQuickSearch = true
     override val supportedTypes = setOf(TvType.Anime, TvType.AnimeMovie, TvType.OVA)
     override val mainPage = mainPageOf(
+        "${mainUrl}/series" to "Yeni Anime Serileri",
         "${mainUrl}/category/aksiyon" to "Aksiyon",
         "${mainUrl}/category/fantastik" to "Fantastik",
         "${mainUrl}/category/isekai" to "Isekai",
