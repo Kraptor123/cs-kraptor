@@ -23,7 +23,7 @@ import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 
 class DiziPalOrijinal : MainAPI() {
-    override var mainUrl = "https://dizipal933.com"
+    override var mainUrl = "https://dizipal934.com"
     override var name = "DiziPalOrijinal"
     override val hasMainPage = true
     override var lang = "tr"
@@ -84,7 +84,11 @@ class DiziPalOrijinal : MainAPI() {
 
             Log.d("kraptor_Dizipal", "🔄 Oturum başlatılıyor: cookie, cKey ve cValue alınıyor")
 
-            val resp = app.get(mainUrl, interceptor = interceptor, timeout = 120)
+            val resp = app.get(mainUrl, interceptor = interceptor, timeout = 120, headers =  mapOf(
+                "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
+                "Referer" to "${mainUrl}/",
+            ))
             sessionCookies = resp.cookies.mapValues { (_, v) -> URLDecoder.decode(v, "UTF-8") }
 
             val document = resp.document
@@ -224,8 +228,14 @@ class DiziPalOrijinal : MainAPI() {
                 "cKey" to cKey!!,
                 "cValue" to cValue!!,
                 "searchterm" to query
-            )
+            ), headers = mapOf(
+                "X-Requested-With" to "XMLHttpRequest",
+                "Accept" to "application/json, text/javascript, */*; q=0.01",
+                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0"
+                )
         ).text
+
+        Log.d("kraptor_Dizipal", "responseBody: $responseBody")
 
         // 2) JSONObject ile parse
         val json = JSONObject(responseBody)
@@ -333,6 +343,7 @@ class DiziPalOrijinal : MainAPI() {
 //        Log.d("kraptor_$name", "ciphertext = $ciphertext iv = $iv")
         try {
             val decryptedContent = decrypt(key, salt, iv, ciphertext)
+            Log.d("kraptor_$name", "decryptedContent = ${decryptedContent}")
             val iframe           = fixUrlNull(decryptedContent).toString()
             Log.d("kraptor_$name", "iframe = $iframe")
 
