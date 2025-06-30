@@ -22,7 +22,7 @@ Teşekkür ederiz.
 - **GinikoCanli**
 - **IpTvPlayStream**
 
-### 📺 Diziler
+### 📹 Diziler
 - **Diziyo**
 - **DiziFun**
 - **CizgiveDizi**
@@ -47,7 +47,7 @@ Teşekkür ederiz.
 - **Sinezy**
 - **FullHDIzle**
 
-### 🎥 Animeler
+### 🎎 Animeler
 - **Anizm**
 - **AsyaAnimeleri**
 - **AnimeIzlesene**
