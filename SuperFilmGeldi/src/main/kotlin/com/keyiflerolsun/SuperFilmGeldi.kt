@@ -18,19 +18,31 @@ class SuperFilmGeldi : MainAPI() {
 
     override val mainPage = mainPageOf(
         "${mainUrl}/page/"                                        to "Son Eklenenler",
-        "${mainUrl}/hdizle/category/aksiyon/page/"                to "Aksiyon",
-        "${mainUrl}/hdizle/category/animasyon/page/"              to "Animasyon",
-        "${mainUrl}/hdizle/category/belgesel/page/"               to "Belgesel",
-        "${mainUrl}/hdizle/category/bilim-kurgu/page/"            to "Bilim Kurgu",
-        "${mainUrl}/hdizle/category/fantastik/page/"              to "Fantastik",
-        "${mainUrl}/hdizle/category/komedi-filmleri/page/"        to "Komedi Filmleri",
-        "${mainUrl}/hdizle/category/macera/page/"                 to "Macera",
-        "${mainUrl}/hdizle/category/gerilim/page/"                to "Gerilim",
-        "${mainUrl}/hdizle/category/suc/page/"                    to "Suç",
-        "${mainUrl}/hdizle/category/karete-filmleri/page/"        to "Karete Filmleri",
-        "${mainUrl}/hdizle/category/yesilcam-erotik-izle/page/"   to "Yeşilçam Erotik",
-        "${mainUrl}/hdizle/category/hd-erotik-filmler-izle/page/" to "Erotik Filmler"
-    )
+        "${mainUrl}/hdizle/category/2023-filmleri/"      to "2023 Filmleri",
+        "${mainUrl}/hdizle/category/2022-filmleri/"      to "2022 Filmleri",
+        "${mainUrl}/hdizle/category/2021-filmleri/"      to "2021 Filmleri",
+        "${mainUrl}/hdizle/category/2020-filmleri/"      to "2020 Filmleri",
+        "${mainUrl}/hdizle/category/aksiyon/"            to "Aksiyon",
+        "${mainUrl}/hdizle/category/animasyon/"          to "Animasyon",
+        "${mainUrl}/hdizle/category/belgesel/"           to "Belgesel",
+        "${mainUrl}/hdizle/category/biyografi/"          to "Biyografi",
+        "${mainUrl}/hdizle/category/bilim-kurgu/"        to "Bilim Kurgu",
+        "${mainUrl}/hdizle/category/fantastik/"          to "Fantastik",
+        "${mainUrl}/hdizle/category/dram/"               to "Dram",
+        "${mainUrl}/hdizle/category/gerilim/"            to "Gerilim",
+        "${mainUrl}/hdizle/category/gizem/"              to "Gizem",
+        "${mainUrl}/hdizle/category/komedi-filmleri/"    to "Komedi Filmleri",
+        "${mainUrl}/hdizle/category/karete-filmleri/"    to "Karete Filmleri",
+        "${mainUrl}/hdizle/category/korku/"              to "Korku",
+        "${mainUrl}/hdizle/category/muzik/"              to "Müzik",
+        "${mainUrl}/hdizle/category/macera/"             to "Macera",
+        "${mainUrl}/hdizle/category/romantik/"           to "Romantik",
+        "${mainUrl}/hdizle/category/spor/"               to "Spor",
+        "${mainUrl}/hdizle/category/savas/"              to "Savaş",
+        "${mainUrl}/hdizle/category/suc/"                to "Suç",
+        "${mainUrl}/hdizle/category/western/"            to "Western",
+        "${mainUrl}/hdizle/category/2019-filmleri/"      to "2019 Filmleri",
+        )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val document = app.get("${request.data}${page}").document
@@ -68,7 +80,12 @@ class SuperFilmGeldi : MainAPI() {
 
     private fun Element.toSearchResult(): SearchResponse? {
         val title     = this.selectFirst("span.movie-title a")?.text()?.substringBefore(" izle") ?: return null
-        val href      = fixUrlNull(this.selectFirst("span.movie-title a")?.attr("href")) ?: return null
+        val hrefraw   = fixUrlNull(this.selectFirst("span.movie-title a")?.attr("href")) ?: return null
+        val href      = if (hrefraw.contains("erotik")) {
+            return null
+            }else {
+            hrefraw
+        }
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
 
         return newMovieSearchResponse(removeUnnecessarySuffixes(title), href, TvType.Movie) { this.posterUrl = posterUrl }
