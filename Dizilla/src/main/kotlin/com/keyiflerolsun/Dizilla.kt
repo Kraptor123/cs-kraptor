@@ -56,21 +56,21 @@ class Dizilla : MainAPI() {
 
 
     override val mainPage = mainPageOf(
-//        "15" to   "Aile",
-//        "9"  to   "Aksiyon",
-//        "17" to   "Animasyon",
-//        "5"  to   "Bilim Kurgu",
-//        "2"  to   "Dram",
-//        "12" to   "Fantastik",
-//        "18" to   "Gerilim",
-//        "3"  to   "Gizem",
-//        "4"  to   "Komedi",
-//        "8"  to   "Korku",
-//        "24" to   "Macera",
+        "15" to   "Aile",
+        "9"  to   "Aksiyon",
+        "17" to   "Animasyon",
+        "5"  to   "Bilim Kurgu",
+        "2"  to   "Dram",
+        "12" to   "Fantastik",
+        "18" to   "Gerilim",
+        "3"  to   "Gizem",
+        "4"  to   "Komedi",
+        "8"  to   "Korku",
+        "24" to   "Macera",
         "7"  to   "Romantik",
-//        "26" to   "Savaş",
-//        "1"  to   "Suç",
-//        "11" to   "Western",
+        "26" to   "Savaş",
+        "1"  to   "Suç",
+        "11" to   "Western",
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
