@@ -1,4 +1,5 @@
 // ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
+// Aes anahtari icin MakotoTokioki'ye teşekkürler.
 
 package com.keyiflerolsun
 
@@ -22,6 +23,9 @@ import org.json.JSONObject
 import org.jsoup.Jsoup
 import java.util.*
 import kotlin.coroutines.cancellation.CancellationException
+import javax.crypto.Cipher
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
 
 
 private val cloudflareKiller by lazy { CloudflareKiller() }
@@ -50,22 +54,23 @@ class Dizilla : MainAPI() {
     override val supportedTypes = setOf(TvType.TvSeries)
 
 
+
     override val mainPage = mainPageOf(
-        "15" to   "Aile",
-        "9"  to   "Aksiyon",
-        "17" to   "Animasyon",
-        "5"  to   "Bilim Kurgu",
-        "2"  to   "Dram",
-        "12" to   "Fantastik",
-        "18" to   "Gerilim",
-        "3"  to   "Gizem",
-        "4"  to   "Komedi",
-        "8"  to   "Korku",
-        "24" to   "Macera",
+//        "15" to   "Aile",
+//        "9"  to   "Aksiyon",
+//        "17" to   "Animasyon",
+//        "5"  to   "Bilim Kurgu",
+//        "2"  to   "Dram",
+//        "12" to   "Fantastik",
+//        "18" to   "Gerilim",
+//        "3"  to   "Gizem",
+//        "4"  to   "Komedi",
+//        "8"  to   "Korku",
+//        "24" to   "Macera",
         "7"  to   "Romantik",
-        "26" to   "Savaş",
-        "1"  to   "Suç",
-        "11" to   "Western",
+//        "26" to   "Savaş",
+//        "1"  to   "Suç",
+//        "11" to   "Western",
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
@@ -85,7 +90,7 @@ class Dizilla : MainAPI() {
 
         val decoded = JSONObject(raw)
             .getString("response")
-            .let { String(Base64.decode(it, Base64.DEFAULT)) }
+            .let { decryptDizillaResponse(it) }
         Log.d("dizillayeni", "decoded = $decoded")
 
         // Parse JSON tree and pick result array
@@ -115,6 +120,7 @@ class Dizilla : MainAPI() {
             }
             val href = fixUrlNull("${mainUrl}/$slug")
                 ?: error("Invalid slug URL: $slug")
+            Log.d("kraptor_Dizilla", "poster =${item.infoposter}")
 
             when (type) {
                 TvType.TvSeries -> newTvSeriesSearchResponse(item.infotitle, href, type) {
@@ -152,7 +158,7 @@ class Dizilla : MainAPI() {
             val objectMapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             val searchResult: SearchResult = objectMapper.readValue(responseBody)
-            val decodedSearch = base64Decode(searchResult.response.toString())
+            val decodedSearch = decryptDizillaResponse(searchResult.response.toString()).toString()
             val contentJson: SearchData = objectMapper.readValue(decodedSearch)
             if (contentJson.state != true) {
                 throw ErrorLoadingException("Invalid Json response")
@@ -168,20 +174,11 @@ class Dizilla : MainAPI() {
             }
             results
         } catch (e: Exception) {
-            Log.e("Dizilla", "Search error: ${e.message}")
+            Log.e("kraptor_Dizilla", "Search error: ${e.message}")
             emptyList()
         }
     }
 
-    private fun toSearchResponse(ad: String, link: String, posterLink: String): SearchResponse {
-        return newTvSeriesSearchResponse(
-            ad,
-            link,
-            TvType.TvSeries,
-        ) {
-            this.posterUrl = posterLink
-        }
-    }
 
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
@@ -189,7 +186,7 @@ class Dizilla : MainAPI() {
         try {
             val response = app.get(url, interceptor = interceptor)
             val bodyString = response.body.string()
-            val document = org.jsoup.Jsoup.parse(bodyString)
+            val document = Jsoup.parse(bodyString)
 
             val titleElement = document.selectFirst("div.poster.poster h2")
             if (titleElement == null) {
@@ -281,7 +278,7 @@ class Dizilla : MainAPI() {
 
             val scriptElement = document.selectFirst("script#__NEXT_DATA__")
             if (scriptElement == null) {
-                Log.e("Dizilla", "__NEXT_DATA__ script bulunamadı")
+                Log.e("kraptor_Dizilla", "__NEXT_DATA__ script bulunamadı")
                 return false
             }
             val script = scriptElement.data()
@@ -295,22 +292,25 @@ class Dizilla : MainAPI() {
             }
 
             val secureDataString = secureDataNode.toString().replace("\"", "")
+            Log.d("kraptor_$name", "secureDataString = $secureDataString")
+
             val decodedData = try {
-                Base64.decode(secureDataString, Base64.DEFAULT).toString(Charsets.UTF_8)
+                decryptDizillaResponse(secureDataString)
             } catch (e: Exception) {
                 return false
             }
+            Log.d("kraptor_$name", "decodedData = $decodedData")
 
             val decodedJson = objectMapper.readTree(decodedData)
             val sourceNode = decodedJson.get("RelatedResults")?.get("getEpisodeSources")?.get("result")?.get(0)?.get("source_content")
             if (sourceNode == null) {
-                Log.e("Dizilla", "source_content bulunamadı")
+                Log.e("kraptor_Dizilla", "source_content bulunamadı")
                 return false
             }
             val source = sourceNode.toString().replace("\"", "").replace("\\", "")
             val iframe = fixUrlNull(Jsoup.parse(source).select("iframe").attr("src"))
             if (iframe == null) {
-                Log.e("Dizilla", "Iframe URL bulunamadı")
+                Log.e("kraptor_Dizilla", "Iframe URL bulunamadı")
                 return false
             }
 
@@ -332,3 +332,28 @@ data class dizillaJson(
     @JsonProperty("poster_url")      val infoposter: String?,
     @JsonProperty("used_slug")       val infoslug:   String?
 )
+
+private val privateAESKey = "9bYMCNQiWsXIYFWYAu7EkdsSbmGBTyUI"
+
+private fun decryptDizillaResponse(response: String): String? {
+    try {
+        val algorithm = "AES/CBC/PKCS5Padding"
+        val keySpec = SecretKeySpec(privateAESKey.toByteArray(), "AES")
+
+        val iv = ByteArray(16)
+        val ivSpec = IvParameterSpec(iv)
+
+        val cipher1 = Cipher.getInstance(algorithm)
+        cipher1.init(Cipher.DECRYPT_MODE, keySpec,ivSpec)
+        val firstIterationData =
+            cipher1.doFinal(Base64.decode(response, Base64.DEFAULT))
+
+        val jsonString = String(firstIterationData)
+
+        //https://www.youtube.com/watch?v=FSXuM2v0YLY
+        return jsonString
+    } catch (e: Exception) {
+        Log.e("kraptor_Dizilla", "Decryption failed: ${e.message}")
+        return null
+    }
+}
