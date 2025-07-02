@@ -57,7 +57,7 @@ class UgurFilm : MainAPI() {
     override suspend fun load(url: String): LoadResponse? {
         val document = app.get(url).document
 
-        val title       = document.selectFirst("div.bilgi h2")?.text()?.trim() ?: return null
+        val title       = document.selectFirst("div.bilgi h1")?.text()?.trim() ?: return null
         val poster      = fixUrlNull(document.selectFirst("div.resim img")?.attr("src"))
         val year        = document.selectFirst("a[href*='/yil/']")?.text()?.trim()?.toIntOrNull()
         val description = document.selectFirst("div.slayt-aciklama")?.text()?.trim()
