@@ -16,7 +16,7 @@ import kotlin.text.*
 
 
 class AnimeciX : MainAPI() {
-    override var mainUrl = "https://anm.cx"
+    override var mainUrl = "https://animecix.tv"
     override var name = "AnimeciX"
     override val hasMainPage = true
     override var lang = "tr"
