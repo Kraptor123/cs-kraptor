@@ -120,15 +120,36 @@ class Dizilla : MainAPI() {
             }
             val href = fixUrlNull("${mainUrl}/$slug")
                 ?: error("Invalid slug URL: $slug")
-            Log.d("kraptor_Dizilla", "poster =${item.infoposter}")
 
             when (type) {
                 TvType.TvSeries -> newTvSeriesSearchResponse(item.infotitle, href, type) {
-                    posterUrl = fixUrlNull(item.infoposter?.replace("images-macellan-online.cdn.ampproject.org/i/s/", ""))
+                    posterUrl = fixUrlNull(
+                        item.infoposter
+                            ?.replace("images-macellan-online.cdn.ampproject.org/i/s/", "")
+                            ?.replace("file.dizilla.club", "file.macellan.online")
+                            ?.replace("images.dizilla.club", "images.macellan.online")
+                            ?.replace("images.dizimia4.com", "images.macellan.online")
+                            ?.replace("file.dizimia4.com", "file.macellan.online")
+                            ?.replace(Regex("(file\\.)[\\w\\.]+\\/?"), "$1macellan.online/")
+                            ?.replace(Regex("(images\\.)[\\w\\.]+\\/?"), "$1macellan.online/")
+                    )
+                    posterHeaders = mapOf("referer" to "${mainUrl}/")
                 }
+
                 TvType.Movie -> newMovieSearchResponse(item.infotitle, href, type) {
-                    posterUrl = fixUrlNull(item.infoposter?.replace("images-macellan-online.cdn.ampproject.org/i/s/", ""))
+                    posterUrl = fixUrlNull(
+                        item.infoposter
+                            ?.replace("images-macellan-online.cdn.ampproject.org/i/s/", "")
+                            ?.replace("file.dizilla.club", "file.macellan.online")
+                            ?.replace("images.dizilla.club", "images.macellan.online")
+                            ?.replace("images.dizimia4.com", "images.macellan.online")
+                            ?.replace("file.dizimia4.com", "file.macellan.online")
+                            ?.replace(Regex("(file\\.)[\\w\\.]+\\/?"), "$1macellan.online/")
+                            ?.replace(Regex("(images\\.)[\\w\\.]+\\/?"), "$1macellan.online/")
+                    )
+                    posterHeaders = mapOf("referer" to "${mainUrl}/")
                 }
+
                 else -> error("Unsupported type for slug=$slug")
             }
         }
@@ -356,4 +377,17 @@ private fun decryptDizillaResponse(response: String): String? {
         Log.e("kraptor_Dizilla", "Decryption failed: ${e.message}")
         return null
     }
+}
+
+fun normalizeUrl(raw: String): String {
+    return raw
+        // Sabit domain eşlemeleri hâlâ ihtiyaç varsa tutun:
+        .replace("images-macellan-online.cdn.ampproject.org/i/s/", "")
+        .replace("file.dizilla.club", "file.macellan.online")
+        .replace("images.dizilla.club", "images.macellan.online")
+        .replace("images.dizimia4.com", "images.macellan.online")
+        .replace("file.dizimia4.com", "file.macellan.online")
+        // Aşağıdaki iki adım sadece host’u değiştirir, path’i bozulmaz:
+        .replace(Regex("""^(https?://)(?:file\.)[\w\.]+"""), "$1file.macellan.online")
+        .replace(Regex("""^(https?://)(?:images\.)[\w\.]+"""), "$1images.macellan.online")
 }
