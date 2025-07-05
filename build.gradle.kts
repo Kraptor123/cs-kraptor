@@ -75,6 +75,8 @@ subprojects {
         val implementation by configurations
 
         // Stubs for all Cloudstream classes
+        cloudstream("com.lagradost:cloudstream3:pre-release")
+
         // these dependencies can include any of those which are added by the app,
         // but you dont need to include any of them if you dont need them
         // https://github.com/recloudstream/cloudstream/blob/master/app/build.gradle
@@ -85,7 +87,6 @@ subprojects {
         implementation("com.fasterxml.jackson.core:jackson-databind:2.16.0")          // JSON-nesne dönüştürme kütüphanesi
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1")      // Kotlin için asenkron işlemler
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
-        implementation("com.github.vidstige:jadb:1.2.1")
     }
 }
 
