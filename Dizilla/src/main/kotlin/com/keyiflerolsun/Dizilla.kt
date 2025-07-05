@@ -56,8 +56,10 @@ class Dizilla : MainAPI() {
 
 
     override val mainPage = mainPageOf(
+        "15" to   "Yerli Diziler",
         "15" to   "Aile",
         "9"  to   "Aksiyon",
+        "17" to   "Anime",
         "17" to   "Animasyon",
         "5"  to   "Bilim Kurgu",
         "2"  to   "Dram",
@@ -66,6 +68,7 @@ class Dizilla : MainAPI() {
         "3"  to   "Gizem",
         "4"  to   "Komedi",
         "8"  to   "Korku",
+        "31" to   "Kore Dizileri",
         "24" to   "Macera",
         "7"  to   "Romantik",
         "26" to   "Savaş",
@@ -75,18 +78,59 @@ class Dizilla : MainAPI() {
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         // Decode Base64 response
-        val raw = app.post(
-            "${mainUrl}/api/bg/findSeries?releaseYearStart=1900&releaseYearEnd=2025&imdbPointMin=5&imdbPointMax=10&categoryIdsComma=${request.data}&countryIdsComma=&orderType=date_desc&languageId=-1&currentPage=${page}&currentPageCount=24&queryStr=&categorySlugsComma=&countryCodesComma=",
-            referer = "${mainUrl}/",
-            headers = mapOf(
-                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-                "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-                "Alt-Used" to "dizilla.club",
-                "Connection" to "keep-alive",
-                "Host" to "dizilla.club",
-            ),
-            interceptor = interceptor
-        ).document.text()
+        val raw = if (request.name.contains("Anime")) {
+            app.post(
+                "${mainUrl}/api/bg/findSeries?releaseYearStart=1900&releaseYearEnd=2024&imdbPointMin=5&imdbPointMax=10&categoryIdsComma=17&countryIdsComma=12&orderType=date_desc&languageId=-1&currentPage=$page&currentPageCount=24&queryStr=&categorySlugsComma=&countryCodesComma=",
+                referer = "${mainUrl}/",
+                headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+                    "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                    "Alt-Used" to "dizilla.club",
+                    "Connection" to "keep-alive",
+                    "Host" to "dizilla.club",
+                ),
+                interceptor = interceptor
+            ).document.text()
+        } else if (request.name.contains("Yerli Diziler")) {
+            app.post(
+                "${mainUrl}/api/bg/findSeries?releaseYearStart=1900&releaseYearEnd=2024&imdbPointMin=5&imdbPointMax=10&categoryIdsComma=&countryIdsComma=29&orderType=date_desc&languageId=-1&currentPage=$page&currentPageCount=24&queryStr=&categorySlugsComma=&countryCodesComma=",
+                referer = "${mainUrl}/",
+                headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+                    "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                    "Alt-Used" to "dizilla.club",
+                    "Connection" to "keep-alive",
+                    "Host" to "dizilla.club",
+                ),
+                interceptor = interceptor
+            ).document.text()
+    }else if (request.name.contains("Kore Dizileri")) {
+            app.post(
+                "${mainUrl}/api/bg/findSeries?releaseYearStart=1900&releaseYearEnd=2024&imdbPointMin=5&imdbPointMax=10&categoryIdsComma=&countryIdsComma=21&orderType=date_desc&languageId=-1&currentPage=$page&currentPageCount=24&queryStr=&categorySlugsComma=&countryCodesComma=",
+                referer = "${mainUrl}/",
+                headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+                    "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                    "Alt-Used" to "dizilla.club",
+                    "Connection" to "keep-alive",
+                    "Host" to "dizilla.club",
+                ),
+                interceptor = interceptor
+            ).document.text()
+        } else {
+            app.post(
+                "${mainUrl}/api/bg/findSeries?releaseYearStart=1900&releaseYearEnd=2025&imdbPointMin=5&imdbPointMax=10&categoryIdsComma=${request.data}&countryIdsComma=&orderType=date_desc&languageId=-1&currentPage=${page}&currentPageCount=24&queryStr=&categorySlugsComma=&countryCodesComma=",
+                referer = "${mainUrl}/",
+                headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+                    "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                    "Alt-Used" to "dizilla.club",
+                    "Connection" to "keep-alive",
+                    "Host" to "dizilla.club",
+                ),
+                interceptor = interceptor
+            ).document.text()
+        }
 
         val decoded = JSONObject(raw)
             .getString("response")
