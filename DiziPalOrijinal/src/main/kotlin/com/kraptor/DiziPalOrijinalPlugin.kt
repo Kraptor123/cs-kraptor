@@ -26,5 +26,6 @@ class DiziPalOrijinalPlugin: Plugin() {
         registerExtractorAPI(FourDplayer())
         registerExtractorAPI(SNDplayer())
         registerExtractorAPI(ORGDplayer())
+        registerExtractorAPI(Dplayer())
     }
 }

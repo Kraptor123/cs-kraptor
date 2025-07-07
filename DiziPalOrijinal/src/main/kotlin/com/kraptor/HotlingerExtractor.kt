@@ -46,3 +46,8 @@ class ORGDplayer : ContentX() {
     override var name    = "ORGDplayer"
     override var mainUrl = "https://org.dplayer82.site"
 }
+
+class Dplayer : ContentX() {
+    override var name    = "Dplayer"
+    override var mainUrl = "https://dplayer82.site"
+}
