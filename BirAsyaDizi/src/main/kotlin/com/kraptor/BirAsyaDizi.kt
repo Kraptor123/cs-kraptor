@@ -156,7 +156,7 @@ class BirAsyaDizi : MainAPI() {
     }
 
     private fun Element.toRecommendationResult(): SearchResponse? {
-        val title     = this.selectFirst("a img")?.attr("title") ?: return null
+        val title     = this.selectFirst("span.baslik")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("a img")?.attr("data-src"))
 
