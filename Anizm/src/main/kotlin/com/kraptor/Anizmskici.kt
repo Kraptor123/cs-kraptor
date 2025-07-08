@@ -38,9 +38,13 @@ fun getVideoUrls(data: String): Map<String, String> {
     val mainHtml = mainResponse.body.string()
     val doc = Jsoup.parse(mainHtml)
     val translatorLinks = doc.select("div#fansec.fansubSecimKutucugu a[translator]").map { it.attr("translator") }
+    val translatorName  = doc.select("div#fansec.fansubSecimKutucugu a[translator] div.title").map {it.text()}
 
     val allPlayerLinks = mutableMapOf<String, String>()
-    translatorLinks.forEach { translatorLink ->
+    doc.select("div#fansec.fansubSecimKutucugu a[translator]").forEach { elem ->
+        // 2. Aynı elem üzerinden hem link’i hem de adı al
+        val translatorLink = elem.attr("translator")
+        val translatorName = elem.selectFirst("div.title")?.text().orEmpty()
         var jsonText: String
         var attempts = 0
         val maxAttempts = 3
@@ -64,7 +68,7 @@ fun getVideoUrls(data: String): Map<String, String> {
                         val name = element.select("span").text()
                         val videoUrl = element.attr("video").replace("/video/", "//player/")
                         if (!allPlayerLinks.containsKey(name)) {
-                            allPlayerLinks[name] = videoUrl
+                            allPlayerLinks["$name, $translatorName"] = videoUrl
                         }
                     }
                     break

@@ -15,7 +15,21 @@ open class AincradExtractor : ExtractorApi() {
 
 
     override suspend fun getUrl(url: String, referer: String?): List<ExtractorLink> {
-//        Log.d("kraptor_aincrad", "url = $url")
+        val fansub = if (url.contains(", ")) {
+            url.substringAfter("name=").replace("}","")
+        } else {
+            name
+        }
+
+        val url  = if (url.contains(", ")) {
+            url.substringBefore(", ").substringAfter("=")
+        }else {
+            url
+        }
+        Log.d("kraptor_aincrad", "gelenUrl = $url")
+        Log.d("kraptor_aincrad", "fansub = $fansub")
+
+
         val hash = URI(url).path.substringAfterLast("/")
         val postUrl = "$mainUrl/player/index.php?data=$hash&do=getVideo"
 
@@ -37,8 +51,8 @@ open class AincradExtractor : ExtractorApi() {
         return response?.securedLink?.let { hlsUrl ->
             listOf(
                 newExtractorLink(
-                    source = name,
-                    name = name,
+                    source = fansub,
+                    name = fansub,
                     url = hlsUrl,
                     type = INFER_TYPE
                 ) {
