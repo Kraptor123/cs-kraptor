@@ -2,12 +2,17 @@
 
 package com.keyiflerolsun
 
+import android.util.Base64
 import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.ExtractorLinkType
+import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.getAndUnpack
 import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
 
 
@@ -77,7 +82,7 @@ class FilmMakinesi : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/arama/?s=${query}").document
-        Log.d("Makine", "arama = $document")
+        Log.d("kraptor_$name", "arama = $document")
         return document.select("div.item-relative").mapNotNull { it.toSearchResult() }
     }
 
@@ -121,13 +126,39 @@ class FilmMakinesi : MainAPI() {
 
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        Log.d("Makine", "data » $data")
+        Log.d("kraptor_$name", "data » $data")
         val document      = app.get(data).document
         val iframe = document.selectFirst("iframe")?.attr("data-src") ?: ""
-        Log.d("Makine", iframe)
+        val iframeGet = app.get(iframe, referer = "${mainUrl}/").document
+        val scriptAl  = iframeGet.select("script[type=text/javascript]")[1].data().trim()
+        val scriptUnpack = getAndUnpack(scriptAl)
+        val regex = Regex("""dc_hello\("([^"]+)"""")
+        val match = regex.find(scriptUnpack)
+        val b64 = match?.groupValues[1].toString()
+        val m3u8Url = decodeDcHello(b64)
+        Log.d("kraptor_$name", "m3u8Url = $m3u8Url")
 
-        loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+        callback.invoke(newExtractorLink(
+            source = this.name,
+            name = this.name,
+            url = m3u8Url,
+            type = ExtractorLinkType.M3U8,
+            {
+                this.referer = "https://closeload.filmmakinesi.de/"
+                quality = Qualities.Unknown.value
+            }
+        ))
 
         return true
     }
+}
+
+fun decodeDcHello(input: String): String {
+    // 1. atob(_0x37934e)
+    val firstDecoded = String(Base64.decode(input, Base64.DEFAULT))
+    // reverse ve tekrar atob işlemi
+    val reversed = firstDecoded.reversed()
+    val secondDecoded = String(Base64.decode(reversed, Base64.DEFAULT))
+    // ikinci decode sonucu "xxx|URL" formatında geliyor, URL ikinci parçadadır
+    return secondDecoded.split("|")[1]
 }
