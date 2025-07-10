@@ -1,5 +1,6 @@
 package com.keyiflerolsun
 
+import android.util.Base64
 import android.util.Log
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -272,11 +273,13 @@ class HDFilmCehennemi : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
+        Log.d("kraptor_$name","data = $data")
         val document = app.get(data).document
         val iframealak = fixUrlNull(
             document.selectFirst(".close")?.attr("data-src")
                 ?: document.selectFirst(".rapidrame")?.attr("data-src")
         ).toString()
+        Log.d("kraptor_$name","iframealak = $iframealak")
 
         // Process hdfilmcehennemi.mobi subtitles
         if (iframealak.contains("hdfilmcehennemi.mobi")) {
@@ -300,6 +303,7 @@ class HDFilmCehennemi : MainAPI() {
                 }
         } else if (iframealak.contains("rplayer")) {
             val iframeDoc = app.get(iframealak, referer = "$data/").document
+//            Log.d("kraptor_$name","iframeDoc = $iframeDoc")
             val regex = Regex("\"file\":\"((?:[^\"]|\"\")*)\"", options = setOf(RegexOption.IGNORE_CASE))
             val matches = regex.findAll(iframeDoc.toString())
 
@@ -318,7 +322,7 @@ class HDFilmCehennemi : MainAPI() {
         }
 
 
-        Log.d("fix", "iframegeldi mi $iframealak")
+        Log.d("kraptor_$name", "iframegeldi mi $iframealak")
 
         document.select("div.alternative-links").map { element ->
             element to element.attr("data-lang").uppercase()
@@ -335,13 +339,41 @@ class HDFilmCehennemi : MainAPI() {
                     referer = data
                 ).text
 
+
                 var iframe = Regex("""data-src=\\"([^"]+)""").find(apiGet)?.groupValues?.get(1)!!.replace("\\", "")
+
+                Log.d("kraptor_$name", "iframe mi $iframe")
+
+                val iframeGet = app.get(iframe, referer = "${mainUrl}/").text
+
+                val evalRegex = Regex("""eval\((.*?\\.*?\\.*?\\.*?\{\}\)\))""", RegexOption.DOT_MATCHES_ALL)
+                val packedCode = evalRegex.find(iframeGet)?.value
+                val unpackedJs = JsUnpacker(packedCode).unpack().toString()
+
+                val regex = Regex("""dc_hello\("([^"]+)"\)""")
+                val match = regex.find(unpackedJs)
+                Log.d("kraptor_$name", "match $match")
+                val base64String = match?.groupValues[1].toString()
+                val realUrl = dcHello(base64String)
+                Log.d("kraptor_$name", "realUrl $realUrl")
+
+
+
                 if (iframe.contains("?rapidrame_id=")) {
                     iframe = "${mainUrl}/playerr/" + iframe.substringAfter("?rapidrame_id=")
                 }
 
-                Log.d("HDCH", "$source » $videoID » $iframe")
-                invokeLocalSource(source, iframe, callback)
+                Log.d("kraptor_$name", "$source » $videoID » $iframe")
+                callback.invoke(newExtractorLink(
+                    source = "HdFilmCehennemi",
+                    name = "HdFilmCehennemi",
+                    url = realUrl,
+                    type = ExtractorLinkType.M3U8,
+                    {
+                        this.referer = "${realUrl}"
+                        this.quality = Qualities.Unknown.value
+                    }
+                ))
             }
         }
 
@@ -363,4 +395,18 @@ class HDFilmCehennemi : MainAPI() {
         @JsonProperty("canonical") val canonical: Boolean,
         @JsonProperty("keywords") val keywords: Boolean
     )
+}
+
+fun dcHello(encoded: String): String {
+    // İlk Base64 çöz
+    val firstDecoded = String(Base64.decode(encoded, Base64.DEFAULT))
+    // Ters çevir
+    val reversed = firstDecoded.reversed()
+    // İkinci Base64 çöz
+    val secondDecoded = String(Base64.decode(reversed, Base64.DEFAULT))
+    // '|' ile ayrılmış parçaların 2.'sini döndür
+    return secondDecoded
+        .split("|")
+        .getOrNull(1)
+        ?: throw IllegalArgumentException("Beklenen formatta değil: $secondDecoded")
 }

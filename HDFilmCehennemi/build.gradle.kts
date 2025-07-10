@@ -1,7 +1,7 @@
-version = 27
+version = 28
 
 cloudstream {
-    authors     = listOf("hexated", "keyiflerolsun", "kraptor123")
+    authors     = listOf("hexated", "keyiflerolsun", "kraptor")
     language    = "tr"
     description = "Türkiye'nin en hızlı hd film izleme sitesi"
 
