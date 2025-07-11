@@ -16,7 +16,7 @@ open class AincradExtractor : ExtractorApi() {
 
     override suspend fun getUrl(url: String, referer: String?): List<ExtractorLink> {
         val fansub = if (url.contains(", ")) {
-            url.substringAfter("name=").replace("}","")
+            url.substringAfter("name=").replace("}","").replace("(Reklamsız)", "").replace(",","").trim()
         } else {
             name
         }
