@@ -28,7 +28,7 @@ class DiziPalOrijinal : MainAPI() {
     override val hasMainPage = true
     override var lang = "tr"
     override val hasQuickSearch = false
-    override val supportedTypes = setOf(TvType.Movie)
+    override val supportedTypes = setOf(TvType.TvSeries)
     //Movie, AnimeMovie, TvSeries, Cartoon, Anime, OVA, Torrent, Documentary, AsianDrama, Live, NSFW, Others, Music, AudioBook, CustomMedia, Audio, Podcast,
 
     override var sequentialMainPage =
