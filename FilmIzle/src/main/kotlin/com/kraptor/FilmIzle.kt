@@ -15,7 +15,7 @@ import org.json.JSONArray
 
 class FilmIzle : MainAPI() {
     override var mainUrl = "https://filmizle.so"
-    override var name = "FilmIzleCx"
+    override var name = "FilmIzle"
     override val hasMainPage = true
     override var lang = "tr"
     override val hasQuickSearch = false
