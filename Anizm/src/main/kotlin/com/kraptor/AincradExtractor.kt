@@ -15,14 +15,14 @@ open class AincradExtractor : ExtractorApi() {
 
 
     override suspend fun getUrl(url: String, referer: String?): List<ExtractorLink> {
-        val fansub = if (url.contains(", ")) {
-            url.substringAfter("name=").replace("}","").replace("(Reklamsız)", "").replace(",","").trim()
+        val fansub = if (url.contains("|")) {
+            url.substringAfter("|").replace("(Reklamsız)", "").replace(",","").trim()
         } else {
             name
         }
 
-        val url  = if (url.contains(", ")) {
-            url.substringBefore(", ").substringAfter("=")
+        val url  = if (url.contains("|")) {
+            url.substringBefore("|")
         }else {
             url
         }

@@ -274,7 +274,7 @@ class Anizm : MainAPI() {
         val videoLinks = getVideoUrls(data)
         videoLinks.forEach { (name, url) ->
             if (name.contains("Aincrad")) {
-            val requestData = mapOf("url" to url, "name" to name).toString()
+            val requestData = "$url|$name"
             Log.d("kraptor_Anizm","request = $requestData")
                     loadExtractor(
                         url = requestData,
