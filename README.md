@@ -34,6 +34,7 @@ Teşekkür ederiz.
 - **BirAsyaDizi**
 - **Dizist**
 - **DiziPalOrijinal**
+- **AsyaMinik**
 
 ### 🍿 Filmler
 - **FilmEkseni**
