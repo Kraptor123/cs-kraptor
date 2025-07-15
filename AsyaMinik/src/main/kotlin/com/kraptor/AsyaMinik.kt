@@ -59,13 +59,14 @@ class AsyaMinik : MainAPI() {
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/?s=${query}").document
 
-        return document.select("div.result-item article").mapNotNull { it.toSearchResult() }
+        return document.select("div.post-container").mapNotNull { it.toSearchResult() }
     }
 
     private fun Element.toSearchResult(): SearchResponse? {
-        val title     = this.selectFirst("div.title a")?.text() ?: return null
-        val href      = fixUrlNull(this.selectFirst("div.title a")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val title     = this.selectFirst("div.title a")?.text()?.substringBefore(" izle") ?: return null
+        if (title.contains("Bölüm")) return null
+        val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 
         return newMovieSearchResponse(title, href, TvType.AsianDrama) { this.posterUrl = posterUrl }
     }
