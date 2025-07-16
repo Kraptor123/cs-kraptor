@@ -1,15 +1,13 @@
-// ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
+
 
 package com.keyiflerolsun
 
 import android.util.Log
+import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.utils.*
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.lagradost.cloudstream3.ErrorLoadingException
-import com.lagradost.cloudstream3.SubtitleFile
-import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.*
 
 open class VideoSeyred : ExtractorApi() {
     override val name            = "VideoSeyred"
@@ -35,20 +33,20 @@ open class VideoSeyred : ExtractorApi() {
                 )
             }
         }
-
+        
         for (source in response.sources) {
-            callback.invoke(
-                newExtractorLink(
-                    source = this.name,
-                    name = this.name,
-                    url = source.file,
-                    type    = INFER_TYPE
-                ) {
-                    headers = mapOf("Referer" to "${mainUrl}/") // Referer ayarlandı
-                    quality = Qualities.Unknown.value // Kalite ayarlandı
-                }
-            )
-        }
+        callback.invoke(
+            newExtractorLink(
+                source = this.name,
+                name = this.name,
+                url = source.file,
+                type    = INFER_TYPE
+            ) {
+                headers = mapOf("Referer" to "${mainUrl}/")
+                quality = Qualities.Unknown.value 
+            }
+        )
+     }
     }
 
     data class VideoSeyredSource(
