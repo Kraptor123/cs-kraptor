@@ -1,4 +1,4 @@
-package com.keyiflerolsun
+package com.kraptor
 
 import android.content.Context
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
@@ -11,6 +11,6 @@ class CizgiMaxPlugin: Plugin() {
         registerExtractorAPI(SibNet())
         registerExtractorAPI(CizgiDuo())
         registerExtractorAPI(CizgiPass())
-        registerExtractorAPI(Drive())
+        registerExtractorAPI(GoogleDriveExtractor())
     }
 }

@@ -1,6 +1,6 @@
 // ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-package com.keyiflerolsun
+package com.kraptor
 
 class CizgiPass : CizgiDuo() {
     override var name    = "CizgiPass"

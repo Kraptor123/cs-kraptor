@@ -1,6 +1,6 @@
 // ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-package com.keyiflerolsun
+package com.kraptor
 
 import android.util.Log
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -25,7 +25,7 @@ open class SibNet : ExtractorApi() {
 
         val isJson = url.trim().startsWith("{") && url.trim().endsWith("}")
         val (realUrl, extraInfo) = if (isJson) {
-            val requestData = mapper.readValue<com.keyiflerolsun.SibNet.RequestData>(url)
+            val requestData = mapper.readValue<RequestData>(url)
             requestData.url to requestData.extra
         } else {
             url to null
