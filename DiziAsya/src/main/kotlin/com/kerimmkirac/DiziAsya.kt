@@ -11,6 +11,9 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
 class DiziAsya : MainAPI() {
     override var mainUrl = "https://api.diziasya.com"
@@ -220,13 +223,19 @@ class DiziAsya : MainAPI() {
 
                 val publishDateMillis = publishDateStr?.let {
                     try {
-                        
                         val dateFormat = if (it.contains("T")) {
-                            DateTimeFormatter.ISO_LOCAL_DATE_TIME
+                            // ISO format: 2023-12-25T14:30:00
+                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
                         } else {
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                            // Custom format: 2023-12-25 14:30
+                            SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
                         }
-                        LocalDateTime.parse(it, dateFormat).toInstant(ZoneOffset.UTC).toEpochMilli()
+
+                        // UTC timezone'ı ayarla
+                        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+                        // Parse et ve milisaniye cinsinden döndür
+                        dateFormat.parse(it)?.time
                     } catch (e: Exception) {
                         null
                     }
@@ -242,13 +251,15 @@ class DiziAsya : MainAPI() {
                 
                 val episodeUrl = "$mainUrl/v2/chapters/show?contentSlug=$slug&chapterNo=$epNum&seasonNo=$seasonNum&contentType=${type.uppercase()}"
 
-                Episode(
-                    data = episodeUrl,
-                    name = episodeName,
-                    season = seasonNum,
-                    episode = epNum,
-                    date = publishDateMillis,
-                    posterUrl = posterUrl
+                newEpisode(
+                    url = episodeUrl,
+                    {
+                        name = episodeName
+                        this.season = seasonNum
+                        episode = epNum
+                        date = publishDateMillis
+                        this.posterUrl = posterUrl
+                    }
                 )
             }
         }
