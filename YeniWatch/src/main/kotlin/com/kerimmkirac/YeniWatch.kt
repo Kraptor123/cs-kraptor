@@ -58,7 +58,7 @@ class YeniWatch : MainAPI() {
         
         href = convertEpisodeUrlToCategoryUrl(href)
 
-        return newMovieSearchResponse(title, href, TvType.Anime) {
+        return newAnimeSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = posterUrl
         }
     }
@@ -73,7 +73,7 @@ class YeniWatch : MainAPI() {
         
         href = convertEpisodeUrlToCategoryUrl(href)
 
-        return newMovieSearchResponse(title, href, TvType.Anime) {
+        return newAnimeSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = posterUrl
         }
     }
@@ -109,7 +109,7 @@ class YeniWatch : MainAPI() {
         
         href = convertEpisodeUrlToCategoryUrl(href)
 
-        return newMovieSearchResponse(title, href, TvType.Anime) {
+        return newAnimeSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = posterUrl
         }
     }
@@ -175,11 +175,11 @@ class YeniWatch : MainAPI() {
         }
         
         
-        return newTvSeriesLoadResponse(title, url, TvType.Anime, episodes) {
+        return newAnimeLoadResponse(title, url, TvType.Anime, true) {
             this.posterUrl = poster
             this.plot = description
             this.tags = tags
-           
+           this.episodes = mutableMapOf(DubStatus.Subbed to episodes)
             addTrailer(trailer)
         }
     }
@@ -189,7 +189,7 @@ class YeniWatch : MainAPI() {
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("a img")?.attr("data-src"))
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newAnimeSearchResponse(title, href, TvType.Anime) { this.posterUrl = posterUrl }
     }
 
     override suspend fun loadLinks(
