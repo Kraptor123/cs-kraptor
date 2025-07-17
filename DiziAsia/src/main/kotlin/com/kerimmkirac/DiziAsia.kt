@@ -112,7 +112,7 @@ class DiziAsia : MainAPI() {
                 val name = ep.selectFirst("a.episode")?.text()?.trim() ?: "Bölüm ${index + 1}"
                 val link = fixUrl(ep.selectFirst("a.episode")?.attr("href") ?: return@mapIndexedNotNull null)
                 newEpisode(link, {
-                    this.name
+                    this.name   = name
                     this.season = 1
                 })
             }
