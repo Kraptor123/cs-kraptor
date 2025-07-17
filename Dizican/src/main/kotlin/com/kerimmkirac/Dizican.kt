@@ -162,13 +162,15 @@ private fun Element.toMainPageResult(): SearchResponse? {
                 
                 if (episodeUrl != null && episodeTitle != null) {
                     episodes.add(
-                        Episode(
-                            data = episodeUrl,
-                            name = episodeTitle,
-                            season = seasonNumber,
-                            episode = episodeNumber,
-                            posterUrl = episodePoster,
-                            description = episodeDate
+                        newEpisode(
+                            url = episodeUrl,
+                            {
+                                name = episodeTitle
+                                season = seasonNumber
+                                episode = episodeNumber
+                                posterUrl = episodePoster
+                                this.description = episodeDate
+                            }
                         )
                     )
                 }
