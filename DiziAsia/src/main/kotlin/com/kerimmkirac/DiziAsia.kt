@@ -111,7 +111,10 @@ class DiziAsia : MainAPI() {
             val episodes = document.select("div.card-episode").mapIndexedNotNull { index, ep ->
                 val name = ep.selectFirst("a.episode")?.text()?.trim() ?: "Bölüm ${index + 1}"
                 val link = fixUrl(ep.selectFirst("a.episode")?.attr("href") ?: return@mapIndexedNotNull null)
-                Episode(link, name, season = 1)
+                newEpisode(link, {
+                    this.name
+                    this.season = 1
+                })
             }
 
             newTvSeriesLoadResponse(title, url, TvType.AsianDrama, episodes) {
