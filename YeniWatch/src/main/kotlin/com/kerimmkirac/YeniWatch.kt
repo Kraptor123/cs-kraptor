@@ -58,7 +58,7 @@ class YeniWatch : MainAPI() {
         
         href = convertEpisodeUrlToCategoryUrl(href)
 
-        return newMovieSearchResponse(title, href, TvType.TvSeries) {
+        return newMovieSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = posterUrl
         }
     }
@@ -73,7 +73,7 @@ class YeniWatch : MainAPI() {
         
         href = convertEpisodeUrlToCategoryUrl(href)
 
-        return newMovieSearchResponse(title, href, TvType.TvSeries) {
+        return newMovieSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = posterUrl
         }
     }
@@ -109,7 +109,7 @@ class YeniWatch : MainAPI() {
         
         href = convertEpisodeUrlToCategoryUrl(href)
 
-        return newMovieSearchResponse(title, href, TvType.TvSeries) {
+        return newMovieSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = posterUrl
         }
     }
