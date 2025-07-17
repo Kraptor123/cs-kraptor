@@ -162,12 +162,14 @@ class YeniWatch : MainAPI() {
                 
                 
                 if (seasonNum != null && seasonNum > 0) {
-                    Episode(
-                        data = episodeLink,
-                        name = episodeName ?: "Bölüm $episodeNum",
-                        season = seasonNum,
-                        episode = episodeNum,
-                        posterUrl = poster,
+                    newEpisode(
+                        url = episodeLink,
+                        {
+                            name = episodeName ?: "Bölüm $episodeNum"
+                            season = seasonNum
+                            episode = episodeNum
+                            posterUrl = poster
+                        }
                        
                     )
                 } else null
