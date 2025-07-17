@@ -126,7 +126,7 @@ class AsyaKing : MainAPI() {
         val episodes = document.select("div.bolumust").mapNotNull { ep ->
             val link = fixUrlNull(ep.selectFirst("a")?.attr("href")) ?: return@mapNotNull null
             val name = ep.selectFirst("div.baslik")?.text()?.trim() ?: return@mapNotNull null
-            Episode(link, name)
+            newEpisode(link, {this.name = name})
         }
 
         return newTvSeriesLoadResponse(title, url, TvType.AsianDrama, episodes) {
