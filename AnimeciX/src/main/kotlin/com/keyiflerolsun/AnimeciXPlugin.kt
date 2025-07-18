@@ -9,5 +9,6 @@ class AnimeciXPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(AnimeciX())
         registerExtractorAPI(TauVideo())
+        registerExtractorAPI(GoogleDriveExtractor())
     }
 }
