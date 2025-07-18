@@ -51,6 +51,7 @@ class Anizm : MainAPI() {
 
     // Ana Sayfa
     override val mainPage = mainPageOf(
+        ""   to "Güncel Animeler",
         "2"  to "Aksiyon",
         "52" to "Arabalar",
         "7"  to "Askeri",
@@ -129,19 +130,40 @@ class Anizm : MainAPI() {
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         initSession()
-        val document = app.post(
-            "$mainUrl/tavsiyeRobotuResult",
-            headers = mapOf(
-                "User-Agent" to USER_AGENT,
-                "Referer" to mainUrl,
-                "X-Requested-With" to "XMLHttpRequest",
-                "X-CSRF-TOKEN" to (csrfToken ?: "")
-            ),
-            data = mapOf("kategoriler[]" to request.data),
-            cookies = sessionCookies!!,
-            interceptor = interceptor,
-            timeout = 120
-        ).document
+        val document = if (request.name.contains("Güncel Animeler")){
+            app.post(
+                "$mainUrl/tavsiyeRobotuResult",
+                headers = mapOf(
+                    "User-Agent" to USER_AGENT,
+                    "Referer" to mainUrl,
+                    "X-Requested-With" to "XMLHttpRequest",
+                    "X-CSRF-TOKEN" to (csrfToken ?: "")
+                ),
+                data = mapOf(
+                    "yillar[]" to "2025",
+                    "yillar[]" to "2024",
+                    "yillar[]" to "2023"
+                ),
+                cookies = sessionCookies!!,
+                interceptor = interceptor,
+                timeout = 120
+            ).document
+        }
+        else {
+            app.post(
+                "$mainUrl/tavsiyeRobotuResult",
+                headers = mapOf(
+                    "User-Agent" to USER_AGENT,
+                    "Referer" to mainUrl,
+                    "X-Requested-With" to "XMLHttpRequest",
+                    "X-CSRF-TOKEN" to (csrfToken ?: "")
+                ),
+                data = mapOf("kategoriler[]" to request.data),
+                cookies = sessionCookies!!,
+                interceptor = interceptor,
+                timeout = 120
+            ).document
+        }
         val home = document.select("div.aramaSonucItem").mapNotNull { it.toMainPageResult() }
         return newHomePageResponse(request.name, home, hasNext = false)
     }
