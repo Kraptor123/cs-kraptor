@@ -1,6 +1,6 @@
 // ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-package com.kraptor
+package com.keyiflerolsun
 
 import android.util.Log
 import com.fasterxml.jackson.annotation.JsonProperty

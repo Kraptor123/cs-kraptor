@@ -10,5 +10,6 @@ class AnimeciXPlugin: Plugin() {
         registerMainAPI(AnimeciX())
         registerExtractorAPI(TauVideo())
         registerExtractorAPI(GoogleDriveExtractor())
+        registerExtractorAPI(SibNet())
     }
 }
