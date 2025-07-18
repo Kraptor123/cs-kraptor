@@ -25,5 +25,6 @@ class DizillaPlugin: Plugin() {
         registerExtractorAPI(FourDplayer())
         registerExtractorAPI(SNDplayer())
         registerExtractorAPI(ORGDplayer())
+        registerExtractorAPI(SnHotLinger())
     }
 }
