@@ -135,7 +135,7 @@ class Dizilla : MainAPI() {
         val decoded = JSONObject(raw)
             .getString("response")
             .let { decryptDizillaResponse(it) }
-        Log.d("dizillayeni", "decoded = $decoded")
+//        Log.d("dizillayeni", "decoded = $decoded")
 
         // Parse JSON tree and pick result array
         val mapper = jsonMapper()
@@ -248,7 +248,7 @@ class Dizilla : MainAPI() {
             }
             results
         } catch (e: Exception) {
-            Log.e("kraptor_Dizilla", "Search error: ${e.message}")
+//            Log.e("kraptor_Dizilla", "Search error: ${e.message}")
             emptyList()
         }
     }
@@ -306,7 +306,7 @@ class Dizilla : MainAPI() {
                 val sezonDoc = org.jsoup.Jsoup.parse(sezonBody)
 //                val split = sezonHref.split("-")
                 val season = sezonHref.substringBefore("-sezon").substringAfterLast("-").toIntOrNull()
-                Log.d("kraptor_$name", "season = $season")
+//                Log.d("kraptor_$name", "season = $season")
                 val episodesContainer = sezonDoc.select("div.episodes")
                 for (bolum in episodesContainer.select("div.cursor-pointer")) {
                     val linkElements = bolum.select("a")
@@ -315,9 +315,9 @@ class Dizilla : MainAPI() {
                     }
                     val epName = linkElements.last()?.ownText() ?: continue
                     val epHref = fixUrlNull(linkElements.last()?.attr("href")) ?: continue
-                    Log.d("kraptor_$name", "epHref = $epHref")
+//                    Log.d("kraptor_$name", "epHref = $epHref")
                     val epEpisode = bolum.selectFirst("a")?.ownText()?.trim()?.toIntOrNull()
-                    Log.d("kraptor_$name", "epEpisode = $epEpisode")
+//                    Log.d("kraptor_$name", "epEpisode = $epEpisode")
                     val newEpisode = newEpisode(epHref) {
                         this.name = epName
                         this.season = season
@@ -369,25 +369,25 @@ class Dizilla : MainAPI() {
             }
 
             val secureDataString = secureDataNode.toString().replace("\"", "")
-            Log.d("kraptor_$name", "secureDataString = $secureDataString")
+//            Log.d("kraptor_$name", "secureDataString = $secureDataString")
 
             val decodedData = try {
                 decryptDizillaResponse(secureDataString)
             } catch (e: Exception) {
                 return false
             }
-            Log.d("kraptor_$name", "decodedData = $decodedData")
+//            Log.d("kraptor_$name", "decodedData = $decodedData")
 
             val decodedJson = objectMapper.readTree(decodedData)
             val sourceNode = decodedJson.get("RelatedResults")?.get("getEpisodeSources")?.get("result")?.get(0)?.get("source_content")
             if (sourceNode == null) {
-                Log.e("kraptor_Dizilla", "source_content bulunamadı")
+//                Log.e("kraptor_Dizilla", "source_content bulunamadı")
                 return false
             }
             val source = sourceNode.toString().replace("\"", "").replace("\\", "")
             val iframe = fixUrlNull(Jsoup.parse(source).select("iframe").attr("src"))
             if (iframe == null) {
-                Log.e("kraptor_Dizilla", "Iframe URL bulunamadı")
+//                Log.e("kraptor_Dizilla", "Iframe URL bulunamadı")
                 return false
             }
             val iframeKont = if (iframe.contains("sn.dplayer74.site")){
@@ -435,20 +435,7 @@ private fun decryptDizillaResponse(response: String): String? {
         //https://www.youtube.com/watch?v=FSXuM2v0YLY
         return jsonString
     } catch (e: Exception) {
-        Log.e("kraptor_Dizilla", "Decryption failed: ${e.message}")
+//        Log.e("kraptor_Dizilla", "Decryption failed: ${e.message}")
         return null
     }
-}
-
-fun normalizeUrl(raw: String): String {
-    return raw
-        // Sabit domain eşlemeleri hâlâ ihtiyaç varsa tutun:
-        .replace("images-macellan-online.cdn.ampproject.org/i/s/", "")
-        .replace("file.dizilla.club", "file.macellan.online")
-        .replace("images.dizilla.club", "images.macellan.online")
-        .replace("images.dizimia4.com", "images.macellan.online")
-        .replace("file.dizimia4.com", "file.macellan.online")
-        // Aşağıdaki iki adım sadece host’u değiştirir, path’i bozulmaz:
-        .replace(Regex("""^(https?://)(?:file\.)[\w\.]+"""), "$1file.macellan.online")
-        .replace(Regex("""^(https?://)(?:images\.)[\w\.]+"""), "$1images.macellan.online")
 }
