@@ -21,49 +21,33 @@ open class TauVideo : ExtractorApi() {
         Log.d("kraptor_$name", "extRef » $extRef")
         Log.d("kraptor_$name", "url » $url")
 
-        try {
-            val mapper = jacksonObjectMapper()
-            val isJson = url.trim().startsWith("{") && url.trim().endsWith("}")
-            val videoKey: String
-            val extraInfo: String?
-            if (isJson) {
-                val requestData = mapper.readValue<RequestData>(url)
-                videoKey = requestData.url.split("/").last()
-                extraInfo = requestData.extra
-            } else {
-                videoKey = url.split("/").last()
-                extraInfo = null
-            }
+        val videolink = url.substringBefore("|")
+        val cevirmen  = url.substringAfter("|")
+        val videoKey  = videolink.substringAfterLast("/")
 
-            val videoUrl = "${mainUrl}/api/video/${videoKey}"
-            Log.d("ACX", "videoUrl » $videoUrl")
-            Log.d("ACX", "extraInfo » $extraInfo")
 
-            val api = app.get(videoUrl).parsedSafe<TauVideoUrls>() ?: throw ErrorLoadingException("TauVideo")
-
-            val finalName = listOfNotNull(this.name, extraInfo)
-                .takeIf { it.isNotEmpty() }
-                ?.joinToString(" + ") ?: this.name
-
-            for (video in api.urls) {
-                callback.invoke(
-                    newExtractorLink(
-                        source = finalName,
-                        name = finalName,
-                        url = video.url,
-                        type = INFER_TYPE
-                    ) {
-                        headers = mapOf("Referer" to extRef)
-                        quality = getQualityFromName(video.label)
-                    }
-                )
-            }
-
-        } catch (e: Exception) {
-            Log.e("ACX", "TauVideo parsing error: ${e.message}")
-            throw ErrorLoadingException("TauVideo parsing failed")
+        val videoUrl = "${mainUrl}/api/video/${videoKey}"
+        Log.d("kraptor_ACX", "videoUrl » $videoUrl")
+        Log.d("kraptor_ACX", "cevirmen » $cevirmen")
+        val api = app.get(videoUrl).parsedSafe<TauVideoUrls>() ?: throw ErrorLoadingException("TauVideo")
+        val finalName = listOfNotNull(this.name, cevirmen)
+            .takeIf { it.isNotEmpty() }
+            ?.joinToString(" + ") ?: this.name
+        for (video in api.urls) {
+            callback.invoke(
+                newExtractorLink(
+                    source = finalName,
+                    name = finalName,
+                    url = video.url,
+                    type = INFER_TYPE
+                ) {
+                    headers = mapOf("Referer" to extRef)
+                    quality = getQualityFromName(video.label)
+                }
+            )
         }
-    }
+
+        }
 
     data class RequestData(
         @JsonProperty("url") val url: String,

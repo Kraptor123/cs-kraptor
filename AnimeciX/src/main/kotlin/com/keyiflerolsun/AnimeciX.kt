@@ -254,14 +254,9 @@ class AnimeciX : MainAPI() {
             }
 
             for (video in videos) {
-                val requestData = mapper.writeValueAsString(
-                    mapOf(
-                        "url" to video.url,
-                        "extra" to video.extra
-                    )
-                )
+                val requestData = "${video.url}|${video.extra}"
                 if (listOf("tau-video", "sibnet").any { video.url.contains(it) }) {
-                    Log.d("kraptor_ACX", "if url  =  ${video.url}")
+                    Log.d("kraptor_ACX", "liste  =  $requestData")
                     loadExtractor(
                         requestData,
                         "${mainUrl}/",
