@@ -8,5 +8,9 @@ import android.content.Context
 class CizgiveDiziPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CizgiveDizi())
+        registerExtractorAPI(GoogleDriveExtractor())
+        registerExtractorAPI(SibNet())
+        registerExtractorAPI(CizgiDuo())
+        registerExtractorAPI(CizgiPass())
     }
 }
