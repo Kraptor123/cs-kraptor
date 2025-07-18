@@ -51,3 +51,8 @@ class SnHotLinger : ContentX() {
     override var name    = "SnHotLinger"
     override var mainUrl = "https://sn.hotlinger.com"
 }
+
+class SNDPlayer74 : ContentX() {
+    override var name    = "SNDPlayer74"
+    override var mainUrl = "https://sn.dplayer74.site"
+}

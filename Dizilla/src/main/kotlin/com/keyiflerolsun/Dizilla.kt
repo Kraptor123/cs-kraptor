@@ -234,7 +234,14 @@ class Dizilla : MainAPI() {
             contentJson.result?.forEach {
                 val name = it.title.toString()
                 val link = fixUrl(it.slug.toString())
-                val posterLink = it.poster.toString()
+                val posterLink = it.poster?.replace("images-macellan-online.cdn.ampproject.org/i/s/", "")
+                    ?.replace("file.dizilla.club", "file.macellan.online")
+                    ?.replace("images.dizilla.club", "images.macellan.online")
+                    ?.replace("images.dizimia4.com", "images.macellan.online")
+                    ?.replace("file.dizimia4.com", "file.macellan.online")
+                    ?.replace("/f/f/", "/630/910/")
+                    ?.replace(Regex("(file\\.)[\\w\\.]+\\/?"), "$1macellan.online/")
+                    ?.replace(Regex("(images\\.)[\\w\\.]+\\/?"), "$1macellan.online/").toString()
                 results.add(newTvSeriesSearchResponse(name, link, TvType.TvSeries) {
                     this.posterUrl = posterLink
                 })
@@ -297,8 +304,9 @@ class Dizilla : MainAPI() {
                 val sezonResponse = app.get(sezonHref, interceptor = interceptor)
                 val sezonBody = sezonResponse.body.string()
                 val sezonDoc = org.jsoup.Jsoup.parse(sezonBody)
-                val split = sezonHref.split("-")
-                val season = split.getOrNull(split.size - 2)?.toIntOrNull()
+//                val split = sezonHref.split("-")
+                val season = sezonHref.substringBefore("-sezon").substringAfterLast("-").toIntOrNull()
+                Log.d("kraptor_$name", "season = $season")
                 val episodesContainer = sezonDoc.select("div.episodes")
                 for (bolum in episodesContainer.select("div.cursor-pointer")) {
                     val linkElements = bolum.select("a")
@@ -307,7 +315,9 @@ class Dizilla : MainAPI() {
                     }
                     val epName = linkElements.last()?.ownText() ?: continue
                     val epHref = fixUrlNull(linkElements.last()?.attr("href")) ?: continue
+                    Log.d("kraptor_$name", "epHref = $epHref")
                     val epEpisode = bolum.selectFirst("a")?.ownText()?.trim()?.toIntOrNull()
+                    Log.d("kraptor_$name", "epEpisode = $epEpisode")
                     val newEpisode = newEpisode(epHref) {
                         this.name = epName
                         this.season = season
@@ -380,8 +390,13 @@ class Dizilla : MainAPI() {
                 Log.e("kraptor_Dizilla", "Iframe URL bulunamadı")
                 return false
             }
+            val iframeKont = if (iframe.contains("sn.dplayer74.site")){
+                iframe.replace("sn.dplayer74.site","sn.hotlinger.com")
+            } else{
+                iframe
+            }
 
-            loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
+            loadExtractor(iframeKont, "${mainUrl}/", subtitleCallback, callback)
             return true
 
         } catch (e: CancellationException) {
