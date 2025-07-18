@@ -36,12 +36,14 @@ fun getVideoUrls(data: String): Map<String, String> {
 
     val mainResponse = client.newCall(mainRequest).execute()
     val mainHtml = mainResponse.body.string()
+//    Log.d("kraptor_anizmskici", "mainHtml = $mainHtml")
     val doc = Jsoup.parse(mainHtml)
-    val translatorLinks = doc.select("div#fansec.fansubSecimKutucugu a[translator]").map { it.attr("translator") }
-    val translatorName  = doc.select("div#fansec.fansubSecimKutucugu a[translator] div.title").map {it.text()}
+    val translatorLinks = doc.select("div.fansubSecimKutucugu a[translator]").map { it.attr("translator") }
+    val translatorName  = doc.select("div.fansubSecimKutucugu a[translator] div.title").map {it.text()}
 
     val allPlayerLinks = mutableMapOf<String, String>()
-    doc.select("div#fansec.fansubSecimKutucugu a[translator]").forEach { elem ->
+    doc.select("div.fansubSecimKutucugu a[translator]").forEach { elem ->
+        Log.d("kraptor_anizmskici", "elem = $elem")
         // 2. Aynı elem üzerinden hem link’i hem de adı al
         val translatorLink = elem.attr("translator")
         val translatorName = elem.selectFirst("div.title")?.text().orEmpty()
@@ -59,6 +61,7 @@ fun getVideoUrls(data: String): Map<String, String> {
 
                 val jsonResponse = client.newCall(jsonRequest).execute()
                 jsonText = jsonResponse.body.string()
+                Log.d("kraptor_anizmskici", "jsonText = $jsonText")
                 
                 if (!jsonText.contains("Attention Required!")) {
                     val jsonData = JSONObject(jsonText)

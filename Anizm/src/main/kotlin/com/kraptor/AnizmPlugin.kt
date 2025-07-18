@@ -11,5 +11,6 @@ class AnizmPlugin: Plugin() {
     override fun load(context: Context) {
         registerMainAPI(Anizm())
         registerExtractorAPI(AincradExtractor())
+        registerExtractorAPI(GoogleDriveExtractor())
     }
 }

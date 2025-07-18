@@ -18,6 +18,8 @@ open class TauVideo : ExtractorApi() {
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
         val extRef = referer ?: ""
+        Log.d("kraptor_$name", "extRef » $extRef")
+        Log.d("kraptor_$name", "url » $url")
 
         try {
             val mapper = jacksonObjectMapper()

@@ -197,12 +197,12 @@ class AnimeciX : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        Log.d("ACX", "data » $data")
+        Log.d("kraptor_ACX", "data » $data")
 
         // Film için eski kodun mantığını kullan (data URL'si anm.cx içeriyorsa)
         val iframeResponse = app.get(data, referer = "$mainUrl/", allowRedirects = true)
         val iframeLink = iframeResponse.url
-        Log.d("ACX", "Final iframeLink » $iframeLink")
+        Log.d("kraptor_ACX", "Final iframeLink » $iframeLink")
 
         if (iframeLink.contains("anm.cx")) {
             val rawJson = app
@@ -213,6 +213,7 @@ class AnimeciX : MainAPI() {
                 )
                 .body
                 .string()
+            Log.d("kraptor_ACX", "rawJson =  $rawJson")
             val json = JSONObject(rawJson)
             val videosArray = json.getJSONObject("title").getJSONArray("videos")
             for (i in 0 until videosArray.length()) {
@@ -226,7 +227,7 @@ class AnimeciX : MainAPI() {
                     || url.contains("youtube", ignoreCase = true)
                 ) continue
 
-                Log.d("ACX", "Video URL: $url")
+                Log.d("kraptor_ACX", "Video URL: $url")
                 loadExtractor(url = url, "$mainUrl/", subtitleCallback, callback)
             }
         } else {
@@ -260,6 +261,7 @@ class AnimeciX : MainAPI() {
                     )
                 )
                 if (listOf("tau-video", "sibnet").any { video.url.contains(it) }) {
+                    Log.d("kraptor_ACX", "if url  =  ${video.url}")
                     loadExtractor(
                         requestData,
                         "${mainUrl}/",
@@ -267,6 +269,7 @@ class AnimeciX : MainAPI() {
                         callback
                     )
                 } else {
+                    Log.d("kraptor_ACX", "else url  =  ${video.url}")
                     loadExtractor(video.url, "${mainUrl}/", subtitleCallback, callback)
                 }
             }
