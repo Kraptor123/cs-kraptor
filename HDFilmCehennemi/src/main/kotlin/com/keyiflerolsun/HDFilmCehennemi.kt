@@ -291,8 +291,10 @@ class HDFilmCehennemi : MainAPI() {
                 .forEach { track ->
                     val lang = track.attr("srclang").let {
                         when (it) {
-                            "tr" -> "Türkçe"
-                            "en" -> "İngilizce"
+                            "tr" -> "Turkish"
+                            "en" -> "English"
+                            "Türkçe" -> "Turkish"
+                            "İngilizce" -> "English"
                             else -> it
                         }
                     }
@@ -352,8 +354,8 @@ class HDFilmCehennemi : MainAPI() {
 
                 val regex = Regex("""dc_hello\("([^"]+)"\)""")
                 val match = regex.find(unpackedJs)
-                Log.d("kraptor_$name", "match $match")
                 val base64String = match?.groupValues[1].toString()
+                Log.d("kraptor_$name", "base64String $base64String")
                 val realUrl = dcHello(base64String)
                 Log.d("kraptor_$name", "realUrl $realUrl")
 
@@ -363,14 +365,28 @@ class HDFilmCehennemi : MainAPI() {
                     iframe = "${mainUrl}/playerr/" + iframe.substringAfter("?rapidrame_id=")
                 }
 
+                val videoIsim = if (realUrl.contains("rapidrame")) {
+                    "Rapidrame"
+                } else if (realUrl.contains("cdnimages")) {
+                    "Close"
+                } else {
+                    "HDFilmCehennemi"
+                }
+
+                val referer = if (realUrl.contains("cdnimages")) {
+                    "https://hdfilmcehennemi.mobi/"
+                } else {
+                    "${realUrl}/"
+                }
+
                 Log.d("kraptor_$name", "$source » $videoID » $iframe")
                 callback.invoke(newExtractorLink(
-                    source = "HdFilmCehennemi",
-                    name = "HdFilmCehennemi",
+                    source = videoIsim,
+                    name = videoIsim,
                     url = realUrl,
                     type = ExtractorLinkType.M3U8,
                     {
-                        this.referer = "${realUrl}"
+                        this.referer = referer
                         this.quality = Qualities.Unknown.value
                     }
                 ))
@@ -399,14 +415,24 @@ class HDFilmCehennemi : MainAPI() {
 
 fun dcHello(encoded: String): String {
     // İlk Base64 çöz
-    val firstDecoded = String(Base64.decode(encoded, Base64.DEFAULT))
+    val firstDecoded = base64Decode(encoded)
+    Log.d("kraptor_hdfilmcehennemi", "firstDecoded $firstDecoded")
     // Ters çevir
     val reversed = firstDecoded.reversed()
+    Log.d("kraptor_hdfilmcehennemi", "reversed $reversed")
     // İkinci Base64 çöz
-    val secondDecoded = String(Base64.decode(reversed, Base64.DEFAULT))
-    // '|' ile ayrılmış parçaların 2.'sini döndür
-    return secondDecoded
-        .split("|")
-        .getOrNull(1)
-        ?: throw IllegalArgumentException("Beklenen formatta değil: $secondDecoded")
+    val secondDecoded = base64Decode(reversed)
+
+    val gercekLink    = if (secondDecoded.contains("+")) {
+        secondDecoded.substringAfterLast("+")
+    } else if (secondDecoded.contains(" ")) {
+        secondDecoded.substringAfterLast(" ")
+    } else if (secondDecoded.contains("|")){
+        secondDecoded.substringAfterLast("|")
+    } else {
+        secondDecoded
+    }
+    Log.d("kraptor_hdfilmcehennemi", "secondDecoded $secondDecoded")
+    return gercekLink
+
 }
