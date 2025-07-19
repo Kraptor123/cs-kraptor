@@ -119,13 +119,13 @@ class `4KFilmIzleme` : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        Log.d("filmizlesene", "data » $data")
+        Log.d("kraptor_$name", "data » $data")
         for (page in 1..2) {
             val document = app.get("$data/$page").document
             val iframesec = document.select("iframe").attr("src")
             if (!iframesec.contains("youtube")) {
             val iframe = fixUrlNull(iframesec).toString()
-            Log.d("filmizlesene", "iframe » $iframe")
+            Log.d("kraptor_$name", "iframe » $iframe")
                 loadExtractor(iframe, referer = "${mainUrl}/", subtitleCallback = subtitleCallback, callback = callback)
             }
             else return false

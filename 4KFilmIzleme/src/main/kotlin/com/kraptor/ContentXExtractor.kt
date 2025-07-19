@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.base64DecodeArray
 import com.lagradost.cloudstream3.utils.*
 import java.nio.charset.Charset
 
@@ -371,7 +372,7 @@ open class TurkeyPlayer : ExtractorApi() {
                 subtitleCallback.invoke(SubtitleFile(lang, fixM3u.toString()))
             }
 
-            Log.d("filmizlesene", "normalized m3u » $fixM3u")
+            Log.d("kraptor_$name", "normalized m3u » $fixM3u")
 
 
             val dil = Regex("""title\":\"([^\"]*)\"""").find(videoReq)
@@ -413,49 +414,73 @@ open class VidMoxy : ExtractorApi() {
     fun decodeHexEscapes(input: String): String {
         return input.replace(Regex("""\\x([0-9A-Fa-f]{2})""")) {
             val byte = it.groupValues[1].toInt(16).toByte()
-            byte.toChar().toString()
+            byte.toInt().toChar().toString()
         }
     }
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
+        Log.d("kraptor_4kfilm", "url = $url")
         val extRef   = referer ?: ""
         val videoReq = app.get(url, referer=extRef).text
-
-        val subUrls = mutableSetOf<String>()
-        Regex("""captions","file":"([^"]+)","label":"([^"]+)"""").findAll(videoReq).forEach {
-            val (subUrl, subLang) = it.destructured
-
-            if (subUrl in subUrls) { return@forEach }
-            subUrls.add(subUrl)
-
-            subtitleCallback.invoke(
-                SubtitleFile(
-                    lang = subLang.replace("\\u0131", "ı").replace("\\u0130", "İ").replace("\\u00fc", "ü").replace("\\u00e7", "ç"),
-                    url  = fixUrl(subUrl.replace("\\", ""))
-                )
-            )
-        }
-
-        val extractedValue = Regex(""""file": "([^"]*)"""").find(videoReq)
-            ?.groupValues?.get(1).toString()
-
-        Log.d("filmizlesene", "extractedValue = $extractedValue")
-
-        val realUrl = decodeHexEscapes(extractedValue)
-        Log.d("filmizlesene", "realUrl = $realUrl")
-
+//        Log.d("kraptor_4kfilm", "videoReq = $videoReq")
+        val regex = Regex("""file\s*:\s*EE\.dd\("([^"]+)"""")
+        val match = regex.find(videoReq)
+        val encoded =  match?.groupValues?.get(1).toString()
+        Log.d("kraptor_4kfilm", "encoded = $encoded")
+        val decoded = decodeEE(encoded)
+        Log.d("kraptor_4kfilm", "decoded = $decoded")
+        val altyRegex = Regex(pattern = """"file": "([^"]*)"""", options = setOf(RegexOption.IGNORE_CASE))
+        altyRegex.findAll(videoReq).map { match ->
+            val url = fixUrl(match.groupValues[1])
+            Log.d("kraptor_4kfilm", "url = $url")
+            val subLang = url
+                .substringAfterLast("/")
+                .substringBefore("_")
+            Log.d("kraptor_4kfilm", "subLang = $subLang")
+            subtitleCallback.invoke(SubtitleFile(
+                lang = subLang,
+                url  = url
+            ))
+        }.toList()
 
 
         callback.invoke(
             newExtractorLink(
                 source  = this.name,
                 name    = this.name,
-                url     = realUrl,
+                url     = decoded,
                 type = ExtractorLinkType.M3U8
             ) {
-                headers = mapOf("Referer" to extRef) // "Referer" ayarı burada yapılabilir
+                headers = mapOf("Origin" to mainUrl) // "Referer" ayarı burada yapılabilir
                 quality = getQualityFromName(Qualities.Unknown.value.toString())
             }
         )
     }
+}
+
+fun decodeEE(encoded: String): String {
+    // 1. URL-dostu işaretleri geri çevir
+    var s = encoded.replace('-', '+')
+        .replace('_', '/')
+    // 2. Base64 uzunluğu mod4 değilse '=' ekle
+    while (s.length % 4 != 0) {
+        s += "="
+    }
+    // 3. Base64 decode
+    val decodedBytes = base64DecodeArray(s)
+    val a = String(decodedBytes, Charsets.UTF_8)
+
+    // 4. ROT13 dönüşümü
+    val rot13 = buildString {
+        for (c in a) {
+            when (c) {
+                in 'A'..'Z' -> append(((c - 'A' + 13) % 26 + 'A'.toInt()).toChar())
+                in 'a'..'z' -> append(((c - 'a' + 13) % 26 + 'a'.toInt()).toChar())
+                else        -> append(c)
+            }
+        }
+    }
+
+    // 5. Tersine çevir ve döndür
+    return rot13.reversed()
 }
