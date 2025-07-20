@@ -128,13 +128,16 @@ class FilmMakinesi : MainAPI() {
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         Log.d("kraptor_$name", "data » $data")
         val document      = app.get(data).document
+//        Log.d("kraptor_$name", "document = $document")
         val iframe = document.selectFirst("iframe")?.attr("data-src") ?: ""
+        Log.d("kraptor_$name", "iframe = $iframe")
         val iframeGet = app.get(iframe, referer = "${mainUrl}/").document
         val scriptAl  = iframeGet.select("script[type=text/javascript]")[1].data().trim()
         val scriptUnpack = getAndUnpack(scriptAl)
         val regex = Regex("""dc_hello\("([^"]+)"""")
         val match = regex.find(scriptUnpack)
         val b64 = match?.groupValues[1].toString()
+        Log.d("kraptor_$name", "b64 = $b64")
         val m3u8Url = decodeDcHello(b64)
         Log.d("kraptor_$name", "m3u8Url = $m3u8Url")
 
@@ -156,9 +159,19 @@ class FilmMakinesi : MainAPI() {
 fun decodeDcHello(input: String): String {
     // 1. atob(_0x37934e)
     val firstDecoded = String(Base64.decode(input, Base64.DEFAULT))
+    Log.d("kraptor_FilmMakinesi", "firstDecoded = $firstDecoded")
     // reverse ve tekrar atob işlemi
     val reversed = firstDecoded.reversed()
+    Log.d("kraptor_FilmMakinesi", "reversed = $reversed")
     val secondDecoded = String(Base64.decode(reversed, Base64.DEFAULT))
+    Log.d("kraptor_FilmMakinesi", "secondDecoded = $secondDecoded")
     // ikinci decode sonucu "xxx|URL" formatında geliyor, URL ikinci parçadadır
-    return secondDecoded.split("|")[1]
+    val linkimiz = if (secondDecoded.contains("+")){
+        secondDecoded.substringAfterLast("+")
+    } else if (secondDecoded.contains("|")) {
+        secondDecoded.split("|")[1]
+    } else {
+        secondDecoded
+    }
+    return linkimiz
 }
