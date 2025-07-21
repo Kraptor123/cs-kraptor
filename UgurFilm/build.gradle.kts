@@ -1,7 +1,7 @@
-version = 10
+version = 11
 
 cloudstream {
-    authors     = listOf("keyiflerolsun")
+    authors     = listOf("kraptor","kerimmkirac")
     language    = "tr"
     description = "Yabancı film izle, Türkçe dublaj ve Türkçe altyazılı film seçenekleriyle 720p ve 1080p HD kalitesinde film izle - Uğur Film full hd film izle."
 

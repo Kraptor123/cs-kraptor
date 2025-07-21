@@ -55,29 +55,33 @@ class UgurFilm : MainAPI() {
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
     override suspend fun load(url: String): LoadResponse? {
-        val document = app.get(url).document
-
-        val title       = document.selectFirst("div.bilgi h1")?.text()?.trim() ?: return null
-        val poster      = fixUrlNull(document.selectFirst("div.resim img")?.attr("src"))
-        val year        = document.selectFirst("a[href*='/yil/']")?.text()?.trim()?.toIntOrNull()
-        val description = document.selectFirst("div.slayt-aciklama")?.text()?.trim()
-        val tags        = document.select("p.tur a[href*='/category/']").map { it.text() }
-        val rating      = document.selectFirst("span.puan")?.text()?.split(" ")?.last()?.toRatingInt()
-        val duration    = document.selectXpath("//span[contains(text(), 'Süre:')]//following-sibling::b").text().split(" ")[0].trim().toIntOrNull()
-        val actors      = document.select("li.oyuncu-k").map {
-            Actor(it.selectFirst("span")!!.text(), it.selectFirst("img")?.attr("src"))
-        }
-
-        return newMovieLoadResponse(title, url, TvType.Movie, url) {
-            this.posterUrl = poster
-            this.year      = year
-            this.plot      = description
-            this.tags      = tags
-            this.rating    = rating
-            this.duration  = duration
-            addActors(actors)
-        }
+    val document = app.get(url).document
+    
+    val title = document.selectFirst("div.bilgi h2")?.text()?.trim() ?: return null
+    val poster = fixUrlNull(document.selectFirst("div.resim img")?.attr("src"))
+    val year = document.selectFirst("a[href*='/yil/']")?.text()?.trim()?.toIntOrNull()
+    val description = document.selectFirst("div.slayt-aciklama")?.text()?.trim()
+    val tags = document.select("p.tur a[href*='/category/']").map { it.text() }
+    val rating = document.selectFirst("span.puan")?.text()?.replace("IMDb : ", "")?.trim()?.toRatingInt()
+    val duration = document.selectXpath("//span[contains(text(), 'Süre:')]//following-sibling::b").text()
+        .replace("Dakika", "").trim().toIntOrNull()
+    val actors = document.select("li.oyuncu-k").map {
+        Actor(
+            it.selectFirst("span.isim")?.text() ?: it.selectFirst("a")?.attr("title") ?: "",
+            fixUrlNull(it.selectFirst("img")?.attr("src"))
+        )
     }
+    
+    return newMovieLoadResponse(title, url, TvType.Movie, url) {
+        this.posterUrl = poster
+        this.year = year
+        this.plot = description
+        this.tags = tags
+        this.rating = rating
+        this.duration = duration
+        addActors(actors)
+    }
+}
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         Log.d("UGF", "data » $data")
