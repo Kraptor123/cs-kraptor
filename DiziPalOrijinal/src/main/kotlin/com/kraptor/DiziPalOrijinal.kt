@@ -299,10 +299,14 @@ class DiziPalOrijinal : MainAPI() {
         val year = document.selectFirst("div.extra span.C a")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("ul.rigth-content > li:nth-child(5) a").map { it.text() }
         val movieTags = document.select("div.popup-content > ul:nth-child(2) > li:nth-child(3) > div:nth-child(2) a").map { it.text() }
-        val rating = document.selectFirst("ul.rigth-content > li:nth-child(3) div.value")?.text()?.trim()?.toFloatOrNull()
+        val rating = document.selectFirst("ul.rigth-content > li:nth-child(3) div.value, div.popup-content > ul:nth-child(2) > li:nth-child(2) > div:nth-child(2)")?.text()?.trim()
         Log.d("kraptor_Dizipal", "rating: $rating")
-        val movieRating = document.selectFirst("div.popup-content > ul:nth-child(2) > li:nth-child(2) > div:nth-child(2)")?.text()?.trim()?.toFloatOrNull()
-        Log.d("kraptor_Dizipal", "movieRating: $movieRating")
+        val puanlar = if (rating!!.contains("Diğer")) {
+            document.selectFirst("div.popup-content > ul:nth-child(2) > li:nth-child(3) > div:nth-child(2)")?.text()
+                ?.trim() ?: ""
+        }else{
+            rating
+        }
         val duration = document.selectFirst("ul.rigth-content > li:nth-child(8) > div.value")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val movieDuration = document.selectFirst("div.popup-content > ul:nth-child(2) > li:nth-child(4) > div:nth-child(2)")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val bolumler = document.select("a.text.block").map { bolumler ->
@@ -329,7 +333,7 @@ class DiziPalOrijinal : MainAPI() {
                 this.plot = movieDesc
                 this.year = year
                 this.tags = movieTags
-                this.score = Score.from10(movieRating)
+                this.score = Score.from10(puanlar)
                 this.duration = movieDuration
             }
             }else{
@@ -338,7 +342,7 @@ class DiziPalOrijinal : MainAPI() {
                     this.plot = description
                     this.year = year
                     this.tags = tags
-                    this.score = Score.from10(rating)
+                    this.score = Score.from10(puanlar)
                     this.duration = duration
                 }
             }
