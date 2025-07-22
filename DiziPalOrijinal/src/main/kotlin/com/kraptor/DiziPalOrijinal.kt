@@ -215,17 +215,19 @@ class DiziPalOrijinal : MainAPI() {
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 
         val imdbScore = this.selectFirst("h4")?.text()?.toFloatOrNull()
+
+        val puan = if (imdbScore == 0.0f) "" else imdbScore?.toString() ?: ""
 //        Log.d("kraptor_$name","imdb score = $imdbScore")
 
         return if (href.contains("/movies/")) {
             newMovieSearchResponse(title, href, TvType.Movie) {
                 this.posterUrl = posterUrl
-                this.score     = Score.from10(imdbScore)
+                this.score     = Score.from10(puan)
             }
         } else {
             newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
                 this.posterUrl = posterUrl
-                this.score     = Score.from10(imdbScore)
+                this.score     = Score.from10(puan)
             }
         }
     }
