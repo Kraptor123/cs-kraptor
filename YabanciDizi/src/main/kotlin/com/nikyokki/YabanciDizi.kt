@@ -214,23 +214,30 @@ class YabanciDizi : MainAPI() {
                     interceptor = interceptor
                 ).document
                 val subFrame = mac.selectFirst("iframe")?.attr("src") ?: return false
+//                Log.d("kraptor_$name","mac = $mac")
                 val iDoc = app.get(
                     subFrame, referer = "${mainUrl}/",
                     headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0")
                 ).text
+//                Log.d("kraptor_$name","iDoc = $iDoc")
                 val cryptData =
                     Regex("""CryptoJS\.AES\.decrypt\("(.*)","""").find(iDoc)?.groupValues?.get(1)
                         ?: ""
+//                Log.d("kraptor_$name","cryptData = $cryptData")
                 val cryptPass =
                     Regex("""","(.*)"\);""").find(iDoc)?.groupValues?.get(1) ?: ""
+//                Log.d("kraptor_$name","cryptPass = $cryptPass")
                 val decryptedData = CryptoJS.decrypt(cryptPass, cryptData)
+//                Log.d("kraptor_$name","decryptedData = $decryptedData")
                 val decryptedDoc = Jsoup.parse(decryptedData)
+                val source = decryptedDoc.selectFirst("source")?.attr("src").toString()
+                Log.d("kraptor_$name","source = $source")
                 val vidUrl =
                     Regex("""file: '(.*)',""").find(decryptedDoc.html())?.groupValues?.get(1)
                         ?: ""
                 Log.d("YBD", "Extractor Link Olusturuluyor -> name: $name, url: $vidUrl")
                 val aa = app.get(
-                    vidUrl,
+                    source,
                     referer = "$mainUrl/",
                     headers =
                         mapOf(
@@ -248,8 +255,9 @@ class YabanciDizi : MainAPI() {
                             "TE" to "trailers",
                             ), interceptor = interceptor).document.body().text()
                 val urlList = extractStreamInfoWithRegex(aa)
+                Log.d("kraptor_$name","urlList = $urlList")
                 for (sonUrl in urlList) {
-                    Log.d("YBD", "sonUrl: ${sonUrl.link} -- ${sonUrl.resolution}")
+                    Log.d("kraptor_$name", "sonUrl: ${sonUrl.link} -- ${sonUrl.resolution}")
                     callback.invoke(
                         newExtractorLink(
                             source = "$name -- ${sonUrl.resolution}",
