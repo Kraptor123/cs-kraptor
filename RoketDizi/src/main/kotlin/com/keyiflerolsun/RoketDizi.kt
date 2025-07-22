@@ -173,7 +173,7 @@ class RoketDizi : MainAPI() {
             document.selectFirst("h3.text-white.opacity-60.text-sm.sm\\:text-md")?.text()?.split(",")?.map { it }
         val rating =
             document.selectFirst("div.flex.items-center")?.selectFirst("span.text-white.text-sm")
-                ?.text()?.trim().toFloatOrNull()
+                ?.text()?.trim()?.toFloatOrNull()
         val actors = document.select("div.global-box h5").map {
             Actor(it.text())
         }
@@ -209,7 +209,7 @@ class RoketDizi : MainAPI() {
                 this.year = year
                 this.plot = description
                 this.tags = tags
-                this.rating = rating
+                this.score = Score.from10(rating)
                 addActors(actors)
             }
         } else {
@@ -219,7 +219,7 @@ class RoketDizi : MainAPI() {
                 this.year = year
                 this.plot = description
                 this.tags = tags
-                this.rating = rating
+                this.score = Score.from10(rating)
                 addActors(actors)
             }
         }
