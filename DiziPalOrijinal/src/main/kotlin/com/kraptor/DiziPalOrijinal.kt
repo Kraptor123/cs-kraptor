@@ -214,8 +214,8 @@ class DiziPalOrijinal : MainAPI() {
         } ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 
-        val imdbScore = this.selectFirst("h4")?.text()?.toDoubleOrNull()
-        Log.d("kraptor_$name","imdb score = $imdbScore")
+        val imdbScore = this.selectFirst("h4")?.text()?.toFloatOrNull()
+//        Log.d("kraptor_$name","imdb score = $imdbScore")
 
         return if (href.contains("/movies/")) {
             newMovieSearchResponse(title, href, TvType.Movie) {
@@ -297,8 +297,10 @@ class DiziPalOrijinal : MainAPI() {
         val year = document.selectFirst("div.extra span.C a")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("ul.rigth-content > li:nth-child(5) a").map { it.text() }
         val movieTags = document.select("div.popup-content > ul:nth-child(2) > li:nth-child(3) > div:nth-child(2) a").map { it.text() }
-        val rating = document.selectFirst("ul.rigth-content > li:nth-child(3) div.value")?.text()?.trim()?.toRatingInt()
-        val movieRating = document.selectFirst("div.popup-content > ul:nth-child(2) > li:nth-child(2) > div:nth-child(2)")?.text()?.trim()?.toRatingInt()
+        val rating = document.selectFirst("ul.rigth-content > li:nth-child(3) div.value")?.text()?.trim()?.toFloatOrNull()
+        Log.d("kraptor_Dizipal", "rating: $rating")
+        val movieRating = document.selectFirst("div.popup-content > ul:nth-child(2) > li:nth-child(2) > div:nth-child(2)")?.text()?.trim()?.toFloatOrNull()
+        Log.d("kraptor_Dizipal", "movieRating: $movieRating")
         val duration = document.selectFirst("ul.rigth-content > li:nth-child(8) > div.value")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val movieDuration = document.selectFirst("div.popup-content > ul:nth-child(2) > li:nth-child(4) > div:nth-child(2)")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val bolumler = document.select("a.text.block").map { bolumler ->
