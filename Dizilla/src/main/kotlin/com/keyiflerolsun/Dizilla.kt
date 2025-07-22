@@ -292,7 +292,7 @@ class Dizilla : MainAPI() {
                 ?.selectFirst("span.text-white.text-sm")
                 ?.ownText()
                 ?.trim()
-            val rating = ratingText.toFloatOrNull()
+            val rating = ratingText?.toFloatOrNull()
 
             val actorsElements = document.select("div.global-box h5")
             val actors = actorsElements.map { Actor(it.ownText()) }
@@ -332,7 +332,7 @@ class Dizilla : MainAPI() {
                 this.year = year
                 this.plot = description
                 this.tags = tags
-                this.rating = rating
+                this.score = Score.from10(rating)
                 addActors(actors)
             }
         } catch (e: CancellationException) {
