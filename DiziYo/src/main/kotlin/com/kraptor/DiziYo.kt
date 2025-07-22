@@ -168,7 +168,7 @@ class DiziYo : MainAPI() {
                 this.plot = description
                 this.year = year
                 this.tags = tags
-                this.score = rating
+                this.score = Score.from10(rating)
                 addActors(actors)
                 addTrailer(trailer)
 
