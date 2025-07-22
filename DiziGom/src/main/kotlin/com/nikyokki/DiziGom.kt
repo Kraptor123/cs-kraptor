@@ -144,7 +144,7 @@ class DiziGom : MainAPI() {
             this.plot = description
             this.tags = tags
             this.duration = duration
-            this.rating = rating
+            this.score = Score.from10(rating)
             addActors(actors)
         }
 

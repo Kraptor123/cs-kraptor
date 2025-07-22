@@ -36,8 +36,12 @@ class Temel : MainAPI() {
         val title     = this.selectFirst("div.flbaslik")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+        val score     = this.selectFirst("rating")?.attr("data-src"))
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     =
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
@@ -75,7 +79,7 @@ class Temel : MainAPI() {
             this.plot            = description
             this.year            = year
             this.tags            = tags
-            this.rating          = rating
+            this.score           = Score.from10(rating)
             this.duration        = duration
             this.recommendations = recommendations
             addActors(actors)

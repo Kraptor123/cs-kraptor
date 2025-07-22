@@ -171,7 +171,7 @@ class FilmIzle : MainAPI() {
                 posterUrl = poster
                 this.year = year
                 plot = description
-                this.rating = rating
+                this.score = Score.from10(rating)
                 this.tags = tags
                 this.duration = duration
                 addActors(actors)
@@ -183,7 +183,7 @@ class FilmIzle : MainAPI() {
                 plot = description
                 this.year = year
                 this.tags = tags
-                this.rating = rating
+                this.score = Score.from10(rating)
                 this.duration = duration
                 addActors(actors)
                 trailerUrl?.let { addTrailer(it) }

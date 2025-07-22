@@ -127,7 +127,7 @@ class DiziKral : MainAPI() {
             this.plot            = description
             this.year            = year
             this.tags            = tags
-            this.rating          = rating
+            this.score = Score.from10(rating)
             this.duration        = duration
             addTrailer(trailer)
         }

@@ -167,7 +167,7 @@ class DiziPal : MainAPI() {
                 this.year      = year
                 this.plot      = description
                 this.tags      = tags
-                this.rating    = rating
+                this.score = Score.from10(rating)
                 this.duration  = duration
             }
         } else { 
@@ -178,7 +178,7 @@ class DiziPal : MainAPI() {
                 this.year      = year
                 this.plot      = description
                 this.tags      = tags
-                this.rating    = rating
+                this.score = Score.from10(rating)
                 this.duration  = duration
             }
         }

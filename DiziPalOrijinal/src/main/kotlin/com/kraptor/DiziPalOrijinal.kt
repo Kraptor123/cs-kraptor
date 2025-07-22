@@ -23,7 +23,7 @@ import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 
 class DiziPalOrijinal : MainAPI() {
-    override var mainUrl = "https://dizipal937.com"
+    override var mainUrl = "https://dizipal938.com"
     override var name = "DiziPalOrijinal"
     override val hasMainPage = true
     override var lang = "tr"
@@ -214,10 +214,17 @@ class DiziPalOrijinal : MainAPI() {
         } ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 
+        val imdbScore = this.selectFirst("h4.text-sm")?.text().toRatingInt()
+
         return if (href.contains("/movies/")) {
-            newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+            newMovieSearchResponse(title, href, TvType.Movie) {
+                this.posterUrl = posterUrl
+            }
         } else {
-            newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+            newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(imdbScore)
+            }
         }
     }
 
@@ -316,7 +323,7 @@ class DiziPalOrijinal : MainAPI() {
                 this.plot = movieDesc
                 this.year = year
                 this.tags = movieTags
-                this.rating = movieRating
+                this.score = Score.from10(movieRating)
                 this.duration = movieDuration
             }
             }else{
@@ -325,7 +332,7 @@ class DiziPalOrijinal : MainAPI() {
                     this.plot = description
                     this.year = year
                     this.tags = tags
-                    this.rating = rating
+                    this.score = Score.from10(rating)
                     this.duration = duration
                 }
             }

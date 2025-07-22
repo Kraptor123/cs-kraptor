@@ -120,7 +120,7 @@ class Animex : MainAPI() {
                 this.plot = description
                 this.year = year
                 this.tags = tags
-                this.rating = rating
+                this.score = Score.from10(rating)
                 this.duration = duration
                 addTrailer(trailer)
 
@@ -131,7 +131,7 @@ class Animex : MainAPI() {
                 this.plot = description
                 this.year = year
                 this.tags = tags
-                this.rating = rating
+                this.score = Score.from10(rating)
                 this.duration = duration
                 addTrailer(trailer)
                 this.episodes = episodeListesi

@@ -274,7 +274,7 @@ class DiziKorea : MainAPI() {
                 this.year      = year
                 this.plot      = description
                 this.tags      = tags
-                this.rating    = rating
+                this.score = Score.from10(rating)
                 this.duration  = duration
                 addActors(actors)
                 addTrailer(trailerUrl)
@@ -285,7 +285,7 @@ class DiziKorea : MainAPI() {
                 this.year      = year
                 this.plot      = description
                 this.tags      = tags
-                this.rating    = rating
+                this.score = Score.from10(rating)
                 this.duration  = duration
                 addActors(actors)
                 addTrailer(trailerUrl)

@@ -162,7 +162,7 @@ class AnimeciX : MainAPI() {
                 this.year = title.title.year
                 this.plot = title.title.description
                 this.tags = title.title.tags.map { it.name }
-                this.rating = title.title.rating.toRatingInt()
+                this.score = Score.from10(title.title.rating.toRatingInt())
                 this.addActors(
                     title.title.actors.map { Actor(it.name, fixUrlNull(it.poster)) }
                 )
@@ -181,7 +181,7 @@ class AnimeciX : MainAPI() {
                     this.year = title.title.year
                     this.plot = title.title.description
                     this.tags = title.title.tags.map { it.name }
-                    this.rating = title.title.rating.toRatingInt()
+                    this.score = Score.from10(title.title.rating.toRatingInt())
                     addActors(title.title.actors.map { Actor(it.name, fixUrlNull(it.poster)) })
                     addTrailer(title.title.trailer)
                 }

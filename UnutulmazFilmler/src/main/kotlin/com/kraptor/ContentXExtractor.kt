@@ -475,8 +475,8 @@ fun decodeEE(encoded: String): String {
     val rot13 = buildString {
         for (c in a) {
             when (c) {
-                in 'A'..'Z' -> append(((c - 'A' + 13) % 26 + 'A'.toInt()).toChar())
-                in 'a'..'z' -> append(((c - 'a' + 13) % 26 + 'a'.toInt()).toChar())
+                in 'A'..'Z' -> append(((c - 'A' + 13) % 26 + 'A'.code).toChar())
+                in 'a'..'z' -> append(((c - 'a' + 13) % 26 + 'a'.code).toChar())
                 else        -> append(c)
             }
         }

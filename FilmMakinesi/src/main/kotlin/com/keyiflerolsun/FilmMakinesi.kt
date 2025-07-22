@@ -94,7 +94,7 @@ class FilmMakinesi : MainAPI() {
         val poster          = fixUrlNull(document.selectFirst("[property='og:image']")?.attr("content"))
         val description     = document.select("div.info-description p").last()?.text()?.trim()
         val tags            = document.select("div.type a").map { it.text() }
-        val rating          = document.selectFirst("div.info b")?.text()?.trim()?.toRatingInt()
+        val imdbScore          = document.selectFirst("div.info b")?.text()?.trim()?.toRatingInt()
         val year            = document.selectFirst("span.date a")?.text()?.trim()?.toIntOrNull()
 
         val durationText = document.selectFirst("div.time")?.text()?.trim() ?: ""
@@ -116,7 +116,7 @@ class FilmMakinesi : MainAPI() {
             this.year            = year
             this.plot            = description
             this.tags            = tags
-            this.rating          = rating
+            this.score = Score.from10(imdbScore)
             this.duration        = duration
             this.recommendations = recommendations
             addActors(actors)

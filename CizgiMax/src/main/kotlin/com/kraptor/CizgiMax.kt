@@ -116,7 +116,7 @@ class CizgiMax : MainAPI() {
             this.posterUrl = poster
             this.plot      = description
             this.tags      = tags
-            this.rating    = rating
+            this.score     = Score.from10(rating)
         }
     }
 
