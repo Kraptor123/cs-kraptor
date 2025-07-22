@@ -173,7 +173,7 @@ class RoketDizi : MainAPI() {
             document.selectFirst("h3.text-white.opacity-60.text-sm.sm\\:text-md")?.text()?.split(",")?.map { it }
         val rating =
             document.selectFirst("div.flex.items-center")?.selectFirst("span.text-white.text-sm")
-                ?.text()?.trim()?.toFloatOrNull()
+                ?.text()?.trim()
         val actors = document.select("div.global-box h5").map {
             Actor(it.text())
         }

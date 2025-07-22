@@ -87,7 +87,7 @@ class FullHDIzle : MainAPI() {
         val description     = document.selectFirst("div.desc")?.text()?.substringAfter("bizimle yaşayın.")?.trim()
         val year            = document.selectFirst("div.detail > div:nth-child(3) > ol:nth-child(2) > li:nth-child(4) > span:nth-child(2) > a")?.text()?.trim()?.toIntOrNull()
         val tags            = document.select("div.detail > div:nth-child(3) > ul:nth-child(1) > li:nth-child(3) a").map { it.text() }
-        val rating          = document.selectFirst("a.imdb")?.text()?.trim()?.toFloatOrNull()
+        val rating          = document.selectFirst("a.imdb")?.text()?.trim()
         val duration        = document.selectFirst("div.detail > div:nth-child(3) > ol:nth-child(2) > li:nth-child(3) > span:nth-child(2)")
             ?.text()
             ?.replace(" Dk.","")

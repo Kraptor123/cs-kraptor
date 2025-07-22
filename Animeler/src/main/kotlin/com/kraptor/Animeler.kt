@@ -128,7 +128,7 @@ class Animeler : MainAPI() {
         val description = document.selectFirst("div.line-clamp-3")?.text()?.trim()
         val tags = document.select("span.leading-6 a").map { it.text() }
         val elements = document.select("li.list-none.mbe-1")
-        val rating = Regex("MAL:\\s*(\\d+(?:\\.\\d+)?)").find(elements.text())?.groups?.get(1)?.value?.toFloatOrNull()
+        val rating = Regex("MAL:\\s*(\\d+(?:\\.\\d+)?)").find(elements.text())?.groups?.get(1)?.value
         val duration = Regex("Süre:\\s*(\\d+)").find(elements.text())?.groups?.get(1)?.value?.toInt()
         val year = Regex("(\\d{4})").find(elements.text())?.groups?.get(1)?.value?.toInt()
         val recommendations =

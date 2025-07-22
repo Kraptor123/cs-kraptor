@@ -263,7 +263,7 @@ class Anizm : MainAPI() {
         val description = document.selectFirst("div.infoDesc")?.text()?.trim()
         val year = document.selectFirst("div.infoSta.mt-2 li")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("span.ui.label").map { it.text() }
-        val rating = document.selectFirst("g.circle-chart__info")?.text()?.trim()?.toFloatOrNull()
+        val rating = document.selectFirst("g.circle-chart__info")?.text()?.trim()
         val trailer = fixUrlNull(document.selectFirst("iframe.yt-hd-thumbnail")?.attr("src"))
 
         val episodes = document.select("div.four.wide.computer.tablet.five.mobile.column.bolumKutucugu a")

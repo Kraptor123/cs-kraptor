@@ -94,7 +94,7 @@ class FilmMakinesi : MainAPI() {
         val poster          = fixUrlNull(document.selectFirst("[property='og:image']")?.attr("content"))
         val description     = document.select("div.info-description p").last()?.text()?.trim()
         val tags            = document.select("div.type a").map { it.text() }
-        val imdbScore          = document.selectFirst("div.info b")?.text()?.trim()?.toFloatOrNull()
+        val imdbScore          = document.selectFirst("div.info b")?.text()?.trim()
         val year            = document.selectFirst("span.date a")?.text()?.trim()?.toIntOrNull()
 
         val durationText = document.selectFirst("div.time")?.text()?.trim() ?: ""

@@ -161,7 +161,7 @@ class DiziMag : MainAPI() {
         val year =
             document.selectFirst("h1 span")?.text()?.substringAfter("(")?.substringBefore(")")
                 ?.toIntOrNull()
-        val rating = document.selectFirst("span.color-imdb")?.text()?.trim()?.toFloatOrNull()
+        val rating = document.selectFirst("span.color-imdb")?.text()?.trim()
         val duration =
             document.selectXpath("//span[text()='Süre']//following-sibling::p").text().trim()
                 .split(" ").first().toIntOrNull()

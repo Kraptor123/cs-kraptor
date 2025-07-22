@@ -125,7 +125,6 @@ class TrDiziIzle : MainAPI() {
             .selectFirst("span.dt_rating_vgs")
             ?.text()
             ?.trim()
-            ?.toFloatOrNull()
         val trailer = Regex("""embed\/(.*)\?rel""")
             .find(document.html())
             ?.groupValues

@@ -244,7 +244,7 @@ class Sinefy : MainAPI() {
         val description     = document.selectFirst("p#tv-series-desc")?.text()?.trim()
         val year            = document.selectFirst("table.ui > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(5) > div:nth-child(2)")?.text()?.trim()?.toIntOrNull()
         val tags            = document.select("div.item.categories a").map { it.text() }
-        val rating          = document.selectFirst("span.color-imdb")?.text()?.trim()?.toFloatOrNull()
+        val rating          = document.selectFirst("span.color-imdb")?.text()?.trim()
         val duration        = document.selectFirst("table.ui > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(6) > div:nth-child(2)")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val recommendations = document.select("div.srelacionados article").mapNotNull { it.toRecommendationResult() }
         val actorNames      = document.select("div.content h5").eachText().map { Actor(it) }

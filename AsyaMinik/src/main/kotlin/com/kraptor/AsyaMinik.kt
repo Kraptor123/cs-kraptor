@@ -101,7 +101,7 @@ class AsyaMinik : MainAPI() {
             .replace("Tür:", "")
             .split(",")
             .map { it.trim() }
-        val rating = document.selectFirst("span.dt_rating_vgs")?.text()?.trim()?.toFloatOrNull()
+        val rating = document.selectFirst("span.dt_rating_vgs")?.text()?.trim()
         val duration = document.selectFirst("span.runtime")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val recommendations = document.select("div.srelacionados article").mapNotNull { it.toRecommendationResult() }
         val actors = document.select("div.reading#singleContent#singleContent > ul:nth-child(4) > li:nth-child(7)")

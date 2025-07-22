@@ -98,7 +98,7 @@ class HDFilm : MainAPI() {
         val description = document.selectFirst("div.ozet-ic")?.text()?.trim()
         val year = document.selectFirst("div.dd a.category")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("div.film-info > ul:nth-child(1) > li:nth-child(4) a").map { it.text() }
-        val rating = document.selectFirst("div.imdb-ic > span")?.text()?.trim()?.toFloatOrNull()
+        val rating = document.selectFirst("div.imdb-ic > span")?.text()?.trim()
         val actors = document.select("div.film-info > ul:nth-child(1) > li:nth-child(2) > div:nth-child(2) a")
             .map { Actor(it.text()) }
         val trailer = Regex("""embed\/(.*)\?rel""").find(document.html())?.groupValues?.get(1)

@@ -87,7 +87,7 @@ class DiziKral : MainAPI() {
         val description     = document.selectFirst("div.summary p")?.text()?.trim()
         val year            = document.selectFirst(".popup-summary > ul:nth-child(2) > li:nth-child(6) > div:nth-child(2) > a:nth-child(1)")?.text()?.trim()?.toIntOrNull()
         val tags            = document.select("div.value a").map { it.text() }
-        val rating          = document.selectFirst(".popup-summary > ul:nth-child(2) > li:nth-child(1) > div:nth-child(2)")?.text()?.trim()?.toFloatOrNull()
+        val rating          = document.selectFirst(".popup-summary > ul:nth-child(2) > li:nth-child(1) > div:nth-child(2)")?.text()?.trim()
         val duration        = document.selectFirst(".popup-summary > ul:nth-child(2) > li:nth-child(7) > div:nth-child(2)")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val trailer         = Regex("""embed\/(.*)\?rel""").find(document.html())?.groupValues?.get(1)?.let { "https://www.youtube.com/embed/$it" }
         val episode         = document.select("div.episode-item").mapNotNull { bolum ->

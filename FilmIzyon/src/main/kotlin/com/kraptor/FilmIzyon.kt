@@ -81,7 +81,7 @@ class FilmIzyon : MainAPI() {
         val description     = document.selectFirst("article.text-white")?.text()?.trim()
         val year            = document.selectFirst("div.d-flex.flex-column.text-nowrap a")?.text()?.trim()?.toIntOrNull()
         val tags            = document.select("div.pb-0 a.btn-warning").map { it.text() }
-        val rating          = document.selectFirst("div.d-flex.flex-column.text-nowrap strong.text-danger")?.text()?.trim()?.toFloatOrNull()
+        val rating          = document.selectFirst("div.d-flex.flex-column.text-nowrap strong.text-danger")?.text()?.trim()
         val duration        = document.selectFirst("div.table-responsive table > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) > div:nth-child(1) > strong")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val fragmanElement = document
             .select("div.filmsayfala a")

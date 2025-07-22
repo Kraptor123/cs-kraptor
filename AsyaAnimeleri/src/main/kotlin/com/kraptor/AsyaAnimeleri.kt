@@ -129,7 +129,7 @@ class AsyaAnimeleri : MainAPI() {
         val description = document.selectFirst("div.entry-content b")?.text()?.trim()
         val year = document.selectFirst("span.split:nth-child(3)")?.text()?.trim()?.toIntOrNull()
         val tags = document.select(".spe > span:nth-child(7)").map { it.text() }
-        val rating = document.selectFirst("div.rating")?.text()?.trim()?.toFloatOrNull()
+        val rating = document.selectFirst("div.rating")?.text()?.trim()
         val duration =
             document.selectFirst(".spe > span:nth-child(4)")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val recommendations = document.select("article.bs").mapNotNull { it.toRecommendationResult() }

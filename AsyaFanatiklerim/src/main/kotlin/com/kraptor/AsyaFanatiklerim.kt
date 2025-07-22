@@ -84,7 +84,7 @@ class AsyaFanatiklerim : MainAPI() {
         val description = document.selectFirst("div.wp-content p")?.text()?.trim()
         val year = document.selectFirst("div.extra span.C a")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("div.sgeneros a").map { it.text() }
-        val rating = document.selectFirst("span.dt_rating_vgs")?.text()?.trim()?.toFloatOrNull()
+        val rating = document.selectFirst("span.dt_rating_vgs")?.text()?.trim()
         val duration = document.selectFirst("span.runtime")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val recommendations = document.select("div.srelacionados article").mapNotNull { it.toRecommendationResult() }
         val actors = document.select("span.valor a").map { Actor(it.text()) }

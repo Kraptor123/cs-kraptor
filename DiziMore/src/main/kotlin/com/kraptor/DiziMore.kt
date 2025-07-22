@@ -130,7 +130,7 @@ class DiziMore : MainAPI() {
         val yearText = document.selectFirst("div.genre-item:nth-child(2)")?.text()?.trim()
         val year = Regex("""\d{4}""").find(yearText ?: "")?.value?.toIntOrNull()
         val tags = document.select("div.genre-item:nth-child(1) > a").map { it.text() }
-        val rating = document.selectFirst("div.color-imdb")?.text()?.trim()?.toFloatOrNull()
+        val rating = document.selectFirst("div.color-imdb")?.text()?.trim()
         val duration =
             document.selectFirst("table.ui > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) > div:nth-child(2)")
                 ?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()

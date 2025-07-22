@@ -69,7 +69,7 @@ class RareFilmm : MainAPI() {
         val poster      = fixUrlNull(document.selectFirst("div.featured-image")?.attr("style")?.substringAfter("url(")?.substringBefore(")"))
         val description = document.selectFirst("div.entry-content p")?.text()?.trim()
         val tags        = document.select("div.entry-tags a").map { it.text() }
-        val rating      = document.selectFirst("span.js-rmp-avg-rating")?.text()?.trim()?.toFloatOrNull()
+        val rating      = document.selectFirst("span.js-rmp-avg-rating")?.text()?.trim()
 
         return newMovieLoadResponse(title, url, TvType.Movie, url) {
             this.posterUrl = poster

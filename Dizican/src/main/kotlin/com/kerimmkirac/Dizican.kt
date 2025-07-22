@@ -203,7 +203,7 @@ private fun Element.toMainPageResult(): SearchResponse? {
         val tags = document.select("div.category a").map { it.text() }
         
         
-        val rating = document.selectFirst("div.imdb-count")?.text()?.split(" ")?.get(0)?.toFloatOrNull()
+        val rating = document.selectFirst("div.imdb-count")?.text()?.split(" ")?.get(0)
         
         
         val director = document.selectFirst("div.director a")?.text()
@@ -221,6 +221,7 @@ private fun Element.toMainPageResult(): SearchResponse? {
             this.year = year
             this.plot = description
             this.tags = tags
+            this.score = Score.from10(rating)
             
             
             

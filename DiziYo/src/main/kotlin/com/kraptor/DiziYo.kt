@@ -142,7 +142,7 @@ class DiziYo : MainAPI() {
         val description = document.selectFirst("div.wp-content p")?.text()?.trim()
         val year = document.selectFirst("div.extra span.date")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("div.sgeneros a").map { it.text() }
-        val rating = document.selectFirst("div.extra:nth-child(5) > b:nth-child(2) > font:nth-child(2)")?.text()?.trim()?.toFloatOrNull()
+        val rating = document.selectFirst("div.extra:nth-child(5) > b:nth-child(2) > font:nth-child(2)")?.text()?.trim()
         val duration =
             document.selectFirst("div.extra span.runtime")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val actors = document.select("div.persons").map { Actor(it.text()) }

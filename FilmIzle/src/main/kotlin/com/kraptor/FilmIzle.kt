@@ -124,7 +124,7 @@ class FilmIzle : MainAPI() {
         val description = document.selectFirst(".desc p")?.text()?.trim()
         val year = document.selectFirst("ul.top > li:nth-child(4) > span:nth-child(2) > a")?.text()?.toIntOrNull()
         val tags = document.select("ul.bottom > li:nth-child(3) > span").map { it.text() }
-        val rating = document.selectFirst(".imdb > span:nth-child(2)")?.text()?.toFloatOrNull()
+        val rating = document.selectFirst(".imdb > span:nth-child(2)")?.text()
         val duration = document.selectFirst("ul.top > li:nth-child(3) > span:nth-child(2)")?.text()?.split(" ")?.first()
             ?.toIntOrNull()
         val actors = document.select("li.actors span").map { Actor(it.text()) }

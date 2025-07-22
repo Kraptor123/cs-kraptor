@@ -239,7 +239,7 @@ class UnutulmazFilmler : MainAPI() {
         val filmDescription = document.selectFirst("div.lhome.overflow-hidden")?.text()?.trim()
         val year            = document.selectFirst("span.font-normal:nth-child(4) > a:nth-child(2)")?.text()?.trim()?.toIntOrNull()
         val tags            = document.select("span.flex a").map { it.text() }
-        val rating          = document.selectFirst("div.border-\\[\\#eab308\\]")?.text()?.trim()?.toFloatOrNull()
+        val rating          = document.selectFirst("div.border-\\[\\#eab308\\]")?.text()?.trim()
         val duration        = document.selectFirst("span.font-normal:nth-child(8)")?.text()?.substringBefore(" ")?.split(" ")?.first()?.trim()?.toIntOrNull()
         val recommendations = document.select("a.border-\\[\\#222\\]").mapNotNull { it.toRecommendationResult() }
         val actors          = document.select("div.flex-wrap a").map { aktor ->
