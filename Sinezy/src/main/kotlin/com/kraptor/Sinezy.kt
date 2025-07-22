@@ -86,7 +86,7 @@ class Sinezy : MainAPI() {
         val description     = document.selectFirst("div.desc.yeniscroll p")?.text()?.trim()
         val year            = document.selectFirst("div.move_k span.year span")?.text()?.trim()?.toIntOrNull()
         val tags            = document.select("div.detail span a").map { it.text() }
-        val rating          = document.selectFirst("span.info span.imdb")?.text()?.trim()?.toRatingInt()
+        val rating          = document.selectFirst("span.info span.imdb")?.text()?.trim()?.toFloatOrNull()
         val duration        = document.selectFirst("div.detail > span:nth-child(1) > span:nth-child(2) > p:nth-child(1)")
             ?.text()
             ?.replace(" Dakika","")

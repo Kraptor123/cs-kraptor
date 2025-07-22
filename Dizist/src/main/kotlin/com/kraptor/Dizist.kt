@@ -144,7 +144,7 @@ class Dizist : MainAPI() {
         val description = document.selectFirst("div.series-profile-summary > p:nth-child(3)")?.text()?.trim()
         val year = document.selectFirst("li.sm\\:w-1\\/5:nth-child(5) > p:nth-child(2)")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("span.block a").map { it.text() }
-        val rating = document.selectFirst("strong.color-imdb")?.text()?.trim()?.toRatingInt()
+        val rating = document.selectFirst("strong.color-imdb")?.text()?.trim()?.toFloatOrNull()
         val recommendations = document.select("div.poster-long.w-full").mapNotNull { it.toRecommendationResult() }
         val duration = document.selectFirst("li.sm\\:w-1\\/5:nth-child(2) > p:nth-child(2)")?.text()?.replace(" dk", "")
             ?.split(" ")?.first()?.trim()?.toIntOrNull()

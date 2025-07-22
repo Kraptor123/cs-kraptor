@@ -201,7 +201,7 @@ class AnimeIzlesene : MainAPI() {
         val rating = if (isMovie) {
             null // Rating not available for movies as per your description
         } else {
-            document.selectFirst("div.featured-attr:nth-child(1) > div:nth-child(2) ")?.text()?.trim()?.toRatingInt()
+            document.selectFirst("div.featured-attr:nth-child(1) > div:nth-child(2) ")?.text()?.trim()?.toFloatOrNull()
         }
 
         val duration = if (isMovie) {

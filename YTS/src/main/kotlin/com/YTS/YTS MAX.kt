@@ -80,7 +80,7 @@ class YTSMX : YTS(){
             ?.split(" / ")
             ?.map { it.trim() }
         val description= document.selectFirst("#synopsis p")?.text()?.trim()
-        val rating= document.select("#movie-info > div.bottom-info > div:nth-child(2) > span:nth-child(2)").text().toRatingInt()
+        val rating= document.select("#movie-info > div.bottom-info > div:nth-child(2) > span:nth-child(2)").text().toFloatOrNull()
         return newMovieLoadResponse(title, url, TvType.Movie, url) {
             this.posterUrl = poster
             this.plot = description

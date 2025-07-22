@@ -132,7 +132,7 @@ class FilmEkseni : MainAPI() {
         val tags = document.select("div.pb-2")
             .mapNotNull { it.text().removePrefix("Tür: ").takeIf { txt -> txt.contains(",") || txt.isNotBlank() } }
             .flatMap { it.split(",").map { tag -> tag.trim() } }
-        val rating = document.selectFirst("div.rate")?.text()?.trim()?.toRatingInt()
+        val rating = document.selectFirst("div.rate")?.text()?.trim()?.toFloatOrNull()
         val duration =
             document.selectFirst("d-flex flex-column text-nowrap")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val recommendations = document.select("div.poster").mapNotNull { it.toRecommendationResult() }

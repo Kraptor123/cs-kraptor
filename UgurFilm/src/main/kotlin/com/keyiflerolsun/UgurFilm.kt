@@ -62,7 +62,7 @@ class UgurFilm : MainAPI() {
     val year = document.selectFirst("a[href*='/yil/']")?.text()?.trim()?.toIntOrNull()
     val description = document.selectFirst("div.slayt-aciklama")?.text()?.trim()
     val tags = document.select("p.tur a[href*='/category/']").map { it.text() }
-    val rating = document.selectFirst("span.puan")?.text()?.replace("IMDb : ", "")?.trim()?.toRatingInt()
+    val rating = document.selectFirst("span.puan")?.text()?.replace("IMDb : ", "")?.trim()?.toFloatOrNull()
     val duration = document.selectXpath("//span[contains(text(), 'Süre:')]//following-sibling::b").text()
         .replace("Dakika", "").trim().toIntOrNull()
     val actors = document.select("li.oyuncu-k").map {

@@ -113,7 +113,7 @@ class BirAsyaDizi : MainAPI() {
         val description = document.selectFirst("div.aciklama div.scroll-liste")?.text()?.trim()
         val year = document.selectFirst("div.extra span.C a")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("ol.gizli li a").map { it.text() }
-        val rating = document.selectFirst("span.tum-gor")?.text()?.trim()?.toRatingInt()
+        val rating = document.selectFirst("span.tum-gor")?.text()?.trim()?.toFloatOrNull()
         val recommendations = document.select("div.sag-vliste li").mapNotNull { it.toRecommendationResult() }
 //        Log.d("kraptor_$name", "ul.scroll-liste = ${document.select("li.szn")}")
         val episodes = document.select("li.szn").map { bolum ->

@@ -99,7 +99,7 @@ class HdFilmCehennemi2 : MainAPI() {
         val description     = document.selectFirst("div.excerpt")?.text()?.trim()
         val year            = document.selectFirst("div.info-right:nth-child(3) > div:nth-child(1) > div:nth-child(2) > a:nth-child(1)")?.text()?.trim()?.toIntOrNull()
         val tags            = document.select("div.categories a").map { it.text() }
-        val rating          = document.selectFirst("span.imdb-rating")?.text()?.replace("IMDB Puanı","")?.trim()?.toRatingInt()
+        val rating          = document.selectFirst("span.imdb-rating")?.text()?.replace("IMDB Puanı","")?.trim()?.toFloatOrNull()
         val recommendations = document.select("ul.flexcroll li").mapNotNull { it.toRecommendationResult() }
         val actors = document.select("div.actor")
             .flatMap { element ->

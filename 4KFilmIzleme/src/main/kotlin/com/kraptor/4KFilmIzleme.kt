@@ -91,7 +91,7 @@ class `4KFilmIzleme` : MainAPI() {
         val tags = document.select("p a").map { it.text() }
         val rating =
             document.selectFirst(".single-list > ul:nth-child(1) > li:nth-child(2) > div:nth-child(1) > div:nth-child(2)")
-                ?.text()?.trim()?.toRatingInt()
+                ?.text()?.trim()?.toFloatOrNull()
         val duration =
             document.selectFirst(".single-list > ul:nth-child(1) > li:nth-child(3) > div:nth-child(1) > div:nth-child(2)")
                 ?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()

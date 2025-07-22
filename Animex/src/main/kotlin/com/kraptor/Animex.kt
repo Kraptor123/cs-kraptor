@@ -98,7 +98,7 @@ class Animex : MainAPI() {
         val text = document.selectFirst(".genre-item")?.text() ?: ""
         val year = Regex("""\b\d{4}\b""").find(text)?.value?.toInt()
         val tags = document.select("div.nano-content a").map { it.text() }
-        val rating = document.selectFirst("div.color-imdb")?.text()?.trim()?.toRatingInt()
+        val rating = document.selectFirst("div.color-imdb")?.text()?.trim()?.toFloatOrNull()
         val duration =
             document.selectFirst("table.ui > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) > div:nth-child(2)")
                 ?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()

@@ -137,7 +137,7 @@ class YabanciDizi : MainAPI() {
                 tags.add(it.text().trim())
             }
         }
-        val rating = document.selectFirst("div.color-imdb")?.text()?.trim()?.toRatingInt()
+        val rating = document.selectFirst("div.color-imdb")?.text()?.trim()?.toFloatOrNull()
         val duration =
             document.selectXpath("//div[text()='Süre']//following-sibling::div").text().trim()
                 .split(" ").first().toIntOrNull()

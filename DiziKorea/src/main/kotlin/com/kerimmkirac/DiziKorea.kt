@@ -244,7 +244,7 @@ class DiziKorea : MainAPI() {
         val year        = document.selectFirst("h1 span")?.text()?.substringAfter("(")?.substringBefore(")")?.toIntOrNull()
         val description = document.selectFirst("div.series-profile-summary p")?.text()?.trim()
         val tags        = document.select("div.series-profile-type a").mapNotNull { it.text().trim() }
-        val rating      = document.selectFirst("span.color-imdb")?.text()?.trim()?.toRatingInt()
+        val rating      = document.selectFirst("span.color-imdb")?.text()?.trim()?.toFloatOrNull()
         val duration    = document.selectXpath("//span[text()='Süre']//following-sibling::p").text().trim().split(" ").first().toIntOrNull()
         val trailerId     = document.selectFirst("div.series-profile-trailer")?.attr("data-yt")
         val trailerUrl = trailerId?.takeIf { it.isNotEmpty() }?.let { "https://www.youtube.com/watch?v=$it" }

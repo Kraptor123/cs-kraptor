@@ -108,7 +108,7 @@ class WebteIzle : MainAPI() {
         val year        = document.selectXpath("//td[contains(text(), 'Vizyon')]/following-sibling::td").text().trim().split(" ").last().toIntOrNull()
         val description = document.selectFirst("blockquote")?.text()?.trim()
         val tags        = document.selectXpath("//a[@itemgroup='genre']").map { it.text() }
-        val rating      = document.selectFirst("div.detail")?.text()?.trim()?.replace(",", ".").toRatingInt()
+        val rating      = document.selectFirst("div.detail")?.text()?.trim()?.toFloatOrNull()
         val duration    = document.selectXpath("//td[contains(text(), 'Süre')]/following-sibling::td").text().trim().split(" ").first().toIntOrNull()
         val trailer     = document.selectFirst("button#fragman")?.attr("data-ytid")
         val actors      = document.selectXpath("//div[@data-tab='oyuncular']//a").map {

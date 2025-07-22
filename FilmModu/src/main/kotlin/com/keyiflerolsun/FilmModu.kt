@@ -82,7 +82,7 @@ class FilmModu : MainAPI() {
         val description = document.selectFirst("p[itemprop='description']")?.text()?.trim()
         val year        = document.selectFirst("span[itemprop='dateCreated']")?.text()?.trim()?.toIntOrNull()
         val tags        = document.select("div.description a[href*='-kategori/']").map { it.text() }
-        val rating      = document.selectFirst("div.description p")?.ownText()?.split(" ")?.last()?.trim()?.toRatingInt()
+        val rating      = document.selectFirst("div.description p")?.ownText()?.split(" ")?.last()?.trim()?.toFloatOrNull()
         val actors      = document.select("div.description a[href*='-oyuncu-']").map { Actor(it.selectFirst("span")!!.text()) }
         val trailer     = document.selectFirst("div.container iframe")?.attr("src")
 

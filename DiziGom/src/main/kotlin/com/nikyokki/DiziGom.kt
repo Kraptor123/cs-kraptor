@@ -109,7 +109,7 @@ class DiziGom : MainAPI() {
         val description = document.selectFirst("div.serieDescription p")?.text()?.trim()
         val year = document.selectFirst("div.airDateYear a")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("div.genreList a").map { it.text() }
-        val rating = document.selectFirst("div.score")?.text()?.trim()?.toRatingInt()
+        val rating = document.selectFirst("div.score")?.text()?.trim()?.toFloatOrNull()
         val duration = document.select("div.serieMetaInformation").select("div.totalSession")
             .last()?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val actors = document.select("div.owl-stage a")

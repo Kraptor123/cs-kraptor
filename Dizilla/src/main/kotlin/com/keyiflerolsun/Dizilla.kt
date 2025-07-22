@@ -292,7 +292,7 @@ class Dizilla : MainAPI() {
                 ?.selectFirst("span.text-white.text-sm")
                 ?.ownText()
                 ?.trim()
-            val rating = ratingText.toRatingInt()
+            val rating = ratingText.toFloatOrNull()
 
             val actorsElements = document.select("div.global-box h5")
             val actors = actorsElements.map { Actor(it.ownText()) }

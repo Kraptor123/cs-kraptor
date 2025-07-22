@@ -120,7 +120,7 @@ class RecTV : MainAPI() {
                 this.plot      = veri.description
                 this.year      = veri.year
                 this.tags      = veri.genres?.map { it.title }
-                this.score = Score.from10("${veri.rating}".toRatingInt())
+                this.score = Score.from10("${veri.rating}".toFloatOrNull())
             }
         }
 
@@ -130,7 +130,7 @@ class RecTV : MainAPI() {
                 this.plot      = veri.description
                 this.year      = veri.year
                 this.tags      = veri.genres?.map { it.title }
-                this.score = Score.from10("${veri.rating}".toRatingInt())
+                this.score = Score.from10("${veri.rating}".toFloatOrNull())
             }
         } else {
             newLiveStreamLoadResponse(veri.title, url, url) {

@@ -130,7 +130,7 @@ class FilmHane : MainAPI() {
         val description     = document.selectFirst("div.series-profile-summary.article p")?.text()?.trim()
         val year            = document.selectFirst("li.sm\\:w-1\\/5:nth-child(5) > p:nth-child(2)")?.text()?.trim()?.toIntOrNull()
         val tags            = document.select("div.series-profile-type.tv-show-profile-type a").map { it.text() }
-        val rating          = document.selectFirst("span.color-imdb")?.text()?.trim()?.toRatingInt()
+        val rating          = document.selectFirst("span.color-imdb")?.text()?.trim()?.toFloatOrNull()
         val duration        = document.selectFirst("li.sm\\:w-1\\/5:nth-child(2) > p:nth-child(2)")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val actors = document
             .select("li.w-auto.sm\\:w-full.flex-shrink-0")
