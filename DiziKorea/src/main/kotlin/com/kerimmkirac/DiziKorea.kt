@@ -103,8 +103,12 @@ class DiziKorea : MainAPI() {
         val title     = this.selectFirst("h2")?.text()?.trim() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("div.poster-long-image img.lazy")?.attr("data-src"))
+        val rating      = this.selectFirst("span.rating.flex.items-center")?.text()?.trim()
 
-        return newTvSeriesSearchResponse(title, href, TvType.AsianDrama) { this.posterUrl = posterUrl }
+        return newTvSeriesSearchResponse(title, href, TvType.AsianDrama) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(rating)
+        }
     }
 
     private fun Element.toEpisodeSearchResult(): SearchResponse? {
@@ -112,6 +116,7 @@ class DiziKorea : MainAPI() {
         val originalHref = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img.lazy")?.attr("data-src"))
         val episodeInfo = this.selectFirst("p.truncate")?.text()?.trim()
+        val rating      = this.selectFirst("span.rating.flex.items-center")?.text()?.trim()
         
         
         val diziHref = convertEpisodeUrlToSeriesUrl(originalHref)
@@ -120,7 +125,8 @@ class DiziKorea : MainAPI() {
         val fullTitle = if (episodeInfo != null) "$title - $episodeInfo" else title
 
         return newTvSeriesSearchResponse(fullTitle, diziHref, TvType.AsianDrama) { 
-            this.posterUrl = posterUrl 
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(rating)
         }
     }
 
@@ -185,16 +191,24 @@ class DiziKorea : MainAPI() {
         val title = this.selectFirst("span.block.truncate")?.text()?.trim() ?: return null
         val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img.lazy")?.attr("data-src"))
+        val rating      = this.selectFirst("span.rating.flex.items-center")?.text()?.trim()
 
-        return newTvSeriesSearchResponse(title, href, TvType.AsianDrama) { this.posterUrl = posterUrl }
+        return newTvSeriesSearchResponse(title, href, TvType.AsianDrama) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(rating)
+        }
     }
 
     private fun Element.toMovieSearchResult(): SearchResponse? {
         val title = this.selectFirst("span.block a")?.text()?.trim() ?: return null
         val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img.lazy")?.attr("data-src"))
+        val rating      = this.selectFirst("span.rating.flex.items-center")?.text()?.trim()
 
-        return newMovieSearchResponse(title, href, TvType.AsianDrama) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.AsianDrama) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(rating)
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {

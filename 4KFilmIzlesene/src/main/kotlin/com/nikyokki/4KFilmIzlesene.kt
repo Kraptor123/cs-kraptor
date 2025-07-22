@@ -60,13 +60,21 @@ class `4KFilmIzlesene` : MainAPI() {
     private fun Element.toMainPageResult(): SearchResponse? {
         val title     = this.selectFirst("div.name")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+        val puan      = this.selectFirst("span.align-right")?.text()?.trim()
+//        Log.d("kraptor_$name","puan = $puan")
         if (this.selectFirst("div.img img")?.attr("data-lazy-src") == "" ||
             this.selectFirst("div.img img")?.attr("data-lazy-src") == null) {
             val posterUrl = fixUrlNull(this.selectFirst("div.img img")?.attr("src"))
-            return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+            return newMovieSearchResponse(title, href, TvType.Movie) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         } else {
             val posterUrl = fixUrlNull(this.selectFirst("div.img img")?.attr("data-lazy-src"))
-            return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+            return newMovieSearchResponse(title, href, TvType.Movie) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         }
     }
 

@@ -84,9 +84,11 @@ class DiziPal : MainAPI() {
 
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val puan      = this.selectFirst("span.imdb.lessDot")?.text()?.trim()
 
         return newTvSeriesSearchResponse(title, href.substringBefore("/sezon"), TvType.TvSeries) {
             this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
         }
     }
 
@@ -94,19 +96,30 @@ class DiziPal : MainAPI() {
         val title     = this.selectFirst("span.title")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val puan      = this.selectFirst("span.imdb.lessDot")?.text()?.trim()
 
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
+        }
     }
 
     private fun SearchItem.toPostSearchResult(): SearchResponse {
         val title     = this.title
         val href      = "${mainUrl}${this.url}"
         val posterUrl = this.poster
+        val puan      = this.imdb
 
         return if (this.type == "series") {
-            newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+            newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+                this.posterUrl = posterUrl
+                this.score = Score.from10(puan)
+            }
         } else {
-            newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+            newMovieSearchResponse(title, href, TvType.Movie) {
+                this.posterUrl = posterUrl
+                this.score = Score.from10(puan)
+            }
         }
     }
 

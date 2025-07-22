@@ -59,8 +59,12 @@ class FilmEkseni : MainAPI() {
         val title = this.selectFirst("h2")?.text() ?: return null
         val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+        val puan      = this.selectFirst("div.poster-imdb")?.text()?.trim()
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
+        }
     }
 
     override suspend fun search(query: String): List<com.lagradost.cloudstream3.SearchResponse> {
@@ -85,9 +89,11 @@ class FilmEkseni : MainAPI() {
                 val slug = item.slug ?: return@mapNotNull null
                 val href = "$mainUrl/$slug"
                 val posterUrl = item.cover?.let { "$mainUrl/uploads/poster/$it" }
+                val puan      = item.imdb.toString()
 
                 newMovieSearchResponse(title, href, TvType.Movie) {
                     this.posterUrl = posterUrl
+                    this.score     = Score.from10(puan)
                 }
             }
         } catch (e: Exception) {
@@ -161,8 +167,12 @@ class FilmEkseni : MainAPI() {
         val title = this.selectFirst("a img")?.attr("alt") ?: return null
         val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("a img")?.attr("data-src"))
+        val puan      = this.selectFirst("div.poster-imdb")?.text()?.trim()
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
+        }
     }
 
     override suspend fun loadLinks(

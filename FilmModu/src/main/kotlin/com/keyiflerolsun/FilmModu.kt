@@ -60,8 +60,12 @@ class FilmModu : MainAPI() {
         val title     = this.selectFirst("a")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("picture img")?.attr("data-src"))
+        val puan      = this.selectFirst("div.hover-box div.imdb-eclipse span.imdb-rating")?.text()?.trim()
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {

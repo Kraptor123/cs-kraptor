@@ -57,11 +57,18 @@ class KultFilmler : MainAPI() {
         val title     = this.selectFirst("div.name a")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("div.name a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("div.img img")?.attr("src"))
+        val puan      = this.selectFirst("span.imdb")?.text()?.trim()
 
         return if (href.contains("/dizi/")) {
-            newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+            newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         } else {
-            newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+            newMovieSearchResponse(title, href, TvType.Movie) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         }
     }
 

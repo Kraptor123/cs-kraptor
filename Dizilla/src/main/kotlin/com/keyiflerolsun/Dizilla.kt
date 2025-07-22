@@ -140,6 +140,7 @@ class Dizilla : MainAPI() {
         // Parse JSON tree and pick result array
         val mapper = jsonMapper()
         val rootNode = mapper.readTree(decoded)
+        Log.d("kraptor_$name","rootNode = $rootNode")
         val itemsNode = if (rootNode.isArray) {
             rootNode
         } else {
@@ -157,6 +158,7 @@ class Dizilla : MainAPI() {
         // Map to SearchResponse
         val home = items.map { item ->
             val slug = item.infoslug ?: error("Missing slug for ${item.infotitle}")
+            val puan = item.infopuan.toString()
             val type = when {
                 slug.startsWith("dizi/") -> TvType.TvSeries
                 slug.startsWith("film/") -> TvType.Movie
@@ -179,6 +181,7 @@ class Dizilla : MainAPI() {
                             ?.replace(Regex("(images\\.)[\\w\\.]+\\/?"), "$1macellan.online/")
                     )
                     posterHeaders = mapOf("referer" to "${mainUrl}/")
+                    this.score    = Score.from10(puan)
                 }
 
                 TvType.Movie -> newMovieSearchResponse(item.infotitle, href, type) {
@@ -227,6 +230,7 @@ class Dizilla : MainAPI() {
             val searchResult: SearchResult = objectMapper.readValue(responseBody)
             val decodedSearch = decryptDizillaResponse(searchResult.response.toString()).toString()
             val contentJson: SearchData = objectMapper.readValue(decodedSearch)
+            Log.d("kraptor_$name","contentjson = $contentJson")
             if (contentJson.state != true) {
                 throw ErrorLoadingException("Invalid Json response")
             }
@@ -234,6 +238,7 @@ class Dizilla : MainAPI() {
             contentJson.result?.forEach {
                 val name = it.title.toString()
                 val link = fixUrl(it.slug.toString())
+                val puan = it.puan.toString()
                 val posterLink = it.poster?.replace("images-macellan-online.cdn.ampproject.org/i/s/", "")
                     ?.replace("file.dizilla.club", "file.macellan.online")
                     ?.replace("images.dizilla.club", "images.macellan.online")
@@ -244,6 +249,7 @@ class Dizilla : MainAPI() {
                     ?.replace(Regex("(images\\.)[\\w\\.]+\\/?"), "$1macellan.online/").toString()
                 results.add(newTvSeriesSearchResponse(name, link, TvType.TvSeries) {
                     this.posterUrl = posterLink
+                    this.score     = Score.from10(puan)
                 })
             }
             results
@@ -412,7 +418,8 @@ data class dizillaJson(
     @JsonProperty("original_title")  val infotitle:   String,
     @JsonProperty("description")     val infodesc:   String,
     @JsonProperty("poster_url")      val infoposter: String?,
-    @JsonProperty("used_slug")       val infoslug:   String?
+    @JsonProperty("used_slug")       val infoslug:   String?,
+    @JsonProperty("imdb_point")      val infopuan:   String?
 )
 
 private val privateAESKey = "9bYMCNQiWsXIYFWYAu7EkdsSbmGBTyUI"

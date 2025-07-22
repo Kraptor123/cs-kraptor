@@ -172,11 +172,18 @@ class UnutulmazFilmler : MainAPI() {
         val title = this.selectFirst("h2")?.text()?.replace("izle","") ?: return null
         val href = fixUrlNull(this.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+        val puan      = this.selectFirst("span.flex.year")?.text()?.trim()
 
         return if (href.contains("/dizi/")) {
-            newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+            newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         } else {
-            newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+            newMovieSearchResponse(title, href, TvType.Movie) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         }
     }
 
@@ -215,14 +222,17 @@ class UnutulmazFilmler : MainAPI() {
 
         val posterUrl = fixUrlNull(this.selectFirst("img[data-src]")?.attr("data-src")
         )
+        val puan      = this.selectFirst("span.flex.year")?.text()?.trim()
 
         return if (href.contains("/dizi/")) {
             newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
                 this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
             }
         } else {
             newMovieSearchResponse(title, href, TvType.Movie) {
                 this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
             }
         }
     }
@@ -289,11 +299,18 @@ class UnutulmazFilmler : MainAPI() {
         val title     = this.selectFirst("a")?.attr("title")?.replace("izle","") ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+        val puan      = this.selectFirst("span.flex.year")?.text()?.trim()
 
         return if (href.contains("/dizi/")) {
-            newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+            newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         } else {
-            newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+            newMovieSearchResponse(title, href, TvType.Movie) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         }
     }
 

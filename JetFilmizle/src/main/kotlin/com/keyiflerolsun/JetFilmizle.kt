@@ -46,16 +46,20 @@ class JetFilmizle : MainAPI() {
     }
 
     private fun Element.toSearchResult(): SearchResponse? {
-        var title = this.selectFirst("a")?.attr("title").toString()
+        val title = this.selectFirst("a")?.attr("title").toString()
 
         val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+        val puan = this.selectFirst("span.puan_1")?.text()?.trim()
         var posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 //        Log.d("kraptor_$name","title = $title")
         if (posterUrl == null) {
             posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
         }
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {

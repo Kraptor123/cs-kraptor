@@ -67,11 +67,18 @@ class SetFilmIzle : MainAPI() {
         val title     = this.selectFirst("h2")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+        val puan      = this.selectFirst("span.rating")?.text()?.trim()
 
         return if (href.contains("/dizi/")) {
-            newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+            newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         } else {
-            newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+            newMovieSearchResponse(title, href, TvType.Movie) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         }
     }
 
@@ -97,16 +104,20 @@ class SetFilmIzle : MainAPI() {
 
     private fun Element.toSearchResult(): SearchResponse? {
         val title     = this.selectFirst("h2")?.text() ?: return null
-        Log.d("kraptor_$name","title = $title")
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
-        Log.d("kraptor_$name","href = $href")
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
-        Log.d("kraptor_$name","posterUrl = $posterUrl")
+        val puan      = this.selectFirst("span.rating")?.text()?.trim()
 
         return if (href.contains("/dizi/")) {
-            newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+            newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         } else {
-            newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+            newMovieSearchResponse(title, href, TvType.Movie) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         }
     }
 
@@ -149,7 +160,7 @@ class SetFilmIzle : MainAPI() {
                 this.plot            = description
                 this.year            = year
                 this.tags            = tags
-                this.score = Score.from10(rating)
+                this.score           = Score.from10(rating)
                 this.duration        = duration
                 this.recommendations = recommendations
                 addActors(actors)
@@ -162,7 +173,7 @@ class SetFilmIzle : MainAPI() {
             this.plot            = description
             this.year            = year
             this.tags            = tags
-            this.score = Score.from10(rating)
+            this.score           = Score.from10(rating)
             this.duration        = duration
             this.recommendations = recommendations
             addActors(actors)
@@ -174,11 +185,18 @@ class SetFilmIzle : MainAPI() {
         val title     = this.selectFirst("a img")?.attr("alt") ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("a img")?.attr("data-src"))
+        val puan      = this.selectFirst("span.rating")?.text()?.trim()
 
         return if (href.contains("/dizi/")) {
-            newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+            newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         } else {
-            newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+            newMovieSearchResponse(title, href, TvType.Movie) {
+                this.posterUrl = posterUrl
+                this.score     = Score.from10(puan)
+            }
         }
     }
 

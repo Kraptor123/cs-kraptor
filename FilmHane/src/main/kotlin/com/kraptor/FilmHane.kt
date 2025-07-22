@@ -75,8 +75,12 @@ class FilmHane : MainAPI() {
         val title = this.selectFirst("h2")?.text() ?: this.selectFirst("h3")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+        val puan      = this.selectFirst("span.rating")?.text()?.trim()
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
@@ -102,16 +106,20 @@ class FilmHane : MainAPI() {
                 val title = seriesDiv.selectFirst("span.block")?.text()?.trim() ?: return@mapNotNull null
                 val href = seriesDiv.parent()?.attr("href")?.let(::fixUrlNull) ?: return@mapNotNull null
                 val posterUrl = seriesDiv.selectFirst("img")?.attr("data-src")?.let(::fixUrlNull)
+                val puan      = seriesDiv.selectFirst("span.rating")?.text()?.trim()
                 return@mapNotNull newTvSeriesSearchResponse(title, fixUrl(href), TvType.TvSeries) {
                     this.posterUrl = posterUrl
+                    this.score     = Score.from10(puan)
                 }
             }
             li.selectFirst("div.result-movies")?.let { movieDiv ->
                 val title = movieDiv.selectFirst("div.result-movies-text a")?.text()?.trim() ?: return@mapNotNull null
                 val href = movieDiv.selectFirst("div.result-movies-text a")?.attr("href")?.let(::fixUrlNull) ?: return@mapNotNull null
                 val posterUrl = movieDiv.selectFirst("div.result-movies-image img")?.attr("data-src")?.let(::fixUrlNull)
+                val puan      = movieDiv.selectFirst("span.rating")?.text()?.trim()
                 return@mapNotNull newMovieSearchResponse(title, fixUrl(href), TvType.Movie) {
                     this.posterUrl = posterUrl
+                    this.score     = Score.from10(puan)
                 }
             }
             null

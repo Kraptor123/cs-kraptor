@@ -96,8 +96,12 @@ class Sinefy : MainAPI() {
             ?.firstOrNull { it.endsWith("1x") }
             ?.substringBefore(" ")
         Log.d("sinef", "poster $posterUrl")
+        val puan      = this.selectFirst("span.rating")?.text()?.trim()
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
@@ -310,8 +314,13 @@ class Sinefy : MainAPI() {
         val title     = this.selectFirst("a img")?.attr("alt") ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("a img")?.attr("data-src"))
+        val puan      = this.selectFirst("span.rating")?.text()?.trim()
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
+        }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {

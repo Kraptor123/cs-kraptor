@@ -68,16 +68,24 @@ class FilmMakinesi : MainAPI() {
         val title     = this.selectFirst("div.title")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("div.item-relative a.item")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("div.thumbnail-outer img.thumbnail")?.attr("src")) ?: fixUrlNull(this.selectFirst("img.thumbnail")?.attr("src"))
+        val puan      = this.selectFirst("div.rating")?.text()?.trim()
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
+        }
     }
 
     private fun Element.toRecommendResult(): SearchResponse? {
         val title     = this.select("div.title").last()?.text() ?: return null
         val href      = fixUrlNull(this.select("div.item-relative a.item").last()?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("div.thumbnail-outer img.thumbnail")?.attr("src"))
+        val puan      = this.selectFirst("div.rating")?.text()?.trim()
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {

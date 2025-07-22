@@ -61,8 +61,12 @@ class FullHDFilmizlesene : MainAPI() {
         val title     = this.selectFirst("span.film-title")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+        val rating    = this.selectFirst("span.imdb")?.text()?.trim()
 
-        return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(rating)
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
