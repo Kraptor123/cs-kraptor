@@ -37,7 +37,7 @@ class UnutulmazFilmler : MainAPI() {
         "49"  to    "Aile",
         "59"  to    "Aksiyon",
         "44"  to    "Animasyon",
-        "47"  to    "Belgesel",
+//        "47"  to    "Belgesel",
         "66"  to    "Bilim Kurgu",
         "74"  to    "Biyografi",
         "48"  to    "Dram",
@@ -45,38 +45,38 @@ class UnutulmazFilmler : MainAPI() {
 //        "84"  to    "Film-Noir",
         "68"  to    "Gerilim",
         "51"  to    "Gizem",
-        "83"  to    "Kısa",
+//        "83"  to    "Kısa",
         "45"  to    "Komedi",
         "63"  to    "Korku",
         "60"  to    "Macera",
-        "64"  to    "Müzik",
-        "70"  to    "Reality-TV",
+//        "64"  to    "Müzik",
+//        "70"  to    "Reality-TV",
         "65"  to    "Romantik",
         "69"  to    "Savaş",
-        "73"  to    "Spor",
+//        "73"  to    "Spor",
         "46"  to    "Suç",
-        "62"  to    "Tarih",
-        "102" to    "TV film",
+//        "62"  to    "Tarih",
+//        "102" to    "TV film",
 //        "78"  to    "Western",
         "15"   to   "Aile Dizi",
         "9"    to   "Aksiyon Dizi",
         "17"   to   "Animasyon Dizi",
-        "13"   to   "Belgesel Dizi",
+//        "13"   to   "Belgesel Dizi",
         "5"    to   "Bilim Kurgu Dizi",
-        "6"    to   "Biyografi Dizi",
-        "2"    to   "Dram Dizi",
-        "16"   to   "Drama Dizi",
-        "12"   to   "Fantastik Dizi",
+//        "6"    to   "Biyografi Dizi",
+//        "2"    to   "Dram Dizi",
+//        "16"   to   "Drama Dizi",
+//        "12"   to   "Fantastik Dizi",
 //        "28"   to   "Game-Show Dizi",
-        "43"   to   "Gerçeklik Dizi",
+//        "43"   to   "Gerçeklik Dizi",
         "18"   to   "Gerilim Dizi",
         "3"    to   "Gizem Dizi",
         "4"    to   "Komedi Dizi",
         "8"    to   "Korku Dizi",
-        "24"   to   "Macera Dizi",
+//        "24"   to   "Macera Dizi",
 //        "20"   to   "Müzikal Dizi",
-        "7"    to   "Romantik Dizi",
-        "26"   to   "Savaş Dizi",
+//        "7"    to   "Romantik Dizi",
+//        "26"   to   "Savaş Dizi",
 //        "23"   to   "Spor Dizi",
         "1"    to   "Suç Dizi",
 //        "10"   to   "Tarih Dizi",
@@ -172,7 +172,7 @@ class UnutulmazFilmler : MainAPI() {
         val title = this.selectFirst("h2")?.text()?.replace("izle","") ?: return null
         val href = fixUrlNull(this.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
-        val puan      = this.selectFirst("span.flex.year")?.text()?.trim()
+        val puan      = this.selectFirst("span.backdrop-blur:nth-of-type(2)")?.text()?.trim()
 
         return if (href.contains("/dizi/")) {
             newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
@@ -222,7 +222,7 @@ class UnutulmazFilmler : MainAPI() {
 
         val posterUrl = fixUrlNull(this.selectFirst("img[data-src]")?.attr("data-src")
         )
-        val puan      = this.selectFirst("span.flex.year")?.text()?.trim()
+        val puan      = this.selectFirst("span.backdrop-blur:nth-of-type(2)")?.text()?.trim()
 
         return if (href.contains("/dizi/")) {
             newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
@@ -299,7 +299,7 @@ class UnutulmazFilmler : MainAPI() {
         val title     = this.selectFirst("a")?.attr("title")?.replace("izle","") ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
-        val puan      = this.selectFirst("span.flex.year")?.text()?.trim()
+        val puan      = this.selectFirst("span.backdrop-blur:nth-of-type(2)")?.text()?.trim()
 
         return if (href.contains("/dizi/")) {
             newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
