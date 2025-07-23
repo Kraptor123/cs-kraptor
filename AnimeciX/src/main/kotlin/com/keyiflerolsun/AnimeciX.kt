@@ -69,6 +69,7 @@ class AnimeciX : MainAPI() {
                 ) {
                     this.posterUrl = fixUrlNull(it.titlePoster)
                     this.score     = Score.from10(it.rating)
+                    this.episodes  = mutableMapOf(DubStatus.Subbed to it.episodeCount)
                 }
             }
 
@@ -89,6 +90,7 @@ class AnimeciX : MainAPI() {
                 ) {
                     this.posterUrl = fixUrlNull(anime.poster)
                     this.score     = Score.from10(anime.rating)
+                    this.episodes  = mutableMapOf(DubStatus.Subbed to anime.episodeCount)
                 }
             } ?: listOf()
 
@@ -107,6 +109,7 @@ class AnimeciX : MainAPI() {
             ) {
                 this.posterUrl = fixUrlNull(anime.poster)
                 this.score     = Score.from10(anime.rating)
+                this.episodes  = mutableMapOf(DubStatus.Subbed to anime.episodeCount)
             }
         }
     }
@@ -155,13 +158,15 @@ class AnimeciX : MainAPI() {
             }
 
             // Anime için LoadResponse oluştur
-            return newTvSeriesLoadResponse(
+            return newAnimeLoadResponse(
                 title.title.title,
                 "$mainUrl/secure/titles/${title.title.id}?titleId=${title.title.id}",
                 TvType.Anime,
-                episodes
+                true,
+
             ) {
                 this.posterUrl = fixUrlNull(title.title.poster)
+                this.episodes  = mutableMapOf(DubStatus.Subbed to episodes)
                 this.year = title.title.year
                 this.plot = title.title.description
                 this.tags = title.title.tags.map { it.name }
