@@ -266,7 +266,7 @@ class YabanciDizi : MainAPI() {
                             type = ExtractorLinkType.M3U8
                         ) {
                             headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0",
-                                "Referer" to vidUrl) // "Referer" ayarı burada yapılabilir
+                                "Referer" to "https://ydx.molystream.org/") // "Referer" ayarı burada yapılabilir
                             quality = getQualityFromName(sonUrl.resolution)
                         }
                     )
