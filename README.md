@@ -4,7 +4,16 @@
 
 [kekikanime telegram](https://t.me/kekikanime)
 
-## ❗Yasal Uyarı
+## ⚖️ DMCA Disclaimer
+We hereby issue this notice to clarify that these extensions function similarly to a standard web browser by fetching video files from the internet.
+
+- No content is hosted by this repository or the Cloudstream 3 application.
+- Any content accessed is hosted by third-party websites.
+- Users are solely responsible for their usage and must comply with their local laws.
+
+If you believe content is violating copyright laws, please contact the actual file hosts, not the developers of this repository or the Cloudstream 3 app.
+
+## ❗DMCA Türkçe
 
 DMCA
 
@@ -12,62 +21,10 @@ DMCA
 
 Teşekkür ederiz.
 
-
-## Altyazılar Çalışmıyor Mu?
-**Sorun Çözümü için tıklayın -> Çözüm(https://github.com/Kraptor123/cs-kekikanime/issues/19#issuecomment-3006398821)**
-
-## 🎬 Eklenen Eklentiler
-
-### 📺 Canlı TV
-- **GinikoCanli**
-- **IpTvPlayStream**
-
-### 📹 Diziler
-- **Diziyo**
-- **DiziFun**
-- **CizgiveDizi**
-- **Dizimore**
-- **TrDiziİzle**
-- **AsyaFanatiklerim**
-- **DiziKral**
-- **DiziFon**
-- **BirAsyaDizi**
-- **Dizist**
-- **DiziPalOrijinal**
-- **AsyaMinik**
-
-### 🍿 Filmler
-- **FilmEkseni**
-- **FilmHane**
-- **FilmIzle**
-- **Sinefy**
-- **4KFilmIzleme**
-- **HdFilmCehennemi2**
-- **HDFilm**
-- **FilmIzyon**
-- **Sinezy**
-- **FullHDIzle**
-
-### 🎎 Animeler
-- **Anizm**
-- **AsyaAnimeleri**
-- **AnimeIzlesene**
-- **Animeler**
-- **Animex**
-
-  
-**Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için de Issues bölümünü kullanabilirsiniz.**
-
-
-**Çalışmayan canlı yayınlar için android cihazınıza [ByeDPI](https://github.com/dovecoteescapee/ByeDPIAndroid/releases/download/v1.2.0/byedpi-1.2.0.apk) kurabilirsiniz. [Kurulum talimatları](https://www.technopat.net/sosyal/konu/android-vpn-olmadan-sinirsiz-erisim-byedpi.3564707/)**                                                                                                                                                                        
-İyi seyirler.
-
 ## 💾 Kurulum
 
 1. **[cloudstream/pre-release](https://github.com/recloudstream/cloudstream/releases/tag/pre-release)** _Adresinden güncel APK dosyasını indirip kurun._
 2. **Uygulamanın yüklü olduğu cihazda** _[depoyu otomatik yüklemek için tıklayın](https://self-similarity.github.io/http-protocol-redirector?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/repo.json)_
-  - **veya**
-  - `Depo ekle` _butonuyla **manuel** ekleme yapmak isteyen arkadaşlar için_ `kekikan` _**kısa kod**u mevcuttur._ `Depo ismi` _kısmını boş bırakarak_ `Depo URL'si` _kısmına_ `kekikan` yazarak `Depo ekle` _demeniz yeterli.._
 
 ## 💡 Faydalı Linkler
 
