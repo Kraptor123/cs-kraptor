@@ -172,8 +172,10 @@ class Anizm : MainAPI() {
         val title = this.selectFirst("a.titleLink")?.text() ?: return null
         val href = fixUrlNull(this.selectFirst("a.imgWrapperLink")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+        val puan      = this.selectFirst("text.circle-chart__percent")?.text()?.trim()
         return newAnimeSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = posterUrl
+            this.score     = Score.from10(puan)
         }
     }
 
@@ -220,6 +222,7 @@ class Anizm : MainAPI() {
                     TvType.Anime
                 ) {
                     posterUrl = poster
+                    score     = Score.from10(item.puan)
                 }
                 searchResponses.add(searchResponse)
             }
@@ -325,5 +328,6 @@ data class AnimeSearchResult(
     @JsonProperty("info_title") val infotitle: String,
     @JsonProperty("info_slug") val infoslug: String,
     @JsonProperty("info_poster") val infoposter: String?,
-    @JsonProperty("info_year") val infoyear: String?
+    @JsonProperty("info_year") val infoyear: String?,
+    @JsonProperty("info_malpoint") val puan: String?
 )
