@@ -1,7 +1,9 @@
 # 📺 cs-kekikanime
 
-**Kısa kod** = **kekikan**
-
+## **Kısa kodlar**
+ **kekikanime**
+ **kekikan**
+ **kraptor**
 [kekikanime telegram](https://t.me/kekikanime)
 
 ## ⚖️ DMCA Disclaimer
