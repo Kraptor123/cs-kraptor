@@ -68,6 +68,7 @@ class AnimeciX : MainAPI() {
                     TvType.Anime
                 ) {
                     this.posterUrl = fixUrlNull(it.titlePoster)
+                    this.score     = Score.from10(it.rating)
                 }
             }
 
@@ -87,6 +88,7 @@ class AnimeciX : MainAPI() {
                     TvType.Anime
                 ) {
                     this.posterUrl = fixUrlNull(anime.poster)
+                    this.score     = Score.from10(anime.rating)
                 }
             } ?: listOf()
 
@@ -104,6 +106,7 @@ class AnimeciX : MainAPI() {
                 TvType.Anime
             ) {
                 this.posterUrl = fixUrlNull(anime.poster)
+                this.score     = Score.from10(anime.rating)
             }
         }
     }

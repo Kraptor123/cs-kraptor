@@ -31,6 +31,7 @@ data class AnimeSearch(
     @JsonProperty("title_type") val titleType: String,
     @JsonProperty("name") val title: String,
     @JsonProperty("poster") val poster: String?,
+    @JsonProperty("mal_vote_average") val rating: String?,
 )
 
 data class LastEpisodesResponse(
@@ -41,6 +42,7 @@ data class LastEpisode(
     @JsonProperty("title_id") val titleId: Int,
     @JsonProperty("title_name") val titleName: String,
     @JsonProperty("title_poster") val titlePoster: String?,
+    @JsonProperty("mal_vote_average") val rating: String?,
     @JsonProperty("season_number") val seasonNumber: Int,
     @JsonProperty("episode_number") val episodeNumber: Int
 )
