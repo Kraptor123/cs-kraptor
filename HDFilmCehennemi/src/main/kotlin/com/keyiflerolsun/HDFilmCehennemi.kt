@@ -295,7 +295,6 @@ class HDFilmCehennemi : MainAPI() {
             val baseUri = iframedoc.location().substringBefore("/", "https://www.hdfilmcehennemi.mobi")
 
             iframedoc.select("track[kind=captions]")
-                .filter { it.attr("srclang") != "forced" }
                 .forEach { track ->
                     val lang = track.attr("srclang").let {
                         when (it) {
