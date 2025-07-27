@@ -32,7 +32,7 @@ class VidMody : ExtractorApi() {
                 links.add(
                     newExtractorLink(
                         source = name,
-                        name = "VidMoly",
+                        name = "VidMody",
                         url = videoLink,
                         type = ExtractorLinkType.M3U8
                     ) {
