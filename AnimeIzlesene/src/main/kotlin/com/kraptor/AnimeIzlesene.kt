@@ -212,8 +212,11 @@ class AnimeIzlesene : MainAPI() {
                 ?.trim()?.toIntOrNull()
         }
 
-        val trailer = Regex("""embed\/(.*)\?rel""").find(document.html())?.groupValues?.get(1)
-            ?.let { "https://www.youtube.com/embed/$it" }
+        val trailer = document.selectFirst("button[data-remote*=\"trailer=\"]")
+    ?.attr("data-remote")
+    ?.substringAfter("trailer=")
+    ?.let { java.net.URLDecoder.decode(it, "UTF-8") }
+
 
         // For movies, create a single episode
         if (isMovie) {
