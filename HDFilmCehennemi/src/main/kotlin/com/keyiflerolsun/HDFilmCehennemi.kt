@@ -380,10 +380,10 @@ class HDFilmCehennemi : MainAPI() {
                     "HDFilmCehennemi"
                 }
 
-                val referer = if (realUrl.contains("cdnimages")) {
+                val refererSon = if (realUrl.contains("cdnimages")) {
                     "https://hdfilmcehennemi.mobi/"
                 } else {
-                    "${realUrl}/"
+                    "${mainUrl}/"
                 }
 
                 Log.d("kraptor_$name", "$source » $videoID » $iframe")
@@ -393,7 +393,7 @@ class HDFilmCehennemi : MainAPI() {
                     url = realUrl,
                     type = ExtractorLinkType.M3U8,
                     {
-                        this.referer = referer
+                        this.referer = refererSon
                         this.quality = Qualities.Unknown.value
                     }
                 ))
@@ -430,16 +430,9 @@ fun dcHello(encoded: String): String {
     // İkinci Base64 çöz
     val secondDecoded = base64Decode(reversed)
 
-    val gercekLink    = if (secondDecoded.contains("+")) {
-        secondDecoded.substringAfterLast("+")
-    } else if (secondDecoded.contains(" ")) {
-        secondDecoded.substringAfterLast(" ")
-    } else if (secondDecoded.contains("|")){
-        secondDecoded.substringAfterLast("|")
-    } else {
-        secondDecoded
-    }
-    Log.d("kraptor_hdfilmcehennemi", "secondDecoded $secondDecoded")
-    return gercekLink
+    val gercekLink    = secondDecoded.substringAfter("http")
+    val sonLink       = "http$gercekLink"
+    Log.d("kraptor_hdfilmcehennemi", "sonLink $sonLink")
+    return sonLink.trim()
 
 }
