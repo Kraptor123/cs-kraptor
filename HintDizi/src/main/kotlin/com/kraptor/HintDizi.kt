@@ -19,31 +19,31 @@ class HintDizi : MainAPI() {
     //Movie, AnimeMovie, TvSeries, Cartoon, Anime, OVA, Torrent, Documentary, AsianDrama, Live, NSFW, Others, Music, AudioBook, CustomMedia, Audio, Podcast,
 
     override val mainPage = mainPageOf(
+        ""  to "Tüm Diziler",
         ""  to "Aksiyon",
-        ""  to "Animasyon",
         ""  to "Belgesel",
-        ""  to "Bilim Kurgu",
-        ""  to "Biyografi",
         ""  to "Dram",
         ""  to "Fantastik",
-        ""  to "Gençlik",
         ""  to "Gerilim",
         ""  to "Gizem",
         ""  to "Komedi",
         ""  to "Korku",
-        ""  to "Macera",
-        ""  to "Polisiye",
         ""  to "Romantik",
-        ""  to "Savaş",
         ""  to "Suç",
         ""  to "Tarih",
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document =  if (page == 1) {
+        val document = if (request.name.contains("Tüm Diziler")) {
+            if (page == 1) {
+                app.get("${mainUrl}/dizi-arsivi/").document
+            } else {
+                app.get("${mainUrl}/dizi-arsivi/page/$page/").document
+            }
+        } else if (page == 1) {
             app.get("${mainUrl}/dizi-arsivi/?filtrele=imdb&sirala=DESC&yil=&imdb=&kelime=&tur=${request.name}").document
         } else {
-            app.get("${mainUrl}/dizi-arsivi/page/$page/?filtrele=imdb&sirala=DESC&yil&imdb&kelime&tur=${request.name}#038;sirala=DESC&yil&imdb&kelime&tur=${request.name}").document
+            app.get("${mainUrl}/dizi-arsivi/page/$page/?filtrele=imdb&sirala=DESC&yil&imdb&kelime&tur=${request.name}").document
         }
         val home     = document.select("div.single-item").mapNotNull { it.toMainPageResult() }
 
@@ -97,7 +97,7 @@ class HintDizi : MainAPI() {
     override suspend fun load(url: String): LoadResponse? {
         val document = app.get(url).document
 
-        val title           = document.selectFirst("h1")?.text()?.trim() ?: return null
+        val title           = document.selectFirst("h1")?.text()?.substringBefore(" Türkçe")?.trim() ?: return null
         val poster          = fixUrlNull(document.selectFirst("div.category_image img")?.attr("src"))
         val description     = document.selectFirst("div.category_desc")?.text()?.trim()
         val year            = document.selectFirst("#icerikcat2 > div:nth-child(1)")?.text()?.trim()?.toIntOrNull()
