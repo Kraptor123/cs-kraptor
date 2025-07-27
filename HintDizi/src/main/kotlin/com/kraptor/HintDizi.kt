@@ -71,15 +71,25 @@ class HintDizi : MainAPI() {
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/?s=${query}").document
 
-        return document.select("div.result-item article").mapNotNull { it.toSearchResult() }
+        return document.select("div.single-item").mapNotNull { it.toSearchResult() }
     }
 
     private fun Element.toSearchResult(): SearchResponse? {
-        val title     = this.selectFirst("div.title a")?.text() ?: return null
-        val href      = fixUrlNull(this.selectFirst("div.title a")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val title     = this.selectFirst("div.categorytitle a")?.text() ?: return null
+        val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+        val poster = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val posterUrl = if (poster!!.contains(".avif")) {
+            "https://res.cloudinary.com/di0j4jsa8/image/fetch/f_auto/$poster"
+        } else {
+            poster
+        }
 
-        return newTvSeriesSearchResponse(title, href, TvType.AsianDrama) { this.posterUrl = posterUrl }
+        val score     = this.selectFirst("div.imdbp")?.text()?.substringAfterLast(" ")?.substringBefore(")")
+
+        return newTvSeriesSearchResponse(title, href, TvType.AsianDrama) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(score)
+        }
     }
 
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
@@ -117,14 +127,6 @@ class HintDizi : MainAPI() {
             this.score           = Score.from10(rating)
             addActors(actors)
         }
-    }
-
-    private fun Element.toRecommendationResult(): SearchResponse? {
-        val title     = this.selectFirst("a img")?.attr("alt") ?: return null
-        val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("a img")?.attr("data-src"))
-
-        return newTvSeriesSearchResponse(title, href, TvType.AsianDrama) { this.posterUrl = posterUrl }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
