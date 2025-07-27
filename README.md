@@ -1,7 +1,11 @@
 # 📺 cs-kekikanime
 
-**Kısa kod** = **kekikan**
+## **Kısa kodlar**
+- **kekikanime**
+- **kekikan**
+- **kraptor**
 
+## Telegram Kanalı
 [kekikanime telegram](https://t.me/kekikanime)
 
 ## ⚖️ DMCA Disclaimer
