@@ -12,6 +12,8 @@ Cloudstream Kurulu Cihazda Aşağıdaki Logoya Tıklayarak Repoyu İndirebilirsi
 - **Kekikan**
 - **kraptor**
 
+Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kekikanime logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
+
 ## Telegram Kanalı
 [kekikanime telegram](https://t.me/kekikanime)
 
