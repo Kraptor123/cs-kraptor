@@ -177,23 +177,29 @@ class BelgeselX : MainAPI() {
                             app.get(url, headers).document.html()
                         }
                         val links = linkRegex.findAll(html).map { it.groupValues[1] }.toList()
-                        Log.d("kraptor_$name","links = $links")
                         val labels = labelRegex.findAll(html).map { it.groupValues[1] }.toList()
+
 
                         links.forEachIndexed { i, linkUrl ->
                             val labelText = labels.getOrNull(i) ?: ""
+                            val kaynakIsim = if (linkUrl.contains("googleusercontent")){
+                                "Google"
+                            } else {
+                                "BelgeselX"
+                            }
+                            Log.d("kraptor_$name","kaynakIsim = $kaynakIsim $linkUrl")
+
                             val qualityInt = qualityMap[labelText] ?: Qualities.Unknown.value
 
-                            val extractor = newExtractorLink(
-                                source = "BelgeselX",
-                                name = "BelgeselX",
+                          callback.invoke(newExtractorLink(
+                                source = kaynakIsim,
+                                name = kaynakIsim,
                                 url = linkUrl,
-                                type = INFER_TYPE
-                            ).apply {
+                                type = INFER_TYPE,
+                                {
                                 this.quality = qualityInt
                             }
-
-                            callback(extractor)
+                          ))
                         }
                     } catch (_: Exception) { /* skip */
                     }
