@@ -106,20 +106,19 @@ class BelgeselX : MainAPI() {
         val tags = document.select("div.gen-socail-share a[href*='belgeselkanali']")
             .map { it.attr("href").split("/").last().replace("-", " ").toTitleCase() }
 
-        var counter = 0
         val episodes = document.select("div.gen-movie-contain").mapNotNull {
             val epName = it.selectFirst("div.gen-movie-info h3 a")?.text()?.trim() ?: return@mapNotNull null
             val epHref = fixUrlNull(it.selectFirst("div.gen-movie-info h3 a")?.attr("href")) ?: return@mapNotNull null
+            val epId   = it.selectFirst("h3 a")?.attr("id").toString()
+            Log.d("kraptor_$name","epId = $epId")
+            val epEpisode = it.selectFirst("div.gen-single-meta-holder li:nth-child(1)")?.text()?.substringAfterLast(" ")
+                ?.trim()?.toIntOrNull()
+            val epSeason = it.selectFirst("div.gen-single-meta-holder li:nth-child(1)")?.text()?.substringBefore(", ")
+                ?.substringAfter(" ")
+                ?.trim()?.toIntOrNull()
 
-            val seasonName = it.selectFirst("div.gen-single-meta-holder ul li")?.text()?.trim() ?: ""
-            var epEpisode = Regex("""Bölüm (\d+)""").find(seasonName)?.groupValues?.get(1)?.toIntOrNull() ?: 0
-            val epSeason = Regex("""Sezon (\d+)""").find(seasonName)?.groupValues?.get(1)?.toIntOrNull() ?: 1
 
-            if (epEpisode == 0) {
-                epEpisode = counter++
-            }
-
-            newEpisode(epHref) {
+            newEpisode("$epHref|$epId") {
                 this.name = epName
                 this.season = epSeason
                 this.episode = epEpisode
@@ -139,9 +138,10 @@ class BelgeselX : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        val sourceHtml = app.get(data).body?.string() ?: return false
-        val idMatch = Regex("""id=\"no(\d+)\"""").find(sourceHtml)
-        val number = idMatch?.groupValues?.get(1) ?: return false
+        val gercekUrl = data.substringBefore("|")
+        val vidId = data.substringAfter("|")
+        val number = vidId
+        Log.d("kraptor_$name","number = $number")
 
         val videoUrls = listOf(
             "https://belgeselx.com/video/data/new1.php?id=$number",
@@ -170,13 +170,14 @@ class BelgeselX : MainAPI() {
         )
 
         coroutineScope {
-            val jobs = videoUrls.map { url ->
+         videoUrls.map { url ->
                 launch(Dispatchers.IO) {
                     try {
                         val html = withTimeout(3_000) {
                             app.get(url, headers).document.html()
                         }
                         val links = linkRegex.findAll(html).map { it.groupValues[1] }.toList()
+                        Log.d("kraptor_$name","links = $links")
                         val labels = labelRegex.findAll(html).map { it.groupValues[1] }.toList()
 
                         links.forEachIndexed { i, linkUrl ->
