@@ -3,7 +3,7 @@
 
 Cloudstream Kurulu Cihazda Aşağıdaki Logoya Tıklayarak Repoyu İndirebilirsiniz:
 
-[<img alt="alt_text" width="200px" src="https://raw.githubusercontent.com/kerimmkirac/cs-kerim/refs/heads/master/kekikanime.png"/>](https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/repo.json)
+[<img alt="alt_text" width="200px" src="https://raw.githubusercontent.com/kerimmkirac/cs-kerim/refs/heads/master/kekikanime.png"/>](kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/TurkMegaRepo/refs/heads/master/repo.json)
 
 
 ## **Kısa kodlar**
