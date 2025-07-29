@@ -148,10 +148,10 @@ class AsyaFilmIzlesene : MainAPI() {
         Log.d("kraptor_$name", "data = ${data}")
         val document = app.get(data).document
 
-        val iframe   = document.select("iframe")
+        val iframe   = document.select("span.optinal-link.amy-streaming-link")
 
         iframe.forEach { iframe ->
-            val iframeSrc = fixUrlNull(iframe.attr("src")).toString()
+            val iframeSrc = fixUrlNull(iframe.attr("data-source")).toString()
             Log.d("kraptor_$name", "iframeSrc = ${iframeSrc}")
             loadExtractor(iframeSrc, "${mainUrl}/", subtitleCallback, callback)
         }
