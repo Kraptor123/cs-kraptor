@@ -41,12 +41,18 @@ open class ContentX : ExtractorApi() {
                 .replace("\\u011f", "ğ")
                 .replace("\\u015f", "ş")
 
+            val language = if (subLang.contains("tur, tr, türkçe", ignoreCase = true)) {
+                "Turkish"
+            } else {
+                subLang
+            }
+
             if (subUrl in subUrls) return@forEach
             subUrls.add(subUrl)
 
             subtitleCallback.invoke(
                 SubtitleFile(
-                    lang = subLang,
+                    lang = language,
                     url = fixUrl(subUrl)
                 )
             )
@@ -118,14 +124,20 @@ open class RapidVid : ExtractorApi() {
         val subUrls = mutableSetOf<String>()
         Regex(""""captions","file":"([^"]*)","label":"([^"]*)"\}""").findAll(videoReq).forEach {
             val (subUrl, subLang) = it.destructured
+            val sublangDuz = subLang
+                .replace("\\u0131", "ı")
+                .replace("\\u0130", "İ")
+                .replace("\\u00fc", "ü")
+                .replace("\\u00e7", "ç")
+            val language = if (sublangDuz.contains("tur, tr, türkçe, turkce", ignoreCase = true)) {
+                "Turkish"
+            } else {
+                sublangDuz
+            }
             if (subUrls.add(subUrl)) {
                 subtitleCallback(
                     SubtitleFile(
-                        lang = subLang
-                            .replace("\\u0131", "ı")
-                            .replace("\\u0130", "İ")
-                            .replace("\\u00fc", "ü")
-                            .replace("\\u00e7", "ç"),
+                        lang = language,
                         url = fixUrl(subUrl.replace("\\", ""))
                     )
                 )
@@ -366,8 +378,8 @@ open class TurkeyPlayer : ExtractorApi() {
         fixM3u?.contains("master.txt")?.let {
             if (!it) {
                 val lang = when {
-                    fixM3u.contains("tur", ignoreCase = true) -> "Türkçe"
-                    fixM3u.contains("en", ignoreCase = true) -> "İngilizce"
+                    fixM3u.contains("tur", ignoreCase = true) -> "Turkish"
+                    fixM3u.contains("en", ignoreCase = true) -> "English"
                     else -> "Bilinmeyen"
                 }
                 subtitleCallback.invoke(SubtitleFile(lang, fixM3u.toString()))
@@ -438,8 +450,13 @@ open class VidMoxy : ExtractorApi() {
                 .substringAfterLast("/")
                 .substringBefore("_")
            Log.d("kraptor_unutulmaz", "subLang = $subLang")
+           val language = if (subLang.contains("tur, tr, türkçe", ignoreCase = true)) {
+               "Turkish"
+           } else {
+               subLang
+           }
             subtitleCallback.invoke(SubtitleFile(
-                lang = subLang,
+                lang = language,
                 url  = url
             ))
         }.toList()

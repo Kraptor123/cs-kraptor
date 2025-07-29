@@ -49,9 +49,9 @@ open class CloseLoad : ExtractorApi() {
                 val srclang   = element.attr("srclang")
                 val labelAttr = element.attr("label")
                 val lang = when (srclang) {
-                    "tr" -> "Türkçe"
-                    "en" -> "İngilizce"
-                    "fr" -> "Fransızca"
+                    "tr" -> "Turkish"
+                    "en" -> "English"
+                    "fr" -> "French"
                     else -> labelAttr.ifBlank { srclang }
                 }
                 val isDefault = element.hasAttr("default")

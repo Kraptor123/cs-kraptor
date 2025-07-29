@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.base64Decode
 import com.lagradost.cloudstream3.base64DecodeArray
 import com.lagradost.cloudstream3.utils.*
 import java.nio.charset.Charset
@@ -40,12 +41,18 @@ open class ContentX : ExtractorApi() {
                 .replace("\\u011f", "ğ")
                 .replace("\\u015f", "ş")
 
+            val language = if (subLang.contains("tur, tr, türkçe", ignoreCase = true)) {
+                "Turkish"
+            } else {
+                subLang
+            }
+
             if (subUrl in subUrls) return@forEach
             subUrls.add(subUrl)
 
             subtitleCallback.invoke(
                 SubtitleFile(
-                    lang = subLang,
+                    lang = language,
                     url = fixUrl(subUrl)
                 )
             )
@@ -117,14 +124,20 @@ open class RapidVid : ExtractorApi() {
         val subUrls = mutableSetOf<String>()
         Regex(""""captions","file":"([^"]*)","label":"([^"]*)"\}""").findAll(videoReq).forEach {
             val (subUrl, subLang) = it.destructured
+            val sublangDuz = subLang
+                .replace("\\u0131", "ı")
+                .replace("\\u0130", "İ")
+                .replace("\\u00fc", "ü")
+                .replace("\\u00e7", "ç")
+            val language = if (sublangDuz.contains("tur, tr, türkçe, turkce", ignoreCase = true)) {
+                "Turkish"
+            } else {
+                sublangDuz
+            }
             if (subUrls.add(subUrl)) {
                 subtitleCallback(
                     SubtitleFile(
-                        lang = subLang
-                            .replace("\\u0131", "ı")
-                            .replace("\\u0130", "İ")
-                            .replace("\\u00fc", "ü")
-                            .replace("\\u00e7", "ç"),
+                        lang = language,
                         url = fixUrl(subUrl.replace("\\", ""))
                     )
                 )
@@ -365,14 +378,14 @@ open class TurkeyPlayer : ExtractorApi() {
         fixM3u?.contains("master.txt")?.let {
             if (!it) {
                 val lang = when {
-                    fixM3u.contains("tur", ignoreCase = true) -> "Türkçe"
-                    fixM3u.contains("en", ignoreCase = true) -> "İngilizce"
+                    fixM3u.contains("tur", ignoreCase = true) -> "Turkish"
+                    fixM3u.contains("en", ignoreCase = true) -> "English"
                     else -> "Bilinmeyen"
                 }
                 subtitleCallback.invoke(SubtitleFile(lang, fixM3u.toString()))
             }
 
-            Log.d("kraptor_RoketTrplay", "normalized m3u » $fixM3u")
+            Log.d("kraptor_unutulmaz", "normalized m3u » $fixM3u")
 
 
             val dil = Regex("""title\":\"([^\"]*)\"""").find(videoReq)
@@ -419,26 +432,31 @@ open class VidMoxy : ExtractorApi() {
     }
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
-        Log.d("kraptor_RoketDizi", "url = $url")
+        Log.d("kraptor_unutulmaz", "url = $url")
         val extRef   = referer ?: ""
         val videoReq = app.get(url, referer=extRef).text
-//        Log.d("kraptor_RoketDizi", "videoReq = $videoReq")
+//        Log.d("kraptor_unutulmaz", "videoReq = $videoReq")
         val regex = Regex("""file\s*:\s*EE\.dd\("([^"]+)"""")
         val match = regex.find(videoReq)
         val encoded =  match?.groupValues?.get(1).toString()
-        Log.d("kraptor_RoketDizi", "encoded = $encoded")
+        Log.d("kraptor_unutulmaz", "encoded = $encoded")
         val decoded = decodeEE(encoded)
-        Log.d("kraptor_RoketDizi", "decoded = $decoded")
+        Log.d("kraptor_unutulmaz", "decoded = $decoded")
         val altyRegex = Regex(pattern = """"file": "([^"]*)"""", options = setOf(RegexOption.IGNORE_CASE))
         altyRegex.findAll(videoReq).map { match ->
             val url = fixUrl(match.groupValues[1])
-            Log.d("kraptor_RoketDizi", "url = $url")
+            Log.d("kraptor_unutulmaz", "url = $url")
             val subLang = url
                 .substringAfterLast("/")
                 .substringBefore("_")
-            Log.d("kraptor_RoketDizi", "subLang = $subLang")
+            Log.d("kraptor_unutulmaz", "subLang = $subLang")
+            val language = if (subLang.contains("tur, tr, türkçe", ignoreCase = true)) {
+                "Turkish"
+            } else {
+                subLang
+            }
             subtitleCallback.invoke(SubtitleFile(
-                lang = subLang,
+                lang = language,
                 url  = url
             ))
         }.toList()
