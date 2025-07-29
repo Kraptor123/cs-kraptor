@@ -36,11 +36,11 @@ class Temel : MainAPI() {
         val title     = this.selectFirst("div.flbaslik")?.text() ?: return null
         val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
-        val score     = this.selectFirst("rating")?.attr("data-src"))
+        val score     = this.selectFirst("rating")?.attr("data-src")
 
         return newMovieSearchResponse(title, href, TvType.Movie) {
             this.posterUrl = posterUrl
-            this.score     =
+            this.score     = Score.from10(score)
         }
     }
 
