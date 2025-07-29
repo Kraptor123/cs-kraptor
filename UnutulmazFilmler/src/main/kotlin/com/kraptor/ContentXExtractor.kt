@@ -41,7 +41,8 @@ open class ContentX : ExtractorApi() {
                 .replace("\\u011f", "ğ")
                 .replace("\\u015f", "ş")
 
-            val language = if (subLang.contains("tur, tr, türkçe", ignoreCase = true)) {
+            val keywords = listOf("tur", "tr", "türkçe", "turkce")
+            val language = if (keywords.any { subLang.contains(it, ignoreCase = true) }) {
                 "Turkish"
             } else {
                 subLang
@@ -129,7 +130,8 @@ open class RapidVid : ExtractorApi() {
                 .replace("\\u0130", "İ")
                 .replace("\\u00fc", "ü")
                 .replace("\\u00e7", "ç")
-            val language = if (sublangDuz.contains("tur, tr, türkçe, turkce", ignoreCase = true)) {
+            val keywords = listOf("tur", "tr", "türkçe", "turkce")
+            val language = if (keywords.any { sublangDuz.contains(it, ignoreCase = true) }) {
                 "Turkish"
             } else {
                 sublangDuz
@@ -379,6 +381,8 @@ open class TurkeyPlayer : ExtractorApi() {
             if (!it) {
                 val lang = when {
                     fixM3u.contains("tur", ignoreCase = true) -> "Turkish"
+                    fixM3u.contains("tr", ignoreCase = true) -> "Turkish"
+                    fixM3u.contains("Türkçe", ignoreCase = true) -> "Turkish"
                     fixM3u.contains("en", ignoreCase = true) -> "English"
                     else -> "Bilinmeyen"
                 }
@@ -443,18 +447,19 @@ open class VidMoxy : ExtractorApi() {
         val decoded = decodeEE(encoded)
         Log.d("kraptor_unutulmaz", "decoded = $decoded")
         val altyRegex = Regex(pattern = """"file": "([^"]*)"""", options = setOf(RegexOption.IGNORE_CASE))
-       altyRegex.findAll(videoReq).map { match ->
+        altyRegex.findAll(videoReq).map { match ->
             val url = fixUrl(match.groupValues[1])
-           Log.d("kraptor_unutulmaz", "url = $url")
+            Log.d("kraptor_unutulmaz", "url = $url")
             val subLang = url
                 .substringAfterLast("/")
                 .substringBefore("_")
-           Log.d("kraptor_unutulmaz", "subLang = $subLang")
-           val language = if (subLang.contains("tur, tr, türkçe", ignoreCase = true)) {
-               "Turkish"
-           } else {
-               subLang
-           }
+            Log.d("kraptor_unutulmaz", "subLang = $subLang")
+            val keywords = listOf("tur", "tr", "türkçe", "turkce")
+            val language = if (keywords.any { subLang.contains(it, ignoreCase = true) }) {
+                "Turkish"
+            } else {
+                subLang
+            }
             subtitleCallback.invoke(SubtitleFile(
                 lang = language,
                 url  = url

@@ -1,5 +1,5 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-version = 24
+version = 25
 
 cloudstream {
     authors     = listOf("kraptor")

@@ -25,9 +25,15 @@ open class VideoSeyred : ExtractorApi() {
 
         for (track in response.tracks) {
             if (track.label != null && track.kind == "captions") {
+                val keywords = listOf("tur", "tr", "türkçe", "turkce")
+                val language = if (keywords.any { track.label.contains(it, ignoreCase = true) }) {
+                    "Turkish"
+                } else {
+                    track.label
+                }
                 subtitleCallback.invoke(
                     SubtitleFile(
-                        lang = track.label,
+                        lang = language,
                         url  = fixUrl(track.file)
                     )
                 )
