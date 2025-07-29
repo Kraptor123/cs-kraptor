@@ -279,12 +279,18 @@ class DiziMag : MainAPI() {
                         val jsonData = ObjectMapper().readValue(decrypt, JsonData::class.java)
                         android.util.Log.d("dzmg", "JSON data parsed with ${jsonData.strSubtitles?.size} subtitles")
 
-                        jsonData.strSubtitles?.let { subtitles -> // Null kontrolü ekledik
+                        jsonData.strSubtitles?.let { subtitles ->
                             for (sub in subtitles) {
                                 android.util.Log.d("dzmg", "adding subtitle: ${sub.label} (${sub.file})")
+                                val keywords = listOf("tur", "tr", "türkçe", "turkce")
+                                val language = if (keywords.any { sub.label.toString().contains(it, ignoreCase = true) }) {
+                                    "Turkish"
+                                } else {
+                                    sub.label.toString()
+                                }
                                 subtitleCallback.invoke(
                                     SubtitleFile(
-                                        lang = sub.label.toString(),
+                                        lang = language,
                                         url = "https://epikplayer.xyz${sub.file}"
                                     )
                                 )

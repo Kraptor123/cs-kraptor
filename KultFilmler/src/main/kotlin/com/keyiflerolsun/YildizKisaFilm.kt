@@ -24,9 +24,16 @@ open class YildizKisaFilm : ExtractorApi() {
 
         val subMatch = subRegex.find(videoSite)?.groupValues[1].toString()
 
+        val keywords = listOf("tur", "tr", "türkçe", "turkce")
+        val language = if (keywords.any { subMatch.substringBefore("]").substringAfter("[").contains(it, ignoreCase = true) }) {
+            "Turkish"
+        } else {
+            subMatch.substringBefore("]").substringAfter("[")
+        }
+
         subtitleCallback.invoke(
             SubtitleFile(
-                lang = subMatch.substringBefore("]").substringAfter("["),
+                lang = language,
                 url = fixUrl(subMatch.substringAfter("]"))
             )
         )

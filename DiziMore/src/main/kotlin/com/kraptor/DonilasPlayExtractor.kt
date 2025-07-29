@@ -54,9 +54,16 @@ class DonilasPlay : ExtractorApi() {
                     // Forced altyazıları hariç tut (opsiyonel, isterseniz bu satırı kaldırın)
                     if (label.contains("Forced", true)) continue
 
+                    val keywords = listOf("tur", "tr", "türkçe", "turkce")
+                    val language = if (keywords.any { label.contains(it, ignoreCase = true) }) {
+                        "Turkish"
+                    } else {
+                        label
+                    }
+
                     subtitleCallback.invoke(
                         SubtitleFile(
-                            lang = label, // Orijinal etiket ("Türkçe Altyazı", "English Subtitle" vb.)
+                            lang = language, // Orijinal etiket ("Türkçe Altyazı", "English Subtitle" vb.)
                             url = fixUrl(mainUrl + file)
                         )
                     )

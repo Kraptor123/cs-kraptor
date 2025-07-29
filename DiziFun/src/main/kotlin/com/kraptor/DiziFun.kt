@@ -207,15 +207,21 @@ class DiziFun : MainAPI() {
                 pattern.findAll(content).forEach { match ->
                     val path = match.groups[1]?.value ?: return@forEach
                     val lang = when {
-                        path.contains("eng") -> "Ingilizce"
-                        path.contains("tur") -> "Turkce"
+                        path.contains("eng") -> "English"
+                        path.contains("tur") -> "Turkish"
                         else -> "Unknown"
+                    }
+                    val keywords = listOf("tur", "tr", "türkçe", "turkce")
+                    val language = if (keywords.any { path.contains(it, ignoreCase = true) }) {
+                        "Turkish"
+                    } else {
+                        lang
                     }
                     val fullUrl = if (path.startsWith("http")) path else {
                         if (path.startsWith("/")) subtitleBaseUrls.first() + path
                         else subtitleBaseUrls.first() + "/" + path
                     }
-                    subtitleUrls.add(Pair(fullUrl, lang))
+                    subtitleUrls.add(Pair(fullUrl, language))
                 }
             }
 

@@ -220,8 +220,8 @@ class FilmEkseni : MainAPI() {
 
         // Validate subtitles before sending
         val subtitleGetiren = listOf(
-            SubtitleFile("Türkçe", "https://eksenload.site/uploads/encode/$videoId/${videoId}_tur.vtt"),
-            SubtitleFile("İngilizce", "https://eksenload.site/uploads/encode/$videoId/${videoId}_en.vtt")
+            SubtitleFile("Turkish", "https://eksenload.site/uploads/encode/$videoId/${videoId}_tur.vtt"),
+            SubtitleFile("English", "https://eksenload.site/uploads/encode/$videoId/${videoId}_en.vtt")
         ).filter {
             // Verify subtitle URLs have valid format
             it.url.startsWith("https://") && it.url.endsWith(".vtt")
