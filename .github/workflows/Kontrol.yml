@@ -1,5 +1,3 @@
-# Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
-
 name: Domain Değişiklik Kontrolü
 
 concurrency:
@@ -14,7 +12,6 @@ on:
 jobs:
   DomainKontrol:
     runs-on: ubuntu-latest
-    #runs-on: self-hosted
 
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -26,54 +23,42 @@ jobs:
       pull-requests: write
 
     steps:
-      - name : Depo Kontrolü
-        uses : actions/checkout@v4
+      - name: Depo Kontrolü
+        uses: actions/checkout@v4
 
-      - name : Python 3.11.8 Yükle
-        uses : actions/setup-python@v5
-        with :
+      - name: Python 3.11.8 Yükle
+        uses: actions/setup-python@v5
+        with:
           python-version: 3.11.8
 
-      - name : Python Sürümünü Göster
-        run  : python -c "import sys; print(sys.version)"
+      - name: Python Sürümünü Göster
+        run: python -c "import sys; print(sys.version)"
 
-      - name : Gereksinimleri Yükle
-        run  : |
+      - name: Gereksinimleri Yükle
+        run: |
           python -m pip install --upgrade pip
           pip install -U setuptools wheel Kekik cloudscraper pycryptodome
 
-      - name : Betiği Çalıştır
-        run  : |
-          python KONTROL.py
+      - name: Betiği Çalıştır
+        run: python KONTROL.py
 
-      - name : Değişiklik Kontrolü
-        id   : degisiklik_kontrol
-        run  : |
-          git diff --quiet . || echo "degisiklik=true" >> $GITHUB_OUTPUT || true
+      - name: Değişiklik Kontrolü
+        id: diff_check
+        run: |
+          git diff --quiet . || echo "changes=true" >> $GITHUB_OUTPUT
 
-      - name : Pull Request Oluştur
-        if   : steps.degisiklik_kontrol.outputs.degisiklik == 'true'
-        run  : |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Pull Request Oluştur ve Otomatik Merge Et
+        if: steps.diff_check.outputs.changes == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: domain-degisikligi
+          title: "♻️ Domain Değişikliği"
+          body: |
+            🔄 Otomatik tespit edilen domain değişiklikleri uygulandı.
 
-          git add -A
-
-          git commit -m "♻️ Domain Değişikliği" \
-            -m "🔄 Otomatik domain güncellemeleri yapıldı."
-          BRANCH="domain-degisikligi"
-
-          git checkout -B $BRANCH
-          git push origin $BRANCH --force
-
-          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/pulls \
-            -d @- <<EOF
-          {
-            "title": "♻️ Domain Değişikliği",
-            "head": "$BRANCH",
-            "base": "master",
-            "body": "🔄 Otomatik tespit edilen domain değişiklikleri uygulandı.\n\n📂 İlgili dosyalar güncellendi. Lütfen değişiklikleri gözden geçirin ve onaylayın."
-          }
-          EOF
+            📂 İlgili dosyalar güncellendi. Lütfen kontrol edin.
+          commit-message: "♻️ Domain Değişikliği"
+          labels: otomatik, domain-güncelleme
+          auto-merge: true
+          merge-method: squash
