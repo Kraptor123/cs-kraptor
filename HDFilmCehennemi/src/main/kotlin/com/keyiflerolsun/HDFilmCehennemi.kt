@@ -359,23 +359,38 @@ class HDFilmCehennemi : MainAPI() {
                 val packedCode = evalRegex.find(iframeGet)?.value
                 val unpackedJs = JsUnpacker(packedCode).unpack().toString()
                 Log.d("kraptor_$name", "unpackedJs $unpackedJs")
-
-                val dcRegex = Regex("""dc_[a-zA-Z0-9_]+\(\[(.*?)\]\)""", RegexOption.DOT_MATCHES_ALL)
+                val dchelloVar = if (unpackedJs.contains("dc_hello")) {
+                    "var"
+                } else {
+                    "yok"
+                }
+                Log.d("kraptor_$name", "dchelloVar $dchelloVar")
+                val dcRegex = if (dchelloVar.contains("var")) {
+                    Regex(pattern = "dc_hello\\(\"([^\"]*)\"\\)", options = setOf(RegexOption.IGNORE_CASE))
+                } else {
+                    Regex("""dc_[a-zA-Z0-9_]+\(\[(.*?)\]\)""", RegexOption.DOT_MATCHES_ALL)
+                }
                 val match = dcRegex.find(unpackedJs)
+                Log.d("kraptor_$name", "match $match")
 
-                val realUrl = if (match != null) {
-                    val parts = match.groupValues[1]
+                val realUrl = if (dchelloVar.contains("var")) {
+                    val parts      = match?.groupValues[1].toString()
+                    Log.d("kraptor_$name", "parts $parts")
+                    val decodedUrl = dcHello(parts)
+                    Log.d("kraptor_$name", "decodedUrl $decodedUrl")
+                    decodedUrl
+                } else{
+                    val parts = match!!.groupValues[1]
                         .split(",")
                         .map { it.trim().removeSurrounding("\"") }
+                    Log.d("kraptor_$name", "parts $parts")
 
                     Log.d("kraptor_$name", "dc parts: $parts")
                     val decodedUrl = dcDecode(parts)
                     Log.d("kraptor_$name", "decoded URL: $decodedUrl")
                     decodedUrl
-                } else {
-                    Log.e("kraptor_$name", "Video URL decode edilemedi")
-                    return@forEach
                 }
+
                 Log.d("kraptor_$name", "realUrl $realUrl")
 
 
@@ -462,4 +477,21 @@ fun dcDecode(valueParts: List<String>): String {
     }
 
     return unmix.trim()
+}
+
+fun dcHello(encoded: String): String {
+    // İlk Base64 çöz
+    val firstDecoded = base64Decode(encoded)
+    Log.d("kraptor_hdfilmcehennemi", "firstDecoded $firstDecoded")
+    // Ters çevir
+    val reversed = firstDecoded.reversed()
+    Log.d("kraptor_hdfilmcehennemi", "reversed $reversed")
+    // İkinci Base64 çöz
+    val secondDecoded = base64Decode(reversed)
+
+    val gercekLink    = secondDecoded.substringAfter("http")
+    val sonLink       = "http$gercekLink"
+    Log.d("kraptor_hdfilmcehennemi", "sonLink $sonLink")
+    return sonLink.trim()
+
 }
