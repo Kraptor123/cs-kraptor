@@ -142,17 +142,19 @@ class FilmMakinesi : MainAPI() {
         val iframeGet = app.get(iframe, referer = "${mainUrl}/").document
         val scriptAl  = iframeGet.select("script[type=text/javascript]")[1].data().trim()
         val scriptUnpack = getAndUnpack(scriptAl)
-        val regex = Regex("""dc_hello\("([^"]+)"""")
-        val match = regex.find(scriptUnpack)
-        val b64 = match?.groupValues[1].toString()
-        Log.d("kraptor_$name", "b64 = $b64")
-        val m3u8Url = dcHello(b64)
-        Log.d("kraptor_$name", "m3u8Url = $m3u8Url")
+        val dcRegex = Regex("""dc_[a-zA-Z0-9_]+\(\[(.*?)\]\)""", RegexOption.DOT_MATCHES_ALL)
+        val match = dcRegex.find(scriptUnpack)
+        val parts = match?.groupValues[1]
+            ?.split(",")
+            ?.map { it.trim().removeSurrounding("\"") }
+        Log.d("kraptor_$name", "dc parts: $parts")
+        val decodedUrl = dcDecode(parts!!)
+        Log.d("kraptor_$name", "decoded URL: $decodedUrl")
 
         callback.invoke(newExtractorLink(
             source = this.name,
             name = this.name,
-            url = m3u8Url,
+            url = decodedUrl,
             type = ExtractorLinkType.M3U8,
             {
                 this.referer = "https://closeload.filmmakinesi.de/"
@@ -164,19 +166,34 @@ class FilmMakinesi : MainAPI() {
     }
 }
 
-fun dcHello(encoded: String): String {
-    // İlk Base64 çöz
-    val firstDecoded = base64Decode(encoded)
-    Log.d("kraptor_filmmakinesi", "firstDecoded $firstDecoded")
-    // Ters çevir
-    val reversed = firstDecoded.reversed()
-    Log.d("kraptor_filmmakinesi", "reversed $reversed")
-    // İkinci Base64 çöz
-    val secondDecoded = base64Decode(reversed)
+fun dcDecode(valueParts: List<String>): String {
+    // Parçaları birleştir
+    var result = valueParts.joinToString("")
 
-    val gercekLink    = secondDecoded.substringAfter("http")
-    val sonLink       = "http$gercekLink"
-    Log.d("kraptor_filmmakinesi", "sonLink $sonLink")
-    return sonLink.trim()
+    // 1. Ters çevir
+    result = result.reversed()
 
+    // 2. ROT13 decode
+    result = result.map { c ->
+        when {
+            c.isLetter() -> {
+                val base = if (c <= 'Z') 'A' else 'a'
+                ((c.code - base.code - 13 + 26) % 26 + base.code).toChar()
+            }
+            else -> c
+        }
+    }.joinToString("")
+
+    // 3. Base64 decode
+    result = base64Decode(result)
+
+    // 4. Karakter karıştırmasını geri al
+    var unmix = ""
+    for (i in result.indices) {
+        var charCode = result[i].code
+        charCode = (charCode - (399756995 % (i + 5)) + 126) % 126
+        unmix += charCode.toChar()
+    }
+
+    return unmix.trim()
 }
