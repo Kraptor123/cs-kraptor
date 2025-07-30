@@ -1,9 +1,9 @@
-# [<img alt="alt_text" width="30px" src="https://raw.githubusercontent.com/kerimmkirac/cs-kerim/refs/heads/master/kekikanime.png"/>](https://kerimmkirac.github.io/http-protocol-redirector/?r=cloudstreamrepo://raw.githubusercontent.com/kerimmkirac/cs-kerim/refs/heads/master/repo.json) cs-kekikanime
+# [<img alt="alt_text" width="30px" src="https://raw.githubusercontent.com/kerimmkirac/cs-kerim/refs/heads/master/kekikanime.png"/>](https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/repo.json) cs-kekikanime
 
 
 Cloudstream Kurulu Cihazda Aşağıdaki Logoya Tıklayarak Repoyu İndirebilirsiniz:
 
-[<img alt="alt_text" width="200px" src="https://raw.githubusercontent.com/kerimmkirac/cs-kerim/refs/heads/master/kekikanime.png"/>](https://kerimmkirac.github.io/http-protocol-redirector/?r=cloudstreamrepo://raw.githubusercontent.com/kerimmkirac/cs-kerim/refs/heads/master/repo.json)
+[<img alt="alt_text" width="200px" src="https://raw.githubusercontent.com/kerimmkirac/cs-kerim/refs/heads/master/kekikanime.png"/>](https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/repo.json)
 
 
 ## **Kısa kodlar**
@@ -37,7 +37,7 @@ Teşekkür ederiz.
 ## 💾 Kurulum
 
 1. **[cloudstream/pre-release](https://github.com/recloudstream/cloudstream/releases/tag/pre-release)** _Adresinden güncel APK dosyasını indirip kurun._
-2. **Uygulamanın yüklü olduğu cihazda** _[depoyu otomatik yüklemek için tıklayın](https://self-similarity.github.io/http-protocol-redirector?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/repo.json)_
+2. **Uygulamanın yüklü olduğu cihazda** _[depoyu otomatik yüklemek için tıklayın](https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/repo.json)_
 
 ## 💡 Faydalı Linkler
 

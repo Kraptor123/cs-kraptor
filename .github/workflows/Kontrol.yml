@@ -7,7 +7,8 @@ concurrency:
 on:
   workflow_dispatch:
   schedule:
-    - cron: 11 */9 * * *
+    - cron: '0 */4 * * *'
+
 
 jobs:
   DomainKontrol:
@@ -19,14 +20,13 @@ jobs:
       REPO_NAME: ${{ github.event.repository.name }}
 
     permissions:
-      contents: write
-      pull-requests: write
+      contents: write  # push izni için bu lazım
 
     steps:
-      - name: Depo Kontrolü
+      - name: Depoyu Klonla
         uses: actions/checkout@v4
 
-      - name: Python 3.11.8 Yükle
+      - name: Python 3.11.8 Kur
         uses: actions/setup-python@v5
         with:
           python-version: 3.11.8
@@ -42,23 +42,15 @@ jobs:
       - name: Betiği Çalıştır
         run: python KONTROL.py
 
-      - name: Değişiklik Kontrolü
-        id: diff_check
+      - name: Değişiklik Varsa Commit ve Push Et
         run: |
-          git diff --quiet . || echo "changes=true" >> $GITHUB_OUTPUT
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Pull Request Oluştur ve Otomatik Merge Et
-        if: steps.diff_check.outputs.changes == 'true'
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: domain-degisikligi
-          title: "♻️ Domain Değişikliği"
-          body: |
-            🔄 Otomatik tespit edilen domain değişiklikleri uygulandı.
-
-            📂 İlgili dosyalar güncellendi. Lütfen kontrol edin.
-          commit-message: "♻️ Domain Değişikliği"
-          labels: otomatik, domain-güncelleme
-          auto-merge: true
-          merge-method: squash
+          if ! git diff --quiet; then
+            git add .
+            git commit -m "♻️ Otomatik domain değişikliği"
+            git push origin HEAD
+          else
+            echo "Değişiklik yok, push yapılmadı."
+          fi
