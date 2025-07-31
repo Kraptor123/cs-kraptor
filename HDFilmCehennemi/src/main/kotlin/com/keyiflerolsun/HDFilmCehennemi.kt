@@ -371,7 +371,7 @@ class HDFilmCehennemi : MainAPI() {
                     Regex("""dc_[a-zA-Z0-9_]+\(\[(.*?)\]\)""", RegexOption.DOT_MATCHES_ALL)
                 }
                 val match = dcRegex.find(unpackedJs)
-                Log.d("kraptor_$name", "match $match")
+//                Log.d("kraptor_$name", "match $match")
 
                 val realUrl = if (dchelloVar.contains("var")) {
                     val parts      = match?.groupValues[1].toString()
@@ -451,34 +451,39 @@ fun dcDecode(valueParts: List<String>): String {
     // Parçaları birleştir
     var result = valueParts.joinToString("")
 
-    // 1. Ters çevir
-    result = result.reversed()
+    // 1. Base64 decode (ilk adım)
+    result = base64Decode(result)
 
     // 2. ROT13 decode
     result = result.map { c ->
         when {
             c.isLetter() -> {
                 val base = if (c <= 'Z') 'A' else 'a'
-                ((c.code - base.code - 13 + 26) % 26 + base.code).toChar()
+                val shifted = c.code + 13
+                val maxChar = if (c <= 'Z') 'Z'.code else 'z'.code
+                if (shifted > maxChar) {
+                    (shifted - 26).toChar()
+                } else {
+                    shifted.toChar()
+                }
             }
             else -> c
         }
     }.joinToString("")
 
-    // 3. Base64 decode
-    result = base64Decode(result)
+    // 3. Ters çevir
+    result = result.reversed()
 
     // 4. Karakter karıştırmasını geri al
     var unmix = ""
     for (i in result.indices) {
         var charCode = result[i].code
-        charCode = (charCode - (399756995 % (i + 5)) + 126) % 126
+        charCode = (charCode - (399756995 % (i + 5)) + 256) % 256
         unmix += charCode.toChar()
     }
 
-    return unmix.trim()
+    return unmix
 }
-
 fun dcHello(encoded: String): String {
     // İlk Base64 çöz
     val firstDecoded = base64Decode(encoded)
