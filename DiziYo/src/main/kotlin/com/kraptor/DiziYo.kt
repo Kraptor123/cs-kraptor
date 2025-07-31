@@ -146,8 +146,11 @@ class DiziYo : MainAPI() {
         val duration =
             document.selectFirst("div.extra span.runtime")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val actors = document.select("div.persons").map { Actor(it.text()) }
-        val trailer = Regex("""embed/(.*)\?rel""").find(document.html())?.groupValues?.get(1)
-            ?.let { "https://www.youtube.com/embed/$it" }
+        val trailerId = document.selectFirst("#trailer div.embed iframe")?.attr("data-wpfc-original-src")?.substringAfterLast("#")
+                ?.substringBefore("?")
+        Log.d("kraptor_$name","trailerid = $trailerId")
+        val trailer = "https://www.youtube.com/embed/$trailerId"
+        Log.d("kraptor_$name","trailer = $trailer")
 
         val tvType = if (title.contains("(Anime)", ignoreCase = true)) {
             TvType.Anime
@@ -158,9 +161,15 @@ class DiziYo : MainAPI() {
         }
 
         return if (tvType == TvType.TvSeries) {
-            val episodes = document.select("div#episodes ul li a").map {
-                newEpisode(fixUrlNull(it.attr("href"))) {
-                    this.name = it.selectFirst("div.episodiotitle a")?.text()
+            val episodes      = document.select("div#episodes ul li").map { bolumler ->
+                val bolumHref = bolumler.selectFirst("a")?.attr("href")
+                val sezon     = bolumHref?.substringBefore("-sezon")?.substringAfterLast("-")?.toIntOrNull()
+                val bolum     = bolumHref?.substringBefore("-bolum")?.substringAfterLast("-")?.toIntOrNull()
+                newEpisode(fixUrlNull(bolumHref)) {
+                    this.name = bolumler.selectFirst("div.episodiotitle a")?.text()
+                    this.posterUrl = bolumler.selectFirst("img")?.attr("data-wpfc-original-src")
+                    this.season  = sezon
+                    this.episode = bolum
                 }
             }
             newTvSeriesLoadResponse(titleTemiz, url, TvType.TvSeries, episodes) {
@@ -174,9 +183,15 @@ class DiziYo : MainAPI() {
 
             }
         } else if (tvType == TvType.Anime) {
-            val episodes = document.select("div#episodes ul li a").map {
-                newEpisode(fixUrlNull(it.attr("href"))) {
-                    this.name = it.selectFirst("div.episodiotitle a")?.text()
+            val episodes      = document.select("div#episodes ul li").map { bolumler ->
+                val bolumHref = bolumler.selectFirst("a")?.attr("href")
+                val sezon     = bolumHref?.substringBefore("-sezon")?.substringAfterLast("-")?.toIntOrNull()
+                val bolum     = bolumHref?.substringBefore("-bolum")?.substringAfterLast("-")?.toIntOrNull()
+                newEpisode(fixUrlNull(bolumHref)) {
+                    this.name = bolumler.selectFirst("div.episodiotitle a")?.text()
+                    this.posterUrl = bolumler.selectFirst("img")?.attr("data-wpfc-original-src")
+                    this.season  = sezon
+                    this.episode = bolum
                 }
             }.let { list ->
                 mutableMapOf(DubStatus.Subbed to list)
