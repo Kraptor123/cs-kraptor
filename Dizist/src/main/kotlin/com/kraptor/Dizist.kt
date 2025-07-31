@@ -141,7 +141,8 @@ class Dizist : MainAPI() {
 
         val title = document.selectFirst("h1")?.text()?.trim() ?: return null
         val poster = fixUrlNull(document.selectFirst("a.block img")?.attr("data-srcset")?.substringBefore(" 1x"))
-        val description = document.selectFirst("div.series-profile-summary > p:nth-child(3)")?.text()?.trim()
+val description = document.selectFirst("div.series-profile-summary > p:nth-child(3)")?.text()?.trim()
+    ?: document.selectFirst("div.series-profile-summary > p:nth-child(2)")?.text()?.trim()
         val year = document.selectFirst("li.sm\\:w-1\\/5:nth-child(5) > p:nth-child(2)")?.text()?.trim()?.toIntOrNull()
         val tags = document.select("span.block a").map { it.text() }
         val rating = document.selectFirst("strong.color-imdb")?.text()?.trim()

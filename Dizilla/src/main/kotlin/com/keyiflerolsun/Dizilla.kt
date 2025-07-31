@@ -332,7 +332,14 @@ class Dizilla : MainAPI() {
             } else {
             }
 
-            val description = document.selectFirst("div.mt-2.text-sm")?.ownText()?.trim()
+            val description = listOf(
+    document.selectFirst("div.mt-2.text-sm")?.ownText()?.trim(),
+    document.selectFirst("div.text-white.text-base")?.text()?.trim(),
+    document.selectFirst("div.series-profile-summary > p:nth-child(1)")?.text()?.trim(),
+    document.selectFirst("div.series-profile-summary > p:nth-child(2)")?.text()?.trim(),
+    document.selectFirst("div.series-profile-summary > p:nth-child(3)")?.text()?.trim()
+).firstOrNull { !it.isNullOrBlank() }
+
 
             val tagsText = document.selectFirst("div.poster.poster h3")?.ownText()
             val tags = tagsText?.split(",")?.map { it.trim() }
