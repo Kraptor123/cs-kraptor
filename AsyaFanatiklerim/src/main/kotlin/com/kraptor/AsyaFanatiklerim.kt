@@ -88,8 +88,11 @@ class AsyaFanatiklerim : MainAPI() {
         val duration = document.selectFirst("span.runtime")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val recommendations = document.select("div.srelacionados article").mapNotNull { it.toRecommendationResult() }
         val actors = document.select("span.valor a").map { Actor(it.text()) }
-        val trailer = Regex("""embed\/(.*)\?rel""").find(document.html())?.groupValues?.get(1)
-            ?.let { "https://www.youtube.com/embed/$it" }
+        val trailer = Regex("""<iframe[^>]+src="https://www\.youtube\.com/embed/([^"?]+)""")
+    .find(document.html())
+    ?.groupValues?.get(1)
+    ?.let { "https://www.youtube.com/embed/$it" }
+
         val episodeList = document.select("ul.episodios li").mapNotNull { episodeBlock ->
             val bolumler = episodeBlock.selectFirst("div.imagen")
             val posterler = fixUrlNull(bolumler?.selectFirst("img")?.attr("src")) ?: return null
@@ -117,7 +120,7 @@ class AsyaFanatiklerim : MainAPI() {
                 this.duration = duration
                 this.recommendations = recommendations
                 addActors(actors)
-                addTrailer(trailer)
+                
             }
         } else {
             return newMovieLoadResponse(title, url, TvType.TvSeries, url) {
