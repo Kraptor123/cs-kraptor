@@ -5,6 +5,7 @@ package com.keyiflerolsun
 import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
+import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
@@ -31,12 +32,32 @@ class JetFilmizle : MainAPI() {
         val document = if (page == 1) {
             app.get(
                 request.data,
-                headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0")
+                headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
+                    "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                    "Accept-Language" to "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+                    "Connection" to "keep-alive",
+                    "Upgrade-Insecure-Requests" to "1",
+                    "Sec-Fetch-Dest" to "document",
+                    "Sec-Fetch-Mode" to "navigate",
+                    "Sec-Fetch-Site" to "same-origin",
+                    "Sec-Fetch-User" to "?1"
+                )
             ).document
         } else {
             app.get(
                 "${request.data}/page/$page",
-                headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0")
+                headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
+                    "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                    "Accept-Language" to "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+                    "Connection" to "keep-alive",
+                    "Upgrade-Insecure-Requests" to "1",
+                    "Sec-Fetch-Dest" to "document",
+                    "Sec-Fetch-Mode" to "navigate",
+                    "Sec-Fetch-Site" to "same-origin",
+                    "Sec-Fetch-User" to "?1"
+                )
             ).document
         }
 //        Log.d("kraptor_$name","document = ${request.data}")
@@ -67,7 +88,17 @@ class JetFilmizle : MainAPI() {
             "${mainUrl}/filmara.php",
             referer = "${mainUrl}/",
             data = mapOf("s" to query),
-            headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0")
+            headers = mapOf(
+                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
+                "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                "Accept-Language" to "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+                "Connection" to "keep-alive",
+                "Upgrade-Insecure-Requests" to "1",
+                "Sec-Fetch-Dest" to "document",
+                "Sec-Fetch-Mode" to "navigate",
+                "Sec-Fetch-Site" to "same-origin",
+                "Sec-Fetch-User" to "?1"
+            )
         ).document
 
         return document.select("article.movie.jet").mapNotNull { it.toSearchResult() }
@@ -76,10 +107,8 @@ class JetFilmizle : MainAPI() {
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
     override suspend fun load(url: String): LoadResponse? {
-        val document = app.get(url).document
-
-        val title =
-            document.selectFirst("section.movie-exp div.movie-exp-title")?.text()?.substringBefore(" izle")?.trim()
+        val document = app.get(url, headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0")).document
+        val title = document.selectFirst("section.movie-exp div.movie-exp-title")?.text()?.substringBefore(" izle")?.trim()
                 ?: return null
         val poster = fixUrlNull(document.selectFirst("section.movie-exp img")?.attr("data-src"))
             ?: fixUrlNull(document.selectFirst("section.movie-exp img")?.attr("src"))
@@ -94,6 +123,37 @@ class JetFilmizle : MainAPI() {
         val actors = document.select("section.movie-exp div.oyuncu").map {
             Actor(it.selectFirst("div.name")!!.text(), fixUrlNull(it.selectFirst("img")!!.attr("data-src")))
         }
+
+        val pageLinks = document.select("a.post-page-numbers")
+        val fragmanElement = pageLinks.firstOrNull { link ->
+            link.selectFirst("span")?.text()?.contains("fragman", ignoreCase = true) == true
+        }
+        val trailerHref = fragmanElement?.attr("href") ?: ""
+        val trailerGet  = app.get(trailerHref,     headers = mapOf(
+            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
+            "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language" to "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Connection" to "keep-alive",
+            "Upgrade-Insecure-Requests" to "1",
+            "Sec-Fetch-Dest" to "document",
+            "Sec-Fetch-Mode" to "navigate",
+            "Sec-Fetch-Site" to "same-origin",
+            "Sec-Fetch-User" to "?1"
+        )
+        ).document
+        val trailerAl   = trailerGet.select("iframe")
+        val trailer = (trailerAl.attr("src")
+            .takeIf { it.isNotBlank() }
+            ?: trailerAl.attr("data-src")
+                .takeIf { it.isNotBlank() }
+            ?: trailerAl.attr("data-lazy-src")
+                .takeIf { it.isNotBlank() })
+            ?: trailerAl.attr("data-litespeed-src")
+                .takeIf { it.isNotBlank() }
+            ?: ""
+
+        Log.d("kraptor_$name","trailer = $trailer")
+
 
         val recommendations = document.select("div#benzers article").mapNotNull {
             var recName =
@@ -117,6 +177,7 @@ class JetFilmizle : MainAPI() {
             this.score = Score.from10(rating)
             this.recommendations = recommendations
             addActors(actors)
+            addTrailer(trailer)
         }
     }
 
@@ -127,7 +188,17 @@ class JetFilmizle : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         Log.d("JTF", "data » $data")
-        val document = app.get(data).document
+        val document = app.get(data, headers = mapOf(
+            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
+            "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language" to "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Connection" to "keep-alive",
+            "Upgrade-Insecure-Requests" to "1",
+            "Sec-Fetch-Dest" to "document",
+            "Sec-Fetch-Mode" to "navigate",
+            "Sec-Fetch-Site" to "same-origin",
+            "Sec-Fetch-User" to "?1"
+        )).document
 
         // 1) Ana iframe'leri topla ve hemen işle
         document.select("iframe").forEach { frame ->
@@ -165,7 +236,17 @@ class JetFilmizle : MainAPI() {
         pageLinks.forEach { (url, isim) ->
             try {
                 Log.d("JTF", "[$isim] işleniyor: $url")
-                val pageDoc = app.get(url).document
+                val pageDoc = app.get(url, headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
+                    "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                    "Accept-Language" to "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+                    "Connection" to "keep-alive",
+                    "Upgrade-Insecure-Requests" to "1",
+                    "Sec-Fetch-Dest" to "document",
+                    "Sec-Fetch-Mode" to "navigate",
+                    "Sec-Fetch-Site" to "same-origin",
+                    "Sec-Fetch-User" to "?1"
+                )).document
                 pageDoc.select("div#movie iframe").forEach { frame ->
                     val src = frame.attr("src")
                         .takeIf { it.isNotBlank() && it != "about:blank" }
