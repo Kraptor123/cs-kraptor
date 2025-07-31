@@ -22,13 +22,15 @@ class SineWix : MainAPI() {
     override val hasMainPage          = true
     override var lang                 = "tr"
     override val hasQuickSearch       = false
-    override val supportedTypes       = setOf(TvType.Movie, TvType.TvSeries, TvType.Anime, TvType.AsianDrama)
+    override val supportedTypes       = setOf(TvType.Movie, TvType.TvSeries, TvType.Anime, TvType.AsianDrama, TvType.Cartoon)
     //Movie, AnimeMovie, TvSeries, Cartoon, Anime, OVA, Torrent, Documentary, AsianDrama, Live, NSFW, Others, Music, AudioBook, CustomMedia, Audio, Podcast,
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/public/api/genres/latestmovies/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA" to "Son Filmler",
-        "${mainUrl}/public/api/genres/latestseries/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"             to "Son Diziler",
-        "${mainUrl}/public/api/genres/latestanimes/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"             to "Son Anime",
+        "${mainUrl}/public/api/genres/latestmovies/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"  to "Son Filmler",
+        "${mainUrl}/public/api/genres/latestseries/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"              to "Son Diziler",
+        "${mainUrl}/public/api/genres/latestanimes/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"              to "Son Animeler",
+        "${mainUrl}/public/api/genres/mediaLibrary/show/10769/serie/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA" to "Kore Diziler",
+        "${mainUrl}/public/api/genres/mediaLibrary/show/16/movie/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"    to "Animasyonlar"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
