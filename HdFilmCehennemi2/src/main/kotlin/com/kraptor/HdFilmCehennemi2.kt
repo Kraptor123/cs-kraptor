@@ -108,7 +108,17 @@ class HdFilmCehennemi2 : MainAPI() {
                     .split(",")
                     .map { name -> Actor(name) }
             }
-        val trailer         = Regex("""embed\/(.*)\?rel""").find(document.html())?.groupValues?.get(1)?.let { "https://www.youtube.com/embed/$it" }
+        val pageLinks = document.select("a.post-page-numbers")
+        val fragmanElement = pageLinks.firstOrNull { link ->
+            link.selectFirst("div.part-name")?.text()?.contains("fragman", ignoreCase = true) == true
+        }
+        val trailerHref = fragmanElement?.attr("href") ?: ""
+
+        val trailerGet  = app.get(trailerHref).document
+
+        val trailer   = fixUrlNull(trailerGet.select("iframe").attr("src")).toString()
+        Log.d("kraptor_$name","trailerHref = $trailerHref")
+        Log.d("kraptor_$name","trailer = $trailer")
 
 
         return newMovieLoadResponse(title, url, TvType.Movie, url) {
