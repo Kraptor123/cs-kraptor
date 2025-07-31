@@ -7,6 +7,8 @@ import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.extractors.AesHelper
 import com.lagradost.cloudstream3.utils.*
+import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
+
 import com.lagradost.cloudstream3.network.CloudflareKiller
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -21,9 +23,11 @@ import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
+import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
+
 
 class DiziPalOrijinal : MainAPI() {
-    override var mainUrl = "https://dizipal940.com"
+    override var mainUrl = "https://dizipal941.com"
     override var name = "DiziPalOrijinal"
     override val hasMainPage = true
     override var lang = "tr"
@@ -311,6 +315,13 @@ class DiziPalOrijinal : MainAPI() {
         }else{
             rating
         }
+        val trailer = document.selectFirst("a[target=_blank][href*=youtube.com]")?.attr("href")
+        val actors = document.select("div.movie-actors ul.hide-more-actors li").mapNotNull { li ->
+    val name = li.selectFirst("a span.name")?.text()?.trim()
+    val role = li.selectFirst("a span.role")?.text()?.trim()
+    if (!name.isNullOrBlank()) Actor(name, role ?: "") else null
+}
+
         val duration = document.selectFirst("ul.rigth-content > li:nth-child(8) > div.value")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val movieDuration = document.selectFirst("div.popup-content > ul:nth-child(2) > li:nth-child(4) > div:nth-child(2)")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val bolumler = document.select("a.text.block").map { bolumler ->
@@ -339,6 +350,8 @@ class DiziPalOrijinal : MainAPI() {
                 this.tags = movieTags
                 this.score = Score.from10(puanlar)
                 this.duration = movieDuration
+                addActors(actors)
+                 addTrailer(trailer)
             }
             }else{
                 return newTvSeriesLoadResponse(title, url, TvType.TvSeries, bolumler) {
@@ -348,6 +361,8 @@ class DiziPalOrijinal : MainAPI() {
                     this.tags = tags
                     this.score = Score.from10(puanlar)
                     this.duration = duration
+                    addActors(actors)
+                     addTrailer(trailer)
                 }
             }
     }
