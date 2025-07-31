@@ -102,8 +102,10 @@ class Animex : MainAPI() {
         val duration =
             document.selectFirst("table.ui > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) > div:nth-child(2)")
                 ?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
-        val trailer = Regex("""embed/(.*)\?rel""").find(document.html())?.groupValues?.get(1)
-            ?.let { "https://www.youtube.com/embed/$it" }
+        val trailer = document.selectFirst("a.prettyPhoto")?.attr("href")
+    ?.takeIf { it.contains("youtube.com/watch") }
+    ?.replace("watch?v=", "embed/")
+
         val episodeListesi = document.select("div.ajax_post a").mapNotNull { bolumElemanlari ->
 //            val epTitle = document.selectFirst("span.episode-names")?.text()?.trim() ?: return null
             val epHref = fixUrlNull(document.selectFirst("div.ajax_post a")?.attr("href"))

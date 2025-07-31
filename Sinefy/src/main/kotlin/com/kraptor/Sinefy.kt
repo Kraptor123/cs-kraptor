@@ -252,8 +252,10 @@ class Sinefy : MainAPI() {
         val duration        = document.selectFirst("table.ui > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(6) > div:nth-child(2)")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val recommendations = document.select("div.srelacionados article").mapNotNull { it.toRecommendationResult() }
         val actorNames      = document.select("div.content h5").eachText().map { Actor(it) }
-        val trailer         = Regex("""embed\/(.*)\?rel""").find(document.html())?.groupValues?.get(1)?.let { "https://www.youtube.com/embed/$it" }
-        val seasonLinks = document.select("section.episodes-box")
+val trailer = document.select("div.media-trailer[data-yt]")
+    .mapNotNull { it.attr("data-yt") }
+    .map { "https://www.youtube.com/embed/$it" }        
+    val seasonLinks = document.select("section.episodes-box")
         return if (seasonLinks.isNotEmpty()) {
             val episodes = mutableListOf<Episode>()
             for (seasonLink in seasonLinks) {

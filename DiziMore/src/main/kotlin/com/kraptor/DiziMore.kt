@@ -136,8 +136,10 @@ class DiziMore : MainAPI() {
                 ?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
 //        val recommendations = document.select("div.srelacionados article").mapNotNull { it.toRecommendationResult() }
         val actors = document.select("div.content h5").map { Actor(it.text()) }
-        val trailer = Regex("""embed/(.*)\?rel""").find(document.html())?.groupValues?.get(1)
-            ?.let { "https://www.youtube.com/embed/$it" }
+        val trailer = document.selectFirst("a.prettyPhoto")?.attr("href")
+    ?.takeIf { it.contains("youtube.com/watch") }
+    ?.replace("watch?v=", "embed/")
+
         val episodes = document.select("div.ajax_post").mapNotNull { bolumElemanlari ->
             val epNumber = bolumElemanlari.attr("data-epnumber").toIntOrNull()
             val epHref = fixUrlNull(bolumElemanlari.selectFirst("a")?.attr("href")) ?: return null

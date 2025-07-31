@@ -150,7 +150,8 @@ class FilmHane : MainAPI() {
                     ?.let { fixUrlNull(it).toString() }
                 Actor(element.text(), posterUrl)
             }
-        val trailer         = Regex("""embed\/(.*)\?rel""").find(document.html())?.groupValues?.get(1)?.let { "https://www.youtube.com/embed/$it" }
+val trailer = document.selectFirst("div.series-profile-trailer[data-yt]")?.attr("data-yt")
+    ?.let { "https://www.youtube.com/embed/$it" }
         val episodeElements = document.select("li.flex.items-center.justify-between a.block.truncate")
         val episodeList = episodeElements.mapNotNull { episodeElement ->
             val epHref = fixUrlNull(episodeElement.attr("href")) ?: return@mapNotNull null

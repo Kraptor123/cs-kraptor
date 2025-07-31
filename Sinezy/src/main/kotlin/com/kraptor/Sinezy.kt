@@ -102,7 +102,7 @@ class Sinezy : MainAPI() {
         val actors = document.select("span.oyn p")
             .flatMap { it.text().split(",") }
             .map { Actor(it.trim()) }
-        val trailer         = Regex("""embed\/(.*)\?rel""").find(document.html())?.groupValues?.get(1)?.let { "https://www.youtube.com/embed/$it" }
+val trailer = document.selectFirst("meta[property=og:video]")?.attr("content")
 
         return newMovieLoadResponse(title, url, TvType.Movie, url) {
             this.posterUrl       = poster

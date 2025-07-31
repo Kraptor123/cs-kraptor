@@ -28,13 +28,13 @@ class Animeler : MainAPI() {
         "${mainUrl}/genre/action/"           to "Action",
         "${mainUrl}/genre/adult-cast/"                   to "Adult Cast",
         "${mainUrl}/genre/adventure/"                    to "Adventure",
-        "${mainUrl}/genre/aksiyon/"                      to "Aksiyon",
+        
         "${mainUrl}/genre/military/"                     to "Askeri",
-        "${mainUrl}/genre/avant-garde/"                  to "Avant Garde",
-        "${mainUrl}/genre/bilim-kurgu/"                  to "Bilim Kurgu",
+       
+       
         "${mainUrl}/genre/boys-love/"                    to "Boys Love",
         "${mainUrl}/genre/comedy/"                       to "Comedy",
-        "${mainUrl}/genre/comic/"                        to "Comic",
+        
         "${mainUrl}/genre/cultivation/"                  to "Cultivation",
         "${mainUrl}/genre/delinquents/"                  to "Delinquents",
         "${mainUrl}/genre/demons/"                       to "Demons",
@@ -51,18 +51,18 @@ class Animeler : MainAPI() {
         "${mainUrl}/genre/harem/"                        to "Harem",
         "${mainUrl}/genre/historical/"                   to "Historical",
         "${mainUrl}/genre/horror/"                       to "Horror",
-        "${mainUrl}/genre/iyashikei/"                    to "Iyashikei",
+        
         "${mainUrl}/genre/josei/"                        to "Josei",
         "${mainUrl}/genre/komedi/"                       to "Komedi",
-        "${mainUrl}/genre/macera/"                       to "Macera",
+        
         "${mainUrl}/genre/martial-arts/"                 to "Martial Arts",
         "${mainUrl}/genre/mecha/"                        to "Mecha",
         "${mainUrl}/genre/music/"                        to "Music",
         "${mainUrl}/genre/mystery/"                      to "Mystery",
         "${mainUrl}/genre/mythology/"                    to "Mythology",
-        "${mainUrl}/genre/op-m-c/"                       to "OP M.C.",
+        
         "${mainUrl}/genre/psychological/"                to "Psychological",
-        "${mainUrl}/genre/reenkarnasyon/"                to "Reenkarnasyon",
+        
         "${mainUrl}/genre/reincarnation/"                to "Reincarnation",
         "${mainUrl}/genre/romance/"                      to "Romance",
         "${mainUrl}/genre/romantizm/"                    to "Romantizm",
@@ -79,8 +79,7 @@ class Animeler : MainAPI() {
         "${mainUrl}/genre/tarihi/"                       to "Tarihi",
         "${mainUrl}/genre/team-sports/"                  to "Team Sports",
         "${mainUrl}/genre/video-game/"                   to "Video Game",
-        "${mainUrl}/genre/visual-arts/"                  to "Visual Arts",
-        "${mainUrl}/genre/workplace/"                    to "Workplace",
+       
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
@@ -134,8 +133,9 @@ class Animeler : MainAPI() {
         val recommendations =
             document.select("div.w-full.bg-gradient-to-t.from-primary.to-transparent.rounded.overflow-hidden.shadow.shadow-primary")
                 .mapNotNull { it.toRecommendationResult() }
-        val trailer = Regex("""embed/(.*)\?rel""").find(document.html())?.groupValues?.get(1)
-            ?.let { "https://www.youtube.com/embed/$it" }
+        val trailer = Regex("""openVideoEmbed\('([^']+youtube\.com/embed/[^']+)""")
+        .find(document.html())
+        ?.groupValues?.get(1)
         val episodeElements = document.select("div.swiper-slide a.w-full")
         val isMovie = episodeElements.any { it.attr("href").contains("-movie", ignoreCase = true) }
 

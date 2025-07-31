@@ -91,6 +91,11 @@ private fun Element.toSearchResult(): SearchResponse? {
     
     val tags = document.select("div.categories a").map { it.text() }
     val movTags = document.select("div.category a").map { it.text() }
+    val trailer = document.select("ul.nav li.nav-item a")
+    .mapNotNull { it.attr("aria-controls") }
+    .firstOrNull { it.startsWith("trailer-https://www.youtube.com/embed/") }
+    ?.substringAfter("trailer-")
+
     
     
     val bolumler = mutableListOf<Episode>()
@@ -151,6 +156,7 @@ private fun Element.toSearchResult(): SearchResponse? {
             this.plot = description
             this.year = year
             this.tags = tags
+            addTrailer(trailer)
         }
     }
 }

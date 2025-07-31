@@ -4,6 +4,8 @@ import android.util.Log
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
+
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.lagradost.cloudstream3.*
@@ -108,6 +110,10 @@ class DiziGom : MainAPI() {
         Log.d("DZG", "Poster: $poster")
         val description = document.selectFirst("div.serieDescription p")?.text()?.trim()
         val year = document.selectFirst("div.airDateYear a")?.text()?.trim()?.toIntOrNull()
+        val trailer = document.selectFirst("meta[property=twitter:player]")?.attr("content")
+    ?.takeIf { it.contains("youtube.com/watch") }
+    ?.replace("watch?v=", "embed/")
+
         val tags = document.select("div.genreList a").map { it.text() }
         val rating = document.selectFirst("div.score")?.text()?.trim()
         val duration = document.select("div.serieMetaInformation").select("div.totalSession")
@@ -144,8 +150,10 @@ class DiziGom : MainAPI() {
             this.plot = description
             this.tags = tags
             this.duration = duration
+            addTrailer(trailer)
             this.score = Score.from10(rating)
             addActors(actors)
+            
         }
 
     }

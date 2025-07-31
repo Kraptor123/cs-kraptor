@@ -130,6 +130,10 @@ class AsyaAnimeleri : MainAPI() {
         val year = document.selectFirst("span.split:nth-child(3)")?.text()?.trim()?.toIntOrNull()
         val tags = document.select(".spe > span:nth-child(7)").map { it.text() }
         val rating = document.selectFirst("div.rating")?.text()?.trim()
+        val trailer = document.selectFirst("a.trailerbutton")?.attr("href")
+    ?.takeIf { it.contains("youtube.com/watch") }
+    ?.replace("watch?v=", "embed/")
+
         val duration =
             document.selectFirst(".spe > span:nth-child(4)")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val recommendations = document.select("article.bs").mapNotNull { it.toRecommendationResult() }
@@ -176,6 +180,7 @@ class AsyaAnimeleri : MainAPI() {
             this.tags = tags
             this.score = Score.from10(rating)
             this.duration = duration
+            addTrailer(trailer)
             this.recommendations = recommendations
             this.episodes = episodeList
         }

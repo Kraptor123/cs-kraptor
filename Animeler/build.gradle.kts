@@ -1,8 +1,8 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-version = 12
+version = 13
 
 cloudstream {
-    authors     = listOf("kraptor")
+    authors     = listOf("kraptor","kerimmkirac")
     language    = "tr"
     description = "HD kalitesinde ücretsiz anime izle! Animeler.me, en yeni ve popüler anime serilerini Türkçe altyazılı ve dublajlı olarak sunar. Favori animelerini hemen keşfet!"
 

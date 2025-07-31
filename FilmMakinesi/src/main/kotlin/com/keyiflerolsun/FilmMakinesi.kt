@@ -117,7 +117,7 @@ class FilmMakinesi : MainAPI() {
         val actors = document.select("div.content a.cast")  // Tüm a.cast öğelerini al
             .map { Actor(it.text().trim()) }  // Her birini Actor nesnesine dönüştür
 
-        val trailer         = fixUrlNull(document.selectXpath("//iframe[@title='Fragman']").attr("data-src"))
+        val trailer = document.selectFirst("a.trailer-button")?.attr("data-video_url")
 
         return newMovieLoadResponse(title, url, TvType.Movie, url) {
             this.posterUrl       = poster

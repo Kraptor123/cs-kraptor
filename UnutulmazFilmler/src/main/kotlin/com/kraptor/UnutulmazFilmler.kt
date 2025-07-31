@@ -257,7 +257,10 @@ class UnutulmazFilmler : MainAPI() {
             val aktorPoster = aktor.selectFirst("img")?.attr("data-src")
             Actor(aktorIsim,aktorPoster)
         }
-        val trailer         = Regex("""embed\/(.*)\?rel""").find(document.html())?.groupValues?.get(1)?.let { "https://www.youtube.com/embed/$it" }
+val trailer = Regex("""youtube\.com/watch\?v=([\w\-]+)""")
+    .find(document.html())
+    ?.groupValues?.get(1)
+    ?.let { "https://www.youtube.com/embed/$it" }
         val bolumListesi    = document.select("div.sznstabs a").map { bolumler ->
             val bolumHref   = bolumler.attr("href")
             val bolumName   = bolumler.selectFirst("span.block.text-sm")?.text()

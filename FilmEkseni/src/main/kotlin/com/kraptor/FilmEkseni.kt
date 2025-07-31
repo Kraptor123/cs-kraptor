@@ -147,8 +147,9 @@ class FilmEkseni : MainAPI() {
             val image = it.selectFirst("img")?.attr("data-src") ?: ""
             Actor(name, image)
         }
-        val trailer = Regex("""embed\/(.*)\?rel""").find(document.html())?.groupValues?.get(1)
-            ?.let { "https://www.youtube.com/embed/$it" }
+        val trailer = document.selectFirst("div[data-trailer]")?.attr("data-trailer")
+    ?.let { "https://www.youtube.com/embed/$it" }
+
 
         return newMovieLoadResponse(title, url, TvType.Movie, url) {
             this.posterUrl = poster
