@@ -26,6 +26,7 @@ class SineWix : MainAPI() {
     //Movie, AnimeMovie, TvSeries, Cartoon, Anime, OVA, Torrent, Documentary, AsianDrama, Live, NSFW, Others, Music, AudioBook, CustomMedia, Audio, Podcast,
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/public/api/media/seriesEpisodesAll/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"  to "Yeni Bölümler",
         "${mainUrl}/public/api/genres/latestmovies/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"  to "Son Filmler",
         "${mainUrl}/public/api/genres/latestseries/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"              to "Son Diziler",
         "${mainUrl}/public/api/genres/latestanimes/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"              to "Son Animeler",
@@ -34,16 +35,35 @@ class SineWix : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}?page=$page", headers = sineHeaders).toString().toJson()
-        val mapper = jacksonObjectMapper().registerKotlinModule()
-        val response: ResponseHash = mapper.readValue<ResponseHash>(document)
-        val home = response.data!!
-            .mapNotNull { icerik ->
-                icerik.toMainPageResult()
-            }
+    val responseString = app.get("${request.data}?page=$page", headers = sineHeaders).text
 
-        return newHomePageResponse(request.name, home)
+    return if (request.name == "Yeni Bölümler") {
+        val mapper = jacksonObjectMapper().registerKotlinModule()
+        val response: YeniBolumResponse = mapper.readValue(responseString)
+        val items = response.data?.mapNotNull { it.toYeniBolumResult() } ?: emptyList()
+        newHomePageResponse(request.name, items)
+    } else {
+        val mapper = jacksonObjectMapper().registerKotlinModule()
+        val response: ResponseHash = mapper.readValue(responseString)
+        val items = response.data?.mapNotNull { it.toMainPageResult() } ?: emptyList()
+        newHomePageResponse(request.name, items)
     }
+}
+
+    fun YeniBolum.toYeniBolumResult(): SearchResponse? {
+    val title = showName ?: return null
+    val season = seasonNumber ?: return null
+    val episode = episodeNumber ?: return null
+
+    val displayTitle = "$title ${season}x${episode.toString().padStart(2, '0')}"
+    val href = "$mainUrl/public/api/series/show/$id/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"
+
+    return newTvSeriesSearchResponse(displayTitle, href, TvType.TvSeries) {
+        this.posterUrl = posterPath
+        this.score = Score.from10(voteAverage)
+    }
+}
+
 
     private fun Icerikler.toMainPageResult(): SearchResponse? {
         val title     = title ?: originalName ?: name ?: return null
@@ -158,7 +178,7 @@ class SineWix : MainAPI() {
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
     override suspend fun load(url: String): LoadResponse? {
-        Log.d("kraptor_$name","url = $url")
+        Log.d("kerim","url = $url")
         val document = app.get(url, headers = sineHeaders).text
         val mapper = jacksonObjectMapper().registerKotlinModule()
         val response: Icerikler = mapper.readValue<Icerikler>(document)
@@ -186,7 +206,7 @@ class SineWix : MainAPI() {
             )
         }
         val trailer  = response.trailerUrl
-//        Log.d("kraptor_$name", "trailer = $trailer")
+        Log.d("kerim", "trailer = $trailer")
 
         val bolumler = response.seasons?.flatMap { season ->
             season.episodes?.mapNotNull { episode ->
@@ -252,7 +272,7 @@ class SineWix : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        Log.d("kraptor_$name", "data = ${data}")
+        Log.d("kerim", "data = ${data}")
         if (data.contains("mediafire")){
             loadExtractor(data, "${mainUrl}/", subtitleCallback, callback)
         } else {
@@ -287,6 +307,24 @@ data class ResponseHash(
     @JsonProperty("search")
     val searchResponse: List<Icerikler>? = null,
 )
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class YeniBolum(
+    @JsonProperty("id") val id: Int?,
+    @JsonProperty("name") val showName: String?,
+    @JsonProperty("episode_name") val episodeName: String?,
+    @JsonProperty("season_number") val seasonNumber: Int?,
+    @JsonProperty("episode_number") val episodeNumber: Int?,
+    @JsonProperty("poster_path") val posterPath: String?,
+    @JsonProperty("vote_average") val voteAverage: Double?,
+    @JsonProperty("type") val type: String?
+)
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class YeniBolumResponse(
+    @JsonProperty("current_page") val currentPage: Int?,
+    @JsonProperty("data") val data: List<YeniBolum>?
+)
+
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Icerikler(
