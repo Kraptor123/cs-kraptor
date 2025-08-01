@@ -27,5 +27,7 @@ class DiziPalOrijinalPlugin: Plugin() {
         registerExtractorAPI(SNDplayer())
         registerExtractorAPI(ORGDplayer())
         registerExtractorAPI(Dplayer())
+        registerExtractorAPI(VidMolyExtractor())
+        registerExtractorAPI(VidMolyTo())
     }
 }

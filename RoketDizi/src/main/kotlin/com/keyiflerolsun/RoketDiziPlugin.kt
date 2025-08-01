@@ -25,5 +25,7 @@ class RoketDiziPlugin: Plugin() {
         registerExtractorAPI(FourDplayer())
         registerExtractorAPI(SNDplayer())
         registerExtractorAPI(ORGDplayer())
+        registerExtractorAPI(VidMolyExtractor())
+        registerExtractorAPI(VidMolyTo())
     }
 }

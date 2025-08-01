@@ -27,5 +27,7 @@ class DizillaPlugin: Plugin() {
         registerExtractorAPI(ORGDplayer())
         registerExtractorAPI(SnHotLinger())
         registerExtractorAPI(SNDPlayer74())
+        registerExtractorAPI(VidMolyExtractor())
+        registerExtractorAPI(VidMolyTo())
     }
 }
