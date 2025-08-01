@@ -1,4 +1,4 @@
-# [<img alt="alt_text" width="30px" src="https://raw.githubusercontent.com/kerimmkirac/cs-kerim/refs/heads/master/kekikanime.png"/>](https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/repo.json) cs-kekikanime
+# [<img alt="alt_text" width="30px" src="https://raw.githubusercontent.com/kerimmkirac/cs-kerim/refs/heads/master/kekikanime.png"/>](https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/repo.json) `cs-kekikanime`
 
 
 Cloudstream Kurulu Cihazda Aşağıdaki Logoya Tıklayarak Repoyu İndirebilirsiniz:
