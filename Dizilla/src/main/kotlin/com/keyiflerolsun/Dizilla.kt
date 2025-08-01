@@ -230,23 +230,48 @@ class Dizilla : MainAPI() {
     }
 
    
-    private suspend fun Element.sonBolumler(): SearchResponse {
-        val name = this.selectFirst("h2")?.text() ?: ""
-        val epName = this.selectFirst("div.opacity-80")!!.text().replace(". Sezon ", "x")
-            .replace(". Bölüm", "")
+    private suspend fun Element.sonBolumler(): SearchResponse? {
+    val name = this.selectFirst("h2")?.text() ?: ""
+    val epName = this.selectFirst("div.opacity-80")!!.text().replace(". Sezon ", "x")
+        .replace(". Bölüm", "")
 
-        val title = "$name - $epName"
+    val title = "$name - $epName"
 
-        val epDoc = fixUrlNull(this.attr("href"))?.let { Jsoup.parse(app.get(it, interceptor = interceptor).body.string()) }
-
-        val href = fixUrlNull(epDoc?.selectFirst("div.poster a")?.attr("href")) ?: "return null"
-
-        val posterUrl = fixUrlNull(epDoc?.selectFirst("div.poster img")?.attr("src"))
-
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
-            this.posterUrl = posterUrl
-        }
+    val epDoc = fixUrlNull(this.attr("href"))?.let { 
+        Jsoup.parse(app.get(it, interceptor = interceptor).body.string()) 
     }
+
+    
+    val href = epDoc?.selectFirst("div.poster a")?.attr("href")?.let { fixUrlNull(it) }
+    
+    
+    val finalHref = href ?: run {
+        
+        epDoc?.selectFirst("a[href*='/dizi/']")?.attr("href")?.let { fixUrlNull(it) }
+        
+        ?: epDoc?.selectFirst("link[rel='canonical']")?.attr("href")?.let { 
+            val canonicalUrl = it
+            
+            val diziSlug = canonicalUrl.substringAfterLast("/").substringBefore("-")
+            fixUrlNull("${mainUrl}/dizi/${diziSlug}")
+        }
+        
+        ?: epDoc?.selectFirst("nav a[href*='/dizi/']")?.attr("href")?.let { fixUrlNull(it) }
+    }
+    
+    
+    if (finalHref == null) {
+        
+        return null
+    }
+
+    
+    val posterUrl = fixUrlNull(this.selectFirst("div.image img")?.attr("src"))
+
+    return newTvSeriesSearchResponse(title, finalHref, TvType.TvSeries) {
+        this.posterUrl = posterUrl
+    }
+}
 
 
     override suspend fun search(query: String): List<SearchResponse> {
