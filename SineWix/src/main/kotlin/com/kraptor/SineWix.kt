@@ -205,7 +205,8 @@ class SineWix : MainAPI() {
                 image = oyuncu.oyuncuPoster.orEmpty()
             )
         }
-        val trailer  = response.trailerUrl
+        val trailer = response.previewPath?.let { "https://www.youtube.com/embed/$it" }
+
         Log.d("kraptor_$name", "trailer = $trailer")
 
         val bolumler = response.seasons?.flatMap { season ->
@@ -352,8 +353,8 @@ data class Icerikler(
     val releaseDate: String? = null,
     @JsonProperty("first_air_date")
     val firstAirDate: String? = null,
-    @JsonProperty("trailer_url")
-    val trailerUrl: String? = null,
+    @JsonProperty("preview_path")
+    val previewPath: String? = null,
     @JsonProperty("casterslist")
     val casterslist: List<Cast>? = null,
     val seasons: List<Season>? = null,
