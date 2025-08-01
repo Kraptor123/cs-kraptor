@@ -178,7 +178,7 @@ class SineWix : MainAPI() {
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
     override suspend fun load(url: String): LoadResponse? {
-        Log.d("kerim","url = $url")
+        Log.d("kraptor_$name","url = $url")
         val document = app.get(url, headers = sineHeaders).text
         val mapper = jacksonObjectMapper().registerKotlinModule()
         val response: Icerikler = mapper.readValue<Icerikler>(document)
@@ -206,7 +206,7 @@ class SineWix : MainAPI() {
             )
         }
         val trailer  = response.trailerUrl
-        Log.d("kerim", "trailer = $trailer")
+        Log.d("kraptor_$name", "trailer = $trailer")
 
         val bolumler = response.seasons?.flatMap { season ->
             season.episodes?.mapNotNull { episode ->
@@ -272,7 +272,7 @@ class SineWix : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        Log.d("kerim", "data = ${data}")
+        Log.d("kraptor_$name", "data = ${data}")
         if (data.contains("mediafire")){
             loadExtractor(data, "${mainUrl}/", subtitleCallback, callback)
         } else {
