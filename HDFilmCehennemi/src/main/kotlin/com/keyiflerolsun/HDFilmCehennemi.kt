@@ -448,39 +448,31 @@ class HDFilmCehennemi : MainAPI() {
 }
 
 fun dcDecode(valueParts: List<String>): String {
-    // 1) join
-    val joined = valueParts.joinToString(separator = "")
+    // 1) Join array elements
+    var result = valueParts.joinToString(separator = "")
 
-    // 2) Base64 → bytes
-    val decodedBytes = Base64.decode(joined, Base64.DEFAULT)
-
-    // 3) bytes → “binary” string (Latin-1), matching JS atob()
-    var result = String(decodedBytes, Charsets.ISO_8859_1)
-
-    // 4) ROT13 exactly as in JS
-    result = buildString {
-        for (c in result) {
-            if (c in 'A'..'Z' || c in 'a'..'z') {
-                val base = if (c <= 'Z') 'A' else 'a'
-                val shifted = (c - base + 13) % 26 + base.code
-                append(shifted.toChar())
-            } else {
-                append(c)
-            }
-        }
-    }
-
-    // 5) reverse
+    // 2) Reverse the string
     result = result.reversed()
 
-    // 6) un-mix
+    // 3) Base64 decode twice (matching JS atob() calls)
+    result = try {
+        val firstDecode = Base64.decode(result, Base64.DEFAULT)
+        val firstString = String(firstDecode, Charsets.ISO_8859_1)
+
+        val secondDecode = Base64.decode(firstString, Base64.DEFAULT)
+        String(secondDecode, Charsets.ISO_8859_1)
+    } catch (e: Exception) {
+        return "" // Handle decode errors
+    }
+
+    // 4) Un-mix: Apply character transformation
     val unmix = StringBuilder(result.length)
     for (i in result.indices) {
-        val raw = result[i].code
+        val charCode = result[i].code
         val delta = 399_756_995 % (i + 5)
-        // match JS: (charCode - delta + 256) % 256
-        val out = (raw - delta + 256) % 256
-        unmix.append(out.toChar())
+        // Match JS logic: (charCode - delta + 256) % 256
+        val transformedCode = (charCode - delta + 256) % 256
+        unmix.append(transformedCode.toChar())
     }
 
     return unmix.toString()
