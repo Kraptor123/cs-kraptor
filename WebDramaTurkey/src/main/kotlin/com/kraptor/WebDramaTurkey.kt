@@ -17,6 +17,7 @@ class WebDramaTurkey : MainAPI() {
     override val hasQuickSearch       = false
     override val supportedTypes       = setOf(TvType.AsianDrama)
     override val mainPage = mainPageOf(
+        "${mainUrl}/" to "Son Bölümler",
         "${mainUrl}/diziler"             to "Diziler",
         "${mainUrl}/filmler"             to "Filmler",
         "${mainUrl}/animeler"            to "Animeler",
@@ -26,7 +27,7 @@ class WebDramaTurkey : MainAPI() {
         "${mainUrl}/tur/komedi"          to "Komedi",
         "${mainUrl}/tur/korku"           to "Korku",
         "${mainUrl}/tur/lise"            to "Lise",
-        "${mainUrl}/tur/ofis-aski"       to "Ofis Aşkı",
+        
         "${mainUrl}/tur/romantik"        to "Romantik",
         "${mainUrl}/tur/universite"      to "Üniversite",
         "${mainUrl}/tur/aile"            to "Aile",
@@ -36,11 +37,10 @@ class WebDramaTurkey : MainAPI() {
         "${mainUrl}/tur/bromance"        to "Bromance",
         "${mainUrl}/tur/eglence"         to "Eğlence",
         "${mainUrl}/tur/genclik"         to "Gençlik",
-        "${mainUrl}/tur/gezi"            to "Gezi",
+       
         "${mainUrl}/tur/gizem"           to "Gizem",
-        "${mainUrl}/tur/gl"              to "GL",
-        "${mainUrl}/tur/izdivac"         to "İzdivaç",
-        "${mainUrl}/tur/muzik"           to "Müzik",
+       
+        
         "${mainUrl}/tur/reality"         to "Reality",
         "${mainUrl}/tur/tarihi"          to "Tarihi",
         "${mainUrl}/tur/tartisma"        to "Tartışma",
@@ -49,11 +49,19 @@ class WebDramaTurkey : MainAPI() {
         "${mainUrl}/tur/wuxia"           to "Wuxia",
         "${mainUrl}/tur/xianxia"         to "Xianxia",
         "${mainUrl}/tur/yarisma"         to "Yarışma",
+        
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}?page=$page").document
-        val home     = document.select("div.col").mapNotNull { it.toMainPageResult() }
+        val document = app.get("${request.data}${if (request.data == mainUrl + "/") "" else "?page=$page"}").document
+        
+        val home = if (request.data == mainUrl + "/") {
+           
+            document.select("div.col.sonyuklemeler").mapNotNull { it.toLatestEpisodeResult() }
+        } else {
+           
+            document.select("div.col").mapNotNull { it.toMainPageResult() }
+        }
 
         return newHomePageResponse(request.name, home)
     }
@@ -409,25 +417,74 @@ class WebDramaTurkey : MainAPI() {
             "Peach of Time",
             "Light On Me"
         )
-        val title     = this.selectFirst("a.list-title")?.text() ?: return null
+        val title = this.selectFirst("a.list-title")?.text() ?: return null
         if (boyslove.any { title.contains(it, ignoreCase = true) }) {
             return null
         }
-        val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+        val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("div.media.media-cover")?.attr("data-src"))
-        val blDisla   = this.selectFirst("div.col a.list-category")?.text() ?: return null
-        val tvType    = if (href.contains("/film/")) {
+        val blDisla = this.selectFirst("div.col a.list-category")?.text() ?: return null
+        val tvType = if (href.contains("/film/")) {
             TvType.Movie
-        } else if (href.contains("/anime/")){
+        } else if (href.contains("/anime/")) {
             TvType.Anime
-        }
-        else {
+        } else {
             TvType.AsianDrama
         }
         if (blDisla.contains("BL", ignoreCase = false)) {
             return null
         }
-        return newMovieSearchResponse(title, href, type = tvType) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, type = tvType) {
+            this.posterUrl = posterUrl
+        }
+    }
+    private fun Element.toLatestEpisodeResult(): SearchResponse? {
+        val title = this.selectFirst("div.list-title")?.text() ?: return null
+        
+        val originalHref = this.selectFirst("a")?.attr("href") ?: return null
+        
+        
+        val href = fixUrlNull(originalHref.replace(Regex("/\\d+-sezon/\\d+-bolum$"), "/"))
+        
+        
+        var posterUrl: String? = null
+        
+        
+        this.selectFirst("div.media.media-episode")?.attr("style")?.let { styleAttr ->
+            val decodedStyle = styleAttr.replace("&quot;", "\"")
+            val regex = """url\("([^"]+)"\)""".toRegex()
+            posterUrl = regex.find(decodedStyle)?.groupValues?.get(1)
+        }
+        
+        
+        if (posterUrl.isNullOrEmpty()) {
+            posterUrl = this.selectFirst("div.media.media-episode")?.attr("data-src")
+        }
+        
+        
+        if (posterUrl.isNullOrEmpty()) {
+            this.selectFirst("div.media.media-episode")?.attr("style")?.let { style ->
+                val urlRegex = """https://[^"'\s)]+\.(jpg|jpeg|png|webp)""".toRegex(RegexOption.IGNORE_CASE)
+                posterUrl = urlRegex.find(style)?.value
+            }
+        }
+        
+        val episodeInfo = this.selectFirst("div.list-category")?.text() ?: ""
+        
+        
+        val fullTitle = "$title - $episodeInfo"
+        
+        val tvType = if (href?.contains("/film/") == true) {
+            TvType.Movie
+        } else if (href?.contains("/anime/") == true) {
+            TvType.Anime
+        } else {
+            TvType.AsianDrama
+        }
+        
+        return newMovieSearchResponse(fullTitle, href ?: return null, type = tvType) {
+            this.posterUrl = fixUrlNull(posterUrl)
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {

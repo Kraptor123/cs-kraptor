@@ -1,8 +1,8 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-version = 4
+version = 5
 
 cloudstream {
-    authors     = listOf("kraptor")
+    authors     = listOf("kraptor","kerimmkirac")
     language    = "tr"
     description = "Web Drama Turkey - Kore, Çin, Japon Dizileri, Filmleri ve Animeler"
 
