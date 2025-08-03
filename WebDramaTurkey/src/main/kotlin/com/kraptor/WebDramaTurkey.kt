@@ -27,14 +27,14 @@ class WebDramaTurkey : MainAPI() {
         "${mainUrl}/tur/komedi"          to "Komedi",
         "${mainUrl}/tur/korku"           to "Korku",
         "${mainUrl}/tur/lise"            to "Lise",
-        
+        "${mainUrl}/tur/ofis-aski"       to "Ofis Aşkı",
         "${mainUrl}/tur/romantik"        to "Romantik",
         "${mainUrl}/tur/universite"      to "Üniversite",
         "${mainUrl}/tur/aile"            to "Aile",
         "${mainUrl}/tur/aksiyon"         to "Aksiyon",
         "${mainUrl}/tur/belgesel"        to "Belgesel",
         "${mainUrl}/tur/bilim-kurgu"     to "Bilim Kurgu",
-        "${mainUrl}/tur/bromance"        to "Bromance",
+       
         "${mainUrl}/tur/eglence"         to "Eğlence",
         "${mainUrl}/tur/genclik"         to "Gençlik",
        
@@ -43,7 +43,7 @@ class WebDramaTurkey : MainAPI() {
         
         "${mainUrl}/tur/reality"         to "Reality",
         "${mainUrl}/tur/tarihi"          to "Tarihi",
-        "${mainUrl}/tur/tartisma"        to "Tartışma",
+        
         "${mainUrl}/tur/varyete"         to "Varyete",
         "${mainUrl}/tur/web-drama"       to "Web Drama",
         "${mainUrl}/tur/wuxia"           to "Wuxia",
