@@ -14,6 +14,7 @@ import com.lagradost.cloudstream3.utils.getAndUnpack
 import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
+import java.nio.charset.StandardCharsets
 
 
 class FilmMakinesi : MainAPI() {
@@ -187,34 +188,51 @@ class FilmMakinesi : MainAPI() {
 }
 
 fun dcDecode(valueParts: List<String>): String {
-    // 1) Join array elements
-    var result = valueParts.joinToString(separator = "")
+    try {
+        // 1) Join array elements (matches: let value = value_parts.join(''))
+        var result = valueParts.joinToString(separator = "")
 
-    // 2) Reverse the string
-    result = result.reversed()
+        // 2) ROT13 transformation (matches the replace function in JS)
+        result = result.map { c ->
+            when {
+                c in 'a'..'z' -> {
+                    val shifted = c.code + 13
+                    if (shifted <= 'z'.code) shifted.toChar() else (shifted - 26).toChar()
+                }
+                c in 'A'..'Z' -> {
+                    val shifted = c.code + 13
+                    if (shifted <= 'Z'.code) shifted.toChar() else (shifted - 26).toChar()
+                }
+                else -> c
+            }
+        }.joinToString("")
 
-    // 3) Base64 decode twice (matching JS atob() calls)
-    result = try {
-        val firstDecode = Base64.decode(result, Base64.DEFAULT)
-        val firstString = String(firstDecode, Charsets.ISO_8859_1)
+        // 3) Reverse the string (matches: split('').reverse().join(''))
+        result = result.reversed()
 
-        val secondDecode = Base64.decode(firstString, Base64.DEFAULT)
-        String(secondDecode, Charsets.ISO_8859_1)
+        // 4) Base64 decode (matches: atob(result))
+        result = try {
+            val decoded = Base64.decode(result, Base64.DEFAULT)
+            String(decoded, StandardCharsets.ISO_8859_1)
+        } catch (e: Exception) {
+            return "" // Handle decode errors
+        }
+
+        // 5) Un-mix: Apply character transformation
+        val unmix = StringBuilder(result.length)
+        for (i in result.indices) {
+            val charCode = result[i].code
+            val delta = 399756995 % (i + 5)
+            // Match JS logic: (charCode - delta + 256) % 256
+            val transformedCode = (charCode - delta + 256) % 256
+            unmix.append(transformedCode.toChar())
+        }
+
+        return unmix.toString()
+
     } catch (e: Exception) {
-        return "" // Handle decode errors
+        return "" // Handle any other errors
     }
-
-    // 4) Un-mix: Apply character transformation
-    val unmix = StringBuilder(result.length)
-    for (i in result.indices) {
-        val charCode = result[i].code
-        val delta = 399_756_995 % (i + 5)
-        // Match JS logic: (charCode - delta + 256) % 256
-        val transformedCode = (charCode - delta + 256) % 256
-        unmix.append(transformedCode.toChar())
-    }
-
-    return unmix.toString()
 }
 
 fun dcHello(encoded: String): String {
