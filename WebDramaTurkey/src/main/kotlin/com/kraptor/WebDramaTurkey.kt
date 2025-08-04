@@ -4,6 +4,8 @@ package com.kraptor
 
 import android.util.Log
 import org.jsoup.nodes.Element
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
@@ -17,6 +19,7 @@ class WebDramaTurkey : MainAPI() {
     override val hasQuickSearch       = false
     override val supportedTypes       = setOf(TvType.AsianDrama)
     override val mainPage = mainPageOf(
+        "${mainUrl}/" to "Son Bölümler",
         "${mainUrl}/diziler"             to "Diziler",
         "${mainUrl}/filmler"             to "Filmler",
         "${mainUrl}/animeler"            to "Animeler",
@@ -33,27 +36,34 @@ class WebDramaTurkey : MainAPI() {
         "${mainUrl}/tur/aksiyon"         to "Aksiyon",
         "${mainUrl}/tur/belgesel"        to "Belgesel",
         "${mainUrl}/tur/bilim-kurgu"     to "Bilim Kurgu",
-        "${mainUrl}/tur/bromance"        to "Bromance",
+       
         "${mainUrl}/tur/eglence"         to "Eğlence",
         "${mainUrl}/tur/genclik"         to "Gençlik",
-        "${mainUrl}/tur/gezi"            to "Gezi",
+       
         "${mainUrl}/tur/gizem"           to "Gizem",
-        "${mainUrl}/tur/gl"              to "GL",
-        "${mainUrl}/tur/izdivac"         to "İzdivaç",
-        "${mainUrl}/tur/muzik"           to "Müzik",
+       
+        
         "${mainUrl}/tur/reality"         to "Reality",
         "${mainUrl}/tur/tarihi"          to "Tarihi",
-        "${mainUrl}/tur/tartisma"        to "Tartışma",
+        
         "${mainUrl}/tur/varyete"         to "Varyete",
         "${mainUrl}/tur/web-drama"       to "Web Drama",
         "${mainUrl}/tur/wuxia"           to "Wuxia",
         "${mainUrl}/tur/xianxia"         to "Xianxia",
         "${mainUrl}/tur/yarisma"         to "Yarışma",
+        
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}?page=$page").document
-        val home     = document.select("div.col").mapNotNull { it.toMainPageResult() }
+        val document = app.get("${request.data}${if (request.data == mainUrl + "/") "" else "?page=$page"}").document
+        
+        val home = if (request.data == mainUrl + "/") {
+           
+            document.select("div.col.sonyuklemeler").mapNotNull { it.toLatestEpisodeResult() }
+        } else {
+           
+            document.select("div.col").mapNotNull { it.toMainPageResult() }
+        }
 
         return newHomePageResponse(request.name, home)
     }
@@ -409,25 +419,74 @@ class WebDramaTurkey : MainAPI() {
             "Peach of Time",
             "Light On Me"
         )
-        val title     = this.selectFirst("a.list-title")?.text() ?: return null
+        val title = this.selectFirst("a.list-title")?.text() ?: return null
         if (boyslove.any { title.contains(it, ignoreCase = true) }) {
             return null
         }
-        val href      = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+        val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("div.media.media-cover")?.attr("data-src"))
-        val blDisla   = this.selectFirst("div.col a.list-category")?.text() ?: return null
-        val tvType    = if (href.contains("/film/")) {
+        val blDisla = this.selectFirst("div.col a.list-category")?.text() ?: return null
+        val tvType = if (href.contains("/film/")) {
             TvType.Movie
-        } else if (href.contains("/anime/")){
+        } else if (href.contains("/anime/")) {
             TvType.Anime
-        }
-        else {
+        } else {
             TvType.AsianDrama
         }
         if (blDisla.contains("BL", ignoreCase = false)) {
             return null
         }
-        return newMovieSearchResponse(title, href, type = tvType) { this.posterUrl = posterUrl }
+        return newMovieSearchResponse(title, href, type = tvType) {
+            this.posterUrl = posterUrl
+        }
+    }
+    private fun Element.toLatestEpisodeResult(): SearchResponse? {
+        val title = this.selectFirst("div.list-title")?.text() ?: return null
+        
+        val originalHref = this.selectFirst("a")?.attr("href") ?: return null
+        
+        
+        val href = fixUrlNull(originalHref.replace(Regex("/\\d+-sezon/\\d+-bolum$"), "/"))
+        
+        
+        var posterUrl: String? = null
+        
+        
+        this.selectFirst("div.media.media-episode")?.attr("style")?.let { styleAttr ->
+            val decodedStyle = styleAttr.replace("&quot;", "\"")
+            val regex = """url\("([^"]+)"\)""".toRegex()
+            posterUrl = regex.find(decodedStyle)?.groupValues?.get(1)
+        }
+        
+        
+        if (posterUrl.isNullOrEmpty()) {
+            posterUrl = this.selectFirst("div.media.media-episode")?.attr("data-src")
+        }
+        
+        
+        if (posterUrl.isNullOrEmpty()) {
+            this.selectFirst("div.media.media-episode")?.attr("style")?.let { style ->
+                val urlRegex = """https://[^"'\s)]+\.(jpg|jpeg|png|webp)""".toRegex(RegexOption.IGNORE_CASE)
+                posterUrl = urlRegex.find(style)?.value
+            }
+        }
+        
+        val episodeInfo = this.selectFirst("div.list-category")?.text() ?: ""
+        
+        
+        val fullTitle = "$title - $episodeInfo"
+        
+        val tvType = if (href?.contains("/film/") == true) {
+            TvType.Movie
+        } else if (href?.contains("/anime/") == true) {
+            TvType.Anime
+        } else {
+            TvType.AsianDrama
+        }
+        
+        return newMovieSearchResponse(fullTitle, href ?: return null, type = tvType) {
+            this.posterUrl = fixUrlNull(posterUrl)
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
@@ -527,32 +586,150 @@ class WebDramaTurkey : MainAPI() {
     }
 
 
-    override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-//        Log.d("kraptor_$name", "data = ${data}")
-        val document = app.get(data).document
-
-        val embedIds = document.select("[data-embed]")
-            .mapNotNull { it.attr("data-embed") }
-            .distinct()
-
-        for (id in embedIds) {
-            val response = app.post(
-                url = "$mainUrl/ajax/embed",
-                referer = data,
-                headers = mapOf(
-                    "X-Requested-With" to "XMLHttpRequest",
-                    "Content-Type" to "application/x-www-form-urlencoded; charset=UTF-8",
-                ),
-                data = mapOf("id" to id)
-            ).document
-            val iframe = response.selectFirst("iframe")?.attr("src").toString()
-
-            val iframeGet = app.get(iframe, referer = data).document
-
-            val iframeSon = iframeGet.selectFirst("iframe")?.attr("src").toString()
-            Log.d("kraptor_$name", "iframeSon = ${iframeSon}")
-             loadExtractor(iframeSon, "${mainUrl}/", subtitleCallback, callback)
+    override suspend fun loadLinks(
+    data: String, 
+    isCasting: Boolean, 
+    subtitleCallback: (SubtitleFile) -> Unit, 
+    callback: (ExtractorLink) -> Unit
+): Boolean {
+    val document = app.get(data).document
+    
+    val embedIds = document.select("[data-embed]")
+        .mapNotNull { it.attr("data-embed") }
+        .distinct()
+    
+    for (id in embedIds) {
+        val response = app.post(
+            url = "$mainUrl/ajax/embed",
+            referer = data,
+            headers = mapOf(
+                "X-Requested-With" to "XMLHttpRequest",
+                "Content-Type" to "application/x-www-form-urlencoded; charset=UTF-8",
+            ),
+            data = mapOf("id" to id)
+        ).document
+        
+        val iframe = response.selectFirst("iframe")?.attr("src").toString()
+        val iframeGet = app.get(iframe, referer = data).document
+        val iframeSon = iframeGet.selectFirst("iframe")?.attr("src").toString()
+        
+        Log.d("kraptor_$name", "iframeSon = $iframeSon")
+        
+        
+        if (iframeSon.contains("webdrama.sbs/video/")) {
+            handleWebDrama(iframeSon, data, callback)
+        } else {
+            loadExtractor(iframeSon, "$mainUrl/", subtitleCallback, callback)
         }
-        return true
+    }
+    return true
+}
+
+private suspend fun handleWebDrama(iframeSon: String, referer: String, callback: (ExtractorLink) -> Unit) {
+    try {
+        
+        val videoId = iframeSon.substringAfter("webdrama.sbs/video/")
+        Log.d("kerimmkirac", "WebDrama videoId = $videoId")
+        
+        
+        val iframeResponse = app.get(
+            url = iframeSon,
+            referer = referer
+        )
+        
+        
+        val cookies = iframeResponse.cookies
+        val fireplayerCookie = cookies["fireplayer_player"] ?: "6qgq1bmrp7gisci61s2p7edgrr"
+        
+        Log.d("kerimmkirac", "WebDrama cookie = $fireplayerCookie")
+        
+        
+        val response = app.post(
+            url = "https://webdrama.sbs/player/index.php?data=$videoId&do=getVideo",
+            referer = iframeSon,
+            headers = mapOf(
+                "X-Requested-With" to "XMLHttpRequest",
+                "Content-Type" to "application/x-www-form-urlencoded; charset=UTF-8",
+                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+                "Accept" to "*/*",
+                "Origin" to "https://webdrama.sbs",
+                "Sec-Fetch-Site" to "same-origin",
+                "Sec-Fetch-Mode" to "cors",
+                "Sec-Fetch-Dest" to "empty",
+                "Cookie" to "fireplayer_player=$fireplayerCookie"
+            )
+        )
+        
+        val jsonResponse = response.parsedSafe<WebDramaResponse>()
+        
+        jsonResponse?.let { webDrama ->
+            
+            webDrama.videoSource?.let { videoSource ->
+                callback.invoke(
+                    newExtractorLink(
+                        "WDT 1",
+                        "WDT 1",
+                        videoSource,
+                        type = if (videoSource.contains(".m3u8") || videoSource.contains(".txt")) ExtractorLinkType.M3U8 else ExtractorLinkType.VIDEO
+                    ) {
+                        this.referer = "https://webdrama.sbs/"
+                        this.headers = mapOf(
+                            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+                            "Accept" to "*/*",
+                            "Sec-Ch-Ua" to "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Brave\";v=\"138\"",
+                            "Sec-Ch-Ua-Mobile" to "?0",
+                            "Sec-Ch-Ua-Platform" to "\"Windows\"",
+                            "Sec-Fetch-Site" to "same-origin",
+                            "Sec-Fetch-Mode" to "cors",
+                            "Sec-Fetch-Dest" to "empty",
+                            "Accept-Language" to "tr-TR,tr;q=0.6",
+                            "Accept-Encoding" to "gzip, deflate, br, zstd",
+                            "Cookie" to "fireplayer_player=$fireplayerCookie"
+                        )
+                    }
+                )
+            }
+            
+            
+            webDrama.securedLink?.let { securedLink ->
+                callback.invoke(
+                    newExtractorLink(
+                        "WDT 2",
+                        "WDT 2",
+                        securedLink,
+                        type = ExtractorLinkType.M3U8
+                    ) {
+                        this.referer = "https://webdrama.sbs/"
+                        this.headers = mapOf(
+                            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+                            "Accept" to "*/*",
+                            "Sec-Ch-Ua" to "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Brave\";v=\"138\"",
+                            "Sec-Ch-Ua-Mobile" to "?0",
+                            "Sec-Ch-Ua-Platform" to "\"Windows\"",
+                            "Sec-Fetch-Site" to "same-origin",
+                            "Sec-Fetch-Mode" to "cors",
+                            "Sec-Fetch-Dest" to "empty",
+                            "Accept-Language" to "tr-TR,tr;q=0.6",
+                            "Accept-Encoding" to "gzip, deflate, br, zstd",
+                            "Cookie" to "fireplayer_player=$fireplayerCookie"
+                        )
+                    }
+                )
+            }
+        }
+        
+    } catch (e: Exception) {
+        Log.e("kerimmkirac", "WebDrama error: ${e.message}")
     }
 }
+
+
+data class WebDramaResponse(
+    val hls: Boolean? = null,
+    val videoImage: String? = null,
+    val videoSource: String? = null,
+    val securedLink: String? = null,
+    val downloadLinks: List<String>? = null,
+    val attachmentLinks: List<String>? = null,
+    val ck: String? = null
+)}
