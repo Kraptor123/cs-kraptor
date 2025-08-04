@@ -23,7 +23,7 @@ class FilmMakinesi : MainAPI() {
     override val hasMainPage          = true
     override var lang                 = "tr"
     override val hasQuickSearch       = false
-    override val supportedTypes       = setOf(TvType.Movie)
+    override val supportedTypes       = setOf(TvType.Movie, TvType.TvSeries)
 
     // ! CloudFlare bypass
     override var sequentialMainPage            = true // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
@@ -120,29 +120,61 @@ class FilmMakinesi : MainAPI() {
 
         val trailer = document.selectFirst("a.trailer-button")?.attr("data-video_url")
 
-        return newMovieLoadResponse(title, url, TvType.Movie, url) {
-            this.posterUrl       = poster
-            this.year            = year
-            this.plot            = description
-            this.tags            = tags
-            this.score = Score.from10(imdbScore)
-            this.duration        = duration
-            this.recommendations = recommendations
-            addActors(actors)
-            addTrailer(trailer)
+        val bolumler = document.select("div.col-12.col-sm-6.col-md-3").map { bolum ->
+            val bolumHref = fixUrlNull(bolum.selectFirst("a")?.attr("href")).toString()
+            val bolumName = bolum.selectFirst("div.ep-details span")?.text() ?: bolum.selectFirst("div.ep-title")?.text()
+            val bolum     = bolumHref.substringAfter("bolum-").substringBefore("/").toIntOrNull()
+            val sezon     = bolumHref.substringAfter("sezon-").substringBefore("/").toIntOrNull()
+            newEpisode(bolumHref,{
+                this.name = bolumName
+                this.episode = bolum
+                this.season  = sezon
+            })
+
         }
-    }
+
+        return if (url.contains("dizi")){
+            newTvSeriesLoadResponse(title, url, TvType.TvSeries, bolumler) {
+                this.posterUrl       = poster
+                this.year            = year
+                this.plot            = description
+                this.tags            = tags
+                this.score = Score.from10(imdbScore)
+                this.duration        = duration
+                this.recommendations = recommendations
+                addActors(actors)
+                addTrailer(trailer)
+            }
+        }else {
+            newMovieLoadResponse(title, url, TvType.Movie, url) {
+                this.posterUrl       = poster
+                this.year            = year
+                this.plot            = description
+                this.tags            = tags
+                this.score = Score.from10(imdbScore)
+                this.duration        = duration
+                this.recommendations = recommendations
+                addActors(actors)
+                addTrailer(trailer)
+            }
+        }
+        }
+
 
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         Log.d("kraptor_$name", "data » $data")
         val document      = app.get(data).document
 //        Log.d("kraptor_$name", "document = $document")
-        val iframe = document.selectFirst("iframe")?.attr("data-src") ?: ""
+        val iframe = document.selectFirst("div.after-player iframe")?.attr("data-src") ?: ""
         Log.d("kraptor_$name", "iframe = $iframe")
         val iframeGet = app.get(iframe, referer = "${mainUrl}/").document
-        val scriptAl  = iframeGet.select("script[type=text/javascript]")[1].data().trim()
-        val scriptUnpack = getAndUnpack(scriptAl)
+        val scripts = iframeGet.getElementsByTag("script")
+        val scriptAl  = scripts.filter { it.html().contains("eval(") }
+        val rawscript = scriptAl[0].html()
+        Log.d("kraptor_$name", "scriptAl = $scriptAl")
+        val scriptUnpack = getAndUnpack(rawscript)
+        Log.d("kraptor_$name", "scriptUnpack = $scriptUnpack")
         val dchelloVar = if (scriptUnpack.contains("dc_hello")) {
             "var"
         } else {
@@ -171,6 +203,11 @@ class FilmMakinesi : MainAPI() {
             Log.d("kraptor_$name", "decoded URL: $decodedUrl")
             decodedUrl
         }
+        val refererSon = if (realUrl.contains("cdnimages")) {
+            "https://hdfilmcehennemi.mobi/"
+        } else {
+            "${mainUrl}/"
+        }
 
         callback.invoke(newExtractorLink(
             source = this.name,
@@ -178,7 +215,7 @@ class FilmMakinesi : MainAPI() {
             url = realUrl,
             type = ExtractorLinkType.M3U8,
             {
-                this.referer = "https://closeload.filmmakinesi.de/"
+                this.referer = refererSon
                 quality = Qualities.Unknown.value
             }
         ))
@@ -207,28 +244,28 @@ fun dcDecode(valueParts: List<String>): String {
             }
         }.joinToString("")
 
-        // 3) Reverse the string (matches: split('').reverse().join(''))
-        result = result.reversed()
-
-        // 4) Base64 decode (matches: atob(result))
-        result = try {
-            val decoded = Base64.decode(result, Base64.DEFAULT)
-            String(decoded, StandardCharsets.ISO_8859_1)
+        // 3) Base64 decode (matches: atob(result))
+        val decodedBytes = try {
+            Base64.decode(result, Base64.DEFAULT)
         } catch (e: Exception) {
             return "" // Handle decode errors
         }
 
-        // 5) Un-mix: Apply character transformation
-        val unmix = StringBuilder(result.length)
-        for (i in result.indices) {
-            val charCode = result[i].code
+        // 4) Reverse the bytes (matches: split('').reverse().join(''))
+        val reversedBytes = decodedBytes.reversedArray()
+
+        // 5) Un-mix: Apply character transformation on bytes
+        val unmixedBytes = ByteArray(reversedBytes.size)
+        for (i in reversedBytes.indices) {
+            val byteValue = reversedBytes[i].toInt() and 0xFF // Convert to unsigned byte
             val delta = 399756995 % (i + 5)
             // Match JS logic: (charCode - delta + 256) % 256
-            val transformedCode = (charCode - delta + 256) % 256
-            unmix.append(transformedCode.toChar())
+            val transformedByte = (byteValue - delta + 256) % 256
+            unmixedBytes[i] = transformedByte.toByte()
         }
 
-        return unmix.toString()
+        // Convert final bytes to string using Latin-1 encoding (matches JavaScript behavior)
+        return String(unmixedBytes, StandardCharsets.ISO_8859_1)
 
     } catch (e: Exception) {
         return "" // Handle any other errors

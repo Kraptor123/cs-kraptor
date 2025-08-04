@@ -468,28 +468,28 @@ fun dcDecode(valueParts: List<String>): String {
             }
         }.joinToString("")
 
-        // 3) Reverse the string (matches: split('').reverse().join(''))
-        result = result.reversed()
-
-        // 4) Base64 decode (matches: atob(result))
-        result = try {
-            val decoded = Base64.decode(result, Base64.DEFAULT)
-            String(decoded, StandardCharsets.ISO_8859_1)
+        // 3) Base64 decode (matches: atob(result))
+        val decodedBytes = try {
+            Base64.decode(result, Base64.DEFAULT)
         } catch (e: Exception) {
             return "" // Handle decode errors
         }
 
-        // 5) Un-mix: Apply character transformation
-        val unmix = StringBuilder(result.length)
-        for (i in result.indices) {
-            val charCode = result[i].code
+        // 4) Reverse the bytes (matches: split('').reverse().join(''))
+        val reversedBytes = decodedBytes.reversedArray()
+
+        // 5) Un-mix: Apply character transformation on bytes
+        val unmixedBytes = ByteArray(reversedBytes.size)
+        for (i in reversedBytes.indices) {
+            val byteValue = reversedBytes[i].toInt() and 0xFF // Convert to unsigned byte
             val delta = 399756995 % (i + 5)
             // Match JS logic: (charCode - delta + 256) % 256
-            val transformedCode = (charCode - delta + 256) % 256
-            unmix.append(transformedCode.toChar())
+            val transformedByte = (byteValue - delta + 256) % 256
+            unmixedBytes[i] = transformedByte.toByte()
         }
 
-        return unmix.toString()
+        // Convert final bytes to string using Latin-1 encoding (matches JavaScript behavior)
+        return String(unmixedBytes, StandardCharsets.ISO_8859_1)
 
     } catch (e: Exception) {
         return "" // Handle any other errors
