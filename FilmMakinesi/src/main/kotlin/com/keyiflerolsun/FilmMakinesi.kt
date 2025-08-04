@@ -13,6 +13,7 @@ import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.getAndUnpack
 import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.cloudstream3.utils.newExtractorLink
+import com.lagradost.cloudstream3.utils.requireReferer
 import org.jsoup.nodes.Element
 import java.nio.charset.StandardCharsets
 
@@ -168,11 +169,30 @@ class FilmMakinesi : MainAPI() {
 //        Log.d("kraptor_$name", "document = $document")
         val iframe = document.selectFirst("div.after-player iframe")?.attr("data-src") ?: ""
         Log.d("kraptor_$name", "iframe = $iframe")
-        val iframeGet = app.get(iframe, referer = "${mainUrl}/").document
-        val scripts = iframeGet.getElementsByTag("script")
+        val iframeGet = app.get(iframe, referer = "${mainUrl}/")
+        val iframeDoc = iframeGet.document
+        val iframeText = iframeGet.text
+        val subRegex = Regex(pattern = "sources:([\\s\\S]*?)(?=captions:)", options = setOf(RegexOption.IGNORE_CASE))
+        val subMatch = subRegex.find(iframeText)?.value.toString()
+        val subCRegex = Regex(
+            "\"file\"\\s*:\\s*\"([^\"]*\\.vtt)\"",
+            RegexOption.IGNORE_CASE
+        )
+       subCRegex.findAll(subMatch)
+            .forEach { match ->
+                val altyaziString = match.groupValues[1]
+                val altyaziHost   = iframe.substringAfter("//").substringBefore("/")
+                val altyaziUrl    = "https://$altyaziHost${altyaziString.replace("\\", "")}"
+                Log.d("kraptor_$name", "altyaziUrl = $altyaziUrl")
+                val altyaziLang   = altyaziUrl.substringAfter("_").substringBefore(".")
+                subtitleCallback.invoke(SubtitleFile(lang = altyaziLang, url = altyaziUrl))
+            }
+
+
+        val scripts = iframeDoc.getElementsByTag("script")
         val scriptAl  = scripts.filter { it.html().contains("eval(") }
         val rawscript = scriptAl[0].html()
-        Log.d("kraptor_$name", "scriptAl = $scriptAl")
+//        Log.d("kraptor_$name", "scriptAl = $scriptAl")
         val scriptUnpack = getAndUnpack(rawscript)
         Log.d("kraptor_$name", "scriptUnpack = $scriptUnpack")
         val dchelloVar = if (scriptUnpack.contains("dc_hello")) {
