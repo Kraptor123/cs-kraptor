@@ -2,7 +2,7 @@
 
 package com.kraptor
 
-import android.util.Log
+import com.lagradost.api.Log
 import org.jsoup.nodes.Element
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper

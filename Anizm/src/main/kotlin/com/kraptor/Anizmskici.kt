@@ -2,7 +2,7 @@
 
 package com.kraptor
 
-import android.util.Log
+import com.lagradost.api.Log
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject

@@ -1,6 +1,6 @@
 package com.kraptor
 
-import android.util.Log
+import com.lagradost.api.Log
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.*
 
@@ -112,7 +112,7 @@ class HdBestVidExtractor : ExtractorApi() {
             }
 
         } catch (e: Exception) {
-            Log.e("HdBestVd", "Error extracting video: ${e.message}", e)
+            Log.e("HdBestVd", "Error extracting video: ${e.message}")
         }
 
         return sources

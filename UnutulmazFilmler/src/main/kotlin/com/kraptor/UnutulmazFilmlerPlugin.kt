@@ -2,12 +2,11 @@
 package com.kraptor
 
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
-import com.lagradost.cloudstream3.plugins.Plugin
-import android.content.Context
+import com.lagradost.cloudstream3.plugins.BasePlugin
 
 @CloudstreamPlugin
-class UnutulmazFilmlerPlugin: Plugin() {
-    override fun load(context: Context) {
+class UnutulmazFilmlerPlugin: BasePlugin() {
+    override fun load() {
         registerMainAPI(UnutulmazFilmler())
         registerExtractorAPI(ContentX())
         registerExtractorAPI(Hotlinger())

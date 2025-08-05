@@ -1,7 +1,7 @@
 // ! Bu araç @kraptor123 tarafından yazılmıştır.
 package com.kraptor
 
-import android.util.Log
+import com.lagradost.api.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.R.string.season
 import com.lagradost.cloudstream3.utils.*
@@ -70,7 +70,7 @@ class CizgiveDizi : MainAPI() {
                         val poster = rawPoster?.let { fixImageFormat(it) }
                         results += newTvSeriesSearchResponse(title, url, TvType.Cartoon) { this.posterUrl = poster }
                     }
-            }.onFailure { Log.e("CizgiVeDizi", "Dizi yükleme hatası", it) }
+            }.onFailure { Log.e("CizgiVeDizi", "Dizi yükleme hatası $it") }
 
             // Filmler
             runCatching {
@@ -86,7 +86,7 @@ class CizgiveDizi : MainAPI() {
                         val poster = rawPoster?.let { fixImageFormat(it) }
                         results += newMovieSearchResponse(title, url, TvType.Movie) { this.posterUrl = poster }
                     }
-            }.onFailure { Log.e("CizgiVeDizi", "Film yükleme hatası", it) }
+            }.onFailure { Log.e("CizgiVeDizi", "Film yükleme hatası $it") }
 
             // Karışık listeleme için karıştır
             results.shuffle()
@@ -107,7 +107,7 @@ class CizgiveDizi : MainAPI() {
                 newTvSeriesSearchResponse(title, url, TvType.Cartoon) { this.posterUrl = poster }
             }
         }.getOrElse {
-            Log.e("CizgiVeDizi", "Ana sayfa yükleme hatası", it)
+            Log.e("CizgiVeDizi", "Ana sayfa yükleme hatası $it")
             emptyList()
         }
 

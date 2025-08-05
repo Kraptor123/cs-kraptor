@@ -2,7 +2,7 @@
 
 package com.keyiflerolsun
 
-import android.util.Log
+import com.lagradost.api.Log
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.SubtitleFile

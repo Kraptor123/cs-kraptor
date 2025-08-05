@@ -1,5 +1,5 @@
 // ! Bu araç @Kraptor123 tarafından | @kekikanime için yazılmıştır.
-version = 15
+version = 16
 dependencies {
     implementation("androidx.annotation:annotation-jvm:1.9.1")
 }

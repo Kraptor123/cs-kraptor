@@ -3,7 +3,7 @@
 package com.kraptor
 
 import android.util.Base64
-import android.util.Log
+import com.lagradost.api.Log
 import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*

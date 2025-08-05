@@ -234,11 +234,11 @@ class DiziMag : MainAPI() {
             "Referer" to "$mainUrl/"
         )
 
-        android.util.Log.d("dzmg", "loadLinks: Starting with data URL - $data")
+        com.lagradost.api.Log.d("dzmg", "loadLinks: Starting with data URL - $data")
 
         val aa = app.get(mainUrl)
         val ciSession = aa.cookies["ci_session"].toString()
-        android.util.Log.d("dzmg", "ci_session cookie obtained: ${ciSession.take(5)}...") // Kısaltılmış log
+        com.lagradost.api.Log.d("dzmg", "ci_session cookie obtained: ${ciSession.take(5)}...") // Kısaltılmış log
 
         val document = app.get(
             data, headers = headers, cookies = mapOf(
@@ -247,41 +247,41 @@ class DiziMag : MainAPI() {
         ).document
 
         val iframe = fixUrlNull(document.selectFirst("div#tv-spoox2 iframe")?.attr("src")) ?: run {
-            android.util.Log.e("dzmg", "iframe src not found in document")
+            com.lagradost.api.Log.e("dzmg", "iframe src not found in document")
             return false
         }
-        android.util.Log.d("dzmg", "iframe URL found: $iframe")
+        com.lagradost.api.Log.d("dzmg", "iframe URL found: $iframe")
 
         val docum = app.get(iframe, headers = headers, referer = "$mainUrl/").document
-        android.util.Log.d("dzmg", "iframe content fetched, scanning scripts...")
+        com.lagradost.api.Log.d("dzmg", "iframe content fetched, scanning scripts...")
 
         docum.select("script").forEach { sc ->
             if (sc.toString().contains("bePlayer")) {
-                android.util.Log.d("dzmg", "bePlayer script found")
+                com.lagradost.api.Log.d("dzmg", "bePlayer script found")
                 val pattern = Pattern.compile("bePlayer\\('(.*?)', '(.*?)'\\)")
                 val matcher = pattern.matcher(sc.toString().trimIndent())
                 if (matcher.find()) {
-                    android.util.Log.d("dzmg", "bePlayer pattern matched successfully")
+                    com.lagradost.api.Log.d("dzmg", "bePlayer pattern matched successfully")
                     val key = matcher.group(1)
                     val jsonCipher = matcher.group(2)
-                    android.util.Log.d("dzmg", "decryption key: ${key?.take(3)}..., cipher: ${jsonCipher?.take(10)}...")
+                    com.lagradost.api.Log.d("dzmg", "decryption key: ${key?.take(3)}..., cipher: ${jsonCipher?.take(10)}...")
 
                     try {
                         val cipherData = ObjectMapper().readValue(
                             jsonCipher?.replace("\\/", "/"),
                             Cipher::class.java
                         )
-                        android.util.Log.d("dzmg", "cipher data parsed - iv: ${cipherData.iv.take(5)}..., s: ${cipherData.s}")
+                        com.lagradost.api.Log.d("dzmg", "cipher data parsed - iv: ${cipherData.iv.take(5)}..., s: ${cipherData.s}")
 
                         val decrypt = key?.let { CryptoJS.decrypt(it, cipherData.ct, cipherData.iv, cipherData.s) }
-                        android.util.Log.d("dzmg", "decryption result: ${decrypt?.take(50)}...")
+                        com.lagradost.api.Log.d("dzmg", "decryption result: ${decrypt?.take(50)}...")
 
                         val jsonData = ObjectMapper().readValue(decrypt, JsonData::class.java)
-                        android.util.Log.d("dzmg", "JSON data parsed with ${jsonData.strSubtitles?.size} subtitles")
+                        com.lagradost.api.Log.d("dzmg", "JSON data parsed with ${jsonData.strSubtitles?.size} subtitles")
 
                         jsonData.strSubtitles?.let { subtitles ->
                             for (sub in subtitles) {
-                                android.util.Log.d("dzmg", "adding subtitle: ${sub.label} (${sub.file})")
+                                com.lagradost.api.Log.d("dzmg", "adding subtitle: ${sub.label} (${sub.file})")
                                 val keywords = listOf("tur", "tr", "türkçe", "turkce")
                                 val language = if (keywords.any { sub.label.toString().contains(it, ignoreCase = true) }) {
                                     "Turkish"
@@ -298,7 +298,7 @@ class DiziMag : MainAPI() {
                         }
 
 
-                        android.util.Log.d("dzmg", "fetching m3u8 content from ${jsonData.videoLocation}")
+                        com.lagradost.api.Log.d("dzmg", "fetching m3u8 content from ${jsonData.videoLocation}")
                         val m3u8Content = app.get(
                             jsonData.videoLocation,
                             referer = iframe,
@@ -308,11 +308,11 @@ class DiziMag : MainAPI() {
                         val regex = Regex("#EXT-X-STREAM-INF:.*? (https?://\\S+)")
                         val matchResult = regex.find(m3u8Content.text())
                         val m3uUrl = matchResult?.groupValues?.get(1) ?: ""
-                        android.util.Log.d("dzmg", "m3u8 URL extracted: ${m3uUrl.take(50)}...")
+                        com.lagradost.api.Log.d("dzmg", "m3u8 URL extracted: ${m3uUrl.take(50)}...")
                         val myHeaders = mapOf("Accept" to "*/*", "Referer" to iframe)
 
                         if (m3uUrl.isNotEmpty()) {
-                            android.util.Log.d("dzmg", "invoking callback with m3u8 URL")
+                            com.lagradost.api.Log.d("dzmg", "invoking callback with m3u8 URL")
                             callback.invoke(
                                 newExtractorLink(
                                     source = this.name,
@@ -325,10 +325,10 @@ class DiziMag : MainAPI() {
                                 }
                             )
                         } else {
-                            android.util.Log.w("dzmg", "m3u8 URL extraction failed")
+                            com.lagradost.api.Log.w("dzmg", "m3u8 URL extraction failed")
                         }
 
-                        android.util.Log.d("dzmg", "invoking callback with videoLocation")
+                        com.lagradost.api.Log.d("dzmg", "invoking callback with videoLocation")
                         callback.invoke(
                             newExtractorLink(
                                 source = this.name,
@@ -342,15 +342,15 @@ class DiziMag : MainAPI() {
                         )
 
                     } catch (e: Exception) {
-                        android.util.Log.e("dzmg", "decryption/parsing error: ${e.stackTraceToString()}")
+                        com.lagradost.api.Log.e("dzmg", "decryption/parsing error: ${e.stackTraceToString()}")
                     }
                 } else {
-                    android.util.Log.w("dzmg", "bePlayer pattern match failed")
+                    com.lagradost.api.Log.w("dzmg", "bePlayer pattern match failed")
                 }
             }
         }
 
-        android.util.Log.d("dzmg", "fallback to loadExtractor")
+        com.lagradost.api.Log.d("dzmg", "fallback to loadExtractor")
         loadExtractor(iframe, "${mainUrl}/", subtitleCallback, callback)
 
         return true

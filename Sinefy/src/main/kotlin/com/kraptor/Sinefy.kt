@@ -2,7 +2,8 @@
 
 package com.kraptor
 
-import android.util.Log
+import android.annotation.SuppressLint
+import com.lagradost.api.Log
 import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
@@ -234,6 +235,7 @@ class Sinefy : MainAPI() {
 
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
+    @SuppressLint("SuspiciousIndentation")
     override suspend fun load(url: String): LoadResponse? {
         val document = app.get(url).document
 

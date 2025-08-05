@@ -2,7 +2,7 @@
 
 package com.kerimmkirac
 
-import android.util.Log
+import com.lagradost.api.Log
 
 import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*

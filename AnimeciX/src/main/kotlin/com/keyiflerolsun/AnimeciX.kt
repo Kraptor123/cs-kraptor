@@ -2,7 +2,7 @@
 
 package com.keyiflerolsun
 
-import android.util.Log
+import com.lagradost.api.Log
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
@@ -12,8 +12,6 @@ import org.json.JSONObject
 import kotlin.collections.mapOf
 import kotlin.*
 import kotlin.text.*
-
-
 
 class AnimeciX : MainAPI() {
     override var mainUrl = "https://animecix.tv"

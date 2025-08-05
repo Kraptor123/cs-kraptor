@@ -1,12 +1,11 @@
 package com.keyiflerolsun
 
-import android.content.Context
+import com.lagradost.cloudstream3.plugins.BasePlugin
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
-import com.lagradost.cloudstream3.plugins.Plugin
 
 @CloudstreamPlugin
-class RareFilmmPlugin: Plugin() {
-    override fun load(context: Context) {
+class RareFilmmPlugin: BasePlugin() {
+    override fun load() {
         registerMainAPI(RareFilmm())
         registerExtractorAPI(Odnoklassniki())
         registerExtractorAPI(OkRuSSL())

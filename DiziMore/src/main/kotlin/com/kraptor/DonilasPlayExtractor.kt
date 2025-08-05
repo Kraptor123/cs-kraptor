@@ -4,7 +4,7 @@ package com.kraptor
 
 import android.R.id.input
 import com.lagradost.cloudstream3.*
-import android.util.Log
+import com.lagradost.api.Log
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue

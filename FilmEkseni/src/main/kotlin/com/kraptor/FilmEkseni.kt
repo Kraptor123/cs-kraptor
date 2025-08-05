@@ -2,7 +2,7 @@
 
 package com.kraptor
 
-import android.util.Log
+import com.lagradost.api.Log
 import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
@@ -97,7 +97,7 @@ class FilmEkseni : MainAPI() {
                 }
             }
         } catch (e: Exception) {
-            Log.e("Eksen", "Search error: ${e.message}", e)
+            Log.e("Eksen", "Search error: ${e.message}")
             return emptyList()
         }
     }

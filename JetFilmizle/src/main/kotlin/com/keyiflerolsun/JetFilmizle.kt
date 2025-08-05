@@ -2,7 +2,7 @@
 
 package com.keyiflerolsun
 
-import android.util.Log
+import com.lagradost.api.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
@@ -265,7 +265,7 @@ class JetFilmizle : MainAPI() {
                     }
                 }
             } catch (e: Exception) {
-                Log.e("JTF", "Failed to fetch or parse $url", e)
+                Log.e("JTF", "Failed to fetch or parse $url  $e")
             }
         }
 

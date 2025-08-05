@@ -1,6 +1,6 @@
 package com.kraptor
 
-import android.util.Log
+import com.lagradost.api.Log
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.ExtractorApi

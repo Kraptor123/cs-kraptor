@@ -1,7 +1,7 @@
 // ! Bu araç @kraptor123 tarafından yazılmıştır.
 package com.kraptor
 
-import android.util.Log
+import com.lagradost.api.Log
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.*

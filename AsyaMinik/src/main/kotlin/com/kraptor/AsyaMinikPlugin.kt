@@ -2,12 +2,11 @@
 package com.kraptor
 
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
-import com.lagradost.cloudstream3.plugins.Plugin
-import android.content.Context
+import com.lagradost.cloudstream3.plugins.BasePlugin
 
 @CloudstreamPlugin
-class AsyaMinikPlugin: Plugin() {
-    override fun load(context: Context) {
+class AsyaMinikPlugin: BasePlugin() {
+    override fun load() {
         registerMainAPI(AsyaMinik())
     }
 }

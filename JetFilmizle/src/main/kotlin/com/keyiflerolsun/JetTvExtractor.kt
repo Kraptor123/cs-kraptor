@@ -1,7 +1,7 @@
 // ! Bu araç @kraptor tarafından | @kekikanime için yazılmıştır.
 package com.keyiflerolsun
 
-import android.util.Log
+import com.lagradost.api.Log
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.*
@@ -49,7 +49,7 @@ open class JetTv : ExtractorApi() {
                 return
             }
         } catch (e: Exception) {
-            Log.e("kraptor_${this.name}", "JSON parse error", e)
+            Log.e("kraptor_${this.name}", "JSON parse error $e")
         }
 
         callback.invoke(

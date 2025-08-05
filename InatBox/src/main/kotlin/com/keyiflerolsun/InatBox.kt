@@ -1,6 +1,6 @@
 package com.keyiflerolsun
 
-import android.util.Log
+import com.lagradost.api.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import okhttp3.Interceptor
@@ -195,7 +195,7 @@ class InatBox : MainAPI() {
                 val episodeArray = try {
                     JSONArray(episodeResponse)
                 } catch (e: Exception) {
-                    Log.e("InatBox", "Failed to parse episode JSON for season: $seasonName", e)
+                    Log.e("InatBox", "Failed to parse episode JSON for season: $seasonName  $e")
                     continue
                 }
 
@@ -406,7 +406,7 @@ class InatBox : MainAPI() {
         val hostName = try {
             URI(url).host ?: throw IllegalArgumentException("Invalid URL: $url")
         } catch (e: Exception) {
-            Log.e("InatBox", "Failed to extract hostname from URL: $url", e)
+            Log.e("InatBox", "Failed to extract hostname from URL: $url $e")
             return null
         }
 

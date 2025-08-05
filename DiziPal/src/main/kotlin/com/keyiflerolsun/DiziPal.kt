@@ -2,7 +2,7 @@
 
 package com.keyiflerolsun
 
-import android.util.Log
+import com.lagradost.api.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.lagradost.cloudstream3.*
