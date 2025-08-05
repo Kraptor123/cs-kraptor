@@ -2,7 +2,6 @@
 
 package com.keyiflerolsun
 
-import android.util.Base64
 import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
@@ -15,6 +14,7 @@ import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.utils.requireReferer
 import org.jsoup.nodes.Element
+import android.util.Base64
 import java.nio.charset.StandardCharsets
 
 
@@ -223,8 +223,8 @@ class FilmMakinesi : MainAPI() {
             Log.d("kraptor_$name", "decoded URL: $decodedUrl")
             decodedUrl
         }
-        val refererSon = if (realUrl.contains("cdnimages")) {
-            "https://hdfilmcehennemi.mobi/"
+        val refererSon = if (iframe.contains(iframe)) {
+            iframe
         } else {
             "${mainUrl}/"
         }
@@ -235,8 +235,9 @@ class FilmMakinesi : MainAPI() {
             url = realUrl,
             type = ExtractorLinkType.M3U8,
             {
-                this.referer = refererSon
+                this.referer = "${mainUrl}/"
                 quality = Qualities.Unknown.value
+                headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0")
             }
         ))
 
@@ -245,11 +246,70 @@ class FilmMakinesi : MainAPI() {
 }
 
 fun dcDecode(valueParts: List<String>): String {
+    // Try new method first
     try {
         // 1) Join array elements (matches: let value = value_parts.join(''))
         var result = valueParts.joinToString(separator = "")
 
-        // 2) ROT13 transformation (matches the replace function in JS)
+        // 2) Reverse the string FIRST (matches: result.split('').reverse().join(''))
+        result = result.reversed()
+
+        // 3) Base64 decode (matches: atob(result))
+        val decodedBytes = try {
+            Base64.decode(result, Base64.DEFAULT)
+        } catch (e: Exception) {
+            throw e // Re-throw to trigger fallback
+        }
+
+        // Convert to string for ROT13 processing
+        var decodedString = String(decodedBytes, StandardCharsets.ISO_8859_1)
+
+        // 4) ROT13 transformation (matches the replace function in JS)
+        decodedString = decodedString.map { c ->
+            when {
+                c in 'a'..'z' -> {
+                    val shifted = c.code + 13
+                    if (shifted <= 'z'.code) shifted.toChar() else (shifted - 26).toChar()
+                }
+                c in 'A'..'Z' -> {
+                    val shifted = c.code + 13
+                    if (shifted <= 'Z'.code) shifted.toChar() else (shifted - 26).toChar()
+                }
+                else -> c
+            }
+        }.joinToString("")
+
+        // 5) Un-mix: Apply character transformation
+        val unmixed = StringBuilder()
+        for (i in decodedString.indices) {
+            val charCode = decodedString[i].code
+            val delta = 399756995 % (i + 5)
+            // Match JS logic: (charCode - delta + 256) % 256
+            val transformedChar = ((charCode - delta + 256) % 256).toChar()
+            unmixed.append(transformedChar)
+        }
+
+        val newResult = unmixed.toString()
+
+        // Check if result looks valid (contains http or typical URL patterns)
+        if (newResult.contains("http") || newResult.contains("www") || newResult.length > 10) {
+            return newResult
+        } else {
+            throw Exception("Result doesn't look like a valid URL, trying fallback")
+        }
+
+    } catch (e: Exception) {
+        // Fallback to old method if new method fails
+        return dcDecodeOldMethod(valueParts)
+    }
+}
+
+private fun dcDecodeOldMethod(valueParts: List<String>): String {
+    try {
+        // 1) Join array elements (matches: let value = value_parts.join(''))
+        var result = valueParts.joinToString(separator = "")
+
+        // 2) ROT13 transformation FIRST (your original order)
         result = result.map { c ->
             when {
                 c in 'a'..'z' -> {
@@ -264,14 +324,14 @@ fun dcDecode(valueParts: List<String>): String {
             }
         }.joinToString("")
 
-        // 3) Base64 decode (matches: atob(result))
+        // 3) Base64 decode
         val decodedBytes = try {
             Base64.decode(result, Base64.DEFAULT)
         } catch (e: Exception) {
             return "" // Handle decode errors
         }
 
-        // 4) Reverse the bytes (matches: split('').reverse().join(''))
+        // 4) Reverse the bytes
         val reversedBytes = decodedBytes.reversedArray()
 
         // 5) Un-mix: Apply character transformation on bytes
@@ -284,7 +344,7 @@ fun dcDecode(valueParts: List<String>): String {
             unmixedBytes[i] = transformedByte.toByte()
         }
 
-        // Convert final bytes to string using Latin-1 encoding (matches JavaScript behavior)
+        // Convert final bytes to string using Latin-1 encoding
         return String(unmixedBytes, StandardCharsets.ISO_8859_1)
 
     } catch (e: Exception) {

@@ -449,11 +449,70 @@ class HDFilmCehennemi : MainAPI() {
 }
 
 fun dcDecode(valueParts: List<String>): String {
+    // Try new method first
     try {
         // 1) Join array elements (matches: let value = value_parts.join(''))
         var result = valueParts.joinToString(separator = "")
 
-        // 2) ROT13 transformation (matches the replace function in JS)
+        // 2) Reverse the string FIRST (matches: result.split('').reverse().join(''))
+        result = result.reversed()
+
+        // 3) Base64 decode (matches: atob(result))
+        val decodedBytes = try {
+            Base64.decode(result, Base64.DEFAULT)
+        } catch (e: Exception) {
+            throw e // Re-throw to trigger fallback
+        }
+
+        // Convert to string for ROT13 processing
+        var decodedString = String(decodedBytes, StandardCharsets.ISO_8859_1)
+
+        // 4) ROT13 transformation (matches the replace function in JS)
+        decodedString = decodedString.map { c ->
+            when {
+                c in 'a'..'z' -> {
+                    val shifted = c.code + 13
+                    if (shifted <= 'z'.code) shifted.toChar() else (shifted - 26).toChar()
+                }
+                c in 'A'..'Z' -> {
+                    val shifted = c.code + 13
+                    if (shifted <= 'Z'.code) shifted.toChar() else (shifted - 26).toChar()
+                }
+                else -> c
+            }
+        }.joinToString("")
+
+        // 5) Un-mix: Apply character transformation
+        val unmixed = StringBuilder()
+        for (i in decodedString.indices) {
+            val charCode = decodedString[i].code
+            val delta = 399756995 % (i + 5)
+            // Match JS logic: (charCode - delta + 256) % 256
+            val transformedChar = ((charCode - delta + 256) % 256).toChar()
+            unmixed.append(transformedChar)
+        }
+
+        val newResult = unmixed.toString()
+
+        // Check if result looks valid (contains http or typical URL patterns)
+        if (newResult.contains("http") || newResult.contains("www") || newResult.length > 10) {
+            return newResult
+        } else {
+            throw Exception("Result doesn't look like a valid URL, trying fallback")
+        }
+
+    } catch (e: Exception) {
+        // Fallback to old method if new method fails
+        return dcDecodeOldMethod(valueParts)
+    }
+}
+
+private fun dcDecodeOldMethod(valueParts: List<String>): String {
+    try {
+        // 1) Join array elements (matches: let value = value_parts.join(''))
+        var result = valueParts.joinToString(separator = "")
+
+        // 2) ROT13 transformation FIRST (your original order)
         result = result.map { c ->
             when {
                 c in 'a'..'z' -> {
@@ -468,14 +527,14 @@ fun dcDecode(valueParts: List<String>): String {
             }
         }.joinToString("")
 
-        // 3) Base64 decode (matches: atob(result))
+        // 3) Base64 decode
         val decodedBytes = try {
             Base64.decode(result, Base64.DEFAULT)
         } catch (e: Exception) {
             return "" // Handle decode errors
         }
 
-        // 4) Reverse the bytes (matches: split('').reverse().join(''))
+        // 4) Reverse the bytes
         val reversedBytes = decodedBytes.reversedArray()
 
         // 5) Un-mix: Apply character transformation on bytes
@@ -488,7 +547,7 @@ fun dcDecode(valueParts: List<String>): String {
             unmixedBytes[i] = transformedByte.toByte()
         }
 
-        // Convert final bytes to string using Latin-1 encoding (matches JavaScript behavior)
+        // Convert final bytes to string using Latin-1 encoding
         return String(unmixedBytes, StandardCharsets.ISO_8859_1)
 
     } catch (e: Exception) {
