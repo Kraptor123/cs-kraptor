@@ -35,7 +35,7 @@ class DiziGom : MainAPI() {
         "${mainUrl}/tur/komedi/" to "Komedi",
         "${mainUrl}/tur/korku/" to "Korku",
         "${mainUrl}/tur/macera/" to "Macera",
-        "${mainUrl}/tur/polisiye/" to "Polisiye",
+        
         "${mainUrl}/tur/romantik/" to "Romantik",
         "${mainUrl}/tur/savas/" to "Savaş",
         "${mainUrl}/tur/suc/" to "Suç",
@@ -75,9 +75,12 @@ class DiziGom : MainAPI() {
         val title = this.selectFirst("div.serie-name a")?.text() ?: return null
         val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val rawText = this.selectFirst("div.episode-date")?.text()?.trim() ?: ""
+        val rating = rawText.substringAfter("IMDb:").trim()
 
         return newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
             this.posterUrl = posterUrl
+            this.score     = Score.from10(rating)
         }
     }
 
