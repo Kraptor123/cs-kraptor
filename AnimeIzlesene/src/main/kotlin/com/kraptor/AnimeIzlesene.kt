@@ -40,7 +40,7 @@ class AnimeIzlesene : MainAPI() {
         "${mainUrl}/category/arabalar" to "Arabalar",
         "${mainUrl}/category/askeri" to "Askeri",
         "${mainUrl}/category/bilim-kurgu" to "Bilim Kurgu",
-        "${mainUrl}/category/boys-love" to "Boys Love",
+        
         "${mainUrl}/category/buyu" to "Büyü",
         "${mainUrl}/category/cocuk" to "Çocuk",
         "${mainUrl}/category/dedektif" to "Dedektif",
@@ -51,7 +51,7 @@ class AnimeIzlesene : MainAPI() {
         "${mainUrl}/category/ecchi" to "Ecchi",
         "${mainUrl}/category/erotik" to "Erotik",
         "${mainUrl}/category/gerilim" to "Gerilim",
-        "${mainUrl}/category/girls-love" to "Girls Love",
+        
         "${mainUrl}/category/gizem" to "Gizem",
         "${mainUrl}/category/gurme" to "Gurme",
         "${mainUrl}/category/harem" to "Harem",

@@ -103,18 +103,50 @@ class DiziBox : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val document = app.get(
-            "${mainUrl}/?s=${query}",
-            cookies     = mapOf(
-                "LockUser"      to "true",
-                "isTrustedUser" to "true",
-                "dbxu"          to "1744054959089"
-            ),
-            interceptor = interceptor
-        ).document
+    val url = "$mainUrl/wp-admin/admin-ajax.php?s=${query}&action=dwls_search"
+    
+    val headers = mapOf(
+        "X-Requested-With" to "XMLHttpRequest",
+        "Accept" to "application/json, text/javascript, */*; q=0.01",
+        "Referer" to "$mainUrl/beta/?s=$query"
+    )
+    
+    val cookies = mapOf(
+        "LockUser" to "true",
+        "isTrustedUser" to "true",
+        "dbxu" to "1744054959089"
+    )
+    
+    val response = app.get(url, headers = headers, cookies = cookies)
+    val jsonResponse = response.parsed<SearchApiResponse>()
+    
+    return jsonResponse.results.mapNotNull { it.toSearchResult() }
+}
 
-        return document.select("article.detailed-article").mapNotNull { it.toMainPageResult() }
+data class SearchApiResponse(
+    val searchTerms: String,
+    val results: List<SearchResult>
+)
+
+data class SearchResult(
+    val ID: Int,
+    val post_title: String,
+    val post_excerpt: String,
+    val permalink: String,
+    val attachment_thumbnail: String?
+)
+
+private fun SearchResult.toSearchResult(): SearchResponse? {
+    val title = this.post_title.ifEmpty { return null }
+    val href = fixUrlNull(this.permalink) ?: return null
+    
+    val rawPoster = this.attachment_thumbnail
+    val posterUrl = fixUrlNull(rawPoster?.replace("50x50", "200x290"))
+
+    return newMovieSearchResponse(title, href, TvType.AsianDrama) { 
+        this.posterUrl = posterUrl 
     }
+}
 
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 

@@ -18,6 +18,7 @@ class AsyaFanatiklerim : MainAPI() {
     override val supportedTypes       = setOf(TvType.TvSeries)
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/bolum/"      to   "Son Bölümler",
         "${mainUrl}/film/"      to   "Filmler",
         "${mainUrl}/dizi/"                  to   "Diziler",
         "${mainUrl}/tur/aile/"              to   "Aile",
@@ -42,15 +43,20 @@ class AsyaFanatiklerim : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = if (page == 1) {
-            app.get(request.data).document
-        } else {
-            app.get("${request.data}page/$page/", allowRedirects = false).document
-        }
-        val home     = document.select("div.items article.item").mapNotNull { it.toMainPageResult() }
-
-        return newHomePageResponse(request.name, home)
+    val document = if (page == 1) {
+        app.get(request.data).document
+    } else {
+        app.get("${request.data}page/$page/", allowRedirects = false).document
     }
+
+    val home = if (request.data.contains("/bolum/")) {
+        document.select("article.item.se.episodes").mapNotNull { it.toEpisodeItem() }
+    } else {
+        document.select("div.items article.item").mapNotNull { it.toMainPageResult() }
+    }
+
+    return newHomePageResponse(request.name, home)
+}
 
     private fun Element.toMainPageResult(): SearchResponse? {
         val title     = this.selectFirst("h3")?.text() ?: return null
@@ -59,6 +65,30 @@ class AsyaFanatiklerim : MainAPI() {
 
         return newMovieSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
     }
+    private fun Element.toEpisodeItem(): SearchResponse? {
+    val episodeName = this.selectFirst("h3")?.text()?.trim() ?: return null
+    val showName = this.selectFirst("div.data span")?.text()?.trim() ?: return null
+    val title = "$showName - $episodeName"
+
+    val originalHref = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+    
+    
+    val seriesHref = convertEpisodeToSeriesUrl(originalHref)
+    
+    val poster = fixUrlNull(this.selectFirst("img")?.attr("src"))
+
+    return newMovieSearchResponse(title, seriesHref, TvType.TvSeries) {
+        this.posterUrl = poster
+    }
+}
+
+private fun convertEpisodeToSeriesUrl(episodeUrl: String): String {
+    
+    
+    return episodeUrl
+        .replace("/bolum/", "/dizi/")  
+        .replace(Regex("-\\d+-bolum-izle/?$"), "/") 
+}
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/?s=${query}").document
