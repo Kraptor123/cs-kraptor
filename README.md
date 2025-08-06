@@ -63,7 +63,7 @@ Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı
 
 ## DMCA Türkçe
 
-İşbu bildirimle, bu uzantıların internetten video dosyalarını getiren ve işlevsel olarak sıradan bir tarayıcıdan (sizin tarayıcınız gibi) farkı olmadığını; bu nedenle Dijital Binyıl Telif Hakkı Yasası’nın (DMCA) hükümlerini ihlal etmediğini bildiririz. Bu uzantıların erişebileceği içerikler ne bizim tarafımızdan ne de Cloudstream 3 uygulaması tarafından barındırılmakta olup, uzantılar bu içeriklere özerk tarama modunda eriştikleri web siteleri üzerinden ulaşmaktadır. İçeriklerin kullanımı ve bununla ilgili tüm yasal sorumluluk tamamen kullanıcıya ve kullanıcının ülke ya da eyalet yasalarına aittir. Eğer herhangi bir fikri mülkiyet hakkı ihlali olduğunu düşünüyorsanız, lütfen bu depo sahipleri veya Cloudstream 3 uygulaması yerine içeriklerin barındırıldığı gerçek sunucularla iletişime geçiniz.
+>İşbu bildirimle, bu uzantıların internetten video dosyalarını getiren ve işlevsel olarak sıradan bir tarayıcıdan (sizin tarayıcınız gibi) farkı olmadığını; bu nedenle Dijital Binyıl Telif Hakkı Yasası’nın (DMCA) hükümlerini ihlal etmediğini bildiririz. Bu uzantıların erişebileceği içerikler ne bizim tarafımızdan ne de Cloudstream 3 uygulaması tarafından barındırılmakta olup, uzantılar bu içeriklere özerk tarama modunda eriştikleri web siteleri üzerinden ulaşmaktadır. İçeriklerin kullanımı ve bununla ilgili tüm yasal sorumluluk tamamen kullanıcıya ve kullanıcının ülke ya da eyalet yasalarına aittir. Eğer herhangi bir fikri mülkiyet hakkı ihlali olduğunu düşünüyorsanız, lütfen bu depo sahipleri veya Cloudstream 3 uygulaması yerine içeriklerin barındırıldığı gerçek sunucularla iletişime geçiniz.
 
 Teşekkür ederiz.
 
