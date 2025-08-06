@@ -3,9 +3,10 @@
   <a href="https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/repo.json"><img src="https://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/.github/icons/logo/kekikanime.png" alt="KekikAnime"></a>
 </h1>
 
-<h1 align="center">
+<h2 align="center">
 Cloudstream Kurulu Cihazda Yukaridaki Logoya Tıklayarak Repoyu Kurabilirsiniz!
-</h1>
+</h2>
+
 <h1 align="center">
 ⚖ DMCA Disclaimer
   </h1>
@@ -57,6 +58,8 @@ Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı
     </td>
   </tr>
 </table>
+
+---
 
 ## DMCA Türkçe
 
