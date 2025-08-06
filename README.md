@@ -67,20 +67,6 @@ Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı
 
 Teşekkür ederiz.
 
-##  Faydalı Linkler
-
-  [Tanıtım Videosu](https://www.youtube.com/watch?v=CiYK7zrP00c)
-  
-  [Diğer Eklentiler](https://rentry.org/cs3-repos)
-  
-  [Eklenti Listesi Wiki](https://cloudstream.miraheze.org/wiki/List_of_extensions)
-  
-  [Open Subtitles Desteği (Torrent veya Yabancı Eklentiler İçin)](https://recloudstream.github.io/csdocs/integrations/opensubtitles/)
-  
-  [anicompat (Fazlaca Anime Eklenti Desteği)](https://youtu.be/0Gl48lL7e9Y)
-  
-  [Eklenti Kodlama](https://www.youtube.com/watch?v=gWECdddixyA)
-
 # `Geliştiriciler`
 
 <table>
