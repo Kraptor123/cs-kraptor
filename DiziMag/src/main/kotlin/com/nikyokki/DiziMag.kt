@@ -41,18 +41,7 @@ class DiziMag : MainAPI() {
         "${mainUrl}/film/tur/aile" to "Aile Film",
         "${mainUrl}/film/tur/animasyon" to "Animasyon Film",
         "${mainUrl}/film/tur/bilim-kurgu" to "Bilim-Kurgu Film",
-        "${mainUrl}/film/tur/dram" to "Dram Film",
-        "${mainUrl}/film/tur/fantastik" to "Fantastik Film",
-        "${mainUrl}/film/tur/gerilim" to "Gerilim Film",
-        "${mainUrl}/film/tur/gizem" to "Gizem Film",
-        "${mainUrl}/film/tur/komedi" to "Komedi Film",
-        "${mainUrl}/film/tur/korku" to "Korku Film",
-        "${mainUrl}/film/tur/macera" to "Macera Film",
-        "${mainUrl}/film/tur/romantik" to "Romantik Film",
-        "${mainUrl}/film/tur/savas" to "Savaş Film",
-        "${mainUrl}/film/tur/suc" to "Suç Film",
-        "${mainUrl}/film/tur/tarih" to "Tarih Film",
-        "${mainUrl}/film/tur/vahsi-bati" to "Vahşi Batı Film",
+        
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
