@@ -48,8 +48,6 @@ Teşekkür ederiz.
 - [anicompat (Fazlaca Anime Eklenti Desteği)](https://youtu.be/0Gl48lL7e9Y)
 - [Eklenti Kodlama](https://www.youtube.com/watch?v=gWECdddixyA)
 
----
-
 # `Geliştiriciler`
 
 <table>
