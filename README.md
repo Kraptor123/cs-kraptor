@@ -50,6 +50,21 @@ Teşekkür ederiz.
 
 ---
 
-<a href="https://github.com/Kraptor123/cs-kekikanime/graphs/contributors?selectedMetric=additions" target="_blank">
-  <img src="https://contrib.rocks/image?repo=Kraptor123/cs-kekikanime" />
-</a>
+# `Geliştiriciler`
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Kraptor123">
+        <img src="https://avatars.githubusercontent.com/u/89366989?v=4" width="80;" alt="kraptor"/><br />
+        <sub><b>kraptor</b></sub>
+        </a>
+    </td>
+     <td align="center">
+      <a href="https://github.com/kerimmkirac">
+        <img src="https://avatars.githubusercontent.com/u/127618379?v=4" width="80;" alt="kerimmkirac"/><br />
+        <sub><b>kerimmkirac</b></sub>
+        </a>
+    </td>
+  </tr>
+</table>
