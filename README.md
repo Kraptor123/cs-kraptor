@@ -66,3 +66,15 @@ Teşekkür ederiz.
     </td>
   </tr>
 </table>
+
+
+# `Özel Teşekkür`
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/ByAyzen">
+        <img src="https://avatars.githubusercontent.com/u/189399597?v=4" width="80;" alt="ByAyzen"/><br />
+        <sub><b>ByAyzen</b></sub>
+        </a>
+    </td>
