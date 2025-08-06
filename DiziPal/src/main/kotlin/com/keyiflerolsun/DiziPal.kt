@@ -164,6 +164,7 @@ class DiziPal : MainAPI() {
 
             val episodes    = document.select("div.episode-item").mapNotNull {
                 val epName    = it.selectFirst("div.name")?.text()?.trim() ?: return@mapNotNull null
+                val epPoster = fixUrlNull(it.selectFirst("img")?.attr("src")) ?: return@mapNotNull null
                 val epHref    = fixUrlNull(it.selectFirst("a")?.attr("href")) ?: return@mapNotNull null
                 val epEpisode = it.selectFirst("div.episode")?.text()?.trim()?.split(" ")?.get(2)?.replace(".", "")?.toIntOrNull()
                 val epSeason  = it.selectFirst("div.episode")?.text()?.trim()?.split(" ")?.get(0)?.replace(".", "")?.toIntOrNull()
@@ -172,6 +173,7 @@ class DiziPal : MainAPI() {
                     this.name    = epName
                     this.episode = epEpisode
                     this.season  = epSeason
+                    this.posterUrl = epPoster
                 }
             }
 
