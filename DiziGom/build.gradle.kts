@@ -1,7 +1,7 @@
-version = 13
+version = 14
 
 cloudstream {
-    authors     = listOf("nikyokki")
+    authors     = listOf("nikyokki", "kraptor")
     language    = "tr"
     description = "Türkçe altyazılı yabancı dizi izle, Tüm yabancı, kore, netflix dizilerin yeni ve eski sezonlarını orijinal dilinde dizigom1 alt yazılı film izleyebilir, sadece türkçe altyazılı en iyi yabancı diziler ve filmler hakkında yorum yapabilirsiniz."
 
