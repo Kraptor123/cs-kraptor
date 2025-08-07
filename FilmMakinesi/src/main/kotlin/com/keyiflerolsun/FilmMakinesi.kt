@@ -172,21 +172,35 @@ class FilmMakinesi : MainAPI() {
         val iframeGet = app.get(iframe, referer = "${mainUrl}/")
         val iframeDoc = iframeGet.document
         val iframeText = iframeGet.text
+//        Log.d("kraptor_$name", "iframeText = $iframeText")
         val subRegex = Regex(pattern = "sources:([\\s\\S]*?)(?=captions:)", options = setOf(RegexOption.IGNORE_CASE))
         val subMatch = subRegex.find(iframeText)?.value.toString()
         val subCRegex = Regex(
             "\"file\"\\s*:\\s*\"([^\"]*\\.vtt)\"",
             RegexOption.IGNORE_CASE
         )
-       subCRegex.findAll(subMatch)
-            .forEach { match ->
-                val altyaziString = match.groupValues[1]
-                val altyaziHost   = iframe.substringAfter("//").substringBefore("/")
-                val altyaziUrl    = "https://$altyaziHost${altyaziString.replace("\\", "")}"
-                Log.d("kraptor_$name", "altyaziUrl = $altyaziUrl")
-                val altyaziLang   = altyaziUrl.substringAfter("_").substringBefore(".")
-                subtitleCallback.invoke(SubtitleFile(lang = altyaziLang, url = altyaziUrl))
-            }
+       if (iframe.contains("rapid")) {
+           subCRegex.findAll(subMatch)
+               .forEach { match ->
+                   val altyaziString = match.groupValues[1]
+                   Log.d("kraptor_$name", "altyaziString = $altyaziString")
+                   val altyaziUrl = "https://rapid.filmmakinesi.de/${altyaziString.replace("\\", "")}"
+                   Log.d("kraptor_$name", "altyaziUrl = $altyaziUrl")
+                   val altyaziLang = altyaziUrl.substringAfter("_").substringBefore(".")
+                   subtitleCallback.invoke(newSubtitleFile(lang = altyaziLang, url = altyaziUrl, {
+                       this.headers = mapOf("Referer" to "https://rapid.filmmakinesi.de/")
+                   }))
+               }
+       }else {
+           iframeDoc.select("track").map { altyazi ->
+              val altyaziUrl = "https://closeload.filmmakinesi.de/${altyazi.attr("src")}"
+               Log.d("kraptor_$name", "closeloadaltyazi = $altyaziUrl")
+              val altyaziLang = altyazi.attr("label")
+               subtitleCallback.invoke(newSubtitleFile(altyaziLang, altyaziUrl, {
+                   this.headers = mapOf("Referer" to "https://closeload.filmmakinesi.de/")
+               }))
+           }
+       }
 
 
         val scripts = iframeDoc.getElementsByTag("script")
@@ -227,6 +241,8 @@ class FilmMakinesi : MainAPI() {
             "https://closeload.filmmakinesi.de/"
         }else if (realUrl.contains("rapidrame")) {
             "https://rapid.filmmakinesi.de/"
+        }else if (realUrl.contains("playmix")) {
+            "https://closeload.filmmakinesi.de/"
         } else {
             "${mainUrl}/"
         }
@@ -280,39 +296,37 @@ fun dcDecode(valueParts: List<String>): String {
 }
 
 private fun dcDecodeNewMethod(valueParts: List<String>): String {
-    // Exactly match the JavaScript function dc_EvJxuL3ULd1
-
-    // 1) Join array elements: let value = value_parts.join('')
+    // Exactly match the JavaScript function dc_yyAkZNbrsS3
+    // JavaScript: let value = value_parts.join('');
     var result = valueParts.joinToString(separator = "")
 
-    // 2) Reverse the string: result.split('').reverse().join('')
-    result = result.reversed()
+    // JavaScript: result = atob(result);
+    val decodedBytes = Base64.decode(result, Base64.DEFAULT)
+    result = String(decodedBytes, StandardCharsets.ISO_8859_1)
 
-    // 3) ROT13 transformation: result.replace(/[a-zA-Z]/g, function(c){...})
+    // JavaScript: result = result.replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<='Z'?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26)});
     result = result.map { c ->
         when {
             c in 'a'..'z' -> {
                 val shifted = c.code + 13
-                if (shifted <= 'z'.code) shifted.toChar() else (shifted - 26).toChar()
+                if (shifted <= 122) shifted.toChar() else (shifted - 26).toChar()
             }
             c in 'A'..'Z' -> {
                 val shifted = c.code + 13
-                if (shifted <= 'Z'.code) shifted.toChar() else (shifted - 26).toChar()
+                if (shifted <= 90) shifted.toChar() else (shifted - 26).toChar()
             }
             else -> c
         }
     }.joinToString("")
 
-    // 4) Base64 decode: result = atob(result)
-    val decodedBytes = Base64.decode(result, Base64.DEFAULT)
-    val decodedString = String(decodedBytes, StandardCharsets.ISO_8859_1)
+    // JavaScript: result = result.split('').reverse().join('');
+    result = result.reversed()
 
-    // 5) Unmix transformation
+    // JavaScript: let unmix=''; for(let i=0;i<result.length;i++){let charCode=result.charCodeAt(i);charCode=(charCode-(399756995%(i+5))+256)%256;unmix+=String.fromCharCode(charCode)}
     val unmixed = StringBuilder()
-    for (i in decodedString.indices) {
-        val charCode = decodedString[i].code
+    for (i in result.indices) {
+        val charCode = result[i].code
         val delta = 399756995 % (i + 5)
-        // JavaScript: (charCode - delta + 256) % 256
         val transformedChar = ((charCode - delta + 256) % 256).toChar()
         unmixed.append(transformedChar)
     }
@@ -425,6 +439,55 @@ private fun dcDecodeAlternative(valueParts: List<String>): String {
     }
 }
 
+// Add a fourth fallback method that tries UTF-8 encoding
+private fun dcDecodeFourthMethod(valueParts: List<String>): String {
+    try {
+        var result = valueParts.joinToString(separator = "")
+
+        // Base64 decode with UTF-8
+        val decodedBytes = Base64.decode(result, Base64.DEFAULT)
+        result = String(decodedBytes, StandardCharsets.UTF_8)
+
+        // ROT13
+        result = result.map { c ->
+            when {
+                c in 'a'..'z' -> {
+                    val shifted = c.code + 13
+                    if (shifted <= 122) shifted.toChar() else (shifted - 26).toChar()
+                }
+                c in 'A'..'Z' -> {
+                    val shifted = c.code + 13
+                    if (shifted <= 90) shifted.toChar() else (shifted - 26).toChar()
+                }
+                else -> c
+            }
+        }.joinToString("")
+
+        // Reverse
+        result = result.reversed()
+
+        // Unmix
+        val unmixed = StringBuilder()
+        for (i in result.indices) {
+            val charCode = result[i].code
+            val delta = 399756995 % (i + 5)
+            val transformedChar = ((charCode - delta + 256) % 256).toChar()
+            unmixed.append(transformedChar)
+        }
+
+        val finalResult = unmixed.toString()
+
+        if (isValidUrl(finalResult)) {
+            return finalResult
+        } else {
+            throw Exception("Fourth method result invalid")
+        }
+
+    } catch (e: Exception) {
+        throw Exception("Fourth method failed: ${e.message}")
+    }
+}
+
 private fun isValidUrl(url: String): Boolean {
     return url.isNotEmpty() &&
             (url.contains("http") ||
@@ -434,7 +497,6 @@ private fun isValidUrl(url: String): Boolean {
                     url.contains(".org") ||
                     url.length > 20)
 }
-
 
 fun dcHello(encoded: String): String {
     // İlk Base64 çöz
