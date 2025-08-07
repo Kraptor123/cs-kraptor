@@ -26,7 +26,7 @@ class CizgiveDizi : MainAPI() {
     private val categoryOrder = listOf(
         "çd", "diz", "ani", "yans", "pro", "bel", "kom", "mac", "çi", "yi",
         "sih", "yem", "sav", "ftb", "pemd", "müz", "giz", "kork", "eği", "dra", "gh",
-        "tıp", "yar", "aks", "bilkur", "fant", "spor", "polis", "doğa", "suç", "füt"
+        "tıp", "yar", "aks", "bilkur", "fant", "spor",
     )
 
     // Etiket kodu -> açıklama
