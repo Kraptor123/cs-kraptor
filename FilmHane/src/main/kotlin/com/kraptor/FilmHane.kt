@@ -224,10 +224,12 @@ val trailer = document.selectFirst("div.series-profile-trailer[data-yt]")?.attr(
         val match = videoReg.find(gercekIframe.html())
         val videoLink = match?.value?.removePrefix("file:\"")?.removeSuffix("\"").toString()
 
-//        Log.d("fhane", "videolinkim = ${videoLink}")
+        Log.d("kraptor_$name", "iframeIlk = ${iframeIlk}")
 
         val subReg = Regex("\"subtitle\":\"[^\"]*\"")
         val subtitleMatch = subReg.find(gercekIframe.html())
+
+        val subUrl = iframeIlk.split("/", limit = 4).take(3).joinToString("/")
 
         subtitleMatch?.let {
             val rawValue = it.value.removePrefix("\"subtitle\":\"").removeSuffix("\"")
@@ -243,10 +245,18 @@ val trailer = document.selectFirst("div.series-profile-trailer[data-yt]")?.attr(
                     }
 
                     // URL'nin içeriğine göre dili belirle (sadece "_eng." veya "_tur." kontrol et)
-                    val language = if (subtitleUrl.contains("_eng.", ignoreCase = true)) {
-                        "İngilizce"
-                    } else if (subtitleUrl.contains("_tur.", ignoreCase = true)) {
-                        "Türkçe"
+
+                    val subtitleFix = "$subUrl$subtitleUrl"
+
+                    Log.d("kraptor_$name","subtitleFix = $subtitleFix")
+                    val language = if (subtitleFix.contains("_eng.", ignoreCase = true)) {
+                        "English"
+                    } else if (subtitleFix.contains("_tur.", ignoreCase = true)) {
+                        "Turkish"
+                    } else if (subtitleFix.contains("_Turkce", ignoreCase = true)) {
+                        "Turkish"
+                    } else if (subtitleFix.contains("_Ingilizce", ignoreCase = true)) {
+                        "English"
                     } else {
                         "Bilinmiyor"
                     }
@@ -255,7 +265,7 @@ val trailer = document.selectFirst("div.series-profile-trailer[data-yt]")?.attr(
                         subtitleCallback.invoke(
                             SubtitleFile(
                                 lang = language,
-                                url = subtitleUrl
+                                url = subtitleFix
                             )
                         )
                     }
@@ -266,8 +276,8 @@ val trailer = document.selectFirst("div.series-profile-trailer[data-yt]")?.attr(
 
         callback.invoke(
             newExtractorLink(
-                source = "FilmHane $qualitiesval",
-                name = "filmHane $qualitiesval",
+                source = "FilmHane",
+                name = "FilmHane",
                 url = videoLink,
                 type = ExtractorLinkType.M3U8,
                 {
