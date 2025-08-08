@@ -6,10 +6,8 @@ import com.lagradost.api.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.getQualityFromName
-import com.lagradost.cloudstream3.utils.loadExtractor
-import com.lagradost.cloudstream3.utils.newExtractorLink
+import com.lagradost.cloudstream3.utils.*
+
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -75,85 +73,20 @@ class FullHDFilm : MainAPI() {
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
 
     override suspend fun load(url: String): LoadResponse? {
-        val document = app.get(url).document
+    val document = app.get(url).document
 
-        val title       = document.selectFirst("h1 span")?.text()?.trim() ?: return null
-        val poster      = fixUrlNull(document.selectFirst("[property='og:image']")?.attr("content"))
-        val description = document.selectFirst("div[itemprop='description']")?.text()?.substringAfter("⭐")?.substringAfter("izleyin.")?.substringAfter("konusu:")?.trim()
-        val year        = document.selectFirst("span[itemprop='dateCreated'] a")?.text()?.trim()?.toIntOrNull()
-        val tags        = document.select("div.detail ul.bottom li:nth-child(5) span a").map { it.text() }
-        val rating      = document.selectFirst("ul.right li:nth-child(2) span")?.text()?.trim()
-        val duration    = document.selectFirst("span[itemprop='duration']")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
-        val actors      = document.select("sc[itemprop='actor'] span").map { Actor(it.text()) }
-        val trailer     = fixUrlNull(document.selectFirst("[property='og:video']")?.attr("content"))
+    val title       = document.selectFirst("h1 span")?.text()?.trim() ?: return null
+    val poster      = fixUrlNull(document.selectFirst("[property='og:image']")?.attr("content"))
+    val description = document.selectFirst("div[itemprop='description']")?.text()?.substringAfter("⭐")?.substringAfter("izleyin.")?.substringAfter("konusu:")?.trim()
+    val year        = document.selectFirst("span[itemprop='dateCreated'] a")?.text()?.trim()?.toIntOrNull()
+    val tags        = document.select("div.detail ul.bottom li:nth-child(5) span a").map { it.text() }
+    val rating      = document.selectFirst("ul.right li:nth-child(2) span")?.text()?.trim()
+    val duration    = document.selectFirst("span[itemprop='duration']")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
+    val actors      = document.select("sc[itemprop='actor'] span").map { Actor(it.text()) }
+    val trailer     = fixUrlNull(document.selectFirst("[property='og:video']")?.attr("content"))
 
-        if (url.contains("-dizi") || tags.any { it.lowercase().contains("dizi") }) {
-            val episodes = mutableListOf<Episode>()
-
-            val iframeSkici = IframeKodlayici()
-
-            val partNumbers  = document.select("li.psec").map { it.attr("id") }
-            val partNames    = document.select("li.psec a").map { it.text().trim() }
-            val pdataMatches = Regex("""pdata\['(.*?)'] = '(.*?)';""").findAll(document.html())
-            val pdataList    = pdataMatches.map { it.destructured }.toList()
-
-            partNumbers.forEachIndexed { index, partNumber ->
-                val partName = partNames.getOrNull(index)
-                val pdata    = pdataList.getOrNull(index)
-                
-                val value = pdata?.component2()
-
-                if (partName!!.lowercase().contains("fragman") || partNumber.lowercase().contains("fragman")) return@forEachIndexed
-
-                val iframeData = iframeSkici.iframeCoz(value!!)
-                val iframeLink = app.get(iframeData, referer="${mainUrl}/").url
-
-                val szNum = partNumber.takeIf { it.contains("sezon") }?.substringBefore("sezon")?.toIntOrNull() ?: 1
-                val epNum = partName.substringBefore(".").trim().toIntOrNull() ?: 1
-
-                episodes.add(newEpisode(iframeLink) {
-                    this.name = "${szNum}. Sezon ${epNum}. Bölüm"
-                    this.season = szNum
-                    this.episode = epNum
-                })
-            }
-
-
-            return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
-                this.posterUrl = poster
-                this.plot      = description
-                this.year      = year
-                this.tags      = tags
-                this.score = Score.from10(rating)
-                this.duration  = duration
-                addActors(actors)
-                addTrailer(trailer)
-            }
-        } else {
-            return newMovieLoadResponse(title, url, TvType.Movie, url) {
-                this.posterUrl = poster
-                this.plot      = description
-                this.year      = year
-                this.tags      = tags
-                this.score = Score.from10(rating)
-                this.duration  = duration
-                addActors(actors)
-                addTrailer(trailer)
-            }
-        }
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        Log.d("FHDF", "data » $data")
-
-        if (!data.contains(mainUrl)) {
-            loadExtractor(data, "${mainUrl}/", subtitleCallback, callback)
-
-            return true
-        }
-
-        val document = app.get(data).document
+    if (url.contains("-dizi") || tags.any { it.lowercase().contains("dizi") }) {
+        val episodes = mutableListOf<Episode>()
 
         val iframeSkici = IframeKodlayici()
 
@@ -165,40 +98,206 @@ class FullHDFilm : MainAPI() {
         partNumbers.forEachIndexed { index, partNumber ->
             val partName = partNames.getOrNull(index)
             val pdata    = pdataList.getOrNull(index)
-            
-            val key   = pdata?.component1()
+
             val value = pdata?.component2()
 
             if (partName!!.lowercase().contains("fragman") || partNumber.lowercase().contains("fragman")) return@forEachIndexed
 
-            Log.d("FHDF", "partNumber » $partNumber") // ! fragman0
-            Log.d("FHDF", "partName   » $partName")   // ! Fragman
-            Log.d("FHDF", "key        » $key")        // ! prt_fragman0
-            // Log.d("FHDF", "value      » ${value}")      // ! Şifreli veri
+            try {
+                // VideoData objesi al
+                val videoData = iframeSkici.iframeCoz(value!!)
+                
+                // M3U8 URL'ini kullan (artık çözülmüş iframe URL'i değil)
+                val videoUrl = videoData.m3u8Url
 
-            val iframeData = iframeSkici.iframeCoz(value!!)
-            val iframeLink = app.get(iframeData, referer="${mainUrl}/").url
-            Log.d("FHDF", "iframeLink » $iframeLink")
+                val szNum = partNumber.takeIf { it.contains("sezon") }?.substringBefore("sezon")?.toIntOrNull() ?: 1
+                val epNum = partName.substringBefore(".").trim().toIntOrNull() ?: 1
 
-            loadExtractor(iframeLink, "${mainUrl}/", subtitleCallback) { extractor ->
-                // Coroutine başlatıyoruz
-                GlobalScope.launch {
-                    // newExtractorLink fonksiyonu bir suspend fonksiyonu olduğu için coroutine içinde çağrılıyor
-                    val extractorLink = newExtractorLink(
-                        source  = "$partName - ${extractor.source}",
-                        name    = "$partName - ${extractor.name}",
-                        url     = extractor.url,
-                        type    = extractor.type
+                episodes.add(newEpisode(videoUrl) {
+                    this.name = "${szNum}. Sezon ${epNum}. Bölüm"
+                    this.season = szNum
+                    this.episode = epNum
+                })
+            } catch (e: Exception) {
+                Log.e("FHDF", "Error processing episode $partName: ${e.message}")
+            }
+        }
+
+        return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
+            this.posterUrl = poster
+            this.plot      = description
+            this.year      = year
+            this.tags      = tags
+            this.score = Score.from10(rating)
+            this.duration  = duration
+            addActors(actors)
+            addTrailer(trailer)
+        }
+    } else {
+        return newMovieLoadResponse(title, url, TvType.Movie, url) {
+            this.posterUrl = poster
+            this.plot      = description
+            this.year      = year
+            this.tags      = tags
+            this.score = Score.from10(rating)
+            this.duration  = duration
+            addActors(actors)
+            addTrailer(trailer)
+        }
+    }
+}   
+
+    @OptIn(DelicateCoroutinesApi::class)
+override suspend fun loadLinks(
+    data: String,
+    isCasting: Boolean,
+    subtitleCallback: (SubtitleFile) -> Unit,
+    callback: (ExtractorLink) -> Unit
+): Boolean {
+    Log.d("FHDF", "data » $data")
+
+    
+    if (data.contains("hdload.site/uploads/encode/") && data.contains("master.m3u8")) {
+        
+        val videoId = data.substringAfter("/uploads/encode/").substringBefore("/master.m3u8")
+        Log.d("FHDF", "Direct M3U8 - videoId » $videoId")
+        
+       
+        callback(
+            newExtractorLink(
+                source = "FullHdFilm",
+                name = "FullHdFilm",
+                url = data,
+                type = ExtractorLinkType.M3U8
+            ) {
+                headers = mapOf("Referer" to "https://hdload.site")
+                quality = Qualities.Unknown.value
+            }
+        )
+
+       
+        val altyazilar = IframeKodlayici.altyaziLinkleriOlustur(videoId)
+        altyazilar.forEach { (language, subtitleUrl) ->
+            val subtitleFile = SubtitleFile(
+                lang = language,
+                url = subtitleUrl
+            )
+            
+            subtitleCallback.invoke(subtitleFile)
+            Log.d("FHDF", "Direct M3U8 subtitle » $language - $subtitleUrl")
+        }
+        
+        return true
+    }
+
+    if (!data.contains(mainUrl)) {
+        loadExtractor(data, "${mainUrl}/", subtitleCallback, callback)
+        return true
+    }
+
+    
+    val document = app.get(data).document
+    val iframeKodlayici = IframeKodlayici()
+
+    val partNumbers = document.select("li.psec").map { it.attr("id") }
+    val partNames = document.select("li.psec a").map { it.text().trim() }
+
+    
+    val pdataMatches = Regex("""pdata\['(.*?)'] = '(.*?)';""").findAll(document.html())
+    val pdataList = pdataMatches.map { it.destructured }.toList()
+
+    Log.d("FHDF", "Found ${partNumbers.size} parts, ${pdataList.size} pdata entries")
+
+    partNumbers.forEachIndexed { index, partNumber ->
+        val partName = partNames.getOrNull(index)
+        val pdata = pdataList.getOrNull(index)
+
+        if (partName!!.lowercase().contains("fragman") || partNumber.lowercase().contains("fragman")) {
+            return@forEachIndexed
+        }
+
+        Log.d("FHDF", "partNumber » $partNumber")
+        Log.d("FHDF", "partName   » $partName")
+
+        try {
+            
+            val pdataValue = pdata?.component2()
+            
+            if (pdataValue != null && pdataValue.isNotEmpty()) {
+                Log.d("FHDF", "pdataValue » $pdataValue")
+                
+                
+                val videoData = iframeKodlayici.iframeCoz(pdataValue)
+                
+                Log.d("FHDF", "videoId » ${videoData.videoId}")
+                Log.d("FHDF", "m3u8Url » ${videoData.m3u8Url}")
+
+                
+                callback(
+                    newExtractorLink(
+                        source = "FHDF",
+                        name = "FullHdFilm",
+                        url = videoData.m3u8Url,
+                        type = ExtractorLinkType.M3U8
                     ) {
-                        headers = mapOf("Referer" to extractor.referer) // "Referer" ayarı burada yapılabilir
-                        quality = getQualityFromName(extractor.quality.toString())
+                        headers = mapOf("Referer" to videoData.referer)
+                        quality = Qualities.Unknown.value
                     }
+                )
 
-                    // Callback fonksiyonuna çağrı yapıyoruz
-                    callback.invoke(extractorLink)
+                
+                videoData.altyazilar.forEach { (language, subtitleUrl) ->
+                    val subtitleFile = SubtitleFile(
+                        lang = language,
+                        url = subtitleUrl
+                    )
+                    
+                    subtitleCallback.invoke(subtitleFile)
+                    Log.d("FHDF", "subtitle » $language - $subtitleUrl")
+                }
+            } else {
+                
+                val iframes = document.select("iframe[src*=hdload.site]")
+                val iframe = iframes.getOrNull(index)
+                
+                if (iframe != null) {
+                    val iframeSrc = iframe.attr("src")
+                    Log.d("FHDF", "fallback iframeSrc » $iframeSrc")
+                    
+                    val videoId = IframeKodlayici.videoIdCikar(iframeSrc)
+                    val m3u8Url = IframeKodlayici.m3u8LinkOlustur(videoId)
+                    val altyazilar = IframeKodlayici.altyaziLinkleriOlustur(videoId)
+                    
+                    Log.d("FHDF", "fallback videoId » $videoId")
+                    Log.d("FHDF", "fallback m3u8Url » $m3u8Url")
+                    
+                    callback(
+                        newExtractorLink(
+                            source = "FullHdFilm",
+                            name = "FullHdFilm ",
+                            url = m3u8Url,
+                            type = ExtractorLinkType.M3U8
+                        ) {
+                            headers = mapOf("Referer" to "https://hdload.site")
+                            quality = Qualities.Unknown.value
+                        }
+                    )
+                    
+                    altyazilar.forEach { (language, subtitleUrl) ->
+                        val subtitleFile = SubtitleFile(
+                            lang = language,
+                            url = subtitleUrl
+                        )
+                        
+                        subtitleCallback.invoke(subtitleFile)
+                        Log.d("FHDF", "fallback subtitle » $language - $subtitleUrl")
+                    }
                 }
             }
+        } catch (e: Exception) {
+            
+        }
     }
-        return true
-}
-}
+
+    return true
+}}
