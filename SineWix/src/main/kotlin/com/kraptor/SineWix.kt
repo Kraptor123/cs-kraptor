@@ -27,9 +27,13 @@ class SineWix : MainAPI() {
 
     override val mainPage = mainPageOf(
         "${mainUrl}/public/api/media/seriesEpisodesAll/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"  to "Yeni Bölümler",
-        "${mainUrl}/public/api/genres/latestmovies/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"  to "Son Filmler",
+        "${mainUrl}/public/api/genres/latestmovies/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"              to "Son Filmler",
         "${mainUrl}/public/api/genres/latestseries/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"              to "Son Diziler",
         "${mainUrl}/public/api/genres/latestanimes/all/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"              to "Son Animeler",
+        "${mainUrl}/public/api/genres/mediaLibrary/show/80/serie/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"    to "Suç Dizileri",
+        "${mainUrl}/public/api/genres/mediaLibrary/show/80/movie/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"    to "Suç Filmleri",
+        "${mainUrl}/public/api/genres/mediaLibrary/show/9648/serie/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"  to "Gizem Dizileri",
+        "${mainUrl}/public/api/genres/mediaLibrary/show/9648/movie/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"  to "Gizem Filmleri",
         "${mainUrl}/public/api/genres/mediaLibrary/show/10769/serie/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA" to "Kore Diziler",
         "${mainUrl}/public/api/genres/mediaLibrary/show/16/movie/9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"    to "Animasyonlar"
     )
