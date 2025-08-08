@@ -1,4 +1,3 @@
-// ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
 package com.keyiflerolsun
 
@@ -212,39 +211,48 @@ private fun SearchResult.toSearchResult(): SearchResponse? {
         @Suppress("NAME_SHADOWING") var iframe = iframe
 
         if (iframe.contains("/player/king/king.php")) {
-            iframe = iframe.replace("king.php?v=", "king.php?wmode=opaque&v=")
-            val subDoc = app.get(
-                iframe,
-                referer     = data,
-                cookies     = mapOf(
-                    "LockUser"      to "true",
-                    "isTrustedUser" to "true",
-                    "dbxu"          to "1744054959089"
-                ),
-                interceptor = interceptor
-            ).document
-            val subFrame = subDoc.selectFirst("div#Player iframe")?.attr("src") ?: return false
+   
+    val subDoc = app.get(
+        iframe.replace("king.php?v=", "king.php?wmode=opaque&v="),
+        referer = data,
+        cookies = mapOf(
+            "LockUser" to "true",
+            "isTrustedUser" to "true",
+            "dbxu" to "1744054959089"
+        ),
+        interceptor = interceptor
+    ).document
 
-            val iDoc          = app.get(subFrame, referer="${mainUrl}/").text
-            val cryptData     = Regex("""CryptoJS\.AES\.decrypt\("(.*)","""").find(iDoc)?.groupValues?.get(1) ?: return false
-            val cryptPass     = Regex("""","(.*)"\);""").find(iDoc)?.groupValues?.get(1) ?: return false
-            val decryptedData = CryptoJS.decrypt(cryptPass, cryptData)
-            val decryptedDoc  = Jsoup.parse(decryptedData)
-            val vidUrl        = Regex("""file: '(.*)',""").find(decryptedDoc.html())?.groupValues?.get(1) ?: return false
+    
+    val embedUrl = subDoc.selectFirst("div#Player iframe")?.attr("src") ?: return false
 
-            callback.invoke(
-                newExtractorLink(
-                    source = this.name,
-                    name = this.name,
-                    url = vidUrl,
-                    type = ExtractorLinkType.M3U8 // Tür olarak M3U8 ayarlandı
-                ) {
-                    headers = mapOf("Referer" to vidUrl) // Referer başlığı ayarlandı
-                    quality = getQualityFromName("4k") // Kalite ayarlandı
-                }
-            )
+    
+    val sheilaUrl = embedUrl.replace("/embed/", "/embed/sheila/")
 
-        } else if (iframe.contains("/player/moly/moly.php")) {
+   
+    val m3uContent = app.get(
+        sheilaUrl,
+        referer = embedUrl 
+    ).text
+
+    
+    val m3u8Url = m3uContent.lineSequence()
+        .firstOrNull { it.startsWith("http") } ?: return false
+
+   
+    callback.invoke(
+        newExtractorLink(
+            source = this.name,
+            name = this.name,
+            url = m3u8Url,
+            type = ExtractorLinkType.M3U8
+        ) {
+            headers = mapOf("Referer" to embedUrl)
+            quality = Qualities.P1080.value
+        }
+    )
+}
+else if (iframe.contains("/player/moly/moly.php")) {
             iframe = iframe.replace("moly.php?h=", "moly.php?wmode=opaque&h=")
             var subDoc = app.get(
                 iframe,

@@ -1,7 +1,7 @@
-version = 12
+version = 13
 
 cloudstream {
-    authors     = listOf("keyiflerolsun", "kraptor")
+    authors     = listOf("kraptor","kerimmkirac")
     language    = "tr"
     description = "Yabancı Dizi izle, Tüm yabancı dizilerin yeni ve eski sezonlarını full hd izleyebileceğiniz elit site."
 
