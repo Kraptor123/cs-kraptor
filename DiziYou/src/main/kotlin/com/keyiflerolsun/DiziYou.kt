@@ -41,7 +41,7 @@ class DiziYou : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = if (request.name.contains("Bölümler")) {
+        val document = if (request.name.contains("Ana Sayfa")) {
             app.get(
                 request.data,
                 headers = mapOf(
