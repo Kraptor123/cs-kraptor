@@ -1,7 +1,6 @@
-version = 20
-
+version = 21
 cloudstream {
-    authors     = listOf("keyiflerolsun")
+    authors     = listOf("kraptor","kerimmkirac")
     language    = "tr"
     description = "Setfilmizle sitemizde, donma yaşamadan Türkçe dublaj ve altyazılı filmleri ile dizileri muhteşem 1080p full HD kalitesinde izleyebilirsiniz."
 
