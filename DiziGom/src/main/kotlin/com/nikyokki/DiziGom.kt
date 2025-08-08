@@ -24,68 +24,140 @@ class DiziGom : MainAPI() {
     override val supportedTypes = setOf(TvType.TvSeries)
 
     override val mainPage = mainPageOf(
-        "" to "Tüm Diziler",
-        "" to "Tüm Filmler",
-        "" to "Aksiyon",
-        "" to "Animasyon",
-        "" to "Belgesel",
-        "" to "Bilim Kurgu",
-        "" to "Dram",
-        "" to "Fantastik",
-        "" to "Gerilim",
-        "" to "Gizem",
-        "" to "Komedi",
-        "" to "Korku",
-        "" to "Macera",
-        "" to "Romantik",
-        "" to "Savaş",
-        "" to "Suç",
-        "" to "Tarih"
-    )
+    "${mainUrl}/tum-bolumler" to "Yeni Bölümler",
+    "" to "Tüm Diziler",
+    "" to "Tüm Filmler",
+    "" to "Aksiyon",
+    "" to "Animasyon",
+    "" to "Belgesel",
+    "" to "Bilim Kurgu",
+    "" to "Dram",
+    "" to "Fantastik",
+    "" to "Gerilim",
+    "" to "Gizem",
+    "" to "Komedi",
+    "" to "Korku",
+    "" to "Macera",
+    "" to "Romantik",
+    "" to "Savaş",
+    "" to "Suç",
+    "" to "Tarih"
+)
 
-    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = if (request.name.contains("Tüm Filmler")){
-              if (page == 1) {
-              app.get("${mainUrl}/tum-yabanci-filmler-hd2/?filtrele=tarih&sirala=DESC&imdb=&yil=&tur=", referer = "${mainUrl}/").document
-          } else {
-              app.get("${mainUrl}/tum-yabanci-filmler-hd2/page/$page/?filtrele=tarih&sirala=DESC&imdb=&yil=&tur=", referer = "${mainUrl}/").document
-          }
-        }else {
-            app.post("${mainUrl}/wp-admin/admin-ajax.php", referer = "${mainUrl}/", data = mapOf(
-            "action"     to "dizigom_search_action",
-            "formData"   to if (request.name.contains("Tüm")){
-                "filtrele=tarih&sirala=DESC&yil=&imdb=&kelime=&tur="
+override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+    val document = when {
+        request.name.contains("Yeni Bölümler") -> {
+            app.get("${request.data}/page/$page").document
+        }
+        request.name.contains("Tüm Filmler") -> {
+            if (page == 1) {
+                app.get("${mainUrl}/tum-yabanci-filmler-hd2/?filtrele=tarih&sirala=DESC&imdb=&yil=&tur=", referer = "${mainUrl}/").document
             } else {
-                "filtrele=tarih&sirala=DESC&yil=&imdb=&kelime=&tur=${request.name}"
-            },
-            "filterType" to "series",
-            "paged"      to "$page",
-            "_wpnonce"   to "b6befddaeb"
-        )).document}
-
-        val home     = document.select("div.single-item, div.movie-box").mapNotNull { it.toMainPageResult() }
-
-        return newHomePageResponse(request.name, list = home )
-    }
-
-    private fun Element.toMainPageResult(): SearchResponse? {
-        val title = this.selectFirst("div.categorytitle , div.film-ismi")?.text() ?: return null
-        val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("div.img img")?.attr("data-src") ?: fixUrlNull(this.selectFirst("img")?.attr("src")))
-        val diziYili = this.selectFirst("span.dizimeta")?.text()?.toIntOrNull()
-        val rating = this.selectFirst("div.imdbp")?.text()?.substringAfter(" ")?.substringBefore(")") ?: this.selectFirst("div.film-ust")?.text()?.trim()
-        val fimDizi = if (href.contains("-film-")) {
-            TvType.TvSeries
-        } else {
-            TvType.Movie
+                app.get("${mainUrl}/tum-yabanci-filmler-hd2/page/$page/?filtrele=tarih&sirala=DESC&imdb=&yil=&tur=", referer = "${mainUrl}/").document
+            }
         }
-
-        return newTvSeriesSearchResponse(title, href, fimDizi) {
-            this.posterUrl = posterUrl
-            this.score     = Score.from10(rating)
-            this.year      = diziYili
+        else -> {
+            app.post("${mainUrl}/wp-admin/admin-ajax.php", referer = "${mainUrl}/", data = mapOf(
+                "action" to "dizigom_search_action",
+                "formData" to if (request.name.contains("Tüm")) {
+                    "filtrele=tarih&sirala=DESC&yil=&imdb=&kelime=&tur="
+                } else {
+                    "filtrele=tarih&sirala=DESC&yil=&imdb=&kelime=&tur=${request.name}"
+                },
+                "filterType" to "series",
+                "paged" to "$page",
+                "_wpnonce" to "bd1ec31e85"
+            )).document
         }
     }
+
+    val home = when {
+        request.name.contains("Yeni Bölümler") -> {
+            document.select("div.episode-box").mapNotNull { it.toEpisodeResult() }
+        }
+        request.name.contains("Tüm Filmler") -> {
+            document.select("div.movie-box").mapNotNull { it.toMainPageResult() }
+        }
+        else -> {
+            document.select("div.single-item").mapNotNull { it.toMainPageResult() }
+        }
+    }
+
+    return newHomePageResponse(request.name, list = home)
+}
+
+private fun Element.toMainPageResult(): SearchResponse? {
+    val title = this.selectFirst("div.categorytitle, div.film-ismi")?.text() ?: return null
+    val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
+    val posterUrl = fixUrlNull(
+        this.selectFirst("div.img img")?.attr("data-src") 
+         ?: this.selectFirst("div.cat-img img")?.attr("src")
+        ?: this.selectFirst("img")?.attr("src")
+    )
+    val diziYili = this.selectFirst("span.dizimeta")?.text()?.substringAfter("Yapım Yılı : ")?.trim()?.toIntOrNull()
+    val rating = this.selectFirst("div.imdbp")?.text()?.substringAfter("IMDb: ")?.substringBefore(")")?.trim()
+        ?: this.selectFirst("div.film-ust")?.text()?.trim()
+              
+    val fimDizi = if (href.contains("-film-") || href.contains("film")) {
+        TvType.Movie
+    } else {
+        TvType.TvSeries
+    }
+
+    return newTvSeriesSearchResponse(title, href, fimDizi) {
+        this.posterUrl = posterUrl
+        this.score = rating?.let { Score.from10(it) }
+        this.year = diziYili
+    }
+}
+
+private fun Element.toEpisodeResult(): SearchResponse? {
+    
+    val seriesTitle = this.selectFirst("div.serie-name a")?.text() ?: return null
+    
+   
+    val episodeInfo = this.selectFirst("div.episode-name a")?.text() ?: return null
+    
+    
+    val fullTitle = this.selectFirst("div.poster img")?.attr("alt") ?: "$seriesTitle $episodeInfo"
+    
+    val originalHref = fixUrlNull(this.selectFirst("div.poster a")?.attr("href")) ?: return null
+    
+    
+    val href = convertEpisodeUrlToSeriesUrl(originalHref)
+    val posterUrl = fixUrlNull(
+        this.selectFirst("div.poster img")?.attr("data-src") 
+        ?: this.selectFirst("div.poster img")?.attr("src")
+    )
+    
+    
+    val episodeDate = this.selectFirst("div.episode-date")?.text()?.trim()
+
+    return newTvSeriesSearchResponse(fullTitle, href, TvType.TvSeries) {
+        this.posterUrl = posterUrl
+        
+       
+    }
+}
+private fun convertEpisodeUrlToSeriesUrl(episodeUrl: String): String {
+    
+    
+    
+    val urlParts = episodeUrl.split("/")
+    val episodePart = urlParts.find { it.contains("-sezon-") && it.contains("-bolum-") } ?: return episodeUrl
+    
+   
+    val seriesName = episodePart
+        .substringBefore("-sezon-")
+        .split("-")
+        .filter { !it.matches(Regex("\\d+")) }
+        .joinToString("-")
+        .trim('-') 
+    
+    // Yeni URL'yi oluştur
+    val baseUrl = episodeUrl.substringBefore("/", "") + "//" + episodeUrl.substringAfter("//").substringBefore("/")
+    return "$baseUrl/dizi-izle/$seriesName/"
+}
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/?s=${query}").document
