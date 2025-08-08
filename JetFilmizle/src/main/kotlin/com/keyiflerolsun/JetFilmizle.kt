@@ -8,6 +8,8 @@ import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.*
+
 import org.jsoup.nodes.Element
 
 class JetFilmizle : MainAPI() {
@@ -200,7 +202,7 @@ class JetFilmizle : MainAPI() {
             "Sec-Fetch-User" to "?1"
         )).document
 
-        // 1) Ana iframe'leri topla ve hemen işle
+        
         document.select("iframe").forEach { frame ->
             val src = frame.attr("src")
                 .takeIf { it.isNotBlank() && it != "about:blank" }
@@ -213,13 +215,30 @@ class JetFilmizle : MainAPI() {
             if (src != null) {
                 val iframeUrl = fixUrlNull(src).toString()
                 Log.d("JTF", "ANA iframe » $iframeUrl")
-                // Eğer iframe doğrudan oynatıcı sayfasıysa, buradan çıkar:
-                loadExtractor(url = iframeUrl, subtitleCallback, callback)
+                
+               
+                if (iframeUrl.contains("jfvid.com/play/")) {
+                    val streamUrl = iframeUrl.replace("/play/", "/stream/")
+                    Log.d("JTF", "JFVid stream » $streamUrl")
+                    callback.invoke(
+                        newExtractorLink(
+                            name = "JFVid",
+                            source = "JFVid", 
+                            url = streamUrl,
+                            
+                            type = ExtractorLinkType.M3U8
+                        ){
+                            this.referer = iframeUrl
+                        }
+                    )
+                } else {
+                    loadExtractor(url = iframeUrl, subtitleCallback, callback)
+                }
             }
         }
 
-        // 2) Sayfa numaralarından link ve isimleri topla (fragmanları atla)
-        val pageLinks = mutableListOf<Pair<String, String>>() // Pair<url, isim>
+        
+        val pageLinks = mutableListOf<Pair<String, String>>()
         document.select("a.post-page-numbers").forEach { aTag ->
             val isim = aTag.selectFirst("span")?.text() ?: ""
             if (isim != "Fragman") {
@@ -232,7 +251,7 @@ class JetFilmizle : MainAPI() {
             }
         }
 
-        // 3) Sadece sayfa linklerini işle, içlerindeki iframe'leri bul
+        
         pageLinks.forEach { (url, isim) ->
             try {
                 Log.d("JTF", "[$isim] işleniyor: $url")
@@ -259,7 +278,26 @@ class JetFilmizle : MainAPI() {
                     if (src != null) {
                         val iframeUrl = fixUrlNull(src).toString()
                         Log.d("JTF", "iframe » $iframeUrl")
-                        loadExtractor(url = iframeUrl, subtitleCallback, callback)
+                        
+                        // JFVid URL'ini kontrol et
+                        if (iframeUrl.contains("jfvid.com/play/")) {
+                            val streamUrl = iframeUrl.replace("/play/", "/stream/")
+                            Log.d("JTF", "JFVid stream » $streamUrl")
+                            callback.invoke(
+                                newExtractorLink(
+                                    name = "JFVid ($isim)",
+                                    source = "JFVid",
+                                    url = streamUrl,
+                                    
+                                    type = ExtractorLinkType.M3U8
+                                ){
+                                    this.referer = iframeUrl
+
+                                }
+                            )
+                        } else {
+                            loadExtractor(url = iframeUrl, subtitleCallback, callback)
+                        }
                     } else {
                         Log.w("JTF", "  ⚠ iframe src bulunamadı: ${frame.outerHtml()}")
                     }
@@ -270,5 +308,4 @@ class JetFilmizle : MainAPI() {
         }
 
         return true
-    }
-}
+    }}
