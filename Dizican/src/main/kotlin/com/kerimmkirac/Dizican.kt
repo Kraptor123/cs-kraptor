@@ -102,14 +102,10 @@ private fun Element.toMainPageResult(): SearchResponse? {
 
     private fun Element.toSearchResult(): SearchResponse? {
     val title = this.selectFirst("div.name a")?.text() ?: return null
-    
-    
     val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
-    
-    
     val posterUrl = fixUrlNull(this.selectFirst("div.img img")?.attr("src"))
 
-        return newMovieSearchResponse(title, href, TvType.AsianDrama) { this.posterUrl = posterUrl }
+     return newMovieSearchResponse(title, href, TvType.AsianDrama, initializer = { this.posterUrl = posterUrl })
     }
 
     override suspend fun quickSearch(query: String): List<SearchResponse> = search(query)
@@ -125,36 +121,22 @@ private fun Element.toMainPageResult(): SearchResponse? {
         val title = document.selectFirst("h1.film")?.text() ?: return null
         val poster = fixUrlNull(document.selectFirst("div.poster img")?.attr("data-src"))
         val description = document.selectFirst("div.description")?.text()
-        
-        
         val year = document.selectFirst("li.release span a")?.text()?.toIntOrNull()
-        
-        
         val tags = document.select("div.category a").map { it.text() }
-        
-       
         val status = if (document.selectFirst("span.final") != null) {
             ShowStatus.Completed
         } else {
             ShowStatus.Ongoing
         }
-        
-        
         val episodes = mutableListOf<Episode>()
-        
-       
         document.select("div.s-wrap").forEach { seasonDiv ->
             val seasonId = seasonDiv.attr("id")
             val seasonNumber = seasonId.replace("s-", "").toIntOrNull() ?: 1
-            
-            
             seasonDiv.select("div.ep-box").forEach { episodeDiv ->
                 val episodeUrl = episodeDiv.selectFirst("a")?.attr("href")
                 val episodeTitle = episodeDiv.selectFirst("div.name a")?.attr("title")
                 val episodePoster = fixUrlNull(episodeDiv.selectFirst("div.img img")?.attr("data-src"))
                 val episodeDate = episodeDiv.selectFirst("div.date span")?.text()
-                
-               
                 val episodeNumber = episodeTitle?.let { title ->
                     val regex = """(\d+)\.\s*Bölüm""".toRegex()
                     regex.find(title)?.groupValues?.get(1)?.toIntOrNull()
@@ -192,7 +174,7 @@ private fun Element.toMainPageResult(): SearchResponse? {
         
     } else {
         
-        val title = document.selectFirst("h1.film")?.text() ?: return null
+        val title = document.selectFirst("div.film h1")?.text() ?: return null
         val poster = fixUrlNull(document.selectFirst("div.poster img")?.attr("data-src"))
         val description = document.selectFirst("div.description")?.text()
         
