@@ -28,7 +28,7 @@ class SetFilmIzle : MainAPI() {
     override val supportedTypes       = setOf(TvType.Movie, TvType.TvSeries)
 
 override val mainPage = mainPageOf(
-    "episodes" to "Yeni Bölümler", // Yeni eklenen
+    "episodes" to "Yeni Bölümler", 
     "${mainUrl}/film/" to "Yeni Filmler",
     "${mainUrl}/dizi/" to "Son Eklenen Diziler",
     "${mainUrl}/tur/aile/" to "Aile",
@@ -92,7 +92,7 @@ private suspend fun getEpisodes(page: Int): List<SearchResponse> {
     val document = Jsoup.parse(response.text)
     val episodes = document.select("article.item.episodes")
     
-    // Her bölüm için doğru dizi URL'ini al
+   
     return episodes.mapNotNull { element ->
         val episodeUrl = fixUrlNull(element.selectFirst("a")?.attr("href")) ?: return@mapNotNull null
         element.toEpisodeResultWithCorrectUrl(episodeUrl)
@@ -108,13 +108,13 @@ private suspend fun Element.toEpisodeResultWithCorrectUrl(episodeUrl: String): S
     val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
     val date = this.selectFirst("div.serie-time")?.text()?.trim()
 
-    // Bölüm sayfasından doğru dizi URL'ini al
+    
     val correctSeriesUrl = try {
         val episodePage = app.get(episodeUrl).document
         val seriesLink = episodePage.selectFirst("a.dizi_profili")?.attr("href")
-        fixUrlNull(seriesLink) ?: episodeUrl // Fallback olarak episode URL'ini kullan
+        fixUrlNull(seriesLink) ?: episodeUrl
     } catch (e: Exception) {
-        episodeUrl // Hata durumunda episode URL'ini kullan
+        episodeUrl
     }
 
     return newTvSeriesSearchResponse(title, correctSeriesUrl, TvType.TvSeries) {
@@ -133,7 +133,7 @@ private fun Element.toEpisodeResult(): SearchResponse? {
     val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
     val date = this.selectFirst("div.serie-time")?.text()?.trim()
 
-    // Bölüm URL'ini dizi ana sayfasına dönüştür
+   
     val href = convertEpisodeUrlToSeriesUrl(originalHref, serie)
 
     return newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
@@ -143,7 +143,7 @@ private fun Element.toEpisodeResult(): SearchResponse? {
 }
 
 private fun convertEpisodeUrlToSeriesUrl(episodeUrl: String, serieName: String): String {
-    // Bu fonksiyon artık kullanılmıyor, yeni approach ile doğrudan episode sayfasından link alıyoruz
+    
     return episodeUrl
 }
 
@@ -334,7 +334,7 @@ override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallbac
         val sourceIframe = JSONObject(sourceBody).optJSONObject("data")?.optString("url") ?: return@forEach
         Log.d("SetFilm", "iframe » $sourceIframe")
 
-        // Player name'ini part key'e göre düzenle
+        
         val displayName = when {
             partKey.contains("turkcedublaj", ignoreCase = true) -> "$name - Dublaj"
             partKey.contains("turkcealtyazi", ignoreCase = true) -> "$name - Altyazı"
@@ -357,7 +357,7 @@ override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallbac
             )
         }
 
-        // SetPlay için partKey'i URL'e ekle
+       
         if (sourceIframe.contains("setplay.cfd") || sourceIframe.contains("setplay.site")) {
             val modifiedUrl = if (sourceIframe.contains("?")) {
                 "${sourceIframe}&partKey=${partKey}"

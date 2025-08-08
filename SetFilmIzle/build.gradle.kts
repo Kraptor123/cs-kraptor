@@ -1,4 +1,4 @@
-version = 21
+version = 22
 cloudstream {
     authors     = listOf("kraptor","kerimmkirac")
     language    = "tr"
