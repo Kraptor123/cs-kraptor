@@ -43,8 +43,8 @@ open class Odnoklassniki : ExtractorApi() {
 
             callback.invoke(
                 newExtractorLink(
-                    source = this.name,
-                    name = this.name,
+                    source = "${this.name} $quality",
+                    name = "${this.name} $quality",
                     url = videoUrl,
                     type = INFER_TYPE
                 ) {
