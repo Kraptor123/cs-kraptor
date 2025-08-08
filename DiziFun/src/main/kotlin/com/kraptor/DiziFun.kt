@@ -105,6 +105,8 @@ class DiziFun : MainAPI() {
 
         val type = if (url.contains("/film/")) TvType.Movie else TvType.TvSeries
 
+        val score = document.selectFirst("div.imdb-score")?.text()
+
         if (type == TvType.Movie) {
             val movieData = url
             return newMovieLoadResponse(title, url, type, movieData) {
@@ -113,6 +115,7 @@ class DiziFun : MainAPI() {
                 this.tags = tags
                 this.plot = description
                 this.actors = actors
+                this.score  = Score.from10(score)
                 addTrailer(trailer)
             }
         } else {
