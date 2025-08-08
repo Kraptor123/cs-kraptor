@@ -21,27 +21,32 @@ class DiziYou : MainAPI() {
     override val supportedTypes       = setOf(TvType.TvSeries)
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/dizi-arsivi/page/SAYFA/?filtrele=tarih&sirala=DESC#038;sirala=DESC"                 to "Yeni Eklenenler",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Aile"                 to "Aile",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Aksiyon"              to "Aksiyon",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Animasyon"            to "Animasyon",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Belgesel"             to "Belgesel",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Bilim+Kurgu"          to "Bilim Kurgu",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Dram"                 to "Dram",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Fantazi"              to "Fantazi",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Gerilim"              to "Gerilim",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Gizem"                to "Gizem",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Komedi"               to "Komedi",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Korku"                to "Korku",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Macera"               to "Macera",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Sava%C5%9F"           to "Savaş",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Su%C3%A7"             to "Suç",
-//        "${mainUrl}/dizi-arsivi/page/SAYFA/?tur=Vah%C5%9Fi+Bat%C4%B1" to "Vahşi Batı"
+        ""  to "Yeni Eklenenler",
+        "" to "Aile",
+//        "" to "Aksiyon",
+//        "" to "Animasyon",
+//        "" to "Belgesel",
+//        "" to "Bilim Kurgu",
+//        "" to "Dram",
+//        "" to "Fantazi",
+//        "" to "Gerilim",
+//        "" to "Gizem",
+//        "" to "Komedi",
+//        "" to "Korku",
+//        "" to "Macera",
+//        "" to "Savaş",
+//        "" to "Suç",
+//        "" to "Vahşi Batı"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val url      = request.data.replace("SAYFA", "$page")
-        val document = app.get(url).document
+        val document = app.get("${mainUrl}/dizi-arsivi/page/$page/?filtrele=imdb&sirala=DESC&yil&imdb&kelime&tur=${request.name}&sirala=DESC&yil&imdb&kelime&tur=${request.name}", headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
+                    "Referer" to "$mainUrl/",
+                    "Cookie" to "wordpress_test_cookie=WP+Cookie+check; wordpress_logged_in_32080760cc27b19056828b6dab487783=karaOsman%7C1755826436%7CkTRdcilQ3fHoAaskjoLhyNFfv2PGDakAyZeh2wdpFsL%7C8417df2c2c603c445ffa06dd66f1fa3a8c7c8b875658b65342eeab756500a48d"
+                )
+            ).document
+
         val home     = document.select("div.single-item").mapNotNull { it.toMainPageResult() }
 
         return newHomePageResponse(request.name, home)
@@ -140,8 +145,8 @@ class DiziYou : MainAPI() {
         for (stream in streamUrls) {
             callback.invoke(
                 newExtractorLink(
-                    source  = stream.name,
-                    name    = stream.name,
+                    source  = this.name,
+                    name    = this.name,
                     url     = stream.url,
                     type = ExtractorLinkType.M3U8
                 ) {
