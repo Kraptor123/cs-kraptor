@@ -22,7 +22,8 @@ class DiziYou : MainAPI() {
 
     override val mainPage = mainPageOf(
         ""  to "Yeni Eklenenler",
-        "" to "Aile",
+        "${mainUrl}/"   to "Ana Sayfa",
+//        "" to "Aile",
 //        "" to "Aksiyon",
 //        "" to "Animasyon",
 //        "" to "Belgesel",
@@ -40,24 +41,41 @@ class DiziYou : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${mainUrl}/dizi-arsivi/page/$page/?filtrele=imdb&sirala=DESC&yil&imdb&kelime&tur=${request.name}&sirala=DESC&yil&imdb&kelime&tur=${request.name}", headers = mapOf(
+        val document = if (request.name.contains("Bölümler")) {
+            app.get(
+                request.data,
+                headers = mapOf(
                     "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
                     "Referer" to "$mainUrl/",
                     "Cookie" to "wordpress_test_cookie=WP+Cookie+check; wordpress_logged_in_32080760cc27b19056828b6dab487783=karaOsman%7C1755826436%7CkTRdcilQ3fHoAaskjoLhyNFfv2PGDakAyZeh2wdpFsL%7C8417df2c2c603c445ffa06dd66f1fa3a8c7c8b875658b65342eeab756500a48d"
                 )
             ).document
+        } else {
+            app.get(
+                "${mainUrl}/dizi-arsivi/page/$page/?filtrele=imdb&sirala=DESC&yil&imdb&kelime&tur=${request.name}&sirala=DESC&yil&imdb&kelime&tur=${request.name}",
+                headers = mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
+                    "Referer" to "$mainUrl/",
+                    "Cookie" to "wordpress_test_cookie=WP+Cookie+check; wordpress_logged_in_32080760cc27b19056828b6dab487783=karaOsman%7C1755826436%7CkTRdcilQ3fHoAaskjoLhyNFfv2PGDakAyZeh2wdpFsL%7C8417df2c2c603c445ffa06dd66f1fa3a8c7c8b875658b65342eeab756500a48d"
+                )
+            ).document
+        }
 
-        val home     = document.select("div.single-item").mapNotNull { it.toMainPageResult() }
+        val home     = document.select("div.single-item, div#list-series-main").mapNotNull { it.toMainPageResult() }
 
         return newHomePageResponse(request.name, home)
     }
 
     private fun Element.toMainPageResult(): SearchResponse? {
-        val title     = this.selectFirst("div#categorytitle a")?.text() ?: return null
-        val href      = fixUrlNull(this.selectFirst("div#categorytitle a")?.attr("href")) ?: return null
+        val title     = this.selectFirst("div#categorytitle a, div.cat-title-main")?.text() ?: return null
+        val href      = fixUrlNull(this.selectFirst("div#categorytitle a, a")?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val score     = this.selectFirst("div.cat-imdb-main")?.text()
 
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+            this.posterUrl = posterUrl
+            this.score     = Score.from10(score)
+        }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
