@@ -58,16 +58,18 @@ private fun Element.toSearchResult(): SearchResponse? {
     val title     = this.selectFirst("div.description")?.text()?.trim() ?: return null
     val href      = fixUrlNull(this.attr("href")) ?: return null
     val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
-    val score = this.selectFirst("span.imdbp")?.ownText()?.trim()
+    val rating = this.selectFirst("span.imdbp")?.ownText()?.trim()
+    Log.d("SZD", "rating » $rating")
 
 
     return newTvSeriesSearchResponse(title, href, TvType.TvSeries) 
     { 
         
-     this.posterUrl = posterUrl;
-     this.score  = Score.from10(score) 
-    
+     this.posterUrl = posterUrl
+     this.score = rating?.replace(",", ".")?.toDoubleOrNull()?.let { 
+        Score.from10(it) 
     }
+}
 }
 
 private fun Element.toNewEpisodeSearchResult(): SearchResponse? {
@@ -84,6 +86,8 @@ private fun Element.toNewEpisodeSearchResult(): SearchResponse? {
     val href = fixUrlNull("/diziler/$seriesName.html") ?: return null
     
     val posterUrl = fixUrlNull(link.selectFirst("img")?.attr("src"))
+    val rating = this.selectFirst("span.imdbp")?.ownText()?.trim()
+    
 
     return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
 }
@@ -104,7 +108,7 @@ private fun Element.toNewEpisodeSearchResult(): SearchResponse? {
         val year        = document.selectFirst("div.extra span")?.text()?.trim()?.split("-")?.first()?.toIntOrNull()
         val description = document.selectFirst("span#tartismayorum-konu")?.text()?.trim()
         val tags        = document.select("div.labels a[href*='tur']").mapNotNull { it.text().trim() }
-        val rating      = document.selectFirst("div.dizipuani a div")?.text()?.trim()?.replace(",", ".")
+        val rating      = document.selectFirst("div.detail")?.text()?.trim()
         val duration    = document.selectXpath("//span[contains(text(), 'Dk.')]").text().trim().substringBefore(" Dk.").toIntOrNull()
 
         val endpoint    = url.split("/").last()
@@ -141,7 +145,9 @@ private fun Element.toNewEpisodeSearchResult(): SearchResponse? {
             this.year      = year
             this.plot      = description
             this.tags      = tags
-            this.score = Score.from10(rating)
+            this.score = rating?.replace(",", ".")?.toDoubleOrNull()?.let { 
+                Score.from10(it) 
+            }
             this.duration  = duration
             addActors(actors)
         }
