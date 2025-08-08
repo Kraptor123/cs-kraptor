@@ -1,4 +1,3 @@
-// ! Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
 package com.keyiflerolsun
 
@@ -18,30 +17,75 @@ class SezonlukDizi : MainAPI() {
     override val supportedTypes       = setOf(TvType.TvSeries)
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/diziler.asp?siralama_tipi=id&s="          to "Son Eklenenler",
-        "${mainUrl}/diziler.asp?siralama_tipi=id&tur=mini&s=" to "Mini Diziler",
-        "${mainUrl}/diziler.asp?siralama_tipi=id&kat=2&s="    to "Yerli Diziler",
-        "${mainUrl}/diziler.asp?siralama_tipi=id&kat=1&s="    to "Yabancı Diziler",
-        "${mainUrl}/diziler.asp?siralama_tipi=id&kat=3&s="    to "Asya Dizileri",
-        "${mainUrl}/diziler.asp?siralama_tipi=id&kat=4&s="    to "Animasyonlar",
-        "${mainUrl}/diziler.asp?siralama_tipi=id&kat=5&s="    to "Animeler",
-        "${mainUrl}/diziler.asp?siralama_tipi=id&kat=6&s="    to "Belgeseller",
-    )
+    "${mainUrl}/ajax/dataDefaultSonCikan.asp?d=-1&k=0&s=" to "Yeni Bölümler",
+    "${mainUrl}/diziler.asp?siralama_tipi=id&s="          to "Yeni Diziler",
+    "${mainUrl}/diziler.asp?siralama_tipi=id&kat=1&s="    to "Yabancı Diziler",
+    "${mainUrl}/diziler.asp?siralama_tipi=id&kat=3&s="    to "Asya Dizileri",
+    "${mainUrl}/diziler.asp?siralama_tipi=id&kat=4&s="    to "Animasyonlar",
+    "${mainUrl}/diziler.asp?siralama_tipi=id&kat=5&s="    to "Animeler",
+    "${mainUrl}/diziler.asp?siralama_tipi=id&kat=6&s="    to "Belgeseller",
+)
 
-    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}${page}").document
-        val home     = document.select("div.afis a").mapNotNull { it.toSearchResult() }
-
-        return newHomePageResponse(request.name, home)
+override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+    val document = if (request.name == "Yeni Bölümler") {
+       
+        app.post(
+            url = "${request.data}${page}",
+            headers = mapOf(
+                "X-Requested-With" to "XMLHttpRequest",
+                "Accept" to "*/*",
+                "Referer" to mainUrl
+            )
+        ).document
+    } else {
+        
+        app.get("${request.data}${page}").document
+    }
+    
+    val home = if (request.name == "Yeni Bölümler") {
+        
+        document.select("div.column div.ui.card").mapNotNull { it.toNewEpisodeSearchResult() }
+    } else {
+        
+        document.select("div.afis a").mapNotNull { it.toSearchResult() }
     }
 
-    private fun Element.toSearchResult(): SearchResponse? {
-        val title     = this.selectFirst("div.description")?.text()?.trim() ?: return null
-        val href      = fixUrlNull(this.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+    return newHomePageResponse(request.name, home)
+}
 
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+private fun Element.toSearchResult(): SearchResponse? {
+    val title     = this.selectFirst("div.description")?.text()?.trim() ?: return null
+    val href      = fixUrlNull(this.attr("href")) ?: return null
+    val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+    val score = this.selectFirst("span.imdbp")?.ownText()?.trim()
+
+
+    return newTvSeriesSearchResponse(title, href, TvType.TvSeries) 
+    { 
+        
+     this.posterUrl = posterUrl;
+     this.score  = Score.from10(score) 
+    
     }
+}
+
+private fun Element.toNewEpisodeSearchResult(): SearchResponse? {
+    val link = this.selectFirst("a") ?: return null
+    
+    val titleElement = link.selectFirst("div.box-title span.title")?.text()?.trim() ?: return null
+    val episodeElement = link.selectFirst("div.box-title span.seep")?.text()?.trim() ?: return null
+    
+    val title = "$titleElement $episodeElement"
+    val originalHref = link.attr("href")
+    
+    
+    val seriesName = originalHref.split("/").getOrNull(1) ?: return null
+    val href = fixUrlNull("/diziler/$seriesName.html") ?: return null
+    
+    val posterUrl = fixUrlNull(link.selectFirst("img")?.attr("src"))
+
+    return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+}
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/diziler.asp?adi=${query}").document
@@ -126,7 +170,33 @@ class SezonlukDizi : MainAPI() {
                 data    = mapOf("id" to "${veri.id}")
             ).document
 
-            val iframe = fixUrlNull(veriResponse.selectFirst("iframe")?.attr("src")) ?: return@forEach
+            val iframe = when {
+    veri.baslik.contains("Dzen", ignoreCase = true) -> {
+        val jsScript = veriResponse.selectFirst("script")?.data() ?: return@forEach
+        val vid = Regex("""var\s+vid\s*=\s*['"](.+?)['"]""").find(jsScript)?.groupValues?.get(1) ?: return@forEach
+        "https://dzen.ru/embed/$vid"
+    }
+
+    veri.baslik.contains("Pixel", ignoreCase = true) -> {
+        val pixelIframe = fixUrlNull(veriResponse.selectFirst("iframe")?.attr("src")) ?: return@forEach
+        val pixelPage = app.get(pixelIframe).document
+        val pixelScript = pixelPage.select("script").mapNotNull { it.data() }.joinToString("\n")
+
+        val hexEncoded = Regex("""file\s*:\s*["']((?:\\x[0-9a-fA-F]{2})+)["']""").find(pixelScript)?.groupValues?.get(1) ?: return@forEach
+
+        val decodedUrl = hexEncoded
+            .replace("""\\x""".toRegex(), "")
+            .chunked(2)
+            .joinToString("") { it.toInt(16).toChar().toString() }
+
+        decodedUrl
+    }
+
+    else -> {
+        fixUrlNull(veriResponse.selectFirst("iframe")?.attr("src")) ?: return@forEach
+    }
+}
+
             Log.d("SZD", "dil»1 | iframe » $iframe")
 
             loadExtractor(iframe, "${mainUrl}/", subtitleCallback) { link ->
