@@ -143,8 +143,13 @@ class AnimeciX : MainAPI() {
                 // JSON'u doğrudan TitleVideos sınıfına çevir
                 val titleVideos: TitleVideos? = ObjectMapper()
                     .readValue(relResp.body.string(), TitleVideos::class.java)
+
+                Log.d("kraptor_$name","titleVideos = ${titleVideos}")
+
                 titleVideos?.videos?.forEach { video ->
+                    Log.d("kraptor_$name","bolum poster = ${video.poster}")
                     episodes.add(
+
                         newEpisode(video.url)
                         {
                             this.name = video.name
