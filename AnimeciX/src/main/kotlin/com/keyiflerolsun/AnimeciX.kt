@@ -147,9 +147,11 @@ class AnimeciX : MainAPI() {
                     episodes.add(
                         newEpisode(video.url)
                         {
-                            this.name = "${video.seasonNum}. Sezon ${video.episodeNum}. Bölüm"
+                            this.name = video.name
                             this.season = video.seasonNum
                             this.episode = video.episodeNum
+                            this.posterUrl = video.poster
+                            this.description = video.description
                         }
                     )
                 }
@@ -253,9 +255,12 @@ class AnimeciX : MainAPI() {
                 val seasonNum = (videoData["season_num"] as? Number)?.toInt()
                 val videoUrl = videoData["url"] as? String
                 val extra = videoData["extra"] as? String
+                val poster = videoData["poster"] as? String
+                val description = videoData["description"] as? String
+                val name        = videoData["name"] as? String
 
                 if (videoUrl != null) {
-                    Video(episodeNum, seasonNum, videoUrl, extra)
+                    Video(episodeNum, seasonNum, videoUrl, extra, poster = poster , description = description, name = name)
                 } else null
             }
 

@@ -79,8 +79,11 @@ data class Credit(
 data class Video(
     @JsonProperty("episode_num") val episodeNum: Int?,
     @JsonProperty("season_num") val seasonNum: Int?,
-    @JsonProperty("url") val url: String,
-    @JsonProperty("extra") val extra: String?
+    @JsonProperty("url")    val url: String,
+    @JsonProperty("extra")  val extra: String?,
+    @JsonProperty("poster") val poster: String?,
+    @JsonProperty("description") val description: String?,
+    @JsonProperty("name") val name: String?
 )
 
 data class TitleVideos(
