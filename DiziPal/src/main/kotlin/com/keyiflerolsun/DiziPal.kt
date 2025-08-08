@@ -220,9 +220,21 @@ class DiziPal : MainAPI() {
                     val subLang = it.substringAfter("[").substringBefore("]")
                     val subUrl  = it.replace("[${subLang}]", "")
 
+                    val subDil = if (subLang.contains("Turkce", ignoreCase = true)) {
+                        "Turkish"
+                    } else if (subLang.contains("Ingilizce", ignoreCase = true)) {
+                        "English"
+                    } else if (subLang.contains("Türkçe", ignoreCase = true)) {
+                        "Turkish"
+                    } else if (subLang.contains("İngilizce", ignoreCase = true)) {
+                        "English"
+                    } else {
+                        subLang
+                    }
+
                     subtitleCallback.invoke(
                         SubtitleFile(
-                            lang = subLang,
+                            lang = subDil,
                             url  = fixUrl(subUrl)
                         )
                     )
