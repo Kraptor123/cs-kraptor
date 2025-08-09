@@ -11,7 +11,7 @@ import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
 
 class UgurFilm : MainAPI() {
-    override var mainUrl              = "https://ugurfilm9.com"
+    override var mainUrl              = "https://ugurfilm10.com"
     override var name                 = "UgurFilm"
     override val hasMainPage          = true
     override var lang                 = "tr"
