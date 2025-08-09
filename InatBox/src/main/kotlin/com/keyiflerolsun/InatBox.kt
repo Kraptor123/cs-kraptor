@@ -18,7 +18,7 @@ import org.json.JSONObject
 import okio.BufferedSource
 
 class InatBox : MainAPI() {
-    private val contentUrl  = "https://dizibox.rest"
+    private val contentUrl  = "https://dizibox.cfd"
     //private val categoryUrl = "https://dizilab.cfd"
 
     override var name                 = "InatBox"
@@ -32,8 +32,8 @@ class InatBox : MainAPI() {
     private val aesKey = "ywevqtjrurkwtqgz" //Master secret and iv key (This is used for both secret key and iv. This is the embedded master key for loading categories like sport channels.)
 
     override val mainPage = mainPageOf(
-        "https://boxbc.sbs/CDN/001_STR/boxbc.sbs/spor_v2.php"  to "Spor Kanalları",
-        "https://boxbc.sbs/CDN/001_STR/boxbc.sbs/derbiler.php" to "Derbiler",
+        "https://boxyz.cfd/CDN/001_STR/boxyz.cfd/spor_v2.php"  to "Spor Kanalları",
+        "https://boxyz.cfd/CDN/001_STR/boxbc.sbs/derbiler.php" to "Derbiler",
 
         "${contentUrl}/tv/list1.php"                           to "Kanallar Liste 1 - TR",
         "${contentUrl}/tv/list2.php"                           to "Kanallar Liste 2 - GLB",
@@ -47,7 +47,6 @@ class InatBox : MainAPI() {
         "${contentUrl}/tv/dini.php"                            to "Dini Kanallar",
         "${contentUrl}/ex/index.php"                           to "EXXEN",
         "${contentUrl}/ga/index.php"                           to "Gain",
-//        "${contentUrl}/blu/index.php"                          to "BluTV",
         "${contentUrl}/nf/index.php"                           to "Netflix", // Burası şu an çalışmıyor.
         "${contentUrl}/dsny/index.php"                         to "Disney+",
         "${contentUrl}/amz/index.php"                          to "Amazon Prime",
