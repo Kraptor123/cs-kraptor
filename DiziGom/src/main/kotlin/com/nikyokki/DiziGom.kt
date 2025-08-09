@@ -11,7 +11,10 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.utils.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.jsoup.nodes.Element
+import java.net.URLDecoder
 
 class DiziGom : MainAPI() {
     override var mainUrl = "https://dizigom1.live"
@@ -44,7 +47,26 @@ class DiziGom : MainAPI() {
     "" to "Tarih"
 )
 
+    private var WpOnce: String? = null
+    private val initMutex = Mutex()
+
+    private suspend fun initSession() {
+        if (WpOnce != null) return
+        initMutex.withLock {
+            if (WpOnce != null) return@withLock
+            Log.d("kraptor_Dizigom", "🔄 Oturum başlatılıyor: WpOnce Aliniyor")
+            val resp = app.get(mainUrl, timeout = 120)
+            val wpOnceAl = resp.document.selectFirst("script#ajax-users-list-js-extra")?.data().toString()
+            val regex = Regex(pattern = "\"admin_ajax_nonce\":\"([^\"]*)\"", options = setOf(RegexOption.IGNORE_CASE))
+            val wpOnceMatch = regex.find(wpOnceAl)?.groupValues[1].toString()
+            WpOnce = wpOnceMatch
+            Log.d("kraptor_Dizigom", "WpOnce: $WpOnce")
+        }
+    }
+
 override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+    initSession()
+
     val document = when {
         request.name.contains("Yeni Bölümler") -> {
             app.get("${request.data}/page/$page").document
@@ -66,7 +88,7 @@ override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageR
                 },
                 "filterType" to "series",
                 "paged" to "$page",
-                "_wpnonce" to "bd1ec31e85"
+                "_wpnonce" to WpOnce!!,
             )).document
         }
     }
