@@ -1,7 +1,7 @@
-version = 23
+version = 24
 
 cloudstream {
-    authors     = listOf("JustRelaxable", "keyiflerolsun")
+    authors     = listOf("JustRelaxable", "keyiflerolsun", "kraptor")
     language    = "tr"
     description = "İnatBox cloudstream eklentisidir. Sevdiğiniz yayın platformlarını ve canlı maçları burada bulabilirsiniz."
 
