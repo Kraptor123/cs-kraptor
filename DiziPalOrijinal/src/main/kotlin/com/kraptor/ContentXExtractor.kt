@@ -41,8 +41,12 @@ open class ContentX : ExtractorApi() {
                 .replace("\\u011f", "ğ")
                 .replace("\\u015f", "ş")
 
+            Log.d("kraptor_$name","sublang = $subLang")
+
             val keywords = listOf("tur", "tr", "türkçe", "turkce")
-            val language = if (keywords.any { subLang.contains(it, ignoreCase = true) }) {
+            val language = if (subLang.contains("Forced")) {
+                    "Turkish Forced"
+            } else if (keywords.any { subLang.contains(it, ignoreCase = true) }) {
                 "Turkish"
             } else {
                 subLang

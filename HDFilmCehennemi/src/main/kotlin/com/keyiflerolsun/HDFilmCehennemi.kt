@@ -316,7 +316,7 @@ class HDFilmCehennemi : MainAPI() {
                 val apiGet = app.get(
                     "${mainUrl}/video/$videoID/",
                     headers = mapOf(
-                        "Content-Type"     to "application/json",
+                        "Content-Type" to "application/json",
                         "X-Requested-With" to "fetch"
                     ),
                     referer = data
@@ -327,81 +327,124 @@ class HDFilmCehennemi : MainAPI() {
 
                 Log.d("kraptor_$name", "iframe mi $iframe")
 
+
                 val iframeGet = app.get(iframe, referer = "${mainUrl}/").text
 
-                val evalRegex = Regex("""eval\((.*?\\.*?\\.*?\\.*?\{\}\)\))""", RegexOption.DOT_MATCHES_ALL)
-                val packedCode = evalRegex.find(iframeGet)?.value
-                val unpackedJs = JsUnpacker(packedCode).unpack().toString()
-                Log.d("kraptor_$name", "unpackedJs $unpackedJs")
-                val dchelloVar = if (unpackedJs.contains("dc_hello")) {
-                    "var"
+                val videoRegex = Regex("""contentUrl": "([^"]*)""", RegexOption.DOT_MATCHES_ALL)
+
+                val videoUrl = videoRegex.find(iframeGet)?.groupValues[1].toString()
+
+                Log.d("kraptor_$name","videourl = $videoUrl")
+
+                if (videoUrl.contains("//")) {
+                    Log.d("kraptor_$name","kolay yöntem başladı")
+                    val videoIsim = if (videoUrl.contains("rapidrame")) {
+                        "Rapidrame"
+                    } else if (videoUrl.contains("cdnimages")) {
+                        "Close"
+                    } else if (videoUrl.contains("hls13.playmix.uno")) {
+                        "Close"
+                    } else {
+                        "HDFilmCehennemi"
+                    }
+
+                    val refererSon = if (videoUrl.contains("cdnimages")) {
+                        "https://hdfilmcehennemi.mobi/"
+                    } else if (videoUrl.contains("hls13.playmix.uno")) {
+                        "https://hdfilmcehennemi.mobi/"
+                    } else {
+                        "${mainUrl}/"
+                    }
+
+                    callback.invoke(
+                        newExtractorLink(
+                        source = videoIsim,
+                        name = videoIsim,
+                        url = videoUrl,
+                        type = ExtractorLinkType.M3U8,
+                        {
+                            this.referer = refererSon
+                            this.quality = Qualities.Unknown.value
+                        }
+                    ))
                 } else {
-                    "yok"
-                }
-                Log.d("kraptor_$name", "dchelloVar $dchelloVar")
-                val dcRegex = if (dchelloVar.contains("var")) {
-                    Regex(pattern = "dc_hello\\(\"([^\"]*)\"\\)", options = setOf(RegexOption.IGNORE_CASE))
-                } else {
-                    Regex("""dc_[a-zA-Z0-9_]+\(\[(.*?)\]\)""", RegexOption.DOT_MATCHES_ALL)
-                }
-                val match = dcRegex.find(unpackedJs)
+
+
+                    val evalRegex = Regex("""eval\((.*?\\.*?\\.*?\\.*?\{\}\)\))""", RegexOption.DOT_MATCHES_ALL)
+                    val packedCode = evalRegex.find(iframeGet)?.value
+                    val unpackedJs = JsUnpacker(packedCode).unpack().toString()
+                    Log.d("kraptor_$name", "unpackedJs $unpackedJs")
+                    val dchelloVar = if (unpackedJs.contains("dc_hello")) {
+                        "var"
+                    } else {
+                        "yok"
+                    }
+                    Log.d("kraptor_$name", "dchelloVar $dchelloVar")
+                    val dcRegex = if (dchelloVar.contains("var")) {
+                        Regex(pattern = "dc_hello\\(\"([^\"]*)\"\\)", options = setOf(RegexOption.IGNORE_CASE))
+                    } else {
+                        Regex("""dc_[a-zA-Z0-9_]+\(\[(.*?)\]\)""", RegexOption.DOT_MATCHES_ALL)
+                    }
+                    val match = dcRegex.find(unpackedJs)
 //                Log.d("kraptor_$name", "match $match")
 
-                val realUrl = if (dchelloVar.contains("var")) {
-                    val parts      = match?.groupValues[1].toString()
-                    Log.d("kraptor_$name", "parts $parts")
-                    val decodedUrl = dcHello(parts)
-                    Log.d("kraptor_$name", "decodedUrl $decodedUrl")
-                    decodedUrl
-                } else{
-                    val parts = match!!.groupValues[1]
-                        .split(",")
-                        .map { it.trim().removeSurrounding("\"") }
-                    Log.d("kraptor_$name", "parts $parts")
+                    val realUrl = if (dchelloVar.contains("var")) {
+                        val parts = match?.groupValues[1].toString()
+                        Log.d("kraptor_$name", "parts $parts")
+                        val decodedUrl = dcHello(parts)
+                        Log.d("kraptor_$name", "decodedUrl $decodedUrl")
+                        decodedUrl
+                    } else {
+                        val parts = match!!.groupValues[1]
+                            .split(",")
+                            .map { it.trim().removeSurrounding("\"") }
+                        Log.d("kraptor_$name", "parts $parts")
 
-                    Log.d("kraptor_$name", "dc parts: $parts")
-                    val decodedUrl = dcDecode(parts)
-                    Log.d("kraptor_$name", "decoded URL: $decodedUrl")
-                    decodedUrl
-                }
-
-                Log.d("kraptor_$name", "realUrl $realUrl")
-
-
-
-                if (iframe.contains("?rapidrame_id=")) {
-                    iframe = "${mainUrl}/playerr/" + iframe.substringAfter("?rapidrame_id=")
-                }
-
-                val videoIsim = if (realUrl.contains("rapidrame")) {
-                    "Rapidrame"
-                } else if (realUrl.contains("cdnimages")) {
-                    "Close"
-                } else if (realUrl.contains("hls13.playmix.uno")) {
-                    "Close"
-                }  else {
-                    "HDFilmCehennemi"
-                }
-
-                val refererSon = if (realUrl.contains("cdnimages")) {
-                    "https://hdfilmcehennemi.mobi/"
-                } else if (realUrl.contains("hls13.playmix.uno")) {
-                    "https://hdfilmcehennemi.mobi/"
-                } else {
-                    "${mainUrl}/"
-                }
-
-                Log.d("kraptor_$name", "$source » $videoID » $iframe")
-                callback.invoke(newExtractorLink(
-                    source = videoIsim,
-                    name = videoIsim,
-                    url = realUrl,
-                    type = ExtractorLinkType.M3U8,
-                    {
-                        this.referer = refererSon
-                        this.quality = Qualities.Unknown.value
+                        Log.d("kraptor_$name", "dc parts: $parts")
+                        val decodedUrl = dcDecode(parts)
+                        Log.d("kraptor_$name", "decoded URL: $decodedUrl")
+                        decodedUrl
                     }
-                ))
+
+                    Log.d("kraptor_$name", "realUrl $realUrl")
+
+
+
+                    if (iframe.contains("?rapidrame_id=")) {
+                        iframe = "${mainUrl}/playerr/" + iframe.substringAfter("?rapidrame_id=")
+                    }
+
+                    val videoIsim = if (realUrl.contains("rapidrame")) {
+                        "Rapidrame"
+                    } else if (realUrl.contains("cdnimages")) {
+                        "Close"
+                    } else if (realUrl.contains("hls13.playmix.uno")) {
+                        "Close"
+                    } else {
+                        "HDFilmCehennemi"
+                    }
+
+                    val refererSon = if (realUrl.contains("cdnimages")) {
+                        "https://hdfilmcehennemi.mobi/"
+                    } else if (realUrl.contains("hls13.playmix.uno")) {
+                        "https://hdfilmcehennemi.mobi/"
+                    } else {
+                        "${mainUrl}/"
+                    }
+
+                    Log.d("kraptor_$name", "$source » $videoID » $iframe")
+                    callback.invoke(
+                        newExtractorLink(
+                        source = videoIsim,
+                        name = videoIsim,
+                        url = realUrl,
+                        type = ExtractorLinkType.M3U8,
+                        {
+                            this.referer = refererSon
+                            this.quality = Qualities.Unknown.value
+                        }
+                    ))
+                }
             }
         }
 

@@ -42,7 +42,9 @@ open class ContentX : ExtractorApi() {
                 .replace("\\u015f", "ş")
 
             val keywords = listOf("tur", "tr", "türkçe", "turkce")
-            val language = if (keywords.any { subLang.contains(it, ignoreCase = true) }) {
+            val language = if (subLang.contains("Forced")) {
+                "Turkish Forced"
+            } else if (keywords.any { subLang.contains(it, ignoreCase = true) }) {
                 "Turkish"
             } else {
                 subLang
