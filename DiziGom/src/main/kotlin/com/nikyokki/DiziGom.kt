@@ -243,6 +243,7 @@ private fun convertEpisodeUrlToSeriesUrl(episodeUrl: String): String {
                         this.name = epName
                         this.season = epSeason
                         this.episode = epEp
+                        this.posterUrl = poster
                     }
                 )
             )

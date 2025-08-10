@@ -535,6 +535,7 @@ class WebDramaTurkey : MainAPI() {
                 this.episode = bNum
                 this.season  = bSeason
                 this.name    = "Bölüm"
+                this.posterUrl = poster
             })
         }
         return if (url.contains("/film/")) {

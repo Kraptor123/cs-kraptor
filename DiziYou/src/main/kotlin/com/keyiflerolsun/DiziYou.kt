@@ -108,6 +108,7 @@ class DiziYou : MainAPI() {
                 this.name = it.selectFirst("div.bolumismi")?.text()?.trim()?.replace(Regex("""[()]"""), "")?.trim() ?: epName
                 this.season = epSeason
                 this.episode = epEpisode
+                this.posterUrl = poster
             }
         }
 

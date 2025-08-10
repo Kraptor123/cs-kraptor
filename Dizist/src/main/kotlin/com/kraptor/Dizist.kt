@@ -187,6 +187,7 @@ val description = document.selectFirst("div.series-profile-summary > p:nth-child
                     episode = bolumSayisi
                     name = "Bölüm"
                     season  = sezonSayisi
+                    posterUrl = poster
                 }
             }
             .toList()

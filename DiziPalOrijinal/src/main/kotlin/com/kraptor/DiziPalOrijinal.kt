@@ -339,6 +339,7 @@ class DiziPalOrijinal : MainAPI() {
                 this.name = bolumName
                 this.season = bolumSeason
                 this.episode = bolumEpisode
+                this.posterUrl = poster
             })
         }
 

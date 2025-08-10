@@ -192,6 +192,7 @@ private fun SearchResult.toSearchResult(): SearchResponse? {
                     this.name = epTitle
                     this.season = epSeason
                     this.episode = epEpisode
+                    this.posterUrl = poster
                 })
             }
         }
