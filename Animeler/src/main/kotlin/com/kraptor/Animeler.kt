@@ -84,7 +84,7 @@ class Animeler : MainAPI() {
     private fun Element.toMainPageResult(): SearchResponse? {
         val title = this.selectFirst("h2 a span.show")?.text() ?: return null
         val href = fixUrlNull(this.selectFirst("a")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 
         return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
     }
@@ -99,7 +99,7 @@ class Animeler : MainAPI() {
     private fun Element.toSearchResult(): SearchResponse? {
         val title = this.selectFirst("h3 a")?.text() ?: return null
         val href = fixUrlNull(this.selectFirst("a.absolute")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
 
         return newMovieSearchResponse(title, href, TvType.Movie) { this.posterUrl = posterUrl }
     }
@@ -110,7 +110,7 @@ class Animeler : MainAPI() {
         val document = app.get(url).document
 
         val title = document.selectFirst(".xl\\:w-full h1")?.text()?.trim() ?: return null
-        val poster = fixUrlNull(document.selectFirst("div.anime-image img")?.attr("src"))
+        val poster = fixUrlNull(document.selectFirst("div.anime-image img")?.attr("data-src"))
         val description = document.selectFirst("div.line-clamp-3")?.text()?.trim()
         val tags = document.select("span.leading-6 a").map { it.text() }
         val elements = document.select("li.list-none.mbe-1")
@@ -216,7 +216,7 @@ class Animeler : MainAPI() {
         Log.d("Animeler", "data = $data")
 
         val document = app.get(data).document
-        val linkContainer = document.select("div.player")
+        val linkContainer = document.select("div.episode-player-box")
         if (linkContainer.isEmpty()) {
             Log.w("Animeler", "No player container found")
             return false
