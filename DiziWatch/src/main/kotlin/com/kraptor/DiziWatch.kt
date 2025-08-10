@@ -112,11 +112,25 @@ class DiziWatch : MainAPI() {
     private fun Icerikler.toSearchResult(): SearchResponse? {
         val title     = objectName?.replace("\\","").toString()
         val href      = fixUrlNull(usedSlug?.replace("\\","")).toString()
-        val posterUrl = objectPosterUrl ?: objectLogoUrl ?: objectSquareUrl
+        val posterUrl = objectPosterUrl?.replace("images-macellan-online.cdn.ampproject.org/i/s/", "")
+            ?.replace("file.dizilla.club", "file.macellan.online")
+            ?.replace("images.dizilla.club", "images.macellan.online")
+            ?.replace("images.dizimia4.com", "images.macellan.online")
+            ?.replace("file.dizimia4.com", "file.macellan.online")
+            ?.replace("/f/f/", "/630/910/")
+            ?.replace(Regex("(file\\.)[\\w\\.]+\\/?"), "$1macellan.online/")
+            ?.replace(Regex("(images\\.)[\\w\\.]+\\/?"), "$1macellan.online/")
         val score     = objectRelatedImdbPoint
 
-        return newAnimeSearchResponse(title, href, TvType.Anime) {
+        val type      = if (href.contains("dizi/")){
+            TvType.TvSeries
+        } else {
+            TvType.Anime
+        }
+
+        return newAnimeSearchResponse(title, href, type) {
             this.posterUrl = posterUrl
+            this.posterHeaders = mapOf("Referer" to "${mainUrl}/")
             this.score     = Score.from10(score)
         }
     }
@@ -151,7 +165,13 @@ class DiziWatch : MainAPI() {
             })
         }
 
-        return newAnimeLoadResponse(title, url, TvType.Anime, true) {
+        val type      = if (url.contains("dizi/")){
+            TvType.TvSeries
+        } else {
+            TvType.Anime
+        }
+
+        return newAnimeLoadResponse(title, url, type, true) {
             this.posterUrl       = poster
             this.plot            = description
             this.year            = year
