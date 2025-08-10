@@ -403,6 +403,7 @@ class Dizilla : MainAPI() {
                         this.name = epName
                         this.season = season
                         this.episode = epEpisode
+                        this.posterUrl = poster
                     }
                     episodeses.add(newEpisode)
                 }
