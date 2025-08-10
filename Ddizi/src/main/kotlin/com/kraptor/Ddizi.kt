@@ -150,70 +150,91 @@ class Ddizi : MainAPI() {
     }
 
     override suspend fun loadLinks(
-        data: String,
-        isCasting: Boolean,
-        subtitleCallback: (SubtitleFile) -> Unit,
-        callback: (ExtractorLink) -> Unit
-    ): Boolean {
-        Log.d("kraptor_$name", "data = $data")
-        val document = app.get(data).document
-        val iframeSrc = fixUrlNull(document.selectFirst("iframe")?.attr("src")).toString()
-        Log.d("kraptor_$name", "iframeSrc = $iframeSrc")
+    data: String,
+    isCasting: Boolean,
+    subtitleCallback: (SubtitleFile) -> Unit,
+    callback: (ExtractorLink) -> Unit
+): Boolean {
+    Log.d("Ddizi", "data = $data")
+    val document = app.get(data).document
+    val iframeSrc = fixUrlNull(document.selectFirst("iframe")?.attr("src")).toString()
+    Log.d("Ddizi", "iframeSrc = $iframeSrc")
 
-        val iframeGet = if (iframeSrc.contains("/player/oynat/")) {
-            app.get(iframeSrc, referer = "${mainUrl}/").text
-        } else {
-            ""
-        }
-        Log.d("kraptor_$name", "iframeGet = $iframeGet")
-
-        val regex = Regex(
-            pattern = """sources:\s*\[\s*\{.*?file:\s*["'](.*?)["'].*?\}\s*,?\s*]""",
-            options = setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
-        )
-
-        // 1) Önce eşleşme al
-        val matchResult = regex.find(iframeGet)
-        // 2) Eşleşme varsa, groupValues[1] URL'imiz; değilse null
-        val extractedUrl = matchResult?.groupValues?.get(1)?.replace("\\","").toString()
-
-        Log.d("kraptor_$name", "extractedUrl = $extractedUrl")
-
-        if (extractedUrl.contains("m3u8")) {
-            callback.invoke(
-                newExtractorLink(
-                    source = "Ddizi",
-                    name = "Ddizi",
-                    url = extractedUrl,
-                    type = ExtractorLinkType.M3U8
-                )
-            )
-        } else if (extractedUrl.contains("video/mp4")){
-            callback.invoke(
-                newExtractorLink(
-                    source = "Google",
-                    name = "Google",
-                    url = extractedUrl,
-                    type = ExtractorLinkType.VIDEO
-                )
-            )
-        }
-        else if (extractedUrl.contains(".mp4"))
-        {
-            callback.invoke(
-                newExtractorLink(
-                    source = "Ddizi",
-                    name = "Ddizi",
-                    url = extractedUrl,
-                    type = ExtractorLinkType.VIDEO
-                )
-            )
-        }
-        else {
-            // URL yoksa veya boşsa, fallback olarak loadExtractor'a devam et
-            loadExtractor(iframeSrc, "$mainUrl/", subtitleCallback, callback)
-        }
-
-        return true
+    val iframeGet = if (iframeSrc.contains("/player/oynat/")) {
+        app.get(iframeSrc, referer = "${mainUrl}/").text
+    } else {
+        ""
     }
-}
+    Log.d("Ddizi", "iframeGet = $iframeGet")
+
+    
+    if (iframeSrc.contains("youtube.com")) {
+        Log.d("Ddizi", "YouTube URL detected, fetching iframe content")
+        
+        
+        val iframeContent = app.get(iframeSrc, referer = "${mainUrl}/").text
+        Log.d("Ddizi", "iframeContent = $iframeContent")
+        
+        
+        val iframeDocument = app.get(iframeSrc, referer = "${mainUrl}/").document
+        val youtubeUrl = iframeDocument.selectFirst("a.div")?.attr("href")
+        
+        Log.d("Ddizi", "YouTube URL extracted = $youtubeUrl")
+        
+        if (youtubeUrl?.isNotEmpty() == true) {
+            
+            loadExtractor(youtubeUrl, "$mainUrl/", subtitleCallback, callback)
+            return true
+        }
+    }
+
+    
+    val regex = Regex(
+        pattern = """sources:\s*\[\s*\{.*?file:\s*["'](.*?)["'].*?\}\s*,?\s*]""",
+        options = setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
+    )
+
+   
+    val matchResult = regex.find(iframeGet)
+    
+    val extractedUrl = matchResult?.groupValues?.get(1)?.replace("\\","").toString()
+
+    Log.d("Ddizi", "extractedUrl = $extractedUrl")
+
+    if (extractedUrl.contains("m3u8")) {
+        callback.invoke(
+            newExtractorLink(
+                source = "Ddizi",
+                name = "Ddizi",
+                url = extractedUrl,
+                type = ExtractorLinkType.M3U8
+            )
+        )
+    } else if (extractedUrl.contains("video/mp4")){
+        callback.invoke(
+            newExtractorLink(
+                source = "Google",
+                name = "Google",
+                url = extractedUrl,
+                type = ExtractorLinkType.VIDEO
+            )
+        )
+    }
+    else if (extractedUrl.contains(".mp4"))
+    {
+        callback.invoke(
+            newExtractorLink(
+                source = "Ddizi",
+                name = "Ddizi",
+                url = extractedUrl,
+                type = ExtractorLinkType.VIDEO
+            )
+        )
+    }
+    else {
+       
+        loadExtractor(iframeSrc, "$mainUrl/", subtitleCallback, callback)
+    }
+
+    return true
+}}
