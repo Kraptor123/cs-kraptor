@@ -269,6 +269,19 @@ class HDFilmCehennemi : MainAPI() {
         }
     }
 
+    private fun cleanupWebView(wv: WebView) {
+        try {
+            wv.stopLoading()
+            wv.setWebChromeClient(null)   // nullable setter kullan
+            wv.webViewClient = object : WebViewClient() {}
+            wv.removeAllViews()
+            wv.clearHistory()
+            wv.loadUrl("about:blank")
+            wv.destroy()
+        } catch (ignored: Throwable) {}
+    }
+
+
     suspend fun createWebViewAndExtract(
         context: Context,
         baseUrl: String,
@@ -285,28 +298,28 @@ class HDFilmCehennemi : MainAPI() {
         """.trimIndent()
         )
 
-        return@withContext WebView(context).apply {
+        val wv = WebView(context.applicationContext).apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
             settings.allowFileAccess = true
             settings.allowContentAccess = true
-
-            webChromeClient = object : WebChromeClient() {
-                override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
-                    Log.d("kraptor_webview_console", "${consoleMessage?.message()}")
-                    return true
-                }
-            }
-
             webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    extractWithDelay(view, onResult, 0)
+                    extractWithDelay(view, { result ->
+                        onResult(result)
+                        // işi bitince temizle (main thread)
+                        Handler(Looper.getMainLooper()).post {
+                            Log.d("kraptor_HdCh", "webview temizlendi")
+                            cleanupWebView(this@apply)
+                        }
+                    }, 0)
                 }
             }
-
             loadDataWithBaseURL(baseUrl, modifiedHtml, "text/html", "UTF-8", null)
         }
+
+        return@withContext wv
     }
 
     private fun extractWithDelay(webView: WebView?, onResult: (String?) -> Unit, attempt: Int) {
@@ -399,7 +412,7 @@ class HDFilmCehennemi : MainAPI() {
         isCasting: Boolean,
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit,
-    ): Boolean = withContext(Dispatchers.IO) {
+    ): Boolean {
         Log.d("kraptor_$name", "data = $data")
         val document = app.get(data).document
 
@@ -440,7 +453,7 @@ class HDFilmCehennemi : MainAPI() {
                     val iframeContent = app.get(iframeUrl, referer = videoReferer).textLarge
                     Log.d("kraptor_$name", "iframeContent length = ${iframeContent.length}")
 
-                    if (appContext != null) {
+                    if (appContext != null && iframeUrl.contains("cehennem")) {
                         Log.d("kraptor_$name", "Using WebView to extract config...")
 
                         // Config objesini al
@@ -487,14 +500,12 @@ class HDFilmCehennemi : MainAPI() {
                                                         label.contains("İngilizce") || language == "en" -> "English"
                                                         label.contains("Türkçe") || language == "tr" -> "Turkish"
                                                         language == "forced" -> "Forced"
-                                                        label.isNotEmpty() -> label.replace("├╝", "ü").replace("─░", "İ")
                                                         language.isNotEmpty() -> language
                                                         else -> "Unknown"
                                                     }
-
-                                                    subtitleCallback(SubtitleFile(
+                                                    subtitleCallback.invoke(SubtitleFile(
                                                         cleanLang,
-                                                        fullSubUrl,
+                                                        fullSubUrl
                                                     ))
                                                 }
                                             }
@@ -510,7 +521,6 @@ class HDFilmCehennemi : MainAPI() {
                                             val quality = sourceObj.optString("label", "")
 
                                             if (videoUrl.isNotEmpty() && videoUrl.startsWith("http")) {
-                                                // Her kaynak için benzersiz bir ad oluştur
                                                 val fullSourceName = if (sources.length() > 1) {
                                                     "$sourceName $langCode - ${if (quality.isNotEmpty() && quality != "0") "Quality $quality" else "Source ${i + 1}"}"
                                                 } else {
@@ -550,7 +560,7 @@ class HDFilmCehennemi : MainAPI() {
                             }
                         }
                     } else {
-                        Log.e("kraptor_$name", "appContext is null!")
+                       loadExtractor(iframeUrl, subtitleCallback, callback)
                     }
 
                 } catch (e: Exception) {
@@ -559,7 +569,7 @@ class HDFilmCehennemi : MainAPI() {
                 }
             }
         }
-        return@withContext true
+        return true
     }
 
     data class Results(

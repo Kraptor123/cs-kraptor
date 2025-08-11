@@ -2,6 +2,9 @@
 
 package com.keyiflerolsun
 
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import com.lagradost.api.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
@@ -15,37 +18,54 @@ import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.utils.requireReferer
 import org.jsoup.nodes.Element
 import android.util.Base64
+import android.webkit.ConsoleMessage
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import java.nio.charset.StandardCharsets
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 
 class FilmMakinesi : MainAPI() {
-    override var mainUrl              = "https://filmmakinesi.de"
-    override var name                 = "FilmMakinesi"
-    override val hasMainPage          = true
-    override var lang                 = "tr"
-    override val hasQuickSearch       = false
-    override val supportedTypes       = setOf(TvType.Movie, TvType.TvSeries)
+    override var mainUrl = "https://filmmakinesi.de"
+    override var name = "FilmMakinesi"
+    override val hasMainPage = true
+    override var lang = "tr"
+    override val hasQuickSearch = false
+    override val supportedTypes = setOf(TvType.Movie, TvType.TvSeries)
 
     // ! CloudFlare bypass
-    override var sequentialMainPage            = true // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
-    override var sequentialMainPageDelay       = 50L  // ? 0.05 saniye
+    override var sequentialMainPage =
+        true // * https://recloudstream.github.io/dokka/-cloudstream/com.lagradost.cloudstream3/-main-a-p-i/index.html#-2049735995%2FProperties%2F101969414
+    override var sequentialMainPageDelay = 50L  // ? 0.05 saniye
     override var sequentialMainPageScrollDelay = 50L  // ? 0.05 saniye
 
+    private var appContext: Context? = null
+
+    fun setContext(context: Context) {
+        this.appContext = context
+    }
+
     override val mainPage = mainPageOf(
-        "${mainUrl}/filmler/"                    to "Son Filmler",
-        "${mainUrl}/kanal/netflix/"                          to "Netflix",
-        "${mainUrl}/kanal/disney/"                           to "Disney",
-        "${mainUrl}/kanal/amazon/"                           to "Amazon",
+        "${mainUrl}/filmler/" to "Son Filmler",
+        "${mainUrl}/kanal/netflix/" to "Netflix",
+        "${mainUrl}/kanal/disney/" to "Disney",
+        "${mainUrl}/kanal/amazon/" to "Amazon",
         "${mainUrl}/film-izle/olmeden-izlenmesi-gerekenler/" to "Ölmeden İzle",
-        "${mainUrl}/film-izle/aksiyon-filmleri-izle/"        to "Aksiyon",
-        "${mainUrl}/film-izle/bilim-kurgu-filmi-izle/"       to "Bilim Kurgu",
-        "${mainUrl}/film-izle/macera-filmleri/"              to "Macera",
-        "${mainUrl}/film-izle/komedi-filmi-izle/"            to "Komedi",
-        "${mainUrl}/film-izle/romantik-filmler-izle/"        to "Romantik",
-        "${mainUrl}/film-izle/belgesel/"                     to "Belgesel",
-        "${mainUrl}/film-izle/fantastik-filmler-izle/"       to "Fantastik",
-        "${mainUrl}/film-izle/polisiye-filmleri-izle/"       to "Polisiye Suç",
-        "${mainUrl}/film-izle/korku-filmleri-izle-hd/"       to "Korku",
+        "${mainUrl}/film-izle/aksiyon-filmleri-izle/" to "Aksiyon",
+        "${mainUrl}/film-izle/bilim-kurgu-filmi-izle/" to "Bilim Kurgu",
+        "${mainUrl}/film-izle/macera-filmleri/" to "Macera",
+        "${mainUrl}/film-izle/komedi-filmi-izle/" to "Komedi",
+        "${mainUrl}/film-izle/romantik-filmler-izle/" to "Romantik",
+        "${mainUrl}/film-izle/belgesel/" to "Belgesel",
+        "${mainUrl}/film-izle/fantastik-filmler-izle/" to "Fantastik",
+        "${mainUrl}/film-izle/polisiye-filmleri-izle/" to "Polisiye Suç",
+        "${mainUrl}/film-izle/korku-filmleri-izle-hd/" to "Korku",
         // "${mainUrl}/film-izle/savas/page/"                        to "Tarihi ve Savaş",
         // "${mainUrl}/film-izle/gerilim-filmleri-izle/page/"        to "Gerilim Heyecan",
         // "${mainUrl}/film-izle/gizemli/page/"                      to "Gizem",
@@ -67,26 +87,28 @@ class FilmMakinesi : MainAPI() {
     }
 
     private fun Element.toSearchResult(): SearchResponse? {
-        val title     = this.selectFirst("div.title")?.text() ?: return null
-        val href      = fixUrlNull(this.selectFirst("div.item-relative a.item")?.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("div.thumbnail-outer img.thumbnail")?.attr("src")) ?: fixUrlNull(this.selectFirst("img.thumbnail")?.attr("src"))
-        val puan      = this.selectFirst("div.rating")?.text()?.trim()
+        val title = this.selectFirst("div.title")?.text() ?: return null
+        val href = fixUrlNull(this.selectFirst("div.item-relative a.item")?.attr("href")) ?: return null
+        val posterUrl = fixUrlNull(this.selectFirst("div.thumbnail-outer img.thumbnail")?.attr("src")) ?: fixUrlNull(
+            this.selectFirst("img.thumbnail")?.attr("src")
+        )
+        val puan = this.selectFirst("div.rating")?.text()?.trim()
 
         return newMovieSearchResponse(title, href, TvType.Movie) {
             this.posterUrl = posterUrl
-            this.score     = Score.from10(puan)
+            this.score = Score.from10(puan)
         }
     }
 
     private fun Element.toRecommendResult(): SearchResponse? {
-        val title     = this.select("div.title").last()?.text() ?: return null
-        val href      = fixUrlNull(this.select("div.item-relative a.item").last()?.attr("href")) ?: return null
+        val title = this.select("div.title").last()?.text() ?: return null
+        val href = fixUrlNull(this.select("div.item-relative a.item").last()?.attr("href")) ?: return null
         val posterUrl = fixUrlNull(this.selectFirst("div.thumbnail-outer img.thumbnail")?.attr("src"))
-        val puan      = this.selectFirst("div.rating")?.text()?.trim()
+        val puan = this.selectFirst("div.rating")?.text()?.trim()
 
         return newMovieSearchResponse(title, href, TvType.Movie) {
             this.posterUrl = posterUrl
-            this.score     = Score.from10(puan)
+            this.score = Score.from10(puan)
         }
     }
 
@@ -100,12 +122,12 @@ class FilmMakinesi : MainAPI() {
 
     override suspend fun load(url: String): LoadResponse? {
         val document = app.get(url).document
-        val title           = document.selectFirst("div.content h1.title")?.text()?.trim() ?: return null
-        val poster          = fixUrlNull(document.selectFirst("[property='og:image']")?.attr("content"))
-        val description     = document.select("div.info-description p").last()?.text()?.trim()
-        val tags            = document.select("div.type a").map { it.text() }
-        val imdbScore          = document.selectFirst("div.info b")?.text()?.trim()
-        val year            = document.selectFirst("span.date a")?.text()?.trim()?.toIntOrNull()
+        val title = document.selectFirst("div.content h1.title")?.text()?.trim() ?: return null
+        val poster = fixUrlNull(document.selectFirst("[property='og:image']")?.attr("content"))
+        val description = document.select("div.info-description p").last()?.text()?.trim()
+        val tags = document.select("div.type a").map { it.text() }
+        val imdbScore = document.selectFirst("div.info b")?.text()?.trim()
+        val year = document.selectFirst("span.date a")?.text()?.trim()?.toIntOrNull()
 
         val durationText = document.selectFirst("div.time")?.text()?.trim() ?: ""
         val duration = if (durationText.startsWith("Süre:")) {
@@ -123,443 +145,306 @@ class FilmMakinesi : MainAPI() {
 
         val bolumler = document.select("div.col-12.col-sm-6.col-md-3").map { bolum ->
             val bolumHref = fixUrlNull(bolum.selectFirst("a")?.attr("href")).toString()
-            val bolumName = bolum.selectFirst("div.ep-details span")?.text() ?: bolum.selectFirst("div.ep-title")?.text()
-            val bolum     = bolumHref.substringAfter("bolum-").substringBefore("/").toIntOrNull()
-            val sezon     = bolumHref.substringAfter("sezon-").substringBefore("/").toIntOrNull()
-            newEpisode(bolumHref,{
+            val bolumName =
+                bolum.selectFirst("div.ep-details span")?.text() ?: bolum.selectFirst("div.ep-title")?.text()
+            val bolum = bolumHref.substringAfter("bolum-").substringBefore("/").toIntOrNull()
+            val sezon = bolumHref.substringAfter("sezon-").substringBefore("/").toIntOrNull()
+            newEpisode(bolumHref, {
                 this.name = bolumName
                 this.episode = bolum
-                this.season  = sezon
+                this.season = sezon
             })
 
         }
 
-        return if (url.contains("dizi")){
+        return if (url.contains("dizi")) {
             newTvSeriesLoadResponse(title, url, TvType.TvSeries, bolumler) {
-                this.posterUrl       = poster
-                this.year            = year
-                this.plot            = description
-                this.tags            = tags
+                this.posterUrl = poster
+                this.year = year
+                this.plot = description
+                this.tags = tags
                 this.score = Score.from10(imdbScore)
-                this.duration        = duration
+                this.duration = duration
                 this.recommendations = recommendations
                 addActors(actors)
                 addTrailer(trailer)
             }
-        }else {
+        } else {
             newMovieLoadResponse(title, url, TvType.Movie, url) {
-                this.posterUrl       = poster
-                this.year            = year
-                this.plot            = description
-                this.tags            = tags
+                this.posterUrl = poster
+                this.year = year
+                this.plot = description
+                this.tags = tags
                 this.score = Score.from10(imdbScore)
-                this.duration        = duration
+                this.duration = duration
                 this.recommendations = recommendations
                 addActors(actors)
                 addTrailer(trailer)
             }
         }
+    }
+
+    private fun cleanupWebView(wv: WebView) {
+        try {
+            wv.stopLoading()
+            wv.setWebChromeClient(null)   // nullable setter kullan
+            wv.webViewClient = object : WebViewClient() {}
+            wv.removeAllViews()
+            wv.clearHistory()
+            wv.loadUrl("about:blank")
+            wv.destroy()
+        } catch (ignored: Throwable) {}
+    }
+
+    suspend fun createWebViewAndExtract(
+        context: Context,
+        baseUrl: String,
+        html: String,
+        onResult: (String?) -> Unit
+    ): WebView = withContext(Dispatchers.Main) {
+
+        val modifiedHtml = html.replace(
+            Regex("""jwplayer\s*\(\s*["']player["']\s*\)\s*\.setup\s*\(\s*configs\s*\)\s*;"""),
+            """
+        window.configs = configs;
+        console.log('jwplayer configs set:', JSON.stringify(configs));
+        jwplayer("player").setup(configs);
+        """.trimIndent()
+        )
+
+        val wv = WebView(context.applicationContext).apply {
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
+            settings.allowFileAccess = true
+            settings.allowContentAccess = true
+            webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    extractWithDelay(view, { result ->
+                        onResult(result)
+                        // işi bitince temizle (main thread)
+                        Handler(Looper.getMainLooper()).post {
+                            Log.d("kraptor_filmmak", "webview temizlendi")
+                            cleanupWebView(this@apply)
+                        }
+                    }, 0)
+                }
+            }
+            loadDataWithBaseURL(baseUrl, modifiedHtml, "text/html", "UTF-8", null)
         }
 
+        return@withContext wv
+    }
+
+    private fun extractWithDelay(webView: WebView?, onResult: (String?) -> Unit, attempt: Int) {
+        if (webView == null || attempt > 15) {
+            Log.d("kraptor_webview", "Timeout reached or WebView is null")
+            onResult(null)
+            return
+        }
+
+        Log.d("kraptor_webview", "Attempt $attempt - Checking for configs...")
+
+        val extractScript = """
+        (function() {
+            // 1. JWPlayer configs
+            if (typeof window.configs !== 'undefined' && window.configs) {
+                return JSON.stringify(window.configs);
+            }
+            
+            // 2. VideoJS player
+            if (typeof videojs !== 'undefined') {
+                try {
+                    var player = videojs('videoplayer');
+                    if (player && player.currentSources && player.currentSources().length > 0) {
+                        var sources = player.currentSources();
+                        var textTracks = [];
+                        
+                        if (player.textTracks && player.textTracks().length > 0) {
+                            for (var i = 0; i < player.textTracks().length; i++) {
+                                var track = player.textTracks()[i];
+                                if (track.kind === 'captions' || track.kind === 'subtitles') {
+                                    textTracks.push({
+                                        file: track.src,
+                                        label: track.label,
+                                        language: track.language,
+                                        kind: track.kind,
+                                        default: track.default || track.mode === 'showing'
+                                    });
+                                }
+                            }
+                        }
+                        
+                        return JSON.stringify({
+                            sources: sources,
+                            tracks: textTracks,
+                            type: 'videojs'
+                        });
+                    }
+                } catch (e) {}
+            }
+            
+            return null;
+        })();
+    """.trimIndent()
+
+        webView.evaluateJavascript(extractScript) { resultJson ->
+            Log.d("kraptor_webview", "=== CONFIG JSON DEBUG ===")
+            Log.d("kraptor_webview", "Raw resultJson: '$resultJson'")
+
+            val cleanResult = resultJson?.let { raw ->
+                if (raw == "null" || raw == "\"null\"") {
+                    null
+                } else {
+                    raw.removePrefix("\"").removeSuffix("\"")
+                        .replace("\\\"", "\"")
+                        .replace("\\\\", "\\")
+                }
+            }
+
+            Log.d("kraptor_webview", "Cleaned result length: ${cleanResult?.length ?: 0}")
+
+            if (cleanResult.isNullOrEmpty() || cleanResult == "null") {
+                if (attempt < 15) {
+                    Log.d("kraptor_webview", "Config is null/empty, retrying in 800ms...")
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        extractWithDelay(webView, onResult, attempt + 1)
+                    }, 200)
+                } else {
+                    Log.d("kraptor_webview", "Max attempts reached, giving up")
+                    onResult(null)
+                }
+            } else {
+                Log.d("kraptor_webview", "SUCCESS! Found config")
+                onResult(cleanResult)
+            }
+        }
+    }
 
 
-    override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
+    override suspend fun loadLinks(
+        data: String,
+        isCasting: Boolean,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean = withContext(Dispatchers.IO) {
         Log.d("kraptor_$name", "data » $data")
-        val document      = app.get(data).document
+        val document = app.get(data).document
 //        Log.d("kraptor_$name", "document = $document")
         val iframe = document.selectFirst("div.after-player iframe")?.attr("data-src") ?: ""
         Log.d("kraptor_$name", "iframe = $iframe")
         val iframeGet = app.get(iframe, referer = "${mainUrl}/")
-        val iframeDoc = iframeGet.document
         val iframeText = iframeGet.text
-//        Log.d("kraptor_$name", "iframeText = $iframeText")
-        val subRegex = Regex(pattern = "sources:([\\s\\S]*?)(?=captions:)", options = setOf(RegexOption.IGNORE_CASE))
-        val subMatch = subRegex.find(iframeText)?.value.toString()
-        val subCRegex = Regex(
-            "\"file\"\\s*:\\s*\"([^\"]*\\.vtt)\"",
-            RegexOption.IGNORE_CASE
-        )
-       if (iframe.contains("rapid")) {
-           subCRegex.findAll(subMatch)
-               .forEach { match ->
-                   val altyaziString = match.groupValues[1]
-                   Log.d("kraptor_$name", "altyaziString = $altyaziString")
-                   val altyaziUrl = "https://rapid.filmmakinesi.de/${altyaziString.replace("\\", "")}"
-                   Log.d("kraptor_$name", "altyaziUrl = $altyaziUrl")
-                   val altyaziLang = altyaziUrl.substringAfter("_").substringBefore(".")
-                   subtitleCallback.invoke(newSubtitleFile(lang = altyaziLang, url = altyaziUrl, {
-                       this.headers = mapOf("Referer" to "https://rapid.filmmakinesi.de/")
-                   }))
-               }
-       }else {
-           iframeDoc.select("track").map { altyazi ->
-              val altyaziUrl = "https://closeload.filmmakinesi.de/${altyazi.attr("src")}"
-               Log.d("kraptor_$name", "closeloadaltyazi = $altyaziUrl")
-              val altyaziLang = altyazi.attr("label")
-               subtitleCallback.invoke(newSubtitleFile(altyaziLang, altyaziUrl, {
-                   this.headers = mapOf("Referer" to "https://closeload.filmmakinesi.de/")
-               }))
-           }
-       }
+        if (appContext != null && iframe.contains("filmmakinesi")) {
+            Log.d("kraptor_$name", "Using WebView to extract config...")
 
-
-        val scripts = iframeDoc.getElementsByTag("script")
-        val scriptAl  = scripts.filter { it.html().contains("eval(") }
-        val rawscript = scriptAl[0].html()
-//        Log.d("kraptor_$name", "scriptAl = $scriptAl")
-        val scriptUnpack = getAndUnpack(rawscript)
-        Log.d("kraptor_$name", "scriptUnpack = $scriptUnpack")
-        val dchelloVar = if (scriptUnpack.contains("dc_hello")) {
-            "var"
-        } else {
-            "yok"
-        }
-        val dcRegex = if (dchelloVar.contains("var")) {
-            Regex(pattern = "dc_hello\\(\"([^\"]*)\"\\)", options = setOf(RegexOption.IGNORE_CASE))
-        } else {
-            Regex("""dc_[a-zA-Z0-9_]+\(\[(.*?)\]\)""", RegexOption.DOT_MATCHES_ALL)
-        }
-        val match = dcRegex.find(scriptUnpack)
-//        Log.d("kraptor_$name", "match $match")
-
-        val realUrl = if (dchelloVar.contains("var")) {
-            val parts      = match?.groupValues[1].toString()
-            Log.d("kraptor_$name", "parts $parts")
-            val decodedUrl = dcHello(parts)
-            Log.d("kraptor_$name", "decodedUrl $decodedUrl")
-            decodedUrl
-        } else{
-            val parts = match!!.groupValues[1]
-                .split(",")
-                .map { it.trim().removeSurrounding("\"") }
-            Log.d("kraptor_$name", "dc parts: $parts")
-            val decodedUrl = dcDecode(parts)
-            Log.d("kraptor_$name", "decoded URL: $decodedUrl")
-            decodedUrl
-        }
-        val refererSon = if (realUrl.contains("cdnimages")) {
-            "https://closeload.filmmakinesi.de/"
-        }else if (realUrl.contains("rapidrame")) {
-            "https://rapid.filmmakinesi.de/"
-        }else if (realUrl.contains("playmix")) {
-            "https://closeload.filmmakinesi.de/"
-        } else {
-            "${mainUrl}/"
-        }
-
-        val sourceName = if (realUrl.contains("cdnimages")){
-            "Close"
-        } else if (realUrl.contains("rapidrame")) {
-            "Rapidrame"
-        } else{
-            "FilmMakinesi"
-        }
-
-        callback.invoke(newExtractorLink(
-            source = sourceName,
-            name = sourceName,
-            url = realUrl,
-            type = ExtractorLinkType.M3U8,
-            {
-                this.referer = refererSon
-                quality = Qualities.Unknown.value
-                headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0")
-            }
-        ))
-
-        return true
-    }
-}
-
-fun dcDecode(valueParts: List<String>): String {
-    // Try the exact JavaScript method first (with double base64 decode)
-    try {
-        return dcDecodeExactJS(valueParts)
-    } catch (e: Exception) {
-        Log.d("dcDecode", "Exact JS method failed: ${e.message}, trying new method")
-
-        // Try new method (matches previous JavaScript exactly)
-        try {
-            return dcDecodeNewMethod(valueParts)
-        } catch (e: Exception) {
-            Log.d("dcDecode", "New method failed: ${e.message}, trying fallback methods")
-
-            // Try fallback method 1 (your current implementation)
-            try {
-                return dcDecodeOldMethod(valueParts)
-            } catch (e2: Exception) {
-                Log.d("dcDecode", "Old method also failed: ${e2.message}")
-
-                // Try alternative decoding approach
-                try {
-                    return dcDecodeAlternative(valueParts)
-                } catch (e3: Exception) {
-                    Log.d("dcDecode", "Alternative method also failed: ${e3.message}")
-
-                    // Try fourth method (UTF-8 encoding)
-                    try {
-                        return dcDecodeFourthMethod(valueParts)
-                    } catch (e4: Exception) {
-                        Log.d("dcDecode", "All methods failed")
-                        return ""
+            val configJson = suspendCoroutine<String?> { continuation ->
+                runBlocking {
+                    createWebViewAndExtract(appContext!!, iframe, iframeText) { result ->
+                        continuation.resume(result)
                     }
                 }
             }
-        }
-    }
-}
 
-private fun dcDecodeExactJS(valueParts: List<String>): String {
-    // Exactly match the JavaScript function dc_yIWREN2ntak from your log
-    // JavaScript: let value = value_parts.join('');
-    var result = valueParts.joinToString(separator = "")
+            configJson?.let { configStr ->
+                val configObj = JSONObject(configStr)
 
-    // JavaScript: result = result.split('').reverse().join('');
-    result = result.reversed()
+                if (configObj.has("tracks")) {
+                    val tracks = configObj.getJSONArray("tracks")
+                    for (i in 0 until tracks.length()) {
+                        val trackObj = tracks.getJSONObject(i)
+                        val kind = trackObj.optString("kind", "")
 
-    // JavaScript: result = atob(result);
-    val firstDecode = Base64.decode(result, Base64.DEFAULT)
-    result = String(firstDecode, StandardCharsets.ISO_8859_1)
+                        if (kind == "captions") {
+                            val subFile = trackObj.optString("file", "")
+                            val label = trackObj.optString("label", "")
+                            val language = trackObj.optString("language", "")
 
-    // JavaScript: result = atob(result); (SECOND BASE64 DECODE!)
-    val secondDecode = Base64.decode(result, Base64.DEFAULT)
-    result = String(secondDecode, StandardCharsets.ISO_8859_1)
+                            val base = iframe.split("/").take(3).joinToString("/")
 
-    // JavaScript: let unmix=''; for(let i=0;i<result.length;i++){let charCode=result.charCodeAt(i);charCode=(charCode-(399756995%(i+5))+256)%256;unmix+=String.fromCharCode(charCode)}
-    val unmixed = StringBuilder()
-    for (i in result.indices) {
-        val charCode = result[i].code
-        val delta = 399756995 % (i + 5)
-        val transformedChar = ((charCode - delta + 256) % 256).toChar()
-        unmixed.append(transformedChar)
-    }
+                            if (subFile.isNotEmpty()) {
+                                val fullSubUrl = if (subFile.startsWith("http")) {
+                                    subFile
+                                } else {
+                                    "$base$subFile"
+                                }
 
-    val finalResult = unmixed.toString()
+                                val cleanLang = when {
+                                    label.contains("İngilizce") || language == "en" -> "English"
+                                    label.contains("Türkçe") || language == "tr" -> "Turkish"
+                                    language == "forced" -> "Forced"
+                                    language.isNotEmpty() -> language
+                                    else -> "Unknown"
+                                }
+                                val subHeaders = if (iframe.contains("close")) {
+                                    mapOf(
+                                        "Referer" to "${base}/",
+                                        "Accept" to "*/*")
+                                    } else {
+                                    mapOf(
+                                        "Referer" to "${base}/",
+                                        "Accept" to "*/*")
+                                    }
 
-    // Validate result
-    if (isValidUrl(finalResult)) {
-        return finalResult
-    } else {
-        throw Exception("Result doesn't look like a valid URL: $finalResult")
-    }
-}
+                                Log.d("kraptor_$name", "altyazi = $fullSubUrl")
 
-private fun dcDecodeNewMethod(valueParts: List<String>): String {
-    // Exactly match the JavaScript function dc_yyAkZNbrsS3
-    // JavaScript: let value = value_parts.join('');
-    var result = valueParts.joinToString(separator = "")
+                                 subtitleCallback.invoke(newSubtitleFile(
+                                    cleanLang,
+                                    fullSubUrl,
+                                     {
+                                         headers = subHeaders
+                                     }
+                                )
+                                )
+                            }
+                        }
+                    }
+                }
+                if (configObj.has("sources")) {
+                    val sources = configObj.getJSONArray("sources")
+                    for (i in 0 until sources.length()) {
+                        val sourceObj = sources.getJSONObject(i)
+                        val videoUrl = sourceObj.optString("file", "").ifEmpty {
+                            sourceObj.optString("src", "")
+                        }
+                        if (videoUrl.isNotEmpty() && videoUrl.startsWith("http")) {
 
-    // JavaScript: result = atob(result);
-    val decodedBytes = Base64.decode(result, Base64.DEFAULT)
-    result = String(decodedBytes, StandardCharsets.ISO_8859_1)
+                            val refererSon = if (videoUrl.contains("cdnimages")) {
+                                "https://closeload.filmmakinesi.de/"
+                            }else if (videoUrl.contains("rapidrame")) {
+                                "https://rapid.filmmakinesi.de/"
+                            }else if (videoUrl.contains("playmix")) {
+                                "https://closeload.filmmakinesi.de/"
+                            } else {
+                                "${mainUrl}/"
+                            }
 
-    // JavaScript: result = result.replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<='Z'?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26)});
-    result = result.map { c ->
-        when {
-            c in 'a'..'z' -> {
-                val shifted = c.code + 13
-                if (shifted <= 122) shifted.toChar() else (shifted - 26).toChar()
+                            val sourceName = if (videoUrl.contains("cdnimages")){
+                                "Close"
+                            } else if (videoUrl.contains("rapidrame")) {
+                                "Rapidrame"
+                            } else{
+                                "FilmMakinesi"
+                            }
+
+                            callback.invoke(
+                                newExtractorLink(
+                                    source = "FilmMakinesi $sourceName",
+                                    name = "FilmMakinesi $sourceName",
+                                    url = videoUrl,
+                                    type = ExtractorLinkType.M3U8,
+                                    {
+                                        this.referer = refererSon
+                                        this.quality = Qualities.Unknown.value
+                                    }
+                                ))
+                        }
+                    }
+                }else {
+                    loadExtractor(iframe, subtitleCallback, callback)
+                }
             }
-            c in 'A'..'Z' -> {
-                val shifted = c.code + 13
-                if (shifted <= 90) shifted.toChar() else (shifted - 26).toChar()
-            }
-            else -> c
         }
-    }.joinToString("")
-
-    // JavaScript: result = result.split('').reverse().join('');
-    result = result.reversed()
-
-    // JavaScript: let unmix=''; for(let i=0;i<result.length;i++){let charCode=result.charCodeAt(i);charCode=(charCode-(399756995%(i+5))+256)%256;unmix+=String.fromCharCode(charCode)}
-    val unmixed = StringBuilder()
-    for (i in result.indices) {
-        val charCode = result[i].code
-        val delta = 399756995 % (i + 5)
-        val transformedChar = ((charCode - delta + 256) % 256).toChar()
-        unmixed.append(transformedChar)
+        return@withContext true
     }
-
-    val finalResult = unmixed.toString()
-
-    // Validate result
-    if (isValidUrl(finalResult)) {
-        return finalResult
-    } else {
-        throw Exception("Result doesn't look like a valid URL: $finalResult")
-    }
-}
-
-private fun dcDecodeOldMethod(valueParts: List<String>): String {
-    // Your existing fallback method
-    try {
-        // 1) Join array elements
-        var result = valueParts.joinToString(separator = "")
-
-        // 2) ROT13 transformation FIRST (original order)
-        result = result.map { c ->
-            when {
-                c in 'a'..'z' -> {
-                    val shifted = c.code + 13
-                    if (shifted <= 'z'.code) shifted.toChar() else (shifted - 26).toChar()
-                }
-                c in 'A'..'Z' -> {
-                    val shifted = c.code + 13
-                    if (shifted <= 'Z'.code) shifted.toChar() else (shifted - 26).toChar()
-                }
-                else -> c
-            }
-        }.joinToString("")
-
-        // 3) Base64 decode
-        val decodedBytes = Base64.decode(result, Base64.DEFAULT)
-
-        // 4) Reverse the bytes
-        val reversedBytes = decodedBytes.reversedArray()
-
-        // 5) Un-mix: Apply character transformation on bytes
-        val unmixedBytes = ByteArray(reversedBytes.size)
-        for (i in reversedBytes.indices) {
-            val byteValue = reversedBytes[i].toInt() and 0xFF
-            val delta = 399756995 % (i + 5)
-            val transformedByte = (byteValue - delta + 256) % 256
-            unmixedBytes[i] = transformedByte.toByte()
-        }
-
-        val finalResult = String(unmixedBytes, StandardCharsets.ISO_8859_1)
-
-        if (isValidUrl(finalResult)) {
-            return finalResult
-        } else {
-            throw Exception("Old method result invalid")
-        }
-
-    } catch (e: Exception) {
-        throw Exception("Old method failed: ${e.message}")
-    }
-}
-
-private fun dcDecodeAlternative(valueParts: List<String>): String {
-    // Alternative approach - try different encoding
-    try {
-        var result = valueParts.joinToString(separator = "")
-
-        // Try base64 decode first
-        val decodedBytes = Base64.decode(result, Base64.DEFAULT)
-        var decodedString = String(decodedBytes, StandardCharsets.UTF_8)
-
-        // Then reverse
-        decodedString = decodedString.reversed()
-
-        // Then ROT13
-        decodedString = decodedString.map { c ->
-            when {
-                c in 'a'..'z' -> {
-                    val shifted = c.code + 13
-                    if (shifted <= 'z'.code) shifted.toChar() else (shifted - 26).toChar()
-                }
-                c in 'A'..'Z' -> {
-                    val shifted = c.code + 13
-                    if (shifted <= 'Z'.code) shifted.toChar() else (shifted - 26).toChar()
-                }
-                else -> c
-            }
-        }.joinToString("")
-
-        // Apply unmix
-        val unmixed = StringBuilder()
-        for (i in decodedString.indices) {
-            val charCode = decodedString[i].code
-            val delta = 399756995 % (i + 5)
-            val transformedChar = ((charCode - delta + 256) % 256).toChar()
-            unmixed.append(transformedChar)
-        }
-
-        val finalResult = unmixed.toString()
-
-        if (isValidUrl(finalResult)) {
-            return finalResult
-        } else {
-            throw Exception("Alternative method result invalid")
-        }
-
-    } catch (e: Exception) {
-        throw Exception("Alternative method failed: ${e.message}")
-    }
-}
-
-// Add a fourth fallback method that tries UTF-8 encoding
-private fun dcDecodeFourthMethod(valueParts: List<String>): String {
-    try {
-        var result = valueParts.joinToString(separator = "")
-
-        // Base64 decode with UTF-8
-        val decodedBytes = Base64.decode(result, Base64.DEFAULT)
-        result = String(decodedBytes, StandardCharsets.UTF_8)
-
-        // ROT13
-        result = result.map { c ->
-            when {
-                c in 'a'..'z' -> {
-                    val shifted = c.code + 13
-                    if (shifted <= 122) shifted.toChar() else (shifted - 26).toChar()
-                }
-                c in 'A'..'Z' -> {
-                    val shifted = c.code + 13
-                    if (shifted <= 90) shifted.toChar() else (shifted - 26).toChar()
-                }
-                else -> c
-            }
-        }.joinToString("")
-
-        // Reverse
-        result = result.reversed()
-
-        // Unmix
-        val unmixed = StringBuilder()
-        for (i in result.indices) {
-            val charCode = result[i].code
-            val delta = 399756995 % (i + 5)
-            val transformedChar = ((charCode - delta + 256) % 256).toChar()
-            unmixed.append(transformedChar)
-        }
-
-        val finalResult = unmixed.toString()
-
-        if (isValidUrl(finalResult)) {
-            return finalResult
-        } else {
-            throw Exception("Fourth method result invalid")
-        }
-
-    } catch (e: Exception) {
-        throw Exception("Fourth method failed: ${e.message}")
-    }
-}
-
-private fun isValidUrl(url: String): Boolean {
-    return url.isNotEmpty() &&
-            (url.contains("http") ||
-                    url.contains("www") ||
-                    url.contains(".com") ||
-                    url.contains(".net") ||
-                    url.contains(".org") ||
-                    url.length > 20)
-}
-
-fun dcHello(encoded: String): String {
-    // İlk Base64 çöz
-    val firstDecoded = base64Decode(encoded)
-    Log.d("kraptor_hdfilmcehennemi", "firstDecoded $firstDecoded")
-    // Ters çevir
-    val reversed = firstDecoded.reversed()
-    Log.d("kraptor_hdfilmcehennemi", "reversed $reversed")
-    // İkinci Base64 çöz
-    val secondDecoded = base64Decode(reversed)
-
-    val gercekLink    = secondDecoded.substringAfter("http")
-    val sonLink       = "http$gercekLink"
-    Log.d("kraptor_hdfilmcehennemi", "sonLink $sonLink")
-    return sonLink.trim()
-
 }
