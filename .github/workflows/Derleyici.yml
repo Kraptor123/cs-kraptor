@@ -33,7 +33,8 @@ jobs:
           path: "builds"
 
       - name: Eski Derlemeleri Temizle
-        run: rm $GITHUB_WORKSPACE/builds/*.cs3 || true
+        run: find $GITHUB_WORKSPACE/builds -name '*.cs3' ! -name 'Anizium.cs3' -delete
+
 
       - name: JDK 23 Ayarla
         uses: actions/setup-java@v4.6.0
@@ -48,9 +49,34 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/src
           chmod +x gradlew
-          ./gradlew make makePluginsJson --stacktrace --info
+          ./gradlew make makePluginsJson
           cp **/build/*.cs3 $GITHUB_WORKSPACE/builds
           cp build/plugins.json $GITHUB_WORKSPACE/builds
+
+      - name: jq Araçlarını Kur (GolgeTV ve AnimeciX eklemeleri için)
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Anizium Eklentisini plugins.json'a Elle Ekle
+        run: |
+          cd $GITHUB_WORKSPACE/builds
+          if ! jq -e '.[] | select(.internalName == "Anizium")' plugins.json > /dev/null; then
+            jq '. += [{
+              "repositoryUrl": "https://github.com/Kraptor123/cs-kekikanime",
+              "apiVersion": 1,
+              "status": 1,
+              "language": "tr",
+              "authors": ["kerimmkirac"],
+              "tvTypes": ["AnimeMovie","Anime"],
+              "version": 1,
+              "internalName": "Anizium",
+              "description": "Anizium ile dünyada ilk ve tek 4K Türkçe dublaj platformunda anime keyfini yaşa. En yeni animeleri İngilizce altyazı ve dublaj seçenekleriyle 1080p ve 4K kalitesinde HD izle.",
+              "url": "https://github.com/Kraptor123/cs-kekikanime/raw/refs/heads/builds/Anizium.cs3",
+              "name": "Anizium",
+              "iconUrl": "https://anizium.co/assets/images/logo.png"
+            }]' plugins.json > plugins-new.json && mv plugins-new.json plugins.json
+          else
+            echo "Anizium zaten plugins.json'da mevcut, eklenmedi."
+          fi
 
       - name: Derlemeleri Yükle
         run: |
