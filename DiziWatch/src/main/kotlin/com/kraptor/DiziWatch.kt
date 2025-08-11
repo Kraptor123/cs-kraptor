@@ -30,66 +30,107 @@ class DiziWatch : MainAPI() {
     //Anime, AnimeAnime, TvSeries, Cartoon, Anime, OVA, Torrent, Documentary, AsianDrama, Live, NSFW, Others, Music, AudioBook, CustomMedia, Audio, Podcast,
 
     override val mainPage = mainPageOf(
-        "15"  to "Aile",
-        "9"   to "Aksiyon",
-        "17"  to "Animasyon",
-        "5"   to "Bilim Kurgu",
-        "2"   to "Dram",
-        "12"  to "Fantastik",
-        "3"   to "Gizem",
-        "4"   to "Komedi",
-        "8"   to "Korku",
-        "24"  to "Macera",
-        "14"  to "Müzik",
-        "7"   to "Romantik",
-        "23"  to "Spor",
-        "1"   to "Suç",
-    )
+    "${mainUrl}/episodes" to "Yeni Bölümler",
+    
+    "9"   to "Aksiyon", 
+    "17"  to "Animasyon",
+    "5"   to "Bilim Kurgu",
+    "2"   to "Dram",
+    "12"  to "Fantastik",
+    "3"   to "Gizem",
+    "4"   to "Komedi",
+    "8"   to "Korku",
+    "24"  to "Macera",
+    "14"  to "Müzik",
+    "7"   to "Romantik",
+    "23"  to "Spor",
+    "1"   to "Suç",
+)
 
+private var sessionCookies: Map<String, String>? = null
+private var cKey: String? = null
+private var cValue: String? = null
+private val initMutex = Mutex()
 
-    private var sessionCookies: Map<String, String>? = null
-
-    private var cKey: String? = null
-
-    private var cValue: String? = null
-    private val initMutex = Mutex()
-
-    private suspend fun initSession() {
-        if (sessionCookies != null && cKey != null && cValue != null) return
-        initMutex.withLock {
-            if (sessionCookies != null && cKey != null && cValue != null) return@withLock
-            Log.d("kraptor_${this.name}", "🔄 Oturum başlatılıyor: cookie ve CSRF alınıyor")
-            val resp = app.get("${mainUrl}/anime-arsivi", timeout = 120)
-            sessionCookies = resp.cookies.mapValues { (_, v) -> URLDecoder.decode(v, "UTF-8") }
-            cKey         = resp.document.selectFirst("form.bg-\\[rgba\\(255\\,255\\,255\\,\\.15\\)\\] > input:nth-child(1)")?.attr("value")
-            cValue           = resp.document.selectFirst("form.bg-\\[rgba\\(255\\,255\\,255\\,\\.15\\)\\] > input:nth-child(2)")?.attr("value")
-            Log.d("kraptor_${this.name}", "✅ Cookie sayısı: ${sessionCookies?.size} ckey=  $cKey cvalue = $cValue")
-        }
+private suspend fun initSession() {
+    if (sessionCookies != null && cKey != null && cValue != null) return
+    initMutex.withLock {
+        if (sessionCookies != null && cKey != null && cValue != null) return@withLock
+        Log.d("kraptor_${this.name}", "🔄 Oturum başlatılıyor: cookie ve CSRF alınıyor")
+        val resp = app.get("${mainUrl}/anime-arsivi", timeout = 120)
+        sessionCookies = resp.cookies.mapValues { (_, v) -> URLDecoder.decode(v, "UTF-8") }
+        cKey = resp.document.selectFirst("form.bg-\\[rgba\\(255\\,255\\,255\\,\\.15\\)\\] > input:nth-child(1)")?.attr("value")
+        cValue = resp.document.selectFirst("form.bg-\\[rgba\\(255\\,255\\,255\\,\\.15\\)\\] > input:nth-child(2)")?.attr("value")
+        Log.d("kraptor_${this.name}", "✅ Cookie sayısı: ${sessionCookies?.size} ckey= $cKey cvalue = $cValue")
     }
+}
 
-    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        initSession()
-        val document = app.get("${mainUrl}/anime-arsivi?category=${request.data}&minImdb=&name=&release_year=&sort=date_desc&page=$page", headers = mapOf(
+override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+    initSession()
+    
+    val document = if (request.data.startsWith("${mainUrl}/episodes")) {
+        
+        app.get("${request.data}?page=$page", headers = mapOf(
             "Cookies" to "$sessionCookies",
             "Referer" to "${mainUrl}/"
         )).document
-//        Log.d("kraptor_$name","document = $document")
-        val home     = document.select("div.content-inner a").mapNotNull { it.toMainPageResult() }
+    } else {
+       
+        app.get("${mainUrl}/anime-arsivi?category=${request.data}&minImdb=&name=&release_year=&sort=date_desc&page=$page", headers = mapOf(
+            "Cookies" to "$sessionCookies", 
+            "Referer" to "${mainUrl}/"
+        )).document
+    }
+    
+    val home = if (request.data.startsWith("${mainUrl}/episodes")) {
+       
+        document.select("div.swiper-slide a").mapNotNull { it.toEpisodeResult() }
+    } else {
+       
+        document.select("div.content-inner a").mapNotNull { it.toMainPageResult() }
+    }
+    
+    return newHomePageResponse(request.name, home)
+}
 
-        return newHomePageResponse(request.name, home)
+private fun Element.toMainPageResult(): SearchResponse? {
+    val title = this.selectFirst("h2")?.text() ?: return null
+    val href = fixUrlNull(this.attr("href")) ?: return null
+    val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
+    val scoreText = this.selectFirst("span.mbimdb")?.ownText()?.trim()
+val score = scoreText?.replace(",", ".")
+
+    
+    return newAnimeSearchResponse(title, href, TvType.Anime) {
+        this.posterUrl = posterUrl
+        this.score = Score.from10(score)
+    }
+}
+
+private fun Element.toEpisodeResult(): SearchResponse? {
+    val title = this.selectFirst("h2")?.text() ?: return null
+    var href = fixUrlNull(this.attr("href")) ?: return null
+    val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("data-src"))
+
+    
+    href = href.replace(Regex("/sezon-\\d+/bolum-\\d+/?$"), "")
+
+    
+    val seasonEpisodeText = this.selectFirst("div.flex.gap-1.items-center")?.text()
+    val timeText = this.selectFirst("div.flex.gap-1.items-center:last-child")?.text()
+
+    
+    val fullTitle = if (seasonEpisodeText != null) {
+        "$title - $seasonEpisodeText"
+    } else {
+        title
     }
 
-    private fun Element.toMainPageResult(): SearchResponse? {
-        val title     = this.selectFirst("h2")?.text() ?: return null
-        val href      = fixUrlNull(this.attr("href")) ?: return null
-        val posterUrl = fixUrlNull(this.selectFirst("img")?.attr("src"))
-        val score     = this.selectFirst("span.hidden")?.text()?.substringAfterLast(" ")
-
-        return newAnimeSearchResponse(title, href, TvType.Anime) {
-            this.posterUrl = posterUrl
-            this.score     = Score.from10(score)
-        }
+    return newAnimeSearchResponse(fullTitle, href, TvType.Anime) {
+        this.posterUrl = posterUrl
     }
+}
+
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.post("${mainUrl}/bg/searchcontent", cookies = sessionCookies!!, data = mapOf(
@@ -147,7 +188,10 @@ class DiziWatch : MainAPI() {
         val tags            = document.select("div.text-sm:nth-child(3) span.text-white:nth-child(3)")
             .flatMap{ it.text().split(",") } // her elemana split uygula
             .map { it.trim() }
-        val rating     = document.selectFirst("span.hidden")?.text()?.substringAfterLast(" ")
+        
+        
+        val score           = document.select(".font-semibold.text-white")?.text()
+        
         val duration        = document.selectFirst("span.runtime")?.text()?.split(" ")?.first()?.trim()?.toIntOrNull()
         val recommendations = document.select("div.srelacionados article").mapNotNull { it.toRecommendationResult() }
         val actors          = document.select("span.valor a").map { Actor(it.text()) }
@@ -162,6 +206,7 @@ class DiziWatch : MainAPI() {
                 this.name = bName
                 this.season = bSezon
                 this.episode = bBolum
+                this.posterUrl = poster
             })
         }
 
@@ -176,7 +221,7 @@ class DiziWatch : MainAPI() {
             this.plot            = description
             this.year            = year
             this.tags            = tags
-            this.score           = Score.from10(rating)
+            this.score           = Score.from10(score)
             this.duration        = duration
             this.recommendations = recommendations
             this.episodes        = mutableMapOf(DubStatus.Subbed to bolumler)
