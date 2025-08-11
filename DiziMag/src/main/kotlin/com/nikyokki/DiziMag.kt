@@ -181,7 +181,6 @@ class DiziMag : MainAPI() {
                                 name = epName
                                 season = epSeason
                                 episode = epEpisode
-                                posterUrl = poster
                             }
                         )
                     )

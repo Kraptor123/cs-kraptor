@@ -91,7 +91,6 @@ class DiziMom : MainAPI() {
                 this.name    = epName.substringBefore(" izle").replace(title, "").trim()
                 this.season  = epSeason
                 this.episode = epEpisode
-                this.posterUrl = poster
             }
         }
 
