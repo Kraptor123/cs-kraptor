@@ -135,7 +135,7 @@ class DiziFun : MainAPI() {
                         this.name = name
                         this.season = season
                         this.episode = episodeNumber
-                        this.posterUrl = poster
+                        this.posterUrl =
                     }
                 }
             }
