@@ -521,53 +521,6 @@ class HDFilmCehennemi : MainAPI() {
                                                     "kraptor_$name",
                                                     "Video URL found: $videoUrl (Source: $fullSourceName)"
                                                 )
-
-                                                // Kaliteyi belirle
-                                                val qualityValue = when {
-                                                    quality.contains("2282") || quality.contains("high") || quality.contains(
-                                                        "yüksek"
-                                                    ) -> Qualities.P1080.value
-
-                                                    quality.contains("570") || quality.contains("normal") -> Qualities.P720.value
-                                                    quality.isNotEmpty() && quality.toIntOrNull() != null -> quality.toInt()
-                                                    else -> Qualities.Unknown.value
-                                                }
-
-                                                val videoRef = if (videoUrl.contains("mobi")) {
-                                                    "https://hdfilmcehennemi.mobi/"
-                                                } else if (videoUrl.contains("cdnimages")) {
-                                                    "https://hdfilmcehennemi.mobi/"
-                                                } else {
-                                                    "${mainUrl}/"
-                                                }
-
-                                                val hostum = videoUrl.substringAfter("/").substringAfter("/")
-                                                    .substringBefore("/")
-
-                                                val videoHeaders = if (videoUrl.contains("cdnimages")) {
-                                                    mapOf(
-                                                        "Referer" to "https://hdfilmcehennemi.mobi/",
-                                                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-                                                        "Accept" to "*/*",
-                                                    )
-                                                } else {
-                                                    mapOf(
-                                                        "Referer" to "${mainUrl}/",
-                                                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-                                                        "Accept" to "*/*",
-                                                    )
-                                                }
-
-                                                val videoIsim = if (videoUrl.contains("rapidrame")) {
-                                                    "Rapidrame"
-                                                } else if (videoUrl.contains("cdnimages")) {
-                                                    "Close"
-                                                } else if (videoUrl.contains("hls13.playmix.uno")) {
-                                                    "Close"
-                                                } else {
-                                                    "HDFilmCehennemi"
-                                                }
-
                                                 val refererSon = if (videoUrl.contains("cdnimages")) {
                                                     "https://hdfilmcehennemi.mobi/"
                                                 } else if (videoUrl.contains("hls13.playmix.uno")) {
@@ -578,8 +531,8 @@ class HDFilmCehennemi : MainAPI() {
 
                                                 callback.invoke(
                                                     newExtractorLink(
-                                                        source = videoIsim,
-                                                        name = videoIsim,
+                                                        source = fullSourceName,
+                                                        name = fullSourceName,
                                                         url = videoUrl,
                                                         type = ExtractorLinkType.M3U8,
                                                         {
