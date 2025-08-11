@@ -280,7 +280,7 @@ class HDFilmCehennemi : MainAPI() {
             Regex("""jwplayer\s*\(\s*["']player["']\s*\)\s*\.setup\s*\(\s*configs\s*\)\s*;"""),
             """
         window.configs = configs;
-        console.log('configs set:', JSON.stringify(configs));
+        console.log('jwplayer configs set:', JSON.stringify(configs));
         jwplayer("player").setup(configs);
         """.trimIndent()
         )
@@ -301,8 +301,6 @@ class HDFilmCehennemi : MainAPI() {
             webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-
-                    // İlk kontrol - hemen
                     extractWithDelay(view, onResult, 0)
                 }
             }
@@ -312,7 +310,7 @@ class HDFilmCehennemi : MainAPI() {
     }
 
     private fun extractWithDelay(webView: WebView?, onResult: (String?) -> Unit, attempt: Int) {
-        if (webView == null || attempt > 10) {
+        if (webView == null || attempt > 15) {
             Log.d("kraptor_webview", "Timeout reached or WebView is null")
             onResult(null)
             return
@@ -320,11 +318,50 @@ class HDFilmCehennemi : MainAPI() {
 
         Log.d("kraptor_webview", "Attempt $attempt - Checking for configs...")
 
-        // Tüm config objesini al, sadece video URL'sini değil
-        webView.evaluateJavascript(
-            "JSON.stringify(window.configs)"
-        ) { resultJson ->
+        val extractScript = """
+        (function() {
+            // 1. JWPlayer configs
+            if (typeof window.configs !== 'undefined' && window.configs) {
+                return JSON.stringify(window.configs);
+            }
+            
+            // 2. VideoJS player
+            if (typeof videojs !== 'undefined') {
+                try {
+                    var player = videojs('videoplayer');
+                    if (player && player.currentSources && player.currentSources().length > 0) {
+                        var sources = player.currentSources();
+                        var textTracks = [];
+                        
+                        if (player.textTracks && player.textTracks().length > 0) {
+                            for (var i = 0; i < player.textTracks().length; i++) {
+                                var track = player.textTracks()[i];
+                                if (track.kind === 'captions' || track.kind === 'subtitles') {
+                                    textTracks.push({
+                                        file: track.src,
+                                        label: track.label,
+                                        language: track.language,
+                                        kind: track.kind,
+                                        default: track.default || track.mode === 'showing'
+                                    });
+                                }
+                            }
+                        }
+                        
+                        return JSON.stringify({
+                            sources: sources,
+                            tracks: textTracks,
+                            type: 'videojs'
+                        });
+                    }
+                } catch (e) {}
+            }
+            
+            return null;
+        })();
+    """.trimIndent()
 
+        webView.evaluateJavascript(extractScript) { resultJson ->
             Log.d("kraptor_webview", "=== CONFIG JSON DEBUG ===")
             Log.d("kraptor_webview", "Raw resultJson: '$resultJson'")
 
@@ -332,7 +369,6 @@ class HDFilmCehennemi : MainAPI() {
                 if (raw == "null" || raw == "\"null\"") {
                     null
                 } else {
-                    // Remove surrounding quotes if it's a JSON string
                     raw.removePrefix("\"").removeSuffix("\"")
                         .replace("\\\"", "\"")
                         .replace("\\\\", "\\")
@@ -342,11 +378,11 @@ class HDFilmCehennemi : MainAPI() {
             Log.d("kraptor_webview", "Cleaned result length: ${cleanResult?.length ?: 0}")
 
             if (cleanResult.isNullOrEmpty() || cleanResult == "null") {
-                if (attempt < 10) {
-                    Log.d("kraptor_webview", "Config is null/empty, retrying in 500ms...")
+                if (attempt < 15) {
+                    Log.d("kraptor_webview", "Config is null/empty, retrying in 800ms...")
                     Handler(Looper.getMainLooper()).postDelayed({
                         extractWithDelay(webView, onResult, attempt + 1)
-                    }, 500)
+                    }, 800)
                 } else {
                     Log.d("kraptor_webview", "Max attempts reached, giving up")
                     onResult(null)
@@ -358,8 +394,6 @@ class HDFilmCehennemi : MainAPI() {
         }
     }
 
-
-    // loadLinks fonksiyonunu da güncelleyelim
     override suspend fun loadLinks(
         data: String,
         isCasting: Boolean,
@@ -372,9 +406,10 @@ class HDFilmCehennemi : MainAPI() {
         document.select("div.alternative-links").map { element ->
             element to element.attr("data-lang").uppercase()
         }.forEach { (element, langCode) ->
-            element.select("button.alternative-link").map { button ->
-                button.text().replace("(HDrip Xbet)", "").trim() + " $langCode" to button.attr("data-video")
-            }.forEach { (source, videoID) ->
+            element.select("button.alternative-link").mapIndexed { index, button -> // index eklendi
+                val sourceName = button.text().replace("(HDrip Xbet)", "").trim()
+                Triple(sourceName, langCode, button.attr("data-video")) // Triple kullanıldı
+            }.forEach { (sourceName, langCode, videoID) ->
                 try {
                     val apiGet = app.get(
                         "${mainUrl}/video/$videoID/",
@@ -396,7 +431,7 @@ class HDFilmCehennemi : MainAPI() {
 
                     Log.d("kraptor_$name", "iframe = $iframeUrl")
 
-                    val videoReferer = if (iframeUrl.contains("id=")) {
+                    val videoReferer = if (iframeUrl.contains("mobi")) {
                         "https://hdfilmcehennemi.mobi/"
                     } else {
                         "${mainUrl}/"
@@ -422,36 +457,9 @@ class HDFilmCehennemi : MainAPI() {
                         configJson?.let { configStr ->
                             if (configStr.isNotEmpty() && configStr != "null") {
                                 try {
-                                    // Config'i parse et
                                     val configObj = JSONObject(configStr)
 
-                                    // Video URL'sini al
-                                    if (configObj.has("sources")) {
-                                        val sources = configObj.getJSONArray("sources")
-                                        for (i in 0 until sources.length()) {
-                                            val sourceObj = sources.getJSONObject(i)
-                                            val videoUrl = sourceObj.optString("file", "")
-
-                                            if (videoUrl.isNotEmpty() && videoUrl.startsWith("http")) {
-                                                Log.d("kraptor_$name", "Video URL found: $videoUrl")
-
-                                                callback.invoke(
-                                                    newExtractorLink(
-                                                        this@HDFilmCehennemi.name,
-                                                        source,
-                                                        videoUrl,
-                                                        type = ExtractorLinkType.M3U8,
-                                                        {
-                                                            referer = videoReferer
-                                                            quality = Qualities.Unknown.value
-                                                        }
-                                                    )
-                                                )
-                                            }
-                                        }
-                                    }
-
-                                    // Altyazıları al
+                                    // --- ÖNCE: altyazıları işle ve callback'i çağır ---
                                     if (configObj.has("tracks")) {
                                         val tracks = configObj.getJSONArray("tracks")
                                         for (i in 0 until tracks.length()) {
@@ -464,42 +472,124 @@ class HDFilmCehennemi : MainAPI() {
                                                 val language = trackObj.optString("language", "")
 
                                                 if (subFile.isNotEmpty()) {
-                                                    // URL'yi tam hale getir
                                                     val fullSubUrl = if (subFile.startsWith("http")) {
                                                         subFile
                                                     } else {
-                                                        // Base URL'yi iframe URL'den çıkar
                                                         val baseUrl = if (iframeUrl.contains("mobi")) {
                                                             "https://hdfilmcehennemi.mobi"
-                                                        }else {
+                                                        } else {
                                                             "${mainUrl}"
                                                         }
-                                                        "$baseUrl$subFile/"
+                                                        "$baseUrl$subFile"
                                                     }
 
-                                                    // Dil adını temizle
                                                     val cleanLang = when {
                                                         label.contains("İngilizce") || language == "en" -> "English"
                                                         label.contains("Türkçe") || language == "tr" -> "Turkish"
-                                                        label.isNotEmpty() -> label
+                                                        language == "forced" -> "Forced"
+                                                        label.isNotEmpty() -> label.replace("├╝", "ü").replace("─░", "İ")
                                                         language.isNotEmpty() -> language
                                                         else -> "Unknown"
                                                     }
 
-                                                    Log.d("kraptor_$name", "Subtitle found: $cleanLang - $fullSubUrl")
-
-                                                    subtitleCallback(newSubtitleFile(
+                                                    subtitleCallback(SubtitleFile(
                                                         cleanLang,
                                                         fullSubUrl,
-                                                        {
-                                                            this.headers = mapOf("Referer" to "$mainUrl/", "Accept" to "*/*", "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0")
-                                                        }
                                                     ))
                                                 }
                                             }
                                         }
                                     }
+                                    if (configObj.has("sources")) {
+                                        val sources = configObj.getJSONArray("sources")
+                                        for (i in 0 until sources.length()) {
+                                            val sourceObj = sources.getJSONObject(i)
+                                            val videoUrl = sourceObj.optString("file", "").ifEmpty {
+                                                sourceObj.optString("src", "")
+                                            }
+                                            val quality = sourceObj.optString("label", "")
 
+                                            if (videoUrl.isNotEmpty() && videoUrl.startsWith("http")) {
+                                                // Her kaynak için benzersiz bir ad oluştur
+                                                val fullSourceName = if (sources.length() > 1) {
+                                                    "$sourceName $langCode - ${if (quality.isNotEmpty() && quality != "0") "Quality $quality" else "Source ${i + 1}"}"
+                                                } else {
+                                                    "$sourceName $langCode"
+                                                }
+
+                                                Log.d(
+                                                    "kraptor_$name",
+                                                    "Video URL found: $videoUrl (Source: $fullSourceName)"
+                                                )
+
+                                                // Kaliteyi belirle
+                                                val qualityValue = when {
+                                                    quality.contains("2282") || quality.contains("high") || quality.contains(
+                                                        "yüksek"
+                                                    ) -> Qualities.P1080.value
+
+                                                    quality.contains("570") || quality.contains("normal") -> Qualities.P720.value
+                                                    quality.isNotEmpty() && quality.toIntOrNull() != null -> quality.toInt()
+                                                    else -> Qualities.Unknown.value
+                                                }
+
+                                                val videoRef = if (videoUrl.contains("mobi")) {
+                                                    "https://hdfilmcehennemi.mobi/"
+                                                } else if (videoUrl.contains("cdnimages")) {
+                                                    "https://hdfilmcehennemi.mobi/"
+                                                } else {
+                                                    "${mainUrl}/"
+                                                }
+
+                                                val hostum = videoUrl.substringAfter("/").substringAfter("/")
+                                                    .substringBefore("/")
+
+                                                val videoHeaders = if (videoUrl.contains("cdnimages")) {
+                                                    mapOf(
+                                                        "Referer" to "https://hdfilmcehennemi.mobi/",
+                                                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+                                                        "Accept" to "*/*",
+                                                    )
+                                                } else {
+                                                    mapOf(
+                                                        "Referer" to "${mainUrl}/",
+                                                        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+                                                        "Accept" to "*/*",
+                                                    )
+                                                }
+
+                                                val videoIsim = if (videoUrl.contains("rapidrame")) {
+                                                    "Rapidrame"
+                                                } else if (videoUrl.contains("cdnimages")) {
+                                                    "Close"
+                                                } else if (videoUrl.contains("hls13.playmix.uno")) {
+                                                    "Close"
+                                                } else {
+                                                    "HDFilmCehennemi"
+                                                }
+
+                                                val refererSon = if (videoUrl.contains("cdnimages")) {
+                                                    "https://hdfilmcehennemi.mobi/"
+                                                } else if (videoUrl.contains("hls13.playmix.uno")) {
+                                                    "https://hdfilmcehennemi.mobi/"
+                                                } else {
+                                                    "${mainUrl}/"
+                                                }
+
+                                                callback.invoke(
+                                                    newExtractorLink(
+                                                        source = videoIsim,
+                                                        name = videoIsim,
+                                                        url = videoUrl,
+                                                        type = ExtractorLinkType.M3U8,
+                                                        {
+                                                            this.referer = refererSon
+                                                            this.quality = Qualities.Unknown.value
+                                                        }
+                                                    ))
+                                            }
+                                        }
+                                    }
                                 } catch (e: Exception) {
                                     Log.e("kraptor_$name", "Error parsing config JSON: $e")
                                     e.printStackTrace()
