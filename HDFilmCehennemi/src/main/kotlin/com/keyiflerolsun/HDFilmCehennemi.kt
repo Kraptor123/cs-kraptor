@@ -269,7 +269,6 @@ class HDFilmCehennemi : MainAPI() {
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     suspend fun createWebViewAndExtract(
         context: Context,
         baseUrl: String,
@@ -277,177 +276,20 @@ class HDFilmCehennemi : MainAPI() {
         onResult: (String?) -> Unit
     ): WebView = withContext(Dispatchers.Main) {
 
-        // HTML'i daha kapsamlı şekilde modifiye et
-        val modifiedHtml = html
-            // JWPlayer setup'ı yakala
-            .replace(
-                Regex("""jwplayer\s*\(\s*["']player["']\s*\)\s*\.setup\s*\(\s*configs\s*\)\s*;"""),
-                """
-            window.configs = configs;
-            window.extractedUrl = null;
-            if (configs && configs.sources && configs.sources[0] && configs.sources[0].file) {
-                window.extractedUrl = configs.sources[0].file;
-                console.log('Video URL extracted:', window.extractedUrl);
-            }
-            jwplayer("player").setup(configs);
-            """.trimIndent()
-            )
-            // VideoJS setup'ı yakala (.mp4 ve .txt dosyaları için)
-            .replace(
-                Regex("""videojs\s*\(\s*["'][^"']*["']\s*,\s*\{[^}]*sources[^}]*\}"""),
-                """
-            const originalSetup = $0;
-            try {
-                const configMatch = originalSetup.match(/sources[^}]*\}/);
-                if (configMatch) {
-                    const sourcesStr = configMatch[0];
-                    const srcMatch = sourcesStr.match(/src['":\s]*['"]([^'"]+)['"]/);
-                    if (srcMatch && srcMatch[1]) {
-                        window.extractedUrl = srcMatch[1];
-                        console.log('VideoJS URL extracted:', window.extractedUrl);
-                    }
-                }
-            } catch (e) {
-                console.error('Error parsing VideoJS config:', e);
-            }
-            originalSetup
-            """.trimIndent()
-            )
-            // Head'e ek script ekle
-            .replace(
-                "</head>",
-                """
-            <script>
-            window.videoUrlExtracted = false;
-            window.realUrls = []; // Gerçek URL'leri sakla
-            
-            // XMLHttpRequest override - M3U8 URL'lerini yakala
-            const origXHR = window.XMLHttpRequest;
-            window.XMLHttpRequest = function() {
-                const xhr = new origXHR();
-                const origOpen = xhr.open;
-                xhr.open = function(method, url) {
-                    if (url && (url.includes('.m3u8') || url.includes('/hls/'))) {
-                        console.log('XHR M3U8 found:', url);
-                        window.realUrls.push(url);
-                        if (!window.extractedUrl || window.extractedUrl.startsWith('blob:')) {
-                            window.extractedUrl = url;
-                        }
-                    }
-                    return origOpen.apply(this, arguments);
-                };
-                return xhr;
-            };
-            
-            // Fetch override - M3U8 URL'lerini yakala  
-            const origFetch = window.fetch;
-            window.fetch = function(url) {
-                if (typeof url === 'string' && (url.includes('.m3u8') || url.includes('/hls/'))) {
-                    console.log('Fetch M3U8 found:', url);
-                    window.realUrls.push(url);
-                    if (!window.extractedUrl || window.extractedUrl.startsWith('blob:')) {
-                        window.extractedUrl = url;
-                    }
-                }
-                return origFetch.apply(this, arguments);
-            };
-            
-            window.extractVideo = function() {
-                try {
-                    // Önce gerçek M3U8 URL'leri kontrol et
-                    if (window.realUrls && window.realUrls.length > 0) {
-                        const lastReal = window.realUrls[window.realUrls.length - 1];
-                        if (lastReal && !lastReal.startsWith('blob:')) {
-                            console.log('Using real M3U8 URL:', lastReal);
-                            return lastReal;
-                        }
-                    }
-                    
-                    // JWPlayer configs kontrol et - blob değilse
-                    if (window.configs && window.configs.sources && window.configs.sources[0]) {
-                        const url = window.configs.sources[0].file;
-                        if (url && !url.startsWith('blob:')) {
-                            window.extractedUrl = url;
-                            window.videoUrlExtracted = true;
-                            console.log('Extracted URL (JWPlayer):', url);
-                            return url;
-                        }
-                    }
-                    
-                    // VideoJS players kontrol
-                    if (window.videojs) {
-                        const players = videojs.getPlayers();
-                        for (let playerId in players) {
-                            const player = players[playerId];
-                            if (player && player.currentSource && player.currentSource()) {
-                                const src = player.currentSource().src;
-                                if (src && src.includes('http') && !src.startsWith('blob:')) {
-                                    window.extractedUrl = src;
-                                    window.videoUrlExtracted = true;
-                                    console.log('Extracted URL (VideoJS):', src);
-                                    return src;
-                                }
-                            }
-                        }
-                    }
-                    
-                    // Video elementleri kontrol et - blob değilse
-                    const videos = document.querySelectorAll('video');
-                    for (let video of videos) {
-                        if (video.src && video.src.includes('http') && !video.src.startsWith('blob:')) {
-                            window.extractedUrl = video.src;
-                            window.videoUrlExtracted = true;
-                            console.log('Extracted URL (Video Element):', video.src);
-                            return video.src;
-                        }
-                    }
-                    
-                    // JWPlayer instance'dan almaya çalış - blob değilse
-                    if (window.jwplayer && window.jwplayer('player')) {
-                        const player = window.jwplayer('player');
-                        const playlist = player.getPlaylist();
-                        if (playlist && playlist[0] && playlist[0].sources && playlist[0].sources[0]) {
-                            const url = playlist[0].sources[0].file;
-                            if (url && !url.startsWith('blob:')) {
-                                window.extractedUrl = url;
-                                window.videoUrlExtracted = true;
-                                return url;
-                            }
-                        }
-                    }
-                } catch (e) {
-                    console.error('Error extracting video URL:', e);
-                }
-                return null;
-            };
-            
-            // VideoJS event listener ekle
-            document.addEventListener('DOMContentLoaded', function() {
-                setTimeout(function() {
-                    window.extractVideo();
-                }, 500);
-            });
-            
-            // Video elementlerine event listener ekle - blob değilse
-            document.addEventListener('loadstart', function(e) {
-                if (e.target.tagName === 'VIDEO' && e.target.src && !e.target.src.startsWith('blob:')) {
-                    window.extractedUrl = e.target.src;
-                    console.log('Video loadstart event:', e.target.src);
-                }
-            }, true);
-            </script>
-            </head>
+        val modifiedHtml = html.replace(
+            Regex("""jwplayer\s*\(\s*["']player["']\s*\)\s*\.setup\s*\(\s*configs\s*\)\s*;"""),
             """
-            )
-
-        Log.d("kraptor_webview", "Modified HTML prepared")
+        window.configs = configs;
+        console.log('configs set:', JSON.stringify(configs));
+        jwplayer("player").setup(configs);
+        """.trimIndent()
+        )
 
         return@withContext WebView(context).apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
             settings.allowFileAccess = true
             settings.allowContentAccess = true
-            settings.mediaPlaybackRequiresUserGesture = false
 
             webChromeClient = object : WebChromeClient() {
                 override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
@@ -460,20 +302,8 @@ class HDFilmCehennemi : MainAPI() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
 
-                    Log.d("kraptor_webview", "Page loaded, starting extraction...")
-
-                    // İlk deneme - hemen kontrol et
-                    extractVideoUrl(view, onResult, 0)
-                }
-
-                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                    super.onPageStarted(view, url, favicon)
-                    Log.d("kraptor_webview", "Page started loading")
-                }
-
-                override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                    // URL redirect'lerini engelleyelim
-                    return false
+                    // İlk kontrol - hemen
+                    extractWithDelay(view, onResult, 0)
                 }
             }
 
@@ -481,175 +311,53 @@ class HDFilmCehennemi : MainAPI() {
         }
     }
 
-    private fun extractVideoUrl(webView: WebView?, onResult: (String?) -> Unit, attempt: Int) {
-        if (webView == null || attempt > 8) { // 2 saniye timeout (8 * 250ms) - daha hızlı
-            Log.d("kraptor_webview", "Timeout or WebView null, returning null")
+    private fun extractWithDelay(webView: WebView?, onResult: (String?) -> Unit, attempt: Int) {
+        if (webView == null || attempt > 10) {
+            Log.d("kraptor_webview", "Timeout reached or WebView is null")
             onResult(null)
             return
         }
 
+        Log.d("kraptor_webview", "Attempt $attempt - Checking for configs...")
+
+        // Tüm config objesini al, sadece video URL'sini değil
         webView.evaluateJavascript(
-            """
-        (function() {
-            try {
-                // Önce gerçek M3U8 URL'leri kontrol et
-                if (window.realUrls && window.realUrls.length > 0) {
-                    const lastReal = window.realUrls[window.realUrls.length - 1];
-                    if (lastReal && !lastReal.startsWith('blob:')) {
-                        return JSON.stringify({success: true, url: lastReal, type: 'real_m3u8'});
-                    }
-                }
-                
-                // İlk önce window.extractedUrl kontrol et - blob değilse
-                if (window.extractedUrl && !window.extractedUrl.startsWith('blob:')) {
-                    return JSON.stringify({success: true, url: window.extractedUrl});
-                }
-                
-                // Manuel extraction dene
-                const extractedUrl = window.extractVideo ? window.extractVideo() : null;
-                if (extractedUrl && !extractedUrl.startsWith('blob:')) {
-                    return JSON.stringify({success: true, url: extractedUrl});
-                }
-                
-                // configs objesini kontrol et (JWPlayer) - blob değilse
-                if (window.configs && window.configs.sources && window.configs.sources[0]) {
-                    const url = window.configs.sources[0].file;
-                    if (url && !url.startsWith('blob:')) {
-                        window.extractedUrl = url;
-                        return JSON.stringify({success: true, url: url, type: 'jwplayer'});
-                    }
-                }
-                
-                // s_5dV6vyCGxgu değişkenini kontrol et (obfuscated koddan) - blob değilse
-                if (window.s_5dV6vyCGxgu && !window.s_5dV6vyCGxgu.startsWith('blob:')) {
-                    return JSON.stringify({success: true, url: window.s_5dV6vyCGxgu, type: 'obfuscated'});
-                }
-                
-                // VideoJS kontrol et (hdfilmcehennemi.mobi için) - blob değilse
-                if (window.videojs) {
-                    const players = videojs.getPlayers();
-                    for (let playerId in players) {
-                        const player = players[playerId];
-                        if (player && player.currentSource && player.currentSource()) {
-                            const src = player.currentSource().src;
-                            if (src && src.includes('http') && !src.startsWith('blob:')) {
-                                return JSON.stringify({success: true, url: src, type: 'videojs'});
-                            }
-                        }
-                    }
-                }
-                
-                // Video element'lerini kontrol et - blob değilse
-                const videos = document.querySelectorAll('video');
-                for (let video of videos) {
-                    if (video.src && video.src.includes('http') && !video.src.startsWith('blob:')) {
-                        return JSON.stringify({success: true, url: video.src, type: 'video_element'});
-                    }
-                    if (video.currentSrc && video.currentSrc.includes('http') && !video.currentSrc.startsWith('blob:')) {
-                        return JSON.stringify({success: true, url: video.currentSrc, type: 'video_currentSrc'});
-                    }
-                }
-                
-                // Source element'lerini kontrol et - blob değilse
-                const sources = document.querySelectorAll('source');
-                for (let source of sources) {
-                    if (source.src && source.src.includes('http') && !source.src.startsWith('blob:')) {
-                        return JSON.stringify({success: true, url: source.src, type: 'source_element'});
-                    }
-                }
-                
-                // JWPlayer'dan almaya çalış - blob değilse
-                if (window.jwplayer && window.jwplayer('player')) {
-                    const player = window.jwplayer('player');
-                    if (player.getPlaylist) {
-                        const playlist = player.getPlaylist();
-                        if (playlist && playlist[0] && playlist[0].sources && playlist[0].sources[0]) {
-                            const url = playlist[0].sources[0].file;
-                            if (url && !url.startsWith('blob:')) {
-                                return JSON.stringify({success: true, url: url, type: 'jwplayer_playlist'});
-                            }
-                        }
-                    }
-                }
-                
-                // Global değişkenleri tara - blob değilse
-                for (let prop in window) {
-                    try {
-                        if (typeof window[prop] === 'string' && 
-                            !window[prop].startsWith('blob:') &&
-                            (window[prop].includes('.m3u8') || 
-                            window[prop].includes('.mp4') || 
-                            window[prop].includes('/hls/'))) {
-                            return JSON.stringify({success: true, url: window[prop], type: 'global_var'});
-                        }
-                    } catch (e) {
-                        // ignore
-                    }
-                }
-                
-                return JSON.stringify({success: false, message: 'No URL found', attempt: $attempt});
-            } catch (e) {
-                return JSON.stringify({success: false, error: e.toString(), attempt: $attempt});
-            }
-        })();
-        """.trimIndent()
+            "JSON.stringify(window.configs)"
         ) { resultJson ->
-            try {
-                Log.d("kraptor_webview", "JavaScript result (attempt $attempt): $resultJson")
 
-                if (resultJson == "null" || resultJson.isNullOrEmpty()) {
-                    // Tekrar dene - daha hızlı interval
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        extractVideoUrl(webView, onResult, attempt + 1)
-                    }, 250)
-                    return@evaluateJavascript
-                }
+            Log.d("kraptor_webview", "=== CONFIG JSON DEBUG ===")
+            Log.d("kraptor_webview", "Raw resultJson: '$resultJson'")
 
-                // JSON string'i parse et (çift quote'ları temizle)
-                val cleanJson = resultJson.removePrefix("\"").removeSuffix("\"")
-                    .replace("\\\"", "\"")
-                    .replace("\\\\", "\\")
-
-                val jsonObject = JSONObject(cleanJson)
-
-                if (jsonObject.getBoolean("success")) {
-                    val videoUrl = jsonObject.getString("url")
-                    val extractionType = jsonObject.optString("type", "unknown")
-
-                    // Blob URL ise reddet ve tekrar dene
-                    if (videoUrl.startsWith("blob:")) {
-                        Log.d("kraptor_webview", "Rejecting blob URL, retrying...")
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            extractVideoUrl(webView, onResult, attempt + 1)
-                        }, 250)
-                        return@evaluateJavascript
-                    }
-
-                    Log.d("kraptor_webview", "Video URL extracted successfully ($extractionType): $videoUrl")
-                    onResult(videoUrl)
+            val cleanResult = resultJson?.let { raw ->
+                if (raw == "null" || raw == "\"null\"") {
+                    null
                 } else {
-                    Log.d("kraptor_webview", "Extraction failed: ${jsonObject.optString("message", "Unknown error")}")
-                    // Tekrar dene - daha hızlı interval
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        extractVideoUrl(webView, onResult, attempt + 1)
-                    }, 250)
+                    // Remove surrounding quotes if it's a JSON string
+                    raw.removePrefix("\"").removeSuffix("\"")
+                        .replace("\\\"", "\"")
+                        .replace("\\\\", "\\")
                 }
-            } catch (e: Exception) {
-                Log.e("kraptor_webview", "Error parsing result: $e")
-                Log.d("kraptor_webview", "Raw result: $resultJson")
+            }
 
-                // Eğer direkt string geliyorsa (quotes olmadan) ve blob değilse
-                if (resultJson.contains("http") && !resultJson.contains("success") && !resultJson.contains("blob:")) {
-                    onResult(resultJson.replace("\"", ""))
-                } else {
-                    // Tekrar dene - daha hızlı interval
+            Log.d("kraptor_webview", "Cleaned result length: ${cleanResult?.length ?: 0}")
+
+            if (cleanResult.isNullOrEmpty() || cleanResult == "null") {
+                if (attempt < 10) {
+                    Log.d("kraptor_webview", "Config is null/empty, retrying in 500ms...")
                     Handler(Looper.getMainLooper()).postDelayed({
-                        extractVideoUrl(webView, onResult, attempt + 1)
-                    }, 250)
+                        extractWithDelay(webView, onResult, attempt + 1)
+                    }, 500)
+                } else {
+                    Log.d("kraptor_webview", "Max attempts reached, giving up")
+                    onResult(null)
                 }
+            } else {
+                Log.d("kraptor_webview", "SUCCESS! Found config")
+                onResult(cleanResult)
             }
         }
     }
+
 
     // loadLinks fonksiyonunu da güncelleyelim
     override suspend fun loadLinks(
@@ -688,67 +396,20 @@ class HDFilmCehennemi : MainAPI() {
 
                     Log.d("kraptor_$name", "iframe = $iframeUrl")
 
-                    if (iframeUrl.contains("hdfilmcehennemi.mobi")) {
-                        val iframedoc = app.get(iframeUrl, referer = mainUrl).document
-                        val baseUri = iframedoc.location().substringBefore("/", "https://www.hdfilmcehennemi.mobi")
-
-                        iframedoc.select("track[kind=captions]")
-                            .forEach { track ->
-                                val lang = track.attr("srclang").let {
-                                    when (it) {
-                                        "tr" -> "Turkish"
-                                        "en" -> "English"
-                                        "Türkçe" -> "Turkish"
-                                        "İngilizce" -> "English"
-                                        else -> it
-                                    }
-                                }
-                                Log.d("kraptor_$name","altyazi track = $track")
-                                val subUrl = track.attr("src").let { src ->
-                                    if (src.startsWith("http")) src else "$baseUri/$src".replace("//", "/")
-                                }
-                                Log.d("kraptor_$name","altyazi url = $subUrl")
-                                subtitleCallback(newSubtitleFile(lang, subUrl, {
-                                    this.headers = mapOf("Referer" to iframeUrl)
-                                }))
-                            }
-                    } else if (iframeUrl.contains("rplayer")) {
-                        val iframeDoc = app.get(iframeUrl, referer = "$data/").document
-                        Log.d("kraptor_$name","iframeDoc = $iframeDoc")
-                        val regex = Regex("\"file\":\"((?:[^\"]|\"\")*)\"", options = setOf(RegexOption.IGNORE_CASE))
-                        val matches = regex.findAll(iframeDoc.toString())
-
-                        for (match in matches) {
-                            val fileUrlEscaped = match.groupValues[1]
-                            Log.d("kraptor_$name","altyazi fileUrlEscaped = $fileUrlEscaped")
-                            val fileUrl = fileUrlEscaped.replace("\\/", "/")
-                            val tamUrl = fixUrlNull(fileUrl).toString()
-                            val sonUrl = "${tamUrl}/"
-                            Log.d("kraptor_$name","altyazi sonurl = $sonUrl")
-                            val langCode = sonUrl.substringAfterLast("_").substringBefore(".")
-                            Log.d("kraptor_$name","altyazi langCode = $langCode")
-                            subtitleCallback.invoke(newSubtitleFile(lang = langCode, url = tamUrl, {
-                                headers = mapOf(
-                                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
-                                )
-                            }))
-                        }
-                    }
-
-                   val Videoreferer = if (iframeUrl.contains("id=")) {
+                    val videoReferer = if (iframeUrl.contains("id=")) {
                         "https://hdfilmcehennemi.mobi/"
                     } else {
                         "${mainUrl}/"
                     }
 
-                    val iframeContent = app.get(iframeUrl, referer = Videoreferer).textLarge
+                    val iframeContent = app.get(iframeUrl, referer = videoReferer).textLarge
                     Log.d("kraptor_$name", "iframeContent length = ${iframeContent.length}")
 
                     if (appContext != null) {
-                        Log.d("kraptor_$name", "Using WebView to extract video URL")
+                        Log.d("kraptor_$name", "Using WebView to extract config...")
 
-                        // Suspending function olarak bekle
-                        val extractedUrl = suspendCoroutine<String?> { continuation ->
+                        // Config objesini al
+                        val configJson = suspendCoroutine<String?> { continuation ->
                             runBlocking {
                                 createWebViewAndExtract(appContext!!, iframeUrl, iframeContent) { result ->
                                     continuation.resume(result)
@@ -756,27 +417,99 @@ class HDFilmCehennemi : MainAPI() {
                             }
                         }
 
-                        Log.d("kraptor_$name", "Final result = $extractedUrl")
+                        Log.d("kraptor_$name", "Config result = $configJson")
 
-                        extractedUrl?.let { videoUrl ->
-                            if (videoUrl.isNotEmpty() && videoUrl != "null") {
-                                callback.invoke(
-                                    newExtractorLink(
-                                        this@HDFilmCehennemi.name,
-                                        source,
-                                        videoUrl,
-                                        type = ExtractorLinkType.M3U8,
-                                        {
-                                            referer = Videoreferer
-                                            quality = Qualities.Unknown.value
+                        configJson?.let { configStr ->
+                            if (configStr.isNotEmpty() && configStr != "null") {
+                                try {
+                                    // Config'i parse et
+                                    val configObj = JSONObject(configStr)
+
+                                    // Video URL'sini al
+                                    if (configObj.has("sources")) {
+                                        val sources = configObj.getJSONArray("sources")
+                                        for (i in 0 until sources.length()) {
+                                            val sourceObj = sources.getJSONObject(i)
+                                            val videoUrl = sourceObj.optString("file", "")
+
+                                            if (videoUrl.isNotEmpty() && videoUrl.startsWith("http")) {
+                                                Log.d("kraptor_$name", "Video URL found: $videoUrl")
+
+                                                callback.invoke(
+                                                    newExtractorLink(
+                                                        this@HDFilmCehennemi.name,
+                                                        source,
+                                                        videoUrl,
+                                                        type = ExtractorLinkType.M3U8,
+                                                        {
+                                                            referer = videoReferer
+                                                            quality = Qualities.Unknown.value
+                                                        }
+                                                    )
+                                                )
+                                            }
                                         }
-                                    )
-                                )
+                                    }
+
+                                    // Altyazıları al
+                                    if (configObj.has("tracks")) {
+                                        val tracks = configObj.getJSONArray("tracks")
+                                        for (i in 0 until tracks.length()) {
+                                            val trackObj = tracks.getJSONObject(i)
+                                            val kind = trackObj.optString("kind", "")
+
+                                            if (kind == "captions") {
+                                                val subFile = trackObj.optString("file", "")
+                                                val label = trackObj.optString("label", "")
+                                                val language = trackObj.optString("language", "")
+
+                                                if (subFile.isNotEmpty()) {
+                                                    // URL'yi tam hale getir
+                                                    val fullSubUrl = if (subFile.startsWith("http")) {
+                                                        subFile
+                                                    } else {
+                                                        // Base URL'yi iframe URL'den çıkar
+                                                        val baseUrl = if (iframeUrl.contains("mobi")) {
+                                                            "https://hdfilmcehennemi.mobi"
+                                                        }else {
+                                                            "${mainUrl}"
+                                                        }
+                                                        "$baseUrl$subFile/"
+                                                    }
+
+                                                    // Dil adını temizle
+                                                    val cleanLang = when {
+                                                        label.contains("İngilizce") || language == "en" -> "English"
+                                                        label.contains("Türkçe") || language == "tr" -> "Turkish"
+                                                        label.isNotEmpty() -> label
+                                                        language.isNotEmpty() -> language
+                                                        else -> "Unknown"
+                                                    }
+
+                                                    Log.d("kraptor_$name", "Subtitle found: $cleanLang - $fullSubUrl")
+
+                                                    subtitleCallback(newSubtitleFile(
+                                                        cleanLang,
+                                                        fullSubUrl,
+                                                        {
+                                                            this.headers = mapOf("Referer" to "$mainUrl/", "Accept" to "*/*", "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0")
+                                                        }
+                                                    ))
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                } catch (e: Exception) {
+                                    Log.e("kraptor_$name", "Error parsing config JSON: $e")
+                                    e.printStackTrace()
+                                }
                             }
                         }
                     } else {
                         Log.e("kraptor_$name", "appContext is null!")
                     }
+
                 } catch (e: Exception) {
                     Log.e("kraptor_$name", "Error processing link: $e")
                     e.printStackTrace()
@@ -785,6 +518,7 @@ class HDFilmCehennemi : MainAPI() {
         }
         return@withContext true
     }
+
     data class Results(
         @JsonProperty("results") val results: List<String> = arrayListOf()
     )
