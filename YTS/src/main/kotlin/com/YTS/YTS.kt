@@ -71,12 +71,12 @@ open class YTS : MainAPI() {
         val tags = document.selectFirst("#mobile-movie-info > h2:nth-child(3)")?.text()?.trim()
             ?.split(" / ")
             ?.map { it.trim() }
-        val rating= document.select("#movie-info > div.bottom-info > div:nth-child(2) > span:nth-child(2)").text()
+        val rating= document.select("#movie-info > div.bottom-info > div:nth-child(2) > span:nth-child(2)").text().toRatingInt()
         return newMovieLoadResponse(title, url, TvType.Movie, url) {
             this.posterUrl = poster
             this.plot = title
             this.year = year
-            this.score = Score.from10(rating)
+            this.rating=rating
             this.tags = tags
         }
     }

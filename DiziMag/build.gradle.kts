@@ -1,4 +1,4 @@
-version = 23
+version = 24
 
 cloudstream {
     authors     = listOf("nikyokki")
@@ -14,5 +14,5 @@ cloudstream {
      **/
     status  = 1 // will be 3 if unspecified
     tvTypes = listOf("TvSeries")
-    iconUrl = "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizimag.pro&size=32"
+    iconUrl = "https://dizimag.me/uploads/logo/original/logo-5063.webp"
 }

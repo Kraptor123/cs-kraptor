@@ -1,5 +1,5 @@
 // use an integer for version numbers
-version = 9
+version = 10
 
 
 cloudstream {
@@ -23,7 +23,7 @@ cloudstream {
     // https://recloudstream.github.io/cloudstream/html/app/com.lagradost.cloudstream3/-tv-type/index.html
     tvTypes = listOf("Movie","Torrent")
 
-    iconUrl = "https://raw.githubusercontent.com/phisher98/TVVVV/main/yts.png"
+    iconUrl = "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://en.yts-official.mx&size=128"
 
     isCrossPlatform = true
 }
