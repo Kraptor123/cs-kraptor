@@ -97,9 +97,11 @@ class DiziBox : MainAPI() {
         val href      = fixUrlNull(this.selectFirst("h3 a")?.attr("href")) ?: (this.selectFirst("a.figure-link")?.attr("href")
             ?.replace(Regex(pattern = """-[0-9]+-.*""", options = setOf(RegexOption.IGNORE_CASE)),"/")
             ?.replace("$mainUrl/","$mainUrl/diziler/") ?: return null)
+        val rating = this.selectFirst("span.label-imdb b")?.text()?.trim()
 
 
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+
+        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl;this.score = Score.from10(rating) }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
