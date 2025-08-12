@@ -1,4 +1,4 @@
-version = 17
+version = 18
 
 cloudstream {
     authors     = listOf("kraptor")
@@ -14,5 +14,5 @@ cloudstream {
     **/
     status  = 1 // will be 3 if unspecified
     tvTypes = listOf("TvSeries", "Movie")
-    iconUrl = "https://dizifun2.com/images/data/favicon.png"
+    iconUrl = "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizifun4.com&size=128"
 }
