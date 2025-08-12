@@ -45,6 +45,7 @@ class DiziBox : MainAPI() {
     }
 
     override val mainPage = mainPageOf(
+        "${mainUrl}/tum-bolumler/page/SAYFA/"   to "Son Bölümler",
         "${mainUrl}/tum-bolumler/page/SAYFA/?tip=populer"   to "Popüler Dizilerden Son Bölümler",
         "${mainUrl}/dizi-arsivi/page/SAYFA/?ulke[]=turkiye&yil=&imdb"   to "Yerli",
         "${mainUrl}/dizi-arsivi/page/SAYFA/?tur[0]=aile&yil&imdb"       to "Aile",
@@ -96,9 +97,11 @@ class DiziBox : MainAPI() {
         val href      = fixUrlNull(this.selectFirst("h3 a")?.attr("href")) ?: (this.selectFirst("a.figure-link")?.attr("href")
             ?.replace(Regex(pattern = """-[0-9]+-.*""", options = setOf(RegexOption.IGNORE_CASE)),"/")
             ?.replace("$mainUrl/","$mainUrl/diziler/") ?: return null)
+        val rating = this.selectFirst("span.label-imdb b")?.text()?.trim()
 
 
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl }
+
+        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) { this.posterUrl = posterUrl;this.score = Score.from10(rating) }
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
