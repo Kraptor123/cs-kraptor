@@ -2,6 +2,7 @@
   "name": "Kraptor’s Turkish Repo | @kraptor123",
   "description": "Türkçe eklentiler",
   "manifestVersion": 1,
+  "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/master/.github/icons/logo/kekikani.png",
   "pluginLists": [
     "https://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/builds/plugins.json"
   ]
