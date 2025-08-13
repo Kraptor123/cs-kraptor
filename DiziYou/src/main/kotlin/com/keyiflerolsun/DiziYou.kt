@@ -22,7 +22,8 @@ class DiziYou : MainAPI() {
 
     override val mainPage = mainPageOf(
         ""  to "Yeni Eklenenler",
-        "${mainUrl}/"   to "Ana Sayfa",
+        "${mainUrl}/"   to "Dizi Arşivi",
+        
 //        "" to "Aile",
 //        "" to "Aksiyon",
 //        "" to "Animasyon",
@@ -41,7 +42,7 @@ class DiziYou : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = if (request.name.contains("Ana Sayfa")) {
+        val document = if (request.name.contains("Dizi Arşivi")) {
             app.get(
                 request.data,
                 headers = mapOf(
@@ -139,16 +140,16 @@ class DiziYou : MainAPI() {
 
             if (optId == "turkceAltyazili") {
                 subTitles.add(DiziyouSubtitle("Turkish", "${storage}/subtitles/${itemId}/tr.vtt"))
-                streamUrls.add(DiziyouStream("Orjinal Dil", "${storage}/episodes/${itemId}/play.m3u8"))
+                streamUrls.add(DiziyouStream("Altyazılı", "${storage}/episodes/${itemId}/play.m3u8"))
             }
 
             if (optId == "ingilizceAltyazili") {
                 subTitles.add(DiziyouSubtitle("English", "${storage}/subtitles/${itemId}/en.vtt"))
-                streamUrls.add(DiziyouStream("Orjinal Dil", "${storage}/episodes/${itemId}/play.m3u8"))
+                streamUrls.add(DiziyouStream("İngilizce Altyazılı", "${storage}/episodes/${itemId}/play.m3u8"))
             }
 
             if (optId == "turkceDublaj") {
-                streamUrls.add(DiziyouStream("Türkçe Dublaj", "${storage}/episodes/${itemId}_tr/play.m3u8"))
+                streamUrls.add(DiziyouStream("Dublaj", "${storage}/episodes/${itemId}_tr/play.m3u8"))
             }
         }
 
@@ -165,7 +166,7 @@ class DiziYou : MainAPI() {
             callback.invoke(
                 newExtractorLink(
                     source  = this.name,
-                    name    = this.name,
+                    name    = "${this.name} - ${stream.name}", 
                     url     = stream.url,
                     type = ExtractorLinkType.M3U8
                 ) {
