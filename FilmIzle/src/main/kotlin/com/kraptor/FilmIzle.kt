@@ -234,7 +234,7 @@ class FilmIzle : MainAPI() {
 
                 Log.d("flmcx", "embed $embedUrl")
 
-                val vidmolyurl = app.get(embedUrl, referer = "https://filmizle.cx/yaratici-izle-tr40", headers = mapOf(
+                val vidmolyurl = app.get(embedUrl, referer = "https://filmizle.cx/", headers = mapOf(
                     "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0",
                     "Sec-Fetch-Dest" to "iframe",
                     "Sec-Fetch-Mode" to "navigate",
