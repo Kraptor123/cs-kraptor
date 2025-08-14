@@ -225,7 +225,7 @@ class FilmIzle : MainAPI() {
 
                 val req = Request.Builder()
                     .url(data)
-                    .header("Referer", "https://filmizle.cx/yaratici-izle-tr40")  // gerekiyorsa ekleyin
+                    .header("Referer", "https://filmizle.cx/")  // gerekiyorsa ekleyin
                     .build()
 
                 val resp = client.newCall(req).execute()
