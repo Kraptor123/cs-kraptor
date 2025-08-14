@@ -93,3 +93,41 @@ subprojects {
 task<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
+// CS3 dosyalarını taşıyan task
+tasks.register("moveCs3Files") {
+    doLast {
+        // Tüm subprojectlerin build klasörlerini kontrol et
+        subprojects.forEach { subproject ->
+            val buildDir = subproject.layout.buildDirectory.get().asFile
+            if (buildDir.exists()) {
+                buildDir.walkTopDown().forEach { file ->
+                    if (file.extension == "cs3") {
+                        println("Moving: ${file.name}")
+
+                        // Hedef dosya yolu (ana dizin)
+                        val targetFile = File(rootProject.projectDir, file.name)
+
+                        // Dosyayı kopyala (varsa üzerine yaz)
+                        file.copyTo(targetFile, overwrite = true)
+
+                        println("Moved ${file.name} to ${targetFile.absolutePath}")
+                    }
+                }
+            }
+        }
+        println("All .cs3 files moved to root directory")
+    }
+}
+
+// Subprojectlerdeki make task'larını çalıştır ve CS3 dosyalarını taşı
+tasks.register("buildAndMove") {
+    dependsOn(subprojects.map { "${it.path}:make" })
+    finalizedBy("moveCs3Files")
+}
+
+// Alternatif olarak sadece makePluginsJson kullanabilirsiniz
+tasks.register("buildAndMovePlugins") {
+    dependsOn(subprojects.map { "${it.path}:makePluginsJson" })
+    finalizedBy("moveCs3Files")
+}
