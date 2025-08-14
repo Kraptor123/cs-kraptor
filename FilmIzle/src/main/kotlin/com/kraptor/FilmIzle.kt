@@ -14,7 +14,7 @@ import okhttp3.Request
 import org.json.JSONArray
 
 class FilmIzle : MainAPI() {
-    override var mainUrl = "https://filmizle.cx/yaratici-izle-tr40"
+    override var mainUrl = "https://filmizle.cx"
     override var name = "FilmIzle"
     override val hasMainPage = true
     override var lang = "tr"
