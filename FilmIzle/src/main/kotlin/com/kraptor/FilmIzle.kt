@@ -14,7 +14,7 @@ import okhttp3.Request
 import org.json.JSONArray
 
 class FilmIzle : MainAPI() {
-    override var mainUrl = "https://filmizle.so"
+    override var mainUrl = "https://filmizle.cx/yaratici-izle-tr40"
     override var name = "FilmIzle"
     override val hasMainPage = true
     override var lang = "tr"
@@ -225,7 +225,7 @@ class FilmIzle : MainAPI() {
 
                 val req = Request.Builder()
                     .url(data)
-                    .header("Referer", "https://filmizle.so")  // gerekiyorsa ekleyin
+                    .header("Referer", "https://filmizle.cx/yaratici-izle-tr40")  // gerekiyorsa ekleyin
                     .build()
 
                 val resp = client.newCall(req).execute()
@@ -234,7 +234,7 @@ class FilmIzle : MainAPI() {
 
                 Log.d("flmcx", "embed $embedUrl")
 
-                val vidmolyurl = app.get(embedUrl, referer = "https://filmizle.so", headers = mapOf(
+                val vidmolyurl = app.get(embedUrl, referer = "https://filmizle.cx/yaratici-izle-tr40", headers = mapOf(
                     "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0",
                     "Sec-Fetch-Dest" to "iframe",
                     "Sec-Fetch-Mode" to "navigate",
