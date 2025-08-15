@@ -1,5 +1,12 @@
-*
-!build/
-!build/**/
-build/*
-!build/**/*.cs3
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+**/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.vscode
