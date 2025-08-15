@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/repo.json"><img src="https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kekikanime.png" alt="Kraptor"></a>
+  <a href="https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/repo.json"><img src="https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorlogo.png" alt="Kraptor"></a>
 </h1>
 
 <h2 align="center">
