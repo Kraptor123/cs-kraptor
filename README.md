@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/repo.json"><img src="https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kekikanime.png" alt="KekikAnime"></a>
+  <a href="https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/repo.json"><img src="https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorlogo.png" alt="Kraptor"></a>
 </h1>
 
 <h2 align="center">
@@ -32,17 +32,13 @@ If you believe content is violating copyright laws, please contact the actual fi
 
 <table>
   <tr>
-    <td align="center"><h2>kekikanime</h3></td>
+    <td align="center"><h2>kraptorcs3</h3></td>
       <tr>
-    <td align="center"><h2>kekikan</h3></td>
+    <td align="center"><h2>Kraptor</h3></td>
           <tr>
-    <td align="center"><h2>Kekikan</h3></td>
-              <tr>
-    <td align="center"><h2>kraptor</h3></td>
-  </tr>
 </table>
 
-Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kekikanime logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
+Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kraptor logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
 
 ---
 
@@ -51,8 +47,8 @@ Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı
     <td align="center">
       <h2>
         Telegram: 
-        <a href="https://t.me/kekikanime" target="_blank" rel="noopener noreferrer">
-          kekikanime
+        <a href="https://t.me/+v2DqXgnBVgEzZWE8" target="_blank" rel="noopener noreferrer">
+          kraptor-Cs3
         </a>
       </h2>
     </td>
