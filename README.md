@@ -38,7 +38,7 @@ If you believe content is violating copyright laws, please contact the actual fi
           <tr>
 </table>
 
-Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kekikanime logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
+Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kraptor logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
 
 ---
 
