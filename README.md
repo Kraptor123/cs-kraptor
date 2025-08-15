@@ -32,14 +32,10 @@ If you believe content is violating copyright laws, please contact the actual fi
 
 <table>
   <tr>
-    <td align="center"><h2>kekikanime</h3></td>
+    <td align="center"><h2>kraptorcs3</h3></td>
       <tr>
-    <td align="center"><h2>kekikan</h3></td>
+    <td align="center"><h2>Kraptor</h3></td>
           <tr>
-    <td align="center"><h2>Kekikan</h3></td>
-              <tr>
-    <td align="center"><h2>kraptor</h3></td>
-  </tr>
 </table>
 
 Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kekikanime logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
