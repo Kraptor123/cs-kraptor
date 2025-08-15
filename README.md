@@ -47,8 +47,8 @@ Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı
     <td align="center">
       <h2>
         Telegram: 
-        <a href="https://t.me/kekikanime" target="_blank" rel="noopener noreferrer">
-          kekikanime
+        <a href="https://t.me/+v2DqXgnBVgEzZWE8" target="_blank" rel="noopener noreferrer">
+          kraptor-Cs3
         </a>
       </h2>
     </td>
