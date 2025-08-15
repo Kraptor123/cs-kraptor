@@ -1,4 +1,4 @@
-# 📺 cs-kekikanime
+# 📺 cs-kraptor
 
 **Kısa kod** = **kekikan**
 
@@ -53,7 +53,7 @@ Teşekkür ederiz.
 ## 💾 Kurulum
 
 1. **[cloudstream/pre-release](https://github.com/recloudstream/cloudstream/releases/tag/pre-release)** _Adresinden güncel APK dosyasını indirip kurun._
-2. **Uygulamanın yüklü olduğu cihazda** _[depoyu otomatik yüklemek için tıklayın](https://raw.githubusercontent.com/Kraptor123/cs-kekikanime/refs/heads/builds/plugins.json)_
+2. **Uygulamanın yüklü olduğu cihazda** _[depoyu otomatik yüklemek için tıklayın](https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/builds/plugins.json)_
   - **veya**
   - `Depo ekle` _butonuyla **manuel** ekleme yapmak isteyen arkadaşlar için_ `kekikan` _**kısa kod**u mevcuttur._ `Depo ismi` _kısmını boş bırakarak_ `Depo URL'si` _kısmına_ `kekikan` yazarak `Depo ekle` _demeniz yeterli.._
 
@@ -68,6 +68,6 @@ Teşekkür ederiz.
 
 ---
 
-<a href="https://github.com/Kraptor123/cs-kekikanime/graphs/contributors?selectedMetric=additions" target="_blank">
-  <img src="https://contrib.rocks/image?repo=Kraptor123/cs-kekikanime" />
+<a href="https://github.com/Kraptor123/cs-kraptor/graphs/contributors?selectedMetric=additions" target="_blank">
+  <img src="https://contrib.rocks/image?repo=Kraptor123/cs-kraptor" />
 </a>
