@@ -1,73 +1,110 @@
-# 📺 cs-kraptor
+<h1 align="center">
+  <br>
+  <a href="https://kraptor123.github.io/redirect/?r=cloudstreamrepo://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/repo.json"><img src="https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kekikanime.png" alt="Kraptor"></a>
+</h1>
 
-**Kısa kod** = **kekikan**
+<h2 align="center">
+Cloudstream Kurulu Cihazda Yukaridaki Logoya Tıklayarak Repoyu Kurabilirsiniz!
+</h2>
 
-## ❗Uyarı
-
-DMCA
-
-İşbu bildirimle, bu uzantıların internetten video dosyalarını getiren ve işlevsel olarak sıradan bir tarayıcıdan (sizin tarayıcınız gibi) farkı olmadığını; bu nedenle Dijital Binyıl Telif Hakkı Yasası’nın (DMCA) hükümlerini ihlal etmediğini bildiririz. Bu uzantıların erişebileceği içerikler ne bizim tarafımızdan ne de Cloudstream 3 uygulaması tarafından barındırılmakta olup, uzantılar bu içeriklere özerk tarama modunda eriştikleri web siteleri üzerinden ulaşmaktadır. İçeriklerin kullanımı ve bununla ilgili tüm yasal sorumluluk tamamen kullanıcıya ve kullanıcının ülke ya da eyalet yasalarına aittir. Eğer herhangi bir fikri mülkiyet hakkı ihlali olduğunu düşünüyorsanız, lütfen bu depo sahipleri veya Cloudstream 3 uygulaması yerine içeriklerin barındırıldığı gerçek sunucularla iletişime geçiniz.
-
-Teşekkür ederiz.
-
-
-## 🎬 Eklenen Eklentiler
-
-### 📺 Canlı TV
-- **CanliTelevizyon**
-- **GinikoCanli**
-- **IpTvPlayStream**
-
-### 📺 Diziler
-- **Diziyo**
-- **DiziFun**
-- **CizgiveDizi**
-- **Dizimore**
-- **TrDiziİzle**
-- **AsyaFanatiklerim**
-- **DiziKral**
-
-### 🍿 Filmler
-- **FilmEkseni**
-- **FilmHane**
-- **FilmIzleCx**
-- **Sinefy**
-- **4KFilmIzleme**
-- **HdFilmCehennemi2**
-- **HDFilm**
-
-### 🎥 Animeler
-- **Anizm**
-- **AsyaAnimeleri**
-- **AnimeIzlesene**
-- **Animeler**
-- **Animex**
-
+<h1 align="center">
+⚖ DMCA Disclaimer
+  </h1>
+<table>
+<tr>
+<td align="center">
   
-**Çalışmayan veya sıkıntı içeren eklentileri bildirmek için issues alanı açılmıştır ayrıca yeni eklenti istekleri için discussions bölümünde açtığım site istekleri sorusuna yanıt olarak istediğiniz siteleri söyleyebilirsiniz.**
+  
+We hereby issue this notice to clarify that these extensions function similarly to a standard web browser by fetching video files from the internet. 
+No content is hosted by this repository or the Cloudstream 3 application. Any content accessed is hosted by third-party websites. Users are solely responsible for their usage and must comply with their local laws. 
+If you believe content is violating copyright laws, please contact the actual file hosts, not the developers of this repository or the Cloudstream 3 app.
 
 
-**Çalışmayan canlı yayınlar için android cihazınıza [ByeDPI](https://github.com/dovecoteescapee/ByeDPIAndroid/releases/download/v1.2.0/byedpi-1.2.0.apk) kurabilirsiniz. [Kurulum talimatları](https://www.technopat.net/sosyal/konu/android-vpn-olmadan-sinirsiz-erisim-byedpi.3564707/)**                                                                                                                                                                        
-İyi seyirler.
+</td>
+</tr>
+</table>
 
-## 💾 Kurulum
+<h1 align="center"> 
+  Kısa kodlar
+  </h1>
+  
+ <div align="center">
 
-1. **[cloudstream/pre-release](https://github.com/recloudstream/cloudstream/releases/tag/pre-release)** _Adresinden güncel APK dosyasını indirip kurun._
-2. **Uygulamanın yüklü olduğu cihazda** _[depoyu otomatik yüklemek için tıklayın](https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/builds/plugins.json)_
-  - **veya**
-  - `Depo ekle` _butonuyla **manuel** ekleme yapmak isteyen arkadaşlar için_ `kekikan` _**kısa kod**u mevcuttur._ `Depo ismi` _kısmını boş bırakarak_ `Depo URL'si` _kısmına_ `kekikan` yazarak `Depo ekle` _demeniz yeterli.._
+<table>
+  <tr>
+    <td align="center"><h2>kekikanime</h3></td>
+      <tr>
+    <td align="center"><h2>kekikan</h3></td>
+          <tr>
+    <td align="center"><h2>Kekikan</h3></td>
+              <tr>
+    <td align="center"><h2>kraptor</h3></td>
+  </tr>
+</table>
 
-## 💡 Faydalı Linkler
-
-- [Tanıtım Videosu](https://www.youtube.com/watch?v=CiYK7zrP00c)
-- [Diğer Eklentiler](https://rentry.org/cs3-repos)
-- [Eklenti Listesi Wiki](https://cloudstream.miraheze.org/wiki/List_of_extensions)
-- [Open Subtitles Desteği (Torrent veya Yabancı Eklentiler İçin)](https://recloudstream.github.io/csdocs/integrations/opensubtitles/)
-- [anicompat (Fazlaca Anime Eklenti Desteği)](https://youtu.be/0Gl48lL7e9Y)
-- [Eklenti Kodlama](https://www.youtube.com/watch?v=gWECdddixyA)
+Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kekikanime logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
 
 ---
 
-<a href="https://github.com/Kraptor123/cs-kraptor/graphs/contributors?selectedMetric=additions" target="_blank">
-  <img src="https://contrib.rocks/image?repo=Kraptor123/cs-kraptor" />
-</a>
+<table>
+  <tr>
+    <td align="center">
+      <h2>
+        Telegram: 
+        <a href="https://t.me/kekikanime" target="_blank" rel="noopener noreferrer">
+          kekikanime
+        </a>
+      </h2>
+    </td>
+  </tr>
+</table>
+
+---
+
+## DMCA Türkçe
+
+>İşbu bildirimle, bu uzantıların internetten video dosyalarını getiren ve işlevsel olarak sıradan bir tarayıcıdan (sizin tarayıcınız gibi) farkı olmadığını; bu nedenle Dijital Binyıl Telif Hakkı Yasası’nın (DMCA) hükümlerini ihlal etmediğini bildiririz. Bu uzantıların erişebileceği içerikler ne bizim tarafımızdan ne de Cloudstream 3 uygulaması tarafından barındırılmakta olup, uzantılar bu içeriklere özerk tarama modunda eriştikleri web siteleri üzerinden ulaşmaktadır. İçeriklerin kullanımı ve bununla ilgili tüm yasal sorumluluk tamamen kullanıcıya ve kullanıcının ülke ya da eyalet yasalarına aittir. Eğer herhangi bir fikri mülkiyet hakkı ihlali olduğunu düşünüyorsanız, lütfen bu depo sahipleri veya Cloudstream 3 uygulaması yerine içeriklerin barındırıldığı gerçek sunucularla iletişime geçiniz.
+
+Teşekkür ederiz.
+
+# `Geliştiriciler`
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Kraptor123">
+        <img src="https://avatars.githubusercontent.com/u/89366989?v=4" width="80;" alt="kraptor"/><br />
+        <sub><b>kraptor</b></sub>
+        </a>
+    </td>
+     <td align="center">
+      <a href="https://github.com/kerimmkirac">
+        <img src="https://avatars.githubusercontent.com/u/127618379?v=4" width="80;" alt="kerimmkirac"/><br />
+        <sub><b>kerimmkirac</b></sub>
+        </a>
+    </td>
+  </tr>
+</table>
+
+
+# `Özel Teşekkür`
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/ByAyzen">
+        <img src="https://avatars.githubusercontent.com/u/189399597?v=4" width="80;" alt="ByAyzen"/><br />
+        <sub><b>ByAyzen</b></sub>
+        </a>
+    </td>
+     <td align="center">
+      <a href="https://github.com/fsamet">
+        <img src="https://avatars.githubusercontent.com/u/182527968?v=4" width="80;" alt="fsamet"/><br />
+        <sub><b>fsamet</b></sub>
+        </a>
+    </td>
+  </tr>
+</table>
+
+
+ </div>
