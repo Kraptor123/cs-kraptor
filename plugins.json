@@ -376,7 +376,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=https://www.diziasya.com/&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 27495,
+    "fileSize": 40464,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -387,7 +387,7 @@
       "Movie",
       "Anime"
     ],
-    "version": 6,
+    "version": 7,
     "internalName": "DiziAsya",
     "description": "Asya'nın en iyi Çin ve Kore dizilerini ve filmlerini keşfedin! Romantizm, dram, aksiyon... Diziasya ile Asya kültürüne hemen adım atın!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziAsya.cs3",
