@@ -3,7 +3,7 @@
     "iconUrl": "https://www.4kfilmizleme.net/wp-content/uploads/2022/09/4kfilmizlemefavicon-1.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 38988,
+    "fileSize": 42168,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -12,7 +12,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 27,
+    "version": 28,
     "internalName": "4KFilmIzleme",
     "description": "Film izle, ⚡ En yeni çıkan yabancı vizyon filmleri 4KFilmizleme ile Online 1080p kalite veya Ultra Full HD 4K Film izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/4KFilmIzleme.cs3",
@@ -221,7 +221,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 15629,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "kerimmkirac"
@@ -357,7 +357,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 16097,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "kerimmkirac"
@@ -517,7 +517,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=dizilla.club&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 49281,
+    "fileSize": 52436,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -528,7 +528,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 51,
+    "version": 52,
     "internalName": "Dizilla",
     "description": "Dizilla tüm yabancı dizileri ücretsiz olarak Türkçe Dublaj ve altyazılı seçenekleri ile 1080P kalite izleyebileceğiniz yeni nesil yabancı dizi izleme siteniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizilla.cs3",
@@ -573,26 +573,6 @@
     "name": "DiziMom"
   },
   {
-    "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizimore.com&size=64",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 17715,
-    "status": 1,
-    "language": "tr",
-    "authors": [
-      "kraptor",
-      "kerimmkirac"
-    ],
-    "tvTypes": [
-      "TvSeries"
-    ],
-    "version": 12,
-    "internalName": "DiziMore",
-    "description": "Sadece Dizi izlemenin Tek Adresin yerli yabancı dizi izlemek için dizimore.com",
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMore.cs3",
-    "name": "DiziMore"
-  },
-  {
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal953.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
@@ -617,7 +597,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal932.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 45032,
+    "fileSize": 48571,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -627,7 +607,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 40,
+    "version": 41,
     "internalName": "DiziPalOrijinal",
     "description": "DiziPal Orijinal.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
@@ -676,7 +656,7 @@
     "iconUrl": "https://icons.iconarchive.com/icons/yohproject/crayon-cute/256/movies-icon.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 41038,
+    "fileSize": 44677,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -687,7 +667,7 @@
       "Movie",
       "Anime"
     ],
-    "version": 24,
+    "version": 25,
     "internalName": "DiziYo",
     "description": "Diziyo ile Yabancı Dizi, Film, Anime, Çizgi-Film izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
@@ -735,7 +715,7 @@
     "iconUrl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRbK_Pe3vpG-yUVt1NvckDpaD6COLDitImrBUnHfAVA4fawhijE",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 17226,
+    "fileSize": 17245,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -745,7 +725,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 16,
+    "version": 17,
     "internalName": "FilmHane",
     "description": "Son çıkan en yeni filmleri türkçe dublaj ve türkçe altyazılı dil seçenekleriyle Full HD (1080p) kalitelerinde film izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmHane.cs3",
@@ -806,7 +786,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 18,
+    "version": 19,
     "internalName": "FilmModu",
     "description": "Film modun geldiyse yüksek kalitede en yeni filmleri izle, 1080p izleyebileceğiniz reklamsiz film sitesi.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmModu.cs3",
@@ -1060,7 +1040,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=roketdizi.co&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 40593,
+    "fileSize": 44192,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1070,7 +1050,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 27,
+    "version": 28,
     "internalName": "RoketDizi",
     "description": "Türkiye'nin en tatlış yabancı dizi izleme sitesi. Türkçe dublaj, altyazılı, eski ve yeni yabancı dizilerin yanı sıra kore (asya) dizileri izleyebilirsiniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RoketDizi.cs3",
@@ -1302,7 +1282,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://unutulmazfilmler4.com/&size=64",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 42155,
+    "fileSize": 45592,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1312,7 +1292,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 14,
+    "version": 15,
     "internalName": "UnutulmazFilmler",
     "description": "Yıllar geçse bile izledikten sonraki etkisi hala süren o unutulmaz filmleri sizler için derliyoruz. Altyazılı film izle. Sadece En iyi filmler.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/UnutulmazFilmler.cs3",
