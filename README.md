@@ -9,7 +9,7 @@ Cloudstream Kurulu Cihazda Yukaridaki Logoya Tıklayarak Repoyu Kurabilirsiniz!
 
 <h2 align="center">
 <br>
-  <a href="https://www.patreon.com/kraptorcs">" alt="Eklentilerin şifrelerini öğrenmek için tıklayın"></a>
+  <a href="https://www.patreon.com/kraptorcs">" "Eklentilerin şifrelerini öğrenmek için tıklayın"></a>
 </h2>
 
 <h1 align="center">
