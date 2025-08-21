@@ -607,7 +607,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 42,
+    "version": 43,
     "internalName": "DiziPalOrijinal",
     "description": "DiziPal Orijinal.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
@@ -656,7 +656,7 @@
     "iconUrl": "https://icons.iconarchive.com/icons/yohproject/crayon-cute/256/movies-icon.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 44677,
+    "fileSize": 44675,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -667,7 +667,7 @@
       "Movie",
       "Anime"
     ],
-    "version": 25,
+    "version": 26,
     "internalName": "DiziYo",
     "description": "Diziyo ile Yabancı Dizi, Film, Anime, Çizgi-Film izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
