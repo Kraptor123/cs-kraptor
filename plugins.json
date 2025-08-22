@@ -1282,7 +1282,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=www.trtcocuk.net.tr&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 19041,
+    "fileSize": 20185,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1291,7 +1291,7 @@
     "tvTypes": [
       "Cartoon"
     ],
-    "version": 3,
+    "version": 4,
     "internalName": "TrtCocuk",
     "description": "TRT Çocuk resmi web sitesinde, canlı tv izle, oyun oyna, çizgi film izle, yarışmalara başvur ve eğlenceyi yakala! Rafadan Tayfa, Akıllı Tavşan Momo, İbi, Kare, Aslan, Hapşuu, Niloya, Rüzgar Gülü, Kardeşim Ozi, Emiray ve dahası burada. TRT Çocuk üzerinden günlük yayın akışını takip edebilir ve ebeveyn blogu yazılarını da okuyabilirsiniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TrtCocuk.cs3",
