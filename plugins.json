@@ -534,6 +534,26 @@
     "name": "DiziKral"
   },
   {
+    "iconUrl": "https://www.google.com/s2/favicons?domain=dizi18.life&sz=%size%",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "fileSize": 18383,
+    "status": 1,
+    "language": "tr",
+    "authors": [
+      "kerimmkirac"
+    ],
+    "tvTypes": [
+      "Movie",
+      "TvSeries"
+    ],
+    "version": 1,
+    "internalName": "DiziLife",
+    "description": "Dizilife yabancı dizi ve film izlemek için tasarlanmış bir platformdur. Tüm dünyadan yerli/yabancı bütün dizileri ve filmleri ücretsiz ve donmadan izleyebilirsiniz.",
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziLife.cs3",
+    "name": "DiziLife"
+  },
+  {
     "iconUrl": "https://www.google.com/s2/favicons?domain=dizilla.club&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
