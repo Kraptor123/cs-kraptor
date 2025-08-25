@@ -1015,23 +1015,26 @@
     "name": "KoreanTurk"
   },
   {
-    "iconUrl": "https://www.google.com/s2/favicons?domain=xprime.tv&sz=%size%",
+    "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 34745,
+    "fileSize": 132145,
     "status": 1,
     "language": "tr",
     "authors": [
-      "kraptor",
-      "kerimmkirac"
+      "kraptor"
     ],
     "tvTypes": [
       "TvSeries",
-      "Movie"
+      "Movie",
+      "Anime",
+      "Cartoon",
+      "AsianDrama",
+      "AnimeMovie"
     ],
-    "version": 3,
+    "version": 1,
     "internalName": "Kraptor+",
-    "description": "Xprime ile film ve dizilerin keyfini çıkarın.",
+    "description": "Kaliteli kaynakları ile birlikte Kraptor+ eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Kraptor+.cs3",
     "name": "Kraptor+"
   },
