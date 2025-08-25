@@ -1018,7 +1018,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=xprime.tv&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 37525,
+    "fileSize": 34745,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1029,7 +1029,7 @@
       "TvSeries",
       "Movie"
     ],
-    "version": 2,
+    "version": 3,
     "internalName": "Kraptor+",
     "description": "Xprime ile film ve dizilerin keyfini çıkarın.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Kraptor+.cs3",
