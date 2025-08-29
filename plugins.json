@@ -22,16 +22,16 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=www.4kfilmizlesene.org&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 11215,
+    "fileSize": 11212,
     "status": 1,
     "language": "tr",
     "authors": [
-      "nikyokki"
+      "Kraptor"
     ],
     "tvTypes": [
       "Movie"
     ],
-    "version": 12,
+    "version": 13,
     "internalName": "4KFilmIzlesene",
     "description": "En yeni ve sorunsuz ⚡  Full HD Film izle keyfi her yerde sizinle ! 4K ve 1080p online film izleme farkıyla 4KFilmizlesene&amp;#039;nin Tadını Çıkart.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/4KFilmIzlesene.cs3",
@@ -856,16 +856,16 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=www.fullhdfilmizlesene.de&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 18302,
+    "fileSize": 18298,
     "status": 1,
     "language": "tr",
     "authors": [
-      "keyiflerolsun"
+      "Kraptor"
     ],
     "tvTypes": [
       "Movie"
     ],
-    "version": 15,
+    "version": 16,
     "internalName": "FullHDFilmizlesene",
     "description": "Sinema zevkini evinize kadar getirdik. Türkiye'nin lider Film sitesinde, en yeni filmleri Full HD izleyin.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDFilmizlesene.cs3",
