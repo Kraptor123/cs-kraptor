@@ -577,7 +577,7 @@
     "iconUrl": "https://dizimag.me/uploads/logo/original/logo-5063.webp",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 29552,
+    "fileSize": 29560,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -586,7 +586,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 24,
+    "version": 25,
     "internalName": "DiziMag",
     "description": "En son çıkan yabancı dizi ve filmleri DiziMag farkıyla full hd 1080p kalitede izle. Dizimag Geniş ve güncel arşiviyle dizi ve filmlerin tadını çıkartın.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMag.cs3",
@@ -636,7 +636,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal932.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 48579,
+    "fileSize": 48576,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -646,7 +646,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 46,
+    "version": 47,
     "internalName": "DiziPalOrijinal",
     "description": "DiziPal Orijinal.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
