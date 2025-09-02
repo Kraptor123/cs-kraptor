@@ -37,9 +37,11 @@ If you believe content is violating copyright laws, please contact the actual fi
 
 <table>
   <tr>
-    <td align="center"><h2>kraptorcs3</h3></td>
+    <td align="center"><h2>kraptor</h3></td>
       <tr>
-    <td align="center"><h2>Kraptor</h3></td>
+          <td align="center"><h2>kraptorcs</h3></td>
+      <tr>
+    <td align="center"><h2>kraptorcs3</h3></td>
           <tr>
 </table>
 
