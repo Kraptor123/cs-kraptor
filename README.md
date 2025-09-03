@@ -7,6 +7,12 @@
 Cloudstream Kurulu Cihazda Yukaridaki Logoya Tıklayarak Repoyu Kurabilirsiniz!
 </h2>
 
+
+<h2 align="center">
+<br>
+  <a href="https://kraptor.codeberg.page/repolar.html">Eklenti Tarayıcısı</a>
+</h2>
+
 <h2 align="center">
 <br>
   <a href="https://www.patreon.com/kraptorcs">Eklentilerin şifrelerini öğrenmek için tıklayın</a>
