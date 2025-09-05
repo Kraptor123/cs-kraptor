@@ -1065,11 +1065,11 @@
       "kerimmkirac"
     ],
     "tvTypes": [
-      "Live"
+      "Nsfw"
     ],
-    "version": 2,
+    "version": 3,
     "internalName": "KraptorTV",
-    "description": "KraptorTV ile legal ve güvenli bir şekilde canlı yayın izleyebilirsiniz.",
+    "description": "yakında silinecek.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorTV.cs3",
     "name": "KraptorTV"
   },
