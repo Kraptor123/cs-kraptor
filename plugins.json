@@ -1058,7 +1058,7 @@
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/builds/kraptortv.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 20425,
+    "fileSize": 11926,
     "status": 0,
     "language": "tr",
     "authors": [
@@ -1067,7 +1067,7 @@
     "tvTypes": [
       "Nsfw"
     ],
-    "version": 3,
+    "version": 6,
     "internalName": "KraptorTV",
     "description": "yakında silinecek.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorTV.cs3",
