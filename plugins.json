@@ -1059,7 +1059,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 20425,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "kerimmkirac"
@@ -1067,7 +1067,7 @@
     "tvTypes": [
       "Live"
     ],
-    "version": 1,
+    "version": 2,
     "internalName": "KraptorTV",
     "description": "KraptorTV ile legal ve güvenli bir şekilde canlı yayın izleyebilirsiniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorTV.cs3",
