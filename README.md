@@ -57,9 +57,18 @@ Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı
 
 <table>
   <tr>
-    <td align="center">
+  <td align="center">
       <h2>
-        Telegram: 
+        Telegram Duyuru Kanalı: 
+        <a href="https://t.me/kraptorcs" target="_blank" rel="noopener noreferrer">
+          Kraptor Duyuru
+        </a>
+      </h2>
+    </td>
+  </tr>
+      <td align="center">
+      <h2>
+        Kraptor Sohbet Grubu(Küfürlü): 
         <a href="https://t.me/+v2DqXgnBVgEzZWE8" target="_blank" rel="noopener noreferrer">
           kraptor-Cs3
         </a>
