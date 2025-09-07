@@ -7,6 +7,17 @@
 Cloudstream Kurulu Cihazda Yukaridaki Logoya Tıklayarak Repoyu Kurabilirsiniz!
 </h2>
 
+
+<h2 align="center">
+<br>
+  <a href="https://kraptor.codeberg.page/">Kraptor'un CloudStream Wikisi</a>
+</h2>
+
+<h2 align="center">
+<br>
+  <a href="https://www.patreon.com/kraptorcs">Eklentilerin şifrelerini öğrenmek için tıklayın</a>
+</h2>
+
 <h1 align="center">
 ⚖ DMCA Disclaimer
   </h1>
@@ -32,9 +43,11 @@ If you believe content is violating copyright laws, please contact the actual fi
 
 <table>
   <tr>
-    <td align="center"><h2>kraptorcs3</h3></td>
+    <td align="center"><h2>kraptor</h3></td>
       <tr>
-    <td align="center"><h2>Kraptor</h3></td>
+          <td align="center"><h2>kraptorcs</h3></td>
+      <tr>
+    <td align="center"><h2>kraptorcs3</h3></td>
           <tr>
 </table>
 
@@ -44,9 +57,18 @@ Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı
 
 <table>
   <tr>
-    <td align="center">
+  <td align="center">
       <h2>
-        Telegram: 
+        Telegram Duyuru Kanalı: 
+        <a href="https://t.me/kraptorcs" target="_blank" rel="noopener noreferrer">
+          Kraptor Duyuru
+        </a>
+      </h2>
+    </td>
+  </tr>
+      <td align="center">
+      <h2>
+        Kraptor Yardım-Sohbet Grubu(küfür içerebilir): 
         <a href="https://t.me/+v2DqXgnBVgEzZWE8" target="_blank" rel="noopener noreferrer">
           kraptor-Cs3
         </a>
