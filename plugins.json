@@ -1055,25 +1055,6 @@
     "name": "Kraptor+"
   },
   {
-    "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/builds/kraptortv.png",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 11926,
-    "status": 0,
-    "language": "tr",
-    "authors": [
-      "kerimmkirac"
-    ],
-    "tvTypes": [
-      "Nsfw"
-    ],
-    "version": 6,
-    "internalName": "KraptorTV",
-    "description": "yakında silinecek.",
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorTV.cs3",
-    "name": "KraptorTV"
-  },
-  {
     "iconUrl": "https://www.google.com/s2/favicons?domain=kultfilmler.com&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
