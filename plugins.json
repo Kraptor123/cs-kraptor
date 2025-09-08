@@ -123,7 +123,7 @@
     "iconUrl": "https://anizium.co/assets/images/logo.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 31900,
+    "fileSize": 31905,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -133,7 +133,7 @@
       "AnimeMovie",
       "Anime"
     ],
-    "version": 3,
+    "version": 4,
     "internalName": "Anizium",
     "description": "Anizium ile dünyada ilk ve tek 4K Türkçe dublaj platformunda anime keyfini yaşa. En yeni animeleri İngilizce altyazı ve dublaj seçenekleriyle 1080p ve 4K kalitesinde HD izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizium.cs3",
