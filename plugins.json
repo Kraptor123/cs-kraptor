@@ -1034,7 +1034,7 @@
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 137469,
+    "fileSize": 142864,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1048,7 +1048,7 @@
       "AsianDrama",
       "AnimeMovie"
     ],
-    "version": 4,
+    "version": 5,
     "internalName": "Kraptor+",
     "description": "Kaliteli kaynakları ile birlikte Kraptor+ eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Kraptor+.cs3",
