@@ -615,7 +615,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal953.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 18120,
+    "fileSize": 18116,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -625,7 +625,7 @@
       "TvSeries",
       "Movie"
     ],
-    "version": 47,
+    "version": 48,
     "internalName": "DiziPal",
     "description": "En yeni dizileri güvenli ve hızlı şekilde sunar.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPal.cs3",
