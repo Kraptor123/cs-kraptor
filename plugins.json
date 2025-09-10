@@ -1560,23 +1560,24 @@
   },
   {
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://en.yts-official.mx&size=128",
-    "jarFileSize": 76378,
+    "jarFileSize": 197498,
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 15876,
+    "fileSize": 35858,
     "status": 1,
-    "language": "en",
+    "language": "tr",
     "authors": [
+      "kraptor",
       "Phisher98"
     ],
     "tvTypes": [
       "Movie",
       "Torrent"
     ],
-    "version": 10,
+    "version": 11,
     "internalName": "YTS",
     "jarUrl": "https://raw.githubusercontent.com/Kraptor123/kraptoranime/builds/YTS.jar",
-    "description": "YTS Movies 4K Support (Torrent)",
+    "description": "YTS Filmleri 4K Desteği Otomatik altyazı ve film açıklaması (Torrent)",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YTS.cs3",
     "name": "YTS"
   }
