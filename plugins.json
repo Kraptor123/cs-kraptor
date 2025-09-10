@@ -1076,6 +1076,27 @@
     "name": "KultFilmler"
   },
   {
+    "iconUrl": "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/raw/refs/heads/master/CNC%20Verse/icon.png",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "fileSize": 66404,
+    "status": 1,
+    "language": "en",
+    "authors": [
+      "kraptor",
+      "NivinCNC"
+    ],
+    "tvTypes": [
+      "Movie",
+      "TvSeries"
+    ],
+    "version": 1,
+    "internalName": "MirrorVerse",
+    "description": "Netflix, Disney+ ve Primevideo içerikleri tek bir eklentide, türkçe dublaj ve altyazı desteğiyle birleşiyor.",
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/MirrorVerse.cs3",
+    "name": "MirrorVerse"
+  },
+  {
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://openani.me/&size=24",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
