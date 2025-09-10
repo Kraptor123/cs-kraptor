@@ -1076,10 +1076,10 @@
     "name": "KultFilmler"
   },
   {
-    "iconUrl": "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/raw/refs/heads/master/CNC%20Verse/icon.png",
+    "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/mirrorverseicon.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 69259,
+    "fileSize": 76751,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1090,7 +1090,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 2,
+    "version": 3,
     "internalName": "MirrorVerse",
     "description": "Netflix, Disney+ ve Primevideo içerikleri tek bir eklentide, türkçe dublaj ve altyazı desteğiyle birleşiyor.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/MirrorVerse.cs3",
