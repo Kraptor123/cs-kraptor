@@ -1140,10 +1140,9 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 20802,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
-      "keyiflerolsun",
       "yusiqo",
       "inatchii",
       "JustRelaxable"
@@ -1153,7 +1152,7 @@
       "Live",
       "TvSeries"
     ],
-    "version": 87,
+    "version": 88,
     "internalName": "RecTV",
     "description": "RecTv APK, Türkiye’deki en popüler Çevrimiçi Medya Akış platformlarından biridir. Filmlerin, Canlı Sporların, Web Dizilerinin ve çok daha fazlasının keyfini ücretsiz çıkarın.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RecTV.cs3",
