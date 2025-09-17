@@ -84,7 +84,7 @@
     "iconUrl": "https://animeler.me/wp-content/uploads/cropped-animelerpw-48x48.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 21677,
+    "fileSize": 21675,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -94,7 +94,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 16,
+    "version": 17,
     "internalName": "Animeler",
     "description": "HD kalitesinde ücretsiz anime izle! Animeler.me, en yeni ve popüler anime serilerini Türkçe altyazılı ve dublajlı olarak sunar. Favori animelerini hemen keşfet!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animeler.cs3",
