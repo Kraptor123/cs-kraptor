@@ -1501,19 +1501,20 @@
     "name": "WebDramaTurkey"
   },
   {
-    "iconUrl": "https://www.google.com/s2/favicons?domain=webteizle2.com&sz=%size%",
+    "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webteizle1.xyz&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 21856,
+    "fileSize": 26463,
     "status": 1,
     "language": "tr",
     "authors": [
+      "kraptor",
       "keyiflerolsun"
     ],
     "tvTypes": [
       "Movie"
     ],
-    "version": 27,
+    "version": 28,
     "internalName": "WebteIzle",
     "description": "Her türlü filmi ister dublaj ister altyazılı, en kaliteli bir şekilde izleyebileceğiniz arşivi en geniş gerçek film izleme siteniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebteIzle.cs3",
