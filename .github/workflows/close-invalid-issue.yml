@@ -1,0 +1,40 @@
+name: Hatalı İssue Kapatma
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  close_invalid:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for required issue template keywords
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Template başlıklarını buraya ekle
+            const requiredKeywords = [
+              "Hatayı Tanımla",
+              "Hatayı Almak İçin Ne Yaptım",
+              "Beklenen Davranış",
+              "CloudStream Sürümü (Alttaki Bilgileri Tanımla)"
+            ];
+            const issueBody = context.payload.issue.body || "";
+            const isValid = requiredKeywords.every(keyword => issueBody.includes(keyword));
+            if (!isValid) {
+              // Issue'yu kapat
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                state: "closed"
+              });
+              // Issue'ya yorum ekle
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                body: "Issue template’e uyulmadığı için kapatıldı. Lütfen zorunlu alanları doldurup tekrar deneyin."
+              });
+            }
