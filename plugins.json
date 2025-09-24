@@ -615,7 +615,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal953.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 18120,
+    "fileSize": 18117,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -625,7 +625,7 @@
       "TvSeries",
       "Movie"
     ],
-    "version": 50,
+    "version": 51,
     "internalName": "DiziPal",
     "description": "En yeni dizileri güvenli ve hızlı şekilde sunar.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPal.cs3",
@@ -1244,7 +1244,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=sezonlukdizi6.com&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 29082,
+    "fileSize": 29008,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1254,7 +1254,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 14,
+    "version": 15,
     "internalName": "SezonlukDizi",
     "description": "Güncel ve eski dizileri en iyi görüntü kalitesiyle bulabileceğiniz yabancı dizi izleme siteniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SezonlukDizi.cs3",
@@ -1504,7 +1504,7 @@
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webteizle1.xyz&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 26871,
+    "fileSize": 26844,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1514,7 +1514,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 30,
+    "version": 31,
     "internalName": "WebteIzle",
     "description": "Her türlü filmi ister dublaj ister altyazılı, en kaliteli bir şekilde izleyebileceğiniz arşivi en geniş gerçek film izleme siteniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebteIzle.cs3",
