@@ -8,27 +8,42 @@ jobs:
   clean_and_close_invalid:
     runs-on: ubuntu-latest
     steps:
-      - name: Clean and close invalid issue
+      - name: Clean and close invalid or new-user issue
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // Template başlıklarını buraya ekle
             const requiredKeywords = [
               "Hatayı Tanımla",
               "Hatayı Almak İçin Ne Yaptım",
               "Beklenen Davranış",
               "CloudStream Sürümü (Alttaki Bilgileri Tanımla)"
             ];
+
+            // Kullanıcının hesabının oluşturulma tarihi
+            const username = context.payload.issue.user.login;
+            const user = await github.rest.users.getByUsername({ username });
+            const createdAt = new Date(user.data.created_at);
+            const now = new Date();
+            const daysOld = (now - createdAt) / (1000 * 60 * 60 * 24);
+
             const issueBody = context.payload.issue.body || "";
-            const isValid = requiredKeywords.every(keyword => issueBody.includes(keyword));
-            if (!isValid) {
+            const isValidTemplate = requiredKeywords.every(keyword => issueBody.includes(keyword));
+            let reason = "";
+
+            if (daysOld < 30) {
+              reason = "Hesabınız 1 aylık olmadığı için issue açamazsınız.";
+            } else if (!isValidTemplate) {
+              reason = "Düzgün bir issue değil.";
+            }
+
+            if (reason) {
               // Issue içeriğini sıfırla ve mesaj ekle
               await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.payload.issue.number,
-                body: "Düzgün bir issue değil."
+                body: reason
               });
               // Issue'yu kapat
               await github.rest.issues.update({
@@ -42,6 +57,6 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.payload.issue.number,
-                body: "Issue template’e uyulmadığı için kapatıldı. Lütfen zorunlu alanları doldurup tekrar deneyin."
+                body: reason + " Issue template’e uyulmadığı veya hesabınız yeni olduğu için kapatıldı. Lütfen gerekli şartları sağlayıp tekrar deneyin."
               });
             }
