@@ -1,7 +1,7 @@
 ---
 name: Hata Raporu
 about: Bize Yardımcı Olmak İçin Bir Hata Raporu Oluştur
-title: "[Bug]"
+title: Eklenti Hatasi
 labels: ''
 assignees: ''
 
