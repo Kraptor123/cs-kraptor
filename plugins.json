@@ -1058,7 +1058,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=kultfilmler.com&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 21766,
+    "fileSize": 21765,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1069,7 +1069,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 18,
+    "version": 19,
     "internalName": "KultFilmler",
     "description": "Kült Filmler özenle en iyi filmleri derler ve iyi bir altyazılı film izleme deneyimi sunmayı amaçlar",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
