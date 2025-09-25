@@ -1015,16 +1015,16 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=www.koreanturk.com&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 12178,
+    "fileSize": 15442,
     "status": 1,
     "language": "tr",
     "authors": [
-      "keyiflerolsun"
+      "kraptor"
     ],
     "tvTypes": [
       "AsianDrama"
     ],
-    "version": 10,
+    "version": 11,
     "internalName": "KoreanTurk",
     "description": "Güney Kore sevdalılarının vazgeçemediği ve Türkiye'nin en çok ziyaret edilen Güney Kore Portalı; Koreantürk'e hoşgeldiniz!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KoreanTurk.cs3",
