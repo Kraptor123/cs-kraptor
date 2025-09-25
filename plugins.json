@@ -635,7 +635,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal932.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 48126,
+    "fileSize": 48129,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -645,7 +645,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 53,
+    "version": 54,
     "internalName": "DiziPalOrijinal",
     "description": "DiziPal Orijinal.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
@@ -1482,7 +1482,7 @@
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webdramaturkey.org/&size=40",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 29551,
+    "fileSize": 29553,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1494,7 +1494,7 @@
       "Movie",
       "Anime"
     ],
-    "version": 9,
+    "version": 10,
     "internalName": "WebDramaTurkey",
     "description": "Web Drama Turkey - Kore, Çin, Japon Dizileri, Filmleri ve Animeler",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebDramaTurkey.cs3",
