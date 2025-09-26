@@ -577,7 +577,7 @@
     "iconUrl": "https://dizimag.me/uploads/logo/original/logo-5063.webp",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 29557,
+    "fileSize": 29555,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -586,7 +586,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 28,
+    "version": 29,
     "internalName": "DiziMag",
     "description": "En son çıkan yabancı dizi ve filmleri DiziMag farkıyla full hd 1080p kalitede izle. Dizimag Geniş ve güncel arşiviyle dizi ve filmlerin tadını çıkartın.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMag.cs3",
