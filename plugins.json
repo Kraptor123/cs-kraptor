@@ -1579,7 +1579,7 @@
       "Music",
       "TvSeries"
     ],
-    "version": 3,
+    "version": 4,
     "internalName": "Youtube",
     "description": "Youtube - sadece düşük kalite videolar desteklenir.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Youtube.cs3",
