@@ -1567,7 +1567,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.youtube.com/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 10908,
+    "fileSize": 10906,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1579,7 +1579,7 @@
       "Music",
       "TvSeries"
     ],
-    "version": 2,
+    "version": 3,
     "internalName": "Youtube",
     "description": "Youtube - sadece düşük kalite videolar desteklenir.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Youtube.cs3",
