@@ -1330,7 +1330,7 @@
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://sinezy.org/&size=48",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 14153,
+    "fileSize": 14151,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1339,7 +1339,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 21,
+    "version": 22,
     "internalName": "Sinezy",
     "description": "Yerli ve yabancı film izle! Türkçe Dublaj ve Alt Yazılı Seçenekleriyle full hd film izlemek için En çok tercih edilen adres!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Sinezy.cs3",
