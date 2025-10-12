@@ -596,16 +596,17 @@
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.dizimom.mom&size=32",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 30667,
+    "fileSize": 30975,
     "status": 1,
     "language": "tr",
     "authors": [
+      "kraptor",
       "keyiflerolsun"
     ],
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 34,
+    "version": 35,
     "internalName": "DiziMom",
     "description": "Binlerce yerli yabancı dizi arşivi, tüm sezonlar, kesintisiz bölümler. Sadece dizi izle, Dizimom heryerde seninle!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMom.cs3",
