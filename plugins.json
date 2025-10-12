@@ -143,7 +143,7 @@
     "iconUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQLGJxL_3l-lZofrxkC-vpKFzHzyKW-Z0lYg&s",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 32201,
+    "fileSize": 32221,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -278,7 +278,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=belgeselx.com&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 21948,
+    "fileSize": 21941,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -734,7 +734,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmekseni.net/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 20574,
+    "fileSize": 20599,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -835,7 +835,7 @@
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmzal.me/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 26198,
+    "fileSize": 26202,
     "status": 1,
     "language": "az",
     "authors": [
@@ -1037,7 +1037,7 @@
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 140669,
+    "fileSize": 140703,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1123,7 +1123,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://rarefilmm.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 14854,
+    "fileSize": 14877,
     "status": 1,
     "language": "en",
     "authors": [
@@ -1137,29 +1137,6 @@
     "description": "The Cave of Forgotten Films",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RareFilmm.cs3",
     "name": "RareFilmm"
-  },
-  {
-    "iconUrl": "https://rectvapk.cc/wp-content/uploads/2023/02/Rec-TV.webp",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 20804,
-    "status": 0,
-    "language": "tr",
-    "authors": [
-      "yusiqo",
-      "inatchii",
-      "JustRelaxable"
-    ],
-    "tvTypes": [
-      "Movie",
-      "Live",
-      "TvSeries"
-    ],
-    "version": 93,
-    "internalName": "RecTV",
-    "description": "RecTv APK, Türkiye’deki en popüler Çevrimiçi Medya Akış platformlarından biridir. Filmlerin, Canlı Sporların, Web Dizilerinin ve çok daha fazlasının keyfini ücretsiz çıkarın.",
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RecTV.cs3",
-    "name": "RecTV"
   },
   {
     "iconUrl": "https://www.google.com/s2/favicons?domain=roketdizi.co&sz=%size%",
@@ -1247,7 +1224,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=sezonlukdizi6.com&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 29008,
+    "fileSize": 29040,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1428,7 +1405,7 @@
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ugurfilm9.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 21455,
+    "fileSize": 21512,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1509,7 +1486,7 @@
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webteizle1.xyz&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 26844,
+    "fileSize": 26881,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1587,10 +1564,10 @@
   },
   {
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://en.yts-official.mx&size=128",
-    "jarFileSize": 197498,
+    "jarFileSize": 197558,
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 35858,
+    "fileSize": 35870,
     "status": 1,
     "language": "tr",
     "authors": [
