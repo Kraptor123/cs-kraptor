@@ -104,7 +104,7 @@
     "iconUrl": "https://animex.tr/wp-content/uploads/2024/06/favicon.ico",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 20093,
+    "fileSize": 23376,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -113,7 +113,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 11,
+    "version": 12,
     "internalName": "Animex",
     "description": "Anime izle, Anime türkce altyazılı , birbirinden farklı ve güzel en güncel animeleri keyifle seyredebileceğiniz Animex.com.tr anime severlerin en popüler türkçe anime izleme sitesidir.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animex.cs3",
