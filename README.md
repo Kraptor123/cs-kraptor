@@ -121,6 +121,24 @@ Teşekkür ederiz.
         <sub><b>fsamet</b></sub>
         </a>
     </td>
+     <td align="center">
+      <a href="https://github.com/fsamet">
+        <img src="https://avatars.githubusercontent.com/u/182527968?v=4" width="80;" alt="fsamet"/><br />
+        <sub><b>fsamet</b></sub>
+        </a>
+      </td>
+  </tr>
+</table>
+
+# `Patreon Özel Destekçilerimiz`
+
+<table>
+  <tr>
+    <td align="center">
+        <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/155932364/cd801d2b8839429b84845be99ef65101/eyJ3IjoxMjB9/1.png?token-hash=4KxWCCs-OX0oCLrJeE7i7AcjBl5t2k02UaaF_P1WWsg%3D&token-time=1761868800" width="80;" alt="Daniel Gary"/><br />
+        <sub><b>Daniel Gary</b></sub>
+        </a>
+      </td>
   </tr>
 </table>
 
