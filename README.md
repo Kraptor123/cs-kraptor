@@ -121,12 +121,6 @@ Teşekkür ederiz.
         <sub><b>fsamet</b></sub>
         </a>
     </td>
-     <td align="center">
-      <a href="https://github.com/fsamet">
-        <img src="https://avatars.githubusercontent.com/u/182527968?v=4" width="80;" alt="fsamet"/><br />
-        <sub><b>fsamet</b></sub>
-        </a>
-      </td>
   </tr>
 </table>
 
