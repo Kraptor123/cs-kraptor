@@ -1529,7 +1529,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=yabancidizi.tv&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 39037,
+    "fileSize": 40314,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1538,7 +1538,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 10,
+    "version": 11,
     "internalName": "YabanciDizi",
     "description": "Son çıkan yabancı dizi ve filmleri yabancidizi' de izle. En yeni yabancı film ve diziler, türkçe altyazılı yada dublaj olarak 1080p kalitesinde hd izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YabanciDizi.cs3",
