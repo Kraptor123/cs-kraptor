@@ -1369,7 +1369,7 @@
     "iconUrl": "https://www.trdiziizle.vip/fawn.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 19153,
+    "fileSize": 19719,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1378,7 +1378,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 8,
+    "version": 9,
     "internalName": "TrDiziIzle",
     "description": "Full hd ve tek parça hemde reklamsız yerli dizi izlemek mi istiyorsunuz? O halde bu site sorunsuz dizi izlemeniz için tam size göre",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TrDiziIzle.cs3",
