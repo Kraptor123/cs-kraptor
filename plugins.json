@@ -774,7 +774,7 @@
     "iconUrl": "https://filmizle.cx/favicon.ico",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 22085,
+    "fileSize": 22097,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -783,7 +783,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 13,
+    "version": 14,
     "internalName": "FilmIzle",
     "description": "Filmizle ile Full HD Film izle. Yerli ve yabancı filmleri Türkçe dublaj veya Alt yazılı seçeneğiyle kesintisiz ve sorunsuz en hızlı film sitesi.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmIzle.cs3",
@@ -1407,7 +1407,7 @@
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.turkanime.co&size=64",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 19909,
+    "fileSize": 19913,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1418,7 +1418,7 @@
       "Anime",
       "AnimeMovie"
     ],
-    "version": 17,
+    "version": 18,
     "internalName": "TurkAnime",
     "description": "Türk Anime TV - Türkiye'nin Online Anime izleme sitesi.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TurkAnime.cs3",
