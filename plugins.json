@@ -1038,31 +1038,7 @@
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 140700,
-    "status": 0,
-    "language": "tr",
-    "authors": [
-      "kraptor"
-    ],
-    "tvTypes": [
-      "TvSeries",
-      "Movie",
-      "Anime",
-      "Cartoon",
-      "AsianDrama",
-      "AnimeMovie"
-    ],
-    "version": 9,
-    "internalName": "Kraptor+",
-    "description": "İsim değişikliği sebebi ile devredışı bırakıldı yakında silinecek.",
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Kraptor+.cs3",
-    "name": "Kraptor+"
-  },
-  {
-    "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 174807,
+    "fileSize": 174838,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1076,7 +1052,7 @@
       "AsianDrama",
       "AnimeMovie"
     ],
-    "version": 9,
+    "version": 10,
     "internalName": "KraptorPlus",
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
