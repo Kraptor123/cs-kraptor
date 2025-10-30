@@ -646,7 +646,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 64,
+    "version": 65,
     "internalName": "DiziPalOrijinal",
     "description": "DiziPal Orijinal.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
