@@ -101,7 +101,7 @@
     "name": "Animeler"
   },
   {
-    "iconUrl": "https://animex.tr/wp-content/uploads/2024/06/favicon.ico",
+    "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://animex.tr/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 23376,
@@ -113,7 +113,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 12,
+    "version": 13,
     "internalName": "Animex",
     "description": "Anime izle, Anime türkce altyazılı , birbirinden farklı ve güzel en güncel animeleri keyifle seyredebileceğiniz Animex.com.tr anime severlerin en popüler türkçe anime izleme sitesidir.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animex.cs3",
@@ -695,7 +695,7 @@
     "iconUrl": "https://icons.iconarchive.com/icons/yohproject/crayon-cute/256/movies-icon.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 45104,
+    "fileSize": 44638,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -706,7 +706,7 @@
       "Movie",
       "Anime"
     ],
-    "version": 32,
+    "version": 34,
     "internalName": "DiziYo",
     "description": "Diziyo ile Yabancı Dizi, Film, Anime, Çizgi-Film izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
@@ -1223,7 +1223,7 @@
     "name": "SelcukFlix"
   },
   {
-    "iconUrl": "https://www.google.com/s2/favicons?domain=www.setfilmizle.de&sz=%size%",
+    "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.setfilmizle.my/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 26867,
@@ -1237,7 +1237,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 22,
+    "version": 23,
     "internalName": "SetFilmIzle",
     "description": "Setfilmizle sitemizde, donma yaşamadan Türkçe dublaj ve altyazılı filmleri ile dizileri muhteşem 1080p full HD kalitesinde izleyebilirsiniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SetFilmIzle.cs3",
