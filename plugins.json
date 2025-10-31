@@ -1094,9 +1094,9 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 6,
+    "version": 7,
     "internalName": "MirrorVerse",
-    "description": "Netflix, Disney+ ve Primevideo içerikleri tek bir eklentide, türkçe dublaj ve altyazı desteğiyle birleşiyor.",
+    "description": "Netflix, Disney+ ve Primevideo eklentileri tek bir eklentide kendisi bir eklenti degildir bu 3 eklentiyi kurar, tüm eklentilerde altyazı netflixde dublaj desteği var.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/MirrorVerse.cs3",
     "name": "MirrorVerse"
   },
