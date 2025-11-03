@@ -751,6 +751,25 @@
     "name": "DiziYou"
   },
   {
+    "iconUrl": "https://www.dmax.com.tr/favicon.ico",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "fileSize": 14095,
+    "status": 1,
+    "language": "tr",
+    "authors": [
+      "kerimmkirac"
+    ],
+    "tvTypes": [
+      "TvSeries"
+    ],
+    "version": 1,
+    "internalName": "Dmax",
+    "description": "Dmax dizi ve programlarını takip etmek için ziyaret edin. Dmax dizi ve programlarını tek parça ve hd kalitesiyle izleyin.",
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dmax.cs3",
+    "name": "Dmax"
+  },
+  {
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmekseni.net/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
@@ -1459,6 +1478,25 @@
     "description": "Hd film izliyerek arkadaşlarınızla ve sevdiklerinizle iyi bir vakit geçirmek istiyorsanız açın bir film eğlenmeye bakın. Bilim kurgu filmleri, aşk drama vahşet aşk romantik sıradışı korku filmlerini izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SuperFilmGeldi.cs3",
     "name": "SuperFilmGeldi"
+  },
+  {
+    "iconUrl": "https://www.google.com/s2/favicons?domain=www.tlctv.com.tr&sz=%size%",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "fileSize": 14025,
+    "status": 1,
+    "language": "tr",
+    "authors": [
+      "kerimmkirac"
+    ],
+    "tvTypes": [
+      "TvSeries"
+    ],
+    "version": 1,
+    "internalName": "Tlc",
+    "description": "TLC TV dizi ve programlarını takip etmek için ziyaret edin. TLC TV dizi ve programlarını tek parça ve hd kalitesiyle izleyin.",
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Tlc.cs3",
+    "name": "Tlc"
   },
   {
     "iconUrl": "https://www.trdiziizle.vip/fawn.png",
