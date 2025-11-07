@@ -1037,7 +1037,7 @@
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://jetfilmizle.de&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 22713,
+    "fileSize": 21617,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1095,7 +1095,7 @@
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 174838,
+    "fileSize": 175403,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1109,7 +1109,7 @@
       "AsianDrama",
       "AnimeMovie"
     ],
-    "version": 10,
+    "version": 11,
     "internalName": "KraptorPlus",
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
