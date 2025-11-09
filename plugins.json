@@ -893,7 +893,7 @@
     "iconUrl": "https://img.flixhq.to/xxrz/400x400/100/ab/5f/ab5f0e1996cc5b71919e10e910ad593e/ab5f0e1996cc5b71919e10e910ad593e.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 23614,
+    "fileSize": 43372,
     "status": 1,
     "language": "en",
     "authors": [
@@ -903,7 +903,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 2,
+    "version": 3,
     "internalName": "FlixHQ",
     "description": "Watch Free Movies and Series online - Very fast streaming - No Registration Required - Click NOW",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FlixHQ.cs3",
