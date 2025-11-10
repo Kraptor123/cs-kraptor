@@ -475,7 +475,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 17970,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "kraptor"
@@ -484,7 +484,7 @@
       "TvSeries",
       "Movie"
     ],
-    "version": 21,
+    "version": 22,
     "internalName": "DiziFun",
     "description": "Her Dizi Bir Macera, Her An Bir Keşif!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziFun.cs3",
