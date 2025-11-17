@@ -33,7 +33,7 @@
     ],
     "version": 17,
     "internalName": "4KFilmIzlesene",
-    "description": "En yeni ve sorunsuz ⚡  Full HD Film izle keyfi her yerde sizinle ! 4K ve 1080p online film izleme farkıyla 4KFilmizlesene&amp;#039;nin Tadını Çıkart.",
+    "description": "En yeni ve sorunsuz ⚡  Full HD Film izle keyfi her yerde sizinle ! 4K ve 1080p online film izleme farkıyla 4KFilmizlesene'nin Tadını Çıkart.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/4KFilmIzlesene.cs3",
     "name": "4KFilmIzlesene"
   },
@@ -372,17 +372,16 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=diziasia.com&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 16097,
-    "status": 0,
+    "fileSize": 16138,
+    "status": 1,
     "language": "tr",
     "authors": [
       "kerimmkirac"
     ],
     "tvTypes": [
-      "Movie",
       "AsianDrama"
     ],
-    "version": 5,
+    "version": 6,
     "internalName": "DiziAsia",
     "description": "DiziAsia - Asya Dizileri İzle",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziAsia.cs3",
@@ -951,7 +950,7 @@
     "iconUrl": "https://www.giniko.com/images/favicon.ico",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 11033,
+    "fileSize": 11157,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -960,7 +959,7 @@
     "tvTypes": [
       "Live"
     ],
-    "version": 6,
+    "version": 7,
     "internalName": "GinikoCanli",
     "description": "Vpn Gerekli! Dünyanın tüm ülkelerinden ücretsiz çevrimiçi TV.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/GinikoCanli.cs3",
@@ -1186,7 +1185,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 1,
+    "version": 2,
     "internalName": "OnePaceTr",
     "description": "One Pace türkçe altyazılı izleme platformu.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/OnePaceTr.cs3",
@@ -1278,7 +1277,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 20383,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "kerimmkirac",
@@ -1288,7 +1287,7 @@
       "Anime",
       "Movie"
     ],
-    "version": 5,
+    "version": 6,
     "internalName": "SeiCode",
     "description": "Seicode ile en yeni animeler keşfedin!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
