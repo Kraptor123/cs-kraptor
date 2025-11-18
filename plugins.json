@@ -1276,18 +1276,18 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=seicode.net&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 20383,
-    "status": 0,
+    "fileSize": 25792,
+    "status": 1,
     "language": "tr",
     "authors": [
-      "kerimmkirac",
-      "kraptor"
+      "kraptor",
+      "kerimmkirac"
     ],
     "tvTypes": [
       "Anime",
       "Movie"
     ],
-    "version": 6,
+    "version": 7,
     "internalName": "SeiCode",
     "description": "Seicode ile en yeni animeler keşfedin!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
