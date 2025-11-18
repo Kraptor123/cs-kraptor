@@ -199,16 +199,17 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=www.asyaking.com&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 15629,
-    "status": 0,
+    "fileSize": 15081,
+    "status": 1,
     "language": "tr",
     "authors": [
-      "kerimmkirac"
+      "kerimmkirac",
+      "kraptor"
     ],
     "tvTypes": [
       "AsianDrama"
     ],
-    "version": 5,
+    "version": 6,
     "internalName": "AsyaKing",
     "description": "Asya Dizi İzle, kore dizi izle, çin dizi izle, bl dizileri izle denilince akla gelen ilk site ; 1080p fullhd türkçe altyazılı olarak izleyin.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaKing.cs3",
