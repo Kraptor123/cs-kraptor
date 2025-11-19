@@ -129,7 +129,7 @@ Teşekkür ederiz.
 <table>
   <tr>
     <td align="center">
-        <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/155932364/cd801d2b8839429b84845be99ef65101/eyJ3IjoxMjB9/1.png?token-hash=4KxWCCs-OX0oCLrJeE7i7AcjBl5t2k02UaaF_P1WWsg%3D&token-time=1761868800" width="80;" alt="Daniel Gary"/><br />
+        <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/155932364/cd801d2b8839429b84845be99ef65101/eyJ3IjoyMDB9/1.png?token-hash=8szpaxXqRvq4qUVVO_GXwy2hDK9h1bThzm0Bm_sKfVc%3D" width="80;" alt="Daniel Gary"/><br />
         <sub><b>Daniel Gary</b></sub>
         </a>
       </td>
