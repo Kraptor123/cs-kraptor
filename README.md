@@ -68,7 +68,7 @@ Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı
   </tr>
       <td align="center">
       <h2>
-        Kraptor Yardım-Sohbet Grubu(küfür içerebilir): 
+        Kraptor Yardım-Sohbet Grubu: 
         <a href="https://t.me/+v2DqXgnBVgEzZWE8" target="_blank" rel="noopener noreferrer">
           kraptor-Cs3
         </a>
