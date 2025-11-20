@@ -1828,7 +1828,7 @@
       "Movie",
       "Torrent"
     ],
-    "version": 14,
+    "version": 16,
     "internalName": "YTS",
     "jarUrl": "https://raw.githubusercontent.com/Kraptor123/kraptoranime/builds/YTS.jar",
     "description": "YTS Filmleri 4K Desteği Otomatik altyazı ve film açıklaması (Torrent)",
