@@ -50,7 +50,7 @@ If you believe content is violating copyright laws, please contact the actual fi
     <td align="center"><h2>kraptorcs3</h3></td>
           <tr>
 </table>
-
+Tüm kısa kodlar aynıdır dilediğinizi seçip kullanabilirsiniz.
 Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kraptor logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
 
 ---
