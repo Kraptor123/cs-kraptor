@@ -1553,6 +1553,25 @@
     "name": "Tlc"
   },
   {
+    "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.tranimeizle.io/&size=128",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "fileSize": 29768,
+    "status": 1,
+    "language": "tr",
+    "authors": [
+      "kraptor"
+    ],
+    "tvTypes": [
+      "Anime"
+    ],
+    "version": 1,
+    "internalName": "TrAnimeIzle",
+    "description": "Anime izle, Anime tv, birbirinden farklı ve güzel animeleri keyifle seyredebileceğiniz Türk anime severlerin en popüler türkçe anime izleme sitesidir.",
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TrAnimeIzle.cs3",
+    "name": "TrAnimeIzle"
+  },
+  {
     "iconUrl": "https://www.trdiziizle.vip/fawn.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
