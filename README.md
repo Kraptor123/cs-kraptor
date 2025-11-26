@@ -40,10 +40,6 @@ If you believe content is violating copyright laws, please contact the actual fi
   <tr>
     <td align="center"><h2>kraptor</h3></td>
       <tr>
-          <td align="center"><h2>kraptorcs</h3></td>
-      <tr>
-    <td align="center"><h2>kraptorcs3</h3></td>
-          <tr>
 </table>
 Tüm kısa kodlar aynıdır dilediğinizi seçip kullanabilirsiniz.
 Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kraptor logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
@@ -57,15 +53,6 @@ Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı
         Telegram Duyuru Kanalı: 
         <a href="https://t.me/kraptorcs" target="_blank" rel="noopener noreferrer">
           Kraptor Duyuru
-        </a>
-      </h2>
-    </td>
-  </tr>
-      <td align="center">
-      <h2>
-        Kraptor Yardım-Sohbet Grubu: 
-        <a href="https://t.me/+v2DqXgnBVgEzZWE8" target="_blank" rel="noopener noreferrer">
-          kraptor-Cs3
         </a>
       </h2>
     </td>
