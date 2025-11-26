@@ -31,7 +31,7 @@ If you believe content is violating copyright laws, please contact the actual fi
 </table>
 
 <h1 align="center"> 
-  Kısa kodlar
+  Kısa kod
   </h1>
   
  <div align="center">
@@ -41,8 +41,6 @@ If you believe content is violating copyright laws, please contact the actual fi
     <td align="center"><h2>kraptor</h3></td>
       <tr>
 </table>
-Tüm kısa kodlar aynıdır dilediğinizi seçip kullanabilirsiniz.
-Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kraptor logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
 
 ---
 
