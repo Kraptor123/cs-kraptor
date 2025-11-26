@@ -1092,16 +1092,17 @@
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://kick.com&size=48",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 22763,
+    "fileSize": 24229,
     "status": 1,
     "language": "tr",
     "authors": [
-      "ByAyzen, Kraptor"
+      "ByAyzen",
+      "kraptor"
     ],
     "tvTypes": [
       "Live"
     ],
-    "version": 5,
+    "version": 6,
     "internalName": "KickTR",
     "description": "Kick, canlı yayın yapılan bir platformdur. Daha gevşek kuralları ve yayıncılara daha fazla kazanç sağlamasıyla bilinir. Platform, yayıncılardan sadece %5 kesinti yapar ve bu oran diğer yayın platformlarına göre en düşük kesintilerden biridir.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KickTR.cs3",
