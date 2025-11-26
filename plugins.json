@@ -296,7 +296,7 @@
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.birasyadizi.com/&size=16",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 13427,
+    "fileSize": 13430,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -305,7 +305,7 @@
     "tvTypes": [
       "AsianDrama"
     ],
-    "version": 10,
+    "version": 11,
     "internalName": "BirAsyaDizi",
     "description": "Asya'nın En Ünlü Dizilerini en yüksek çözünürlükte HD ve kesintisiz izleyin, kaliteli Asya film ve dizilerinin keyfini sürün.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/BirAsyaDizi.cs3",
@@ -1770,7 +1770,7 @@
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webdramaturkey.org/&size=40",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 33461,
+    "fileSize": 33460,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1782,7 +1782,7 @@
       "Movie",
       "Anime"
     ],
-    "version": 15,
+    "version": 16,
     "internalName": "WebDramaTurkey",
     "description": "Web Drama Turkey - Kore, Çin, Japon Dizileri, Filmleri ve Animeler",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebDramaTurkey.cs3",
