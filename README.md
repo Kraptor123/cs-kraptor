@@ -81,24 +81,10 @@ Teşekkür ederiz.
         <sub><b>kerimmkirac</b></sub>
         </a>
     </td>
-  </tr>
-</table>
-
-
-# `Özel Teşekkür`
-
-<table>
-  <tr>
-    <td align="center">
+     <td align="center">
       <a href="https://github.com/ByAyzen">
         <img src="https://avatars.githubusercontent.com/u/189399597?v=4" width="80;" alt="ByAyzen"/><br />
         <sub><b>ByAyzen</b></sub>
-        </a>
-    </td>
-     <td align="center">
-      <a href="https://github.com/fsamet">
-        <img src="https://avatars.githubusercontent.com/u/182527968?v=4" width="80;" alt="fsamet"/><br />
-        <sub><b>fsamet</b></sub>
         </a>
     </td>
   </tr>
