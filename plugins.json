@@ -851,7 +851,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmmakinesi.tv&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 31471,
+    "fileSize": 31640,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -864,7 +864,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 46,
+    "version": 47,
     "internalName": "FilmMakinesi",
     "description": "Film Makinesi, en yeni ve en güncel filmleri sitemizde full HD kalite farkı ile izleyebilirsiniz. HD film izle denildiğinde akla gelen en kaliteli film izleme sitesi.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmMakinesi.cs3",
