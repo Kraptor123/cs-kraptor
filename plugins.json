@@ -803,7 +803,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 21,
+    "version": 22,
     "internalName": "FilmHane",
     "description": "Son çıkan en yeni filmleri türkçe dublaj ve türkçe altyazılı dil seçenekleriyle Full HD (1080p) kalitelerinde film izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmHane.cs3",
