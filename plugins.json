@@ -1912,7 +1912,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.youtube.com/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 58923,
+    "fileSize": 65978,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1926,7 +1926,7 @@
       "Music",
       "TvSeries"
     ],
-    "version": 6,
+    "version": 7,
     "internalName": "Youtube",
     "description": "Youtube. ",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Youtube.cs3",
