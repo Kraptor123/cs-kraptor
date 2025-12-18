@@ -162,7 +162,7 @@
     "iconUrl": "https://asyaanimeleri.top/wp-content/uploads/2021/08/Asya-animeleri-12-e1629130525708.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 15217,
+    "fileSize": 14802,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -171,7 +171,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 9,
+    "version": 10,
     "internalName": "AsyaAnimeleri",
     "description": "Asya Animeleri – Anime izle | Donghua izle | Animeler | Donghuantr | Türkanime | Donghua Anime, Türkçe Altyazılı Anime izle , Türkçe Anime, animeizle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaAnimeleri.cs3",
