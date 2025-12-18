@@ -1295,7 +1295,7 @@
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://rectvapk.cc&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 50521,
+    "fileSize": 55229,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1308,9 +1308,9 @@
       "Live",
       "TvSeries"
     ],
-    "version": 13,
+    "version": 14,
     "internalName": "RecTV",
-    "description": "RecTv,Türkiye’deki en popüler Çevrimiçi Medya Akış platformlarından biridir. Filmlerin, Canlı Sporların, Web Dizilerinin ve çok daha fazlasının keyfini ücretsiz çıkarın.",
+    "description": "RecTV,Türkiye’deki en popüler Çevrimiçi Medya Akış platformlarından biridir. Filmlerin, Canlı Sporların, Web Dizilerinin ve çok daha fazlasının keyfini ücretsiz çıkarın.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RecTV.cs3",
     "name": "RecTV"
   },
