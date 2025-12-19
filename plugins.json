@@ -874,7 +874,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=www.filmmodu17.com&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 18417,
+    "fileSize": 18462,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -883,7 +883,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 25,
+    "version": 26,
     "internalName": "FilmModu",
     "description": "Film modun geldiyse yüksek kalitede en yeni filmleri izle, 1080p izleyebileceğiniz reklamsiz film sitesi.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmModu.cs3",
@@ -953,7 +953,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?domain=www.fullhdfilmizlesene.de&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 18649,
+    "fileSize": 19057,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -962,7 +962,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 17,
+    "version": 18,
     "internalName": "FullHDFilmizlesene",
     "description": "Sinema zevkini evinize kadar getirdik. Türkiye'nin lider Film sitesinde, en yeni filmleri Full HD izleyin.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDFilmizlesene.cs3",
