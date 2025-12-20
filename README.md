@@ -90,7 +90,7 @@ Teşekkür ederiz.
   </tr>
 </table>
 
-# Patreon Destekçileri
+# Aktif Destekçiler
 
 ## ⭐ Özel Destekçi
 <table>
@@ -112,6 +112,29 @@ Teşekkür ederiz.
   </tr>
 </table>
 
-
-
+## Geçmişte Destek Olanlar ♥️
+<table>
+  <tr>
+                    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/206325968?v=4" width="80" /><br/>
+      <sub><b>Makoto Tokioki</b></sub>
+    </td>
+    <td align="center">
+      <img src="https://cdn.buymeacoffee.com/uploads/profile_pictures/default/v2/C2D9E1/BR.png@200w_0e.webp" width="80" /><br/>
+      <sub><b>İbrahim</b></sub>
+    </td>
+        <td align="center">
+      <img src="https://cdn.buymeacoffee.com/uploads/profile_pictures/default/v2/FFD8CF/SO.png@200w_0e.webp" width="80" /><br/>
+      <sub><b>Sasuke Onur</b></sub>
+    </td>
+            <td align="center">
+      <img src="https://cdn.buymeacoffee.com/uploads/profile_pictures/default/v2/FFABD0/YU.png@200w_0e.webp" width="80" /><br/>
+      <sub><b>Yusuf</b></sub>
+    </td>
+   <td align="center">
+      <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/191889064/93b5170bea5b42bda74b04541be51ce1/eyJ3IjoyMDB9/2.png?token-hash=rMZrXhcvTPp3F0fkiHKuZXzz2bLwJ-XjwTFMFXnrO5Q%3D" width="80" /><br/>
+      <sub><b>Akın VeritasAequitas</b></sub>
+    </td>
+  </tr>
+</table>
  </div>
