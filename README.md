@@ -112,17 +112,6 @@ Teşekkür ederiz.
   </tr>
 </table>
 
-## 💛 Genel Destekçi
-<table>
-  <tr>
-    <td align="center">
-      <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/191889064/93b5170bea5b42bda74b04541be51ce1/eyJ3IjoyMDB9/2.png?token-hash=rMZrXhcvTPp3F0fkiHKuZXzz2bLwJ-XjwTFMFXnrO5Q%3D" width="80" /><br/>
-      <sub><b>Akın VeritasAequitas</b></sub>
-    </td>
-  </tr>
-</table>
-
-
 
 
  </div>
