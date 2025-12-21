@@ -1910,6 +1910,25 @@
     "name": "YeniWatch"
   },
   {
+    "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://yesilcamtv.com.tr&size=64",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "fileSize": 13770,
+    "status": 1,
+    "language": "tr",
+    "authors": [
+      "kraptor"
+    ],
+    "tvTypes": [
+      "Movie"
+    ],
+    "version": 1,
+    "internalName": "YesilCamTv",
+    "description": "Türk sinemasının unutulmaz filmler bu adreste.",
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YesilCamTv.cs3",
+    "name": "YesilCamTv"
+  },
+  {
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.youtube.com/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
