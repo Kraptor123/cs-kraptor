@@ -356,7 +356,7 @@
     "iconUrl": "https://cizgivedizi.com/Logo.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 27154,
+    "fileSize": 27142,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -365,7 +365,7 @@
     "tvTypes": [
       "Cartoon"
     ],
-    "version": 19,
+    "version": 20,
     "internalName": "CizgiveDizi",
     "description": "Ücretsiz bir şekilde çizgi dizi, dizi, anime ve daha fazlasını eski-yeni demeden izleyebilirsiniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiveDizi.cs3",
