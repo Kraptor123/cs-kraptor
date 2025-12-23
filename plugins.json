@@ -676,7 +676,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizist.club/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 17459,
+    "fileSize": 17455,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -685,7 +685,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 12,
+    "version": 13,
     "internalName": "Dizist",
     "description": "Yabancı Dizi izle - Dizist",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizist.cs3",
