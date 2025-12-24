@@ -23,7 +23,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 11912,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "Kraptor"
@@ -33,7 +33,7 @@
     ],
     "version": 17,
     "internalName": "4KFilmIzlesene",
-    "description": "En yeni ve sorunsuz ⚡  Full HD Film izle keyfi her yerde sizinle ! 4K ve 1080p online film izleme farkıyla 4KFilmizlesene'nin Tadını Çıkart.",
+    "description": "Yakında Silinecek!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/4KFilmIzlesene.cs3",
     "name": "4KFilmIzlesene"
   },
@@ -469,26 +469,6 @@
     "description": "DiziCan TV'de en popüler Kore, Çin ve Asya dizilerini keşfet! Güncel bölümler, kaliteli altyazılar ve sınırsız dizi keyfi seni bekliyor.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizican.cs3",
     "name": "Dizican"
-  },
-  {
-    "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizifun4.com&size=128",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 18845,
-    "status": 0,
-    "language": "tr",
-    "authors": [
-      "kraptor"
-    ],
-    "tvTypes": [
-      "TvSeries",
-      "Movie"
-    ],
-    "version": 24,
-    "internalName": "DiziFun",
-    "description": "Her Dizi Bir Macera, Her An Bir Keşif!",
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziFun.cs3",
-    "name": "DiziFun"
   },
   {
     "iconUrl": "https://www.google.com/s2/favicons?domain=dizigom1.co&sz=%size%",
