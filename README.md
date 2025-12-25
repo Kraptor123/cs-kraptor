@@ -10,12 +10,7 @@ Cloudstream Kurulu Cihazda Yukaridaki Logoya Tıklayarak Repoyu Kurabilirsiniz!
 
 <h2 align="center">
 <br>
-  <a href="https://kraptor.codeberg.page/">Kraptor'un CloudStream Wikisi</a>
-</h2>
-
-<h2 align="center">
-<br>
-  <a href="https://www.patreon.com/kraptorcs">Eklentilerin şifrelerini öğrenmek için tıklayın</a>
+  <a href="https://linktr.ee/kraptorcs">Tüm Linklerim</a>
 </h2>
 
 <h1 align="center">
@@ -36,7 +31,7 @@ If you believe content is violating copyright laws, please contact the actual fi
 </table>
 
 <h1 align="center"> 
-  Kısa kodlar
+  Kısa kod
   </h1>
   
  <div align="center">
@@ -45,13 +40,7 @@ If you believe content is violating copyright laws, please contact the actual fi
   <tr>
     <td align="center"><h2>kraptor</h3></td>
       <tr>
-          <td align="center"><h2>kraptorcs</h3></td>
-      <tr>
-    <td align="center"><h2>kraptorcs3</h3></td>
-          <tr>
 </table>
-
-Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı hatası aldığınız durumlarda uygulamanın kurulu olduğu cihazda yukarıda ki kraptor logosuna tıklayarak repo kurulumunu gerçekleştirebilirsiniz.
 
 ---
 
@@ -62,15 +51,6 @@ Kısa kod bağlantı bulunamadı hatası: Kısa kod için bağlantı bulunamadı
         Telegram Duyuru Kanalı: 
         <a href="https://t.me/kraptorcs" target="_blank" rel="noopener noreferrer">
           Kraptor Duyuru
-        </a>
-      </h2>
-    </td>
-  </tr>
-      <td align="center">
-      <h2>
-        Kraptor Yardım-Sohbet Grubu(küfür içerebilir): 
-        <a href="https://t.me/+v2DqXgnBVgEzZWE8" target="_blank" rel="noopener noreferrer">
-          kraptor-Cs3
         </a>
       </h2>
     </td>
@@ -95,7 +75,13 @@ Teşekkür ederiz.
         <sub><b>kraptor</b></sub>
         </a>
     </td>
-     <td align="center">
+         <td align="center">
+      <a href="https://github.com/ByAyzen">
+        <img src="https://avatars.githubusercontent.com/u/189399597?v=4" width="80;" alt="ByAyzen"/><br />
+        <sub><b>ByAyzen</b></sub>
+        </a>
+    </td>
+       <td align="center">
       <a href="https://github.com/kerimmkirac">
         <img src="https://avatars.githubusercontent.com/u/127618379?v=4" width="80;" alt="kerimmkirac"/><br />
         <sub><b>kerimmkirac</b></sub>
@@ -104,25 +90,51 @@ Teşekkür ederiz.
   </tr>
 </table>
 
+# Aktif Destekçiler
 
-# `Özel Teşekkür`
-
+## ⭐ Özel Destekçi
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/ByAyzen">
-        <img src="https://avatars.githubusercontent.com/u/189399597?v=4" width="80;" alt="ByAyzen"/><br />
-        <sub><b>ByAyzen</b></sub>
-        </a>
-    </td>
-     <td align="center">
-      <a href="https://github.com/fsamet">
-        <img src="https://avatars.githubusercontent.com/u/182527968?v=4" width="80;" alt="fsamet"/><br />
-        <sub><b>fsamet</b></sub>
-        </a>
+      <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/155932364/cd801d2b8839429b84845be99ef65101/eyJ3IjoyMDB9/1.png?token-hash=8szpaxXqRvq4qUVVO_GXwy2hDK9h1bThzm0Bm_sKfVc%3D" width="80" /><br/>
+      <sub><b>Daniel Gary</b></sub>
     </td>
   </tr>
 </table>
 
+## 🔥 Tam Destekçi
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/165740079/1866dfb6d755494eafb97ad5d79b1d0a/eyJ3IjoyMDB9/1.jpeg?token-hash=5bWNKWASZbz7q6CAfdBkgfcZrJaGpnbJswLsFIeT1vw%3D" width="80" /><br/>
+      <sub><b>Elgun Tagizade</b></sub>
+    </td>
+  </tr>
+</table>
 
+## Geçmişte Destek Olanlar ♥️
+<table>
+  <tr>
+                    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/206325968?v=4" width="80" /><br/>
+      <sub><b>Makoto Tokioki</b></sub>
+    </td>
+    <td align="center">
+      <img src="https://cdn.buymeacoffee.com/uploads/profile_pictures/default/v2/C2D9E1/BR.png@200w_0e.webp" width="80" /><br/>
+      <sub><b>İbrahim</b></sub>
+    </td>
+        <td align="center">
+      <img src="https://cdn.buymeacoffee.com/uploads/profile_pictures/default/v2/FFD8CF/SO.png@200w_0e.webp" width="80" /><br/>
+      <sub><b>Sasuke Onur</b></sub>
+    </td>
+            <td align="center">
+      <img src="https://cdn.buymeacoffee.com/uploads/profile_pictures/default/v2/FFABD0/YU.png@200w_0e.webp" width="80" /><br/>
+      <sub><b>Yusuf</b></sub>
+    </td>
+   <td align="center">
+      <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/191889064/93b5170bea5b42bda74b04541be51ce1/eyJ3IjoyMDB9/2.png?token-hash=rMZrXhcvTPp3F0fkiHKuZXzz2bLwJ-XjwTFMFXnrO5Q%3D" width="80" /><br/>
+      <sub><b>Akın VeritasAequitas</b></sub>
+    </td>
+  </tr>
+</table>
  </div>
