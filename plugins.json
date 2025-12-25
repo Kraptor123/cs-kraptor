@@ -4,7 +4,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 47021,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "kraptor"
@@ -12,7 +12,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 34,
+    "version": 35,
     "internalName": "4KFilmIzleme",
     "description": "Film izle, ⚡ En yeni çıkan yabancı vizyon filmleri 4KFilmizleme ile Online 1080p kalite veya Ultra Full HD 4K Film izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/4KFilmIzleme.cs3",
