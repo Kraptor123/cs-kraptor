@@ -75,16 +75,16 @@ Teşekkür ederiz.
         <sub><b>kraptor</b></sub>
         </a>
     </td>
-     <td align="center">
-      <a href="https://github.com/kerimmkirac">
-        <img src="https://avatars.githubusercontent.com/u/127618379?v=4" width="80;" alt="kerimmkirac"/><br />
-        <sub><b>kerimmkirac</b></sub>
-        </a>
-    </td>
-     <td align="center">
+         <td align="center">
       <a href="https://github.com/ByAyzen">
         <img src="https://avatars.githubusercontent.com/u/189399597?v=4" width="80;" alt="ByAyzen"/><br />
         <sub><b>ByAyzen</b></sub>
+        </a>
+    </td>
+       <td align="center">
+      <a href="https://github.com/kerimmkirac">
+        <img src="https://avatars.githubusercontent.com/u/127618379?v=4" width="80;" alt="kerimmkirac"/><br />
+        <sub><b>kerimmkirac</b></sub>
         </a>
     </td>
   </tr>
