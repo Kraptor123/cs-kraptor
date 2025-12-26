@@ -913,7 +913,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 22661,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "kraptor",
@@ -923,7 +923,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 24,
+    "version": 25,
     "internalName": "FullHDFilm",
     "description": "Fullhdfilm ile en yeni vizyon filmler Full HD ve kesintisiz film sizlerle. Özgün film arşivimizle en üstün kaliteli film izle keyfini sunuyoruz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDFilm.cs3",
@@ -1175,7 +1175,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 22979,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "kraptor",
@@ -1185,7 +1185,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 21,
+    "version": 22,
     "internalName": "KultFilmler",
     "description": "Kült Filmler özenle en iyi filmleri derler ve iyi bir altyazılı film izleme deneyimi sunmayı amaçlar",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
