@@ -87,6 +87,12 @@ Teşekkür ederiz.
         <sub><b>kerimmkirac</b></sub>
         </a>
     </td>
+       <td align="center">
+      <a href="https://github.com/kerimmkirac">
+        <img src="https://avatars.githubusercontent.com/u/34142302?v=4" width="80;" alt="trup40"/><br />
+        <sub><b>trup40</b></sub>
+        </a>
+    </td>
   </tr>
 </table>
 
