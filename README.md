@@ -90,7 +90,7 @@ Teşekkür ederiz.
        <td align="center">
       <a href="https://github.com/trup40">
         <img src="https://avatars.githubusercontent.com/u/34142302?v=4" width="80;" alt="trup40"/><br />
-        <sub><b>trup40(Eagle)</b></sub>
+        <sub><b>trup40 (Eagle)</b></sub>
         </a>
     </td>
   </tr>
