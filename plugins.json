@@ -1480,7 +1480,7 @@
     "iconUrl": "https://play-lh.googleusercontent.com/brwGNmr7IjA_MKk_TTPs0va10hdKE_bD_a1lnKoiMuCayW98EHpRv55edA6aEoJlmwfX=w240-h480",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 37439,
+    "fileSize": 37437,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1493,7 +1493,7 @@
       "AsianDrama",
       "Cartoon"
     ],
-    "version": 8,
+    "version": 9,
     "internalName": "SineWix",
     "description": "SineWix - Ücretsiz Film, Dizi ve Anime İzleme Uygulaması 5000+ HD İçerik, Türkçe Altyazılı, Otaku Dostu Anime Arşivi, Premium Kalite Yabancı Yapımlar",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SineWix.cs3",
