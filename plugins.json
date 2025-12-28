@@ -1,43 +1,5 @@
 [
   {
-    "iconUrl": "https://www.4kfilmizleme.net/wp-content/uploads/2022/09/4kfilmizlemefavicon-1.png",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 47021,
-    "status": 0,
-    "language": "tr",
-    "authors": [
-      "kraptor"
-    ],
-    "tvTypes": [
-      "Movie"
-    ],
-    "version": 35,
-    "internalName": "4KFilmIzleme",
-    "description": "Film izle, ⚡ En yeni çıkan yabancı vizyon filmleri 4KFilmizleme ile Online 1080p kalite veya Ultra Full HD 4K Film izle.",
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/4KFilmIzleme.cs3",
-    "name": "4KFilmIzleme"
-  },
-  {
-    "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.4kfilmizlesene.org&size=128",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 11912,
-    "status": 0,
-    "language": "tr",
-    "authors": [
-      "Kraptor"
-    ],
-    "tvTypes": [
-      "Movie"
-    ],
-    "version": 17,
-    "internalName": "4KFilmIzlesene",
-    "description": "Yakında Silinecek!",
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/4KFilmIzlesene.cs3",
-    "name": "4KFilmIzlesene"
-  },
-  {
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://animecix.net&size=16",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
@@ -654,7 +616,7 @@
     "name": "DiziPalOrijinal"
   },
   {
-    "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizist.club/&size=128",
+    "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizist.live/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 17455,
@@ -666,7 +628,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 13,
+    "version": 14,
     "internalName": "Dizist",
     "description": "Yabancı Dizi izle - Dizist",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizist.cs3",
@@ -908,27 +870,6 @@
     "description": "Watch Free Movies and Series online - Very fast streaming - No Registration Required - Click NOW",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FlixHQ.cs3",
     "name": "FlixHQ"
-  },
-  {
-    "iconUrl": "https://www.google.com/s2/favicons?domain=fullhdfilm.pro&sz=%size%",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 22661,
-    "status": 0,
-    "language": "tr",
-    "authors": [
-      "kraptor",
-      "kerimmkirac"
-    ],
-    "tvTypes": [
-      "Movie",
-      "TvSeries"
-    ],
-    "version": 25,
-    "internalName": "FullHDFilm",
-    "description": "Fullhdfilm ile en yeni vizyon filmler Full HD ve kesintisiz film sizlerle. Özgün film arşivimizle en üstün kaliteli film izle keyfini sunuyoruz.",
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDFilm.cs3",
-    "name": "FullHDFilm"
   },
   {
     "iconUrl": "https://www.google.com/s2/favicons?domain=www.fullhdfilmizlesene.de&sz=%size%",
@@ -1769,26 +1710,6 @@
     "description": "Yabancı film izle, Türkçe dublaj ve Türkçe altyazılı film seçenekleriyle 720p ve 1080p HD kalitesinde film izle - Uğur Film full hd film izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/UgurFilm.cs3",
     "name": "UgurFilm"
-  },
-  {
-    "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://unutulmazfilmler4.com/&size=64",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 47549,
-    "status": 0,
-    "language": "tr",
-    "authors": [
-      "kraptor"
-    ],
-    "tvTypes": [
-      "Movie",
-      "TvSeries"
-    ],
-    "version": 22,
-    "internalName": "UnutulmazFilmler",
-    "description": "Yıllar geçse bile izledikten sonraki etkisi hala süren o unutulmaz filmleri sizler için derliyoruz. Altyazılı film izle. Sadece En iyi filmler.",
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/UnutulmazFilmler.cs3",
-    "name": "UnutulmazFilmler"
   },
   {
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://watch2movies.net/&size=128",
