@@ -1,0 +1,54 @@
+name: Build CloudStream Providers
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          path: src
+
+      - name: Checkout builds branch
+        uses: actions/checkout@v4
+        with:
+          ref: builds
+          path: builds
+          fetch-depth: 0
+        continue-on-error: true
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Grant execute permission
+        run: chmod +x src/gradlew
+
+      - name: Build plugins
+        run: |
+          cd src
+          ./gradlew makePlugins
+
+      - name: Copy build outputs
+        run: |
+          mkdir -p builds
+          cp src/build/*.cs3 builds/ || true
+          cp src/build/plugins.json builds/ || true
+
+      - name: Commit & push builds
+        run: |
+          cd builds
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Build plugins" || echo "No changes"
+          git push origin builds
