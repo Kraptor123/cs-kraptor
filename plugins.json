@@ -84,16 +84,17 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.animeizlesene.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 23345,
+    "fileSize": 24189,
     "status": 1,
     "language": "tr",
     "authors": [
-      "kraptor"
+      "kraptor",
+      "ByAyzen"
     ],
     "tvTypes": [
       "Anime"
     ],
-    "version": 19,
+    "version": 20,
     "internalName": "AnimeIzlesene",
     "description": "Sade tasarıma sahip, yüksek kaliteli anime izleme sitesi. En sevdiğiniz anime serilerini, kesintisiz bir şekilde izleyebilirsiniz. Geniş arşivimiz sayesinde, her zaman yeni çıkan animeleri ve eski klasikleri keşfedebilirsiniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeIzlesene.cs3",
