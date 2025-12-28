@@ -476,25 +476,6 @@
     "name": "DiziKorea"
   },
   {
-    "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizikral.nl/mofy/img/192x192_.png&size=128",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 20580,
-    "status": 0,
-    "language": "tr",
-    "authors": [
-      "kraptor"
-    ],
-    "tvTypes": [
-      "TvSeries"
-    ],
-    "version": 13,
-    "internalName": "DiziKral",
-    "description": "DiziKRAL - ücretsiz yabancı dizi izle, film izle, anime izle.",
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziKral.cs3",
-    "name": "DiziKral"
-  },
-  {
     "iconUrl": "https://www.google.com/s2/favicons?domain=dizi18.life&sz=%size%",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
@@ -599,7 +580,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal932.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 58548,
+    "fileSize": 61766,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -609,7 +590,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 74,
+    "version": 75,
     "internalName": "DiziPalOrijinal",
     "description": "DiziPal Orijinal.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
