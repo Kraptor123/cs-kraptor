@@ -1078,6 +1078,7 @@
     "language": "tr",
     "authors": [
       "kraptor",
+      "Phisher98",
       "ByAyzen"
     ],
     "tvTypes": [
@@ -1088,7 +1089,7 @@
       "AsianDrama",
       "AnimeMovie"
     ],
-    "version": 15,
+    "version": 16,
     "internalName": "KraptorPlus",
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
@@ -1559,7 +1560,7 @@
     "iconUrl": "https://www.trdiziizle.vip/fawn.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 19856,
+    "fileSize": 19860,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1568,7 +1569,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 12,
+    "version": 13,
     "internalName": "TrDiziIzle",
     "description": "Full hd ve tek parça hemde reklamsız yerli dizi izlemek mi istiyorsunuz? O halde bu site sorunsuz dizi izlemeniz için tam size göre",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TrDiziIzle.cs3",
