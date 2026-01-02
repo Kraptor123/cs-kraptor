@@ -3,7 +3,7 @@
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://animecix.net&size=16",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 36965,
+    "fileSize": 39255,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -15,7 +15,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 28,
+    "version": 29,
     "internalName": "AnimeciX",
     "description": "AnimeciX, animeleri keşfedebileceğiniz ve animeler hakkında her şeyi öğrenebileceğiniz bir paylaşım platformudur.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeciX.cs3",
@@ -25,7 +25,7 @@
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://animely.net/&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 23035,
+    "fileSize": 25283,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -36,7 +36,7 @@
       "AnimeMovie",
       "OVA"
     ],
-    "version": 1,
+    "version": 2,
     "internalName": "AnimeElysium",
     "description": "AnimeElysium ile en sevdiğiniz animeleri Türkçe altyazılı olarak HD kalitede izleyin. Güncel sezon animeleri, klasikler ve çok daha fazlası. Hemen ücretsiz hesap oluşturun ve anime dünyasına katılın. Binlerce bölüm anime içeriğiyle sizleri bekliyor!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeElysium.cs3",
@@ -46,7 +46,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.animeizlesene.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 24189,
+    "fileSize": 26394,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -56,7 +56,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 20,
+    "version": 21,
     "internalName": "AnimeIzlesene",
     "description": "Sade tasarıma sahip, yüksek kaliteli anime izleme sitesi. En sevdiğiniz anime serilerini, kesintisiz bir şekilde izleyebilirsiniz. Geniş arşivimiz sayesinde, her zaman yeni çıkan animeleri ve eski klasikleri keşfedebilirsiniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeIzlesene.cs3",
@@ -66,7 +66,7 @@
     "iconUrl": "https://animeler.me/wp-content/uploads/cropped-animelerpw-48x48.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 23052,
+    "fileSize": 25317,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -76,7 +76,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 23,
+    "version": 24,
     "internalName": "Animeler",
     "description": "HD kalitesinde ücretsiz anime izle! Animeler.me, en yeni ve popüler anime serilerini Türkçe altyazılı ve dublajlı olarak sunar. Favori animelerini hemen keşfet!",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animeler.cs3",
@@ -86,7 +86,7 @@
     "iconUrl": "https://anizium.co/assets/images/logo.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 32394,
+    "fileSize": 34651,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -96,7 +96,7 @@
       "AnimeMovie",
       "Anime"
     ],
-    "version": 6,
+    "version": 7,
     "internalName": "Anizium",
     "description": "Anizium ile dünyada ilk ve tek 4K Türkçe dublaj platformunda anime keyfini yaşa. En yeni animeleri İngilizce altyazı ve dublaj seçenekleriyle 1080p ve 4K kalitesinde HD izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizium.cs3",
@@ -106,7 +106,7 @@
     "iconUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQLGJxL_3l-lZofrxkC-vpKFzHzyKW-Z0lYg&s",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 32428,
+    "fileSize": 34509,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -115,7 +115,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 36,
+    "version": 37,
     "internalName": "Anizm",
     "description": "Türkçe Altyazılı Anime İzle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizm.cs3",
@@ -125,7 +125,7 @@
     "iconUrl": "https://asyaanimeleri.top/wp-content/uploads/2021/08/Asya-animeleri-12-e1629130525708.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 14802,
+    "fileSize": 17069,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -134,7 +134,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 10,
+    "version": 11,
     "internalName": "AsyaAnimeleri",
     "description": "Asya Animeleri – Anime izle | Donghua izle | Animeler | Donghuantr | Türkanime | Donghua Anime, Türkçe Altyazılı Anime izle , Türkçe Anime, animeizle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaAnimeleri.cs3",
@@ -144,7 +144,7 @@
     "iconUrl": "https://asyafanatiklerim.com/wp-content/uploads/2018/08/md_5aaeb1de75bea.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 14913,
+    "fileSize": 17256,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -154,7 +154,7 @@
     "tvTypes": [
       "AsianDrama"
     ],
-    "version": 11,
+    "version": 12,
     "internalName": "AsyaFanatiklerim",
     "description": "Asya Fanatikleri, asya dizilerini izleme imkanı sunar. Kore dizileri izle, asyafanatikleri kore dizileri, tayvan dizileri izle, çin dizileri izle, anime izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaFanatiklerim.cs3",
@@ -164,7 +164,7 @@
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://asyafilmizlesene.org&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 12840,
+    "fileSize": 15160,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -173,7 +173,7 @@
     "tvTypes": [
       "AsianDrama"
     ],
-    "version": 3,
+    "version": 4,
     "internalName": "AsyaFilmIzlesene",
     "description": "Hint filmleri, Hint filmleri izle, Asya filmleri izle, Kore filmleri izle, HD izle, Full izle, 1080p izle, online izle, Tek parça izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaFilmIzlesene.cs3",
@@ -1560,7 +1560,7 @@
     "iconUrl": "https://www.trdiziizle.vip/fawn.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 19860,
+    "fileSize": 19746,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1569,7 +1569,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 13,
+    "version": 14,
     "internalName": "TrDiziIzle",
     "description": "Full hd ve tek parça hemde reklamsız yerli dizi izlemek mi istiyorsunuz? O halde bu site sorunsuz dizi izlemeniz için tam size göre",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TrDiziIzle.cs3",
