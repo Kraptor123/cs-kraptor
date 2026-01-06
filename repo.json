@@ -1,9 +1,0 @@
-{
-  "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kekikanifaviconbeyaz.png",
-  "name": "Kraptor’s Turkish Repo | @kraptor123",
-  "description": "Türkçe eklentiler",
-  "manifestVersion": 1,
-  "pluginLists": [
-    "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/builds/plugins.json"
-  ]
-}
