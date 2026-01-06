@@ -9,8 +9,10 @@ Cloudstream Kurulu Cihazda Yukaridaki Logoya Tıklayarak Repoyu Kurabilirsiniz!
 
 
 <h2 align="center">
-<br>
   <a href="https://linktr.ee/kraptorcs">Tüm Linklerim</a>
+  <br>
+  <br>
+  <a href="https://github.com/Kraptor123/Cs-Karma">Cs-Karma</a>
 </h2>
 
 <h1 align="center">
