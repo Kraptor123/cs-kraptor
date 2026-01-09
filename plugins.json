@@ -500,7 +500,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=https://dizilla.to",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 57647,
+    "fileSize": 58853,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -511,7 +511,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 62,
+    "version": 63,
     "internalName": "Dizilla",
     "description": "1080p yabancı dizi izle. Türkçe altyazılı veya dublaj seçenekleriyle 1080p çözünürlükte yabancı dizilere anında ulaş. Popüler dizileri kesintisiz izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizilla.cs3",
