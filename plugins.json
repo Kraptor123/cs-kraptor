@@ -145,7 +145,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 17252,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "kraptor",
@@ -154,7 +154,7 @@
     "tvTypes": [
       "AsianDrama"
     ],
-    "version": 13,
+    "version": 14,
     "internalName": "AsyaFanatiklerim",
     "description": "Asya Fanatikleri, asya dizilerini izleme imkanı sunar. Kore dizileri izle, asyafanatikleri kore dizileri, tayvan dizileri izle, çin dizileri izle, anime izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaFanatiklerim.cs3",
@@ -639,7 +639,7 @@
     "iconUrl": "https://i.imgur.com/zQYsL6Z.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 53906,
+    "fileSize": 53936,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -650,7 +650,7 @@
       "Movie",
       "Anime"
     ],
-    "version": 45,
+    "version": 46,
     "internalName": "DiziYo",
     "description": "Diziyo ile Yabancı Dizi, Film, Anime, Çizgi-Film izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
@@ -738,7 +738,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 22275,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "kraptor"
@@ -746,7 +746,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 15,
+    "version": 16,
     "internalName": "FilmIzle",
     "description": "Filmizle ile Full HD Film izle. Yerli ve yabancı filmleri Türkçe dublaj veya Alt yazılı seçeneğiyle kesintisiz ve sorunsuz en hızlı film sitesi.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmIzle.cs3",
@@ -757,7 +757,7 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 18884,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
       "ByAyzen"
@@ -765,7 +765,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 2,
+    "version": 3,
     "internalName": "FilmKutu",
     "description": "Filmkutu ile en yeni yapımları yüksek kalitede izle. Reklamsız, kesintisiz ve 1080p seçenekleriyle HD film izlemenin en kolay yolu.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmKutu.cs3",
@@ -995,17 +995,16 @@
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://jetfilmizle.de&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 22270,
+    "fileSize": 22357,
     "status": 1,
     "language": "tr",
     "authors": [
-      "kraptor",
-      "keyiflerolsun"
+      "kraptor"
     ],
     "tvTypes": [
       "Movie"
     ],
-    "version": 35,
+    "version": 36,
     "internalName": "JetFilmizle",
     "description": "Binlerce Film İzleme Seçeneğiyle En İyi Film İzleme Sitesi",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/JetFilmizle.cs3",
@@ -1465,16 +1464,15 @@
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "fileSize": 21624,
-    "status": 1,
+    "status": 0,
     "language": "tr",
     "authors": [
-      "kraptor",
-      "keyiflerolsun"
+      "kraptor"
     ],
     "tvTypes": [
       "Movie"
     ],
-    "version": 30,
+    "version": 31,
     "internalName": "SuperFilmGeldi",
     "description": "Hd film izliyerek arkadaşlarınızla ve sevdiklerinizle iyi bir vakit geçirmek istiyorsanız açın bir film eğlenmeye bakın. Bilim kurgu filmleri, aşk drama vahşet aşk romantik sıradışı korku filmlerini izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SuperFilmGeldi.cs3",
@@ -1522,7 +1520,7 @@
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tranimaci.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 15526,
+    "fileSize": 16839,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1531,7 +1529,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "version": 1,
+    "version": 2,
     "internalName": "TRAnimaci",
     "description": "TR Animaci - En güncel Çin Animeleri'ni Türkçe Altyazılı sunan bir Online Anime izleme sitesi.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TRAnimaci.cs3",
