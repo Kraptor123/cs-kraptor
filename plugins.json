@@ -914,7 +914,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://hdfilmcehennemi.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 30453,
+    "fileSize": 30445,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -924,7 +924,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 60,
+    "version": 61,
     "internalName": "HDFilmCehennemi",
     "description": "Türkiye'nin en hızlı hd film izleme sitesi",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmCehennemi.cs3",
