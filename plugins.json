@@ -222,7 +222,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=asyawatch.com",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 55447,
+    "fileSize": 54437,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -232,7 +232,7 @@
       "AsianDrama",
       "Movie"
     ],
-    "version": 7,
+    "version": 8,
     "internalName": "AsyaWatch",
     "description": "Kore, Çin ve Japon dizilerini tek tıkla HD ve Türkçe altyazılı izle. En güncel Asya dizileri, unutulmaz Asya filmleri ve web dramalar seni bekliyor.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaWatch.cs3",
@@ -500,7 +500,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=https://dizilla.to",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 58853,
+    "fileSize": 57963,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -511,7 +511,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 63,
+    "version": 64,
     "internalName": "Dizilla",
     "description": "1080p yabancı dizi izle. Türkçe altyazılı veya dublaj seçenekleriyle 1080p çözünürlükte yabancı dizilere anında ulaş. Popüler dizileri kesintisiz izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizilla.cs3",
@@ -580,7 +580,7 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal932.com&size=128",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 61766,
+    "fileSize": 60986,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -590,7 +590,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 75,
+    "version": 76,
     "internalName": "DiziPalOrijinal",
     "description": "DiziPal Orijinal.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
@@ -639,7 +639,7 @@
     "iconUrl": "https://i.imgur.com/zQYsL6Z.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 53936,
+    "fileSize": 52930,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -650,7 +650,7 @@
       "Movie",
       "Anime"
     ],
-    "version": 46,
+    "version": 47,
     "internalName": "DiziYo",
     "description": "Diziyo ile Yabancı Dizi, Film, Anime, Çizgi-Film izle.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
@@ -856,7 +856,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.fullhdfilmizlesene.de",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 21361,
+    "fileSize": 23821,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -866,7 +866,7 @@
     "tvTypes": [
       "Movie"
     ],
-    "version": 23,
+    "version": 24,
     "internalName": "FullHDFilmizlesene",
     "description": "Sinema zevkini evinize kadar getirdik. Türkiye'nin lider Film sitesinde, en yeni filmleri Full HD izleyin.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDFilmizlesene.cs3",
@@ -1241,7 +1241,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=roketdizi.co",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 50119,
+    "fileSize": 49218,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1251,7 +1251,7 @@
     "tvTypes": [
       "TvSeries"
     ],
-    "version": 38,
+    "version": 39,
     "internalName": "RoketDizi",
     "description": "Türkiye'nin en tatlış yabancı dizi izleme sitesi. Türkçe dublaj, altyazılı, eski ve yeni yabancı dizilerin yanı sıra kore (asya) dizileri izleyebilirsiniz.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RoketDizi.cs3",
@@ -1282,7 +1282,7 @@
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=selcukflix.com",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 57436,
+    "fileSize": 56450,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1292,7 +1292,7 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 9,
+    "version": 10,
     "internalName": "SelcukFlix",
     "description": "Selcukflix'te her türden en yeni ve en popüler dizi ve filmleri izlemenin keyfini çıkarın. Aksiyondan romantiğe, bilim kurgudan dramaya, geniş kütüphanemizde herkes için bir şey var.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SelcukFlix.cs3",
