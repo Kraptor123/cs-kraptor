@@ -911,10 +911,10 @@
     "name": "GinikoCanli"
   },
   {
-    "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://hdfilmcehennemi.com&size=128",
+    "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=http://hdfilmcehennemi.nl",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 30445,
+    "fileSize": 30663,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -924,9 +924,9 @@
       "Movie",
       "TvSeries"
     ],
-    "version": 61,
+    "version": 62,
     "internalName": "HDFilmCehennemi",
-    "description": "Türkiye'nin en hızlı hd film izleme sitesi",
+    "description": "Hdfilmcehennemi - Türkiye'nin en hızlı hd film izleme sitesi. Tek ve gerçek hdfilmcehennemi sitesi.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmCehennemi.cs3",
     "name": "HDFilmCehennemi"
   },
@@ -1072,7 +1072,7 @@
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "fileSize": 256259,
+    "fileSize": 249143,
     "status": 1,
     "language": "tr",
     "authors": [
@@ -1088,7 +1088,7 @@
       "AsianDrama",
       "AnimeMovie"
     ],
-    "version": 19,
+    "version": 20,
     "internalName": "KraptorPlus",
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
