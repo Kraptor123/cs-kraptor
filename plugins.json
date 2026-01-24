@@ -106,15 +106,15 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizm.cs3",
-    "status": 1,
-    "version": 39,
+    "status": 0,
+    "version": 40,
     "name": "Anizm",
     "internalName": "Anizm",
     "authors": [
       "kraptor"
     ],
     "description": "Türkçe Altyazılı Anime İzle.",
-    "fileSize": 42135,
+    "fileSize": 48869,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
