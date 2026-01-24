@@ -98,9 +98,18 @@ Teşekkür ederiz.
   </tr>
 </table>
 
+# `Özel Teşekkür`
+<table>
+    <td align="center">
+      <a href="https://github.com/fsamet">
+      <img src="https://avatars.githubusercontent.com/u/182527968" width="80" /><br/>
+      <sub><b>Fatih Samed Özkan</b></sub>
+    </td>
+  </table>
+        
 # Aktif Destekçiler
 
-## ⭐ Aboneler
+## ⭐ `Aboneler`
 <table>
   <tr>
     <td align="center">
@@ -114,7 +123,7 @@ Teşekkür ederiz.
   </tr>
 </table>
 
-## Destekçiler ♥️
+## `Destekçiler` ♥️
 <table>
   <!-- 1. SATIR -->
   <tr>
@@ -167,4 +176,9 @@ Teşekkür ederiz.
     </td>
   </tr>
 </table>
+
+---
+
+ ## Bana Bu Yolcukta Destek Olan Herkese Sonsuz Teşekkürler!
+
  </div>
