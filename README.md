@@ -138,11 +138,11 @@ Teşekkür ederiz.
       <sub><b>Elgun Tagizade</b></sub>
     </td>
      <td align="center">
-      <img src="https://placehold.co/80x80/1a1c29/white/?text=Ali\nŞahin" width="80" /><br/>
+      <img src="https://placehold.co/80x80/1a1c29/white/?text=Ali\nSahin" width="80" /><br/>
       <sub><b>Ali Şahin</b></sub>
     </td>
      <td align="center">
-      <img src="https://placehold.co/80x80/1a1c29/white/?text=Zeki\nDinçer" width="80" /><br/>
+      <img src="https://placehold.co/80x80/1a1c29/white/?text=Zeki\nDincer" width="80" /><br/>
       <sub><b>Zeki Dinçer</b></sub>
     </td>
     <td align="center">
@@ -150,11 +150,11 @@ Teşekkür ederiz.
       <sub><b>Oguz Oguz</b></sub>
     </td>
      <td align="center">
-      <img src="https://placehold.co/80x80/1a1c29/white/?text=Rıdvan\nDemirel" width="80" /><br/>
+      <img src="https://placehold.co/80x80/1a1c29/white/?text=Ridvan\nDemirel" width="80" /><br/>
       <sub><b>Rıdvan Demirel</b></sub>
     </td>
     <td align="center">
-      <img src="https://placehold.co/80x80/1a1c29/white/?text=Fatih\nSamed\nÖzkan" width="80" /><br/>
+      <img src="https://placehold.co/80x80/1a1c29/white/?text=Fatih\nSamed\nOzkan" width="80" /><br/>
       <sub><b>Fatih Samed Özkan</b></sub>
     </td>
     <td align="center">
