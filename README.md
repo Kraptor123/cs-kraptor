@@ -100,7 +100,7 @@ Teşekkür ederiz.
 
 # Aktif Destekçiler
 
-## ⭐ Özel Destekçi
+## ⭐ Aboneler
 <table>
   <tr>
     <td align="center">
@@ -110,20 +110,10 @@ Teşekkür ederiz.
   </tr>
 </table>
 
-## 🔥 Tam Destekçi
+## Destekçiler ♥️
 <table>
   <tr>
-    <td align="center">
-      <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/165740079/1866dfb6d755494eafb97ad5d79b1d0a/eyJ3IjoyMDB9/1.jpeg?token-hash=5bWNKWASZbz7q6CAfdBkgfcZrJaGpnbJswLsFIeT1vw%3D" width="80" /><br/>
-      <sub><b>Elgun Tagizade</b></sub>
-    </td>
-  </tr>
-</table>
-
-## Geçmişte Destek Olanlar ♥️
-<table>
-  <tr>
-                    <td align="center">
+      <td align="center">
       <img src="https://avatars.githubusercontent.com/u/206325968?v=4" width="80" /><br/>
       <sub><b>Makoto Tokioki</b></sub>
     </td>
@@ -142,6 +132,34 @@ Teşekkür ederiz.
    <td align="center">
       <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/191889064/93b5170bea5b42bda74b04541be51ce1/eyJ3IjoyMDB9/2.png?token-hash=rMZrXhcvTPp3F0fkiHKuZXzz2bLwJ-XjwTFMFXnrO5Q%3D" width="80" /><br/>
       <sub><b>Akın VeritasAequitas</b></sub>
+    </td>
+    <td align="center">
+      <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/165740079/1866dfb6d755494eafb97ad5d79b1d0a/eyJ3IjoyMDB9/1.jpeg?token-hash=5bWNKWASZbz7q6CAfdBkgfcZrJaGpnbJswLsFIeT1vw%3D" width="80" /><br/>
+      <sub><b>Elgun Tagizade</b></sub>
+    </td>
+     <td align="center">
+      <img src="https://placehold.co/80x80/1a1c29/white/?text=Ali\nŞahin" width="80" /><br/>
+      <sub><b>Ali Şahin</b></sub>
+    </td>
+     <td align="center">
+      <img src="https://placehold.co/80x80/1a1c29/white/?text=Zeki\nDinçer" width="80" /><br/>
+      <sub><b>Zeki Dinçer</b></sub>
+    </td>
+    <td align="center">
+      <img src="https://placehold.co/80x80/1a1c29/white/?text=Oguz\nOguz" width="80" /><br/>
+      <sub><b>Oguz Oguz</b></sub>
+    </td>
+     <td align="center">
+      <img src="https://placehold.co/80x80/1a1c29/white/?text=Rıdvan\nDemirel" width="80" /><br/>
+      <sub><b>Rıdvan Demirel</b></sub>
+    </td>
+    <td align="center">
+      <img src="https://placehold.co/80x80/1a1c29/white/?text=Fatih\nSamed\nÖzkan" width="80" /><br/>
+      <sub><b>Fatih Samed Özkan</b></sub>
+    </td>
+    <td align="center">
+      <img src="https://placehold.co/80x80/1a1c29/white/?text=Murat\nMert" width="80" /><br/>
+      <sub><b>Murat Mert</b></sub>
     </td>
   </tr>
 </table>
