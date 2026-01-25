@@ -1859,7 +1859,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YTS.cs3",
     "status": 1,
-    "version": 20,
+    "version": 21,
     "name": "YTS",
     "internalName": "YTS",
     "authors": [
@@ -1868,7 +1868,7 @@
       "ByAyzen"
     ],
     "description": "YTS Filmleri 4K Desteği Otomatik altyazı ve film açıklaması (Torrent)",
-    "fileSize": 44163,
+    "fileSize": 38859,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1876,8 +1876,6 @@
       "Torrent"
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://en.yts-official.mx&size=128",
-    "apiVersion": 1,
-    "jarFileSize": 226826,
-    "jarUrl": "https://raw.githubusercontent.com/Kraptor123/kraptoranime/builds/YTS.jar"
+    "apiVersion": 1
   }
 ]
