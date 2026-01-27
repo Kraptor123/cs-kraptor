@@ -561,7 +561,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPal.cs3",
     "status": 1,
-    "version": 64,
+    "version": 65,
     "name": "DiziPal",
     "internalName": "DiziPal",
     "authors": [
@@ -569,7 +569,7 @@
       "ByAyzen"
     ],
     "description": "En yeni dizileri güvenli ve hızlı şekilde sunar.",
-    "fileSize": 25542,
+    "fileSize": 29657,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
