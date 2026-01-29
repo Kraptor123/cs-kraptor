@@ -719,14 +719,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmHane.cs3",
     "status": 1,
-    "version": 24,
+    "version": 25,
     "name": "FilmHane",
     "internalName": "FilmHane",
     "authors": [
       "kraptor"
     ],
     "description": "Son çıkan en yeni filmleri türkçe dublaj ve türkçe altyazılı dil seçenekleriyle Full HD (1080p) kalitelerinde film izle.",
-    "fileSize": 20563,
+    "fileSize": 20565,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
