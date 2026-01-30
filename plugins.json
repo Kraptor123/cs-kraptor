@@ -184,7 +184,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaKing.cs3",
     "status": 1,
-    "version": 8,
+    "version": 9,
     "name": "AsyaKing",
     "internalName": "AsyaKing",
     "authors": [
@@ -192,7 +192,7 @@
       "kraptor"
     ],
     "description": "Asya Dizi İzle, kore dizi izle, çin dizi izle, bl dizileri izle denilince akla gelen ilk site ; 1080p fullhd türkçe altyazılı olarak izleyin.",
-    "fileSize": 17698,
+    "fileSize": 15366,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -223,14 +223,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaWatch.cs3",
     "status": 1,
-    "version": 9,
+    "version": 10,
     "name": "AsyaWatch",
     "internalName": "AsyaWatch",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Kore, Çin ve Japon dizilerini tek tıkla HD ve Türkçe altyazılı izle. En güncel Asya dizileri, unutulmaz Asya filmleri ve web dramalar seni bekliyor.",
-    "fileSize": 64382,
+    "fileSize": 61769,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -358,14 +358,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziAsia.cs3",
     "status": 1,
-    "version": 7,
+    "version": 8,
     "name": "DiziAsia",
     "internalName": "DiziAsia",
     "authors": [
       "kerimmkirac"
     ],
     "description": "DiziAsia - Asya Dizileri İzle",
-    "fileSize": 18648,
+    "fileSize": 15030,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -501,7 +501,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizilla.cs3",
     "status": 1,
-    "version": 66,
+    "version": 67,
     "name": "Dizilla",
     "internalName": "Dizilla",
     "authors": [
@@ -510,7 +510,7 @@
       "keyiflerolsun"
     ],
     "description": "1080p yabancı dizi izle. Türkçe altyazılı veya dublaj seçenekleriyle 1080p çözünürlükte yabancı dizilere anında ulaş. Popüler dizileri kesintisiz izle.",
-    "fileSize": 69101,
+    "fileSize": 66314,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -956,14 +956,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HintDizi.cs3",
     "status": 1,
-    "version": 9,
+    "version": 10,
     "name": "HintDizi",
     "internalName": "HintDizi",
     "authors": [
       "kraptor"
     ],
     "description": "En sevilen Hint dizileri ve filmleri, güncel içerikler ve arşivlik yapımlar HintDizi.com'da! Dizi arşivimize göz atın ve favori yapımlarınızı kaçırmayın.",
-    "fileSize": 19182,
+    "fileSize": 16186,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1075,7 +1075,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 27,
+    "version": 28,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -1084,7 +1084,7 @@
       "ByAyzen"
     ],
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
-    "fileSize": 321797,
+    "fileSize": 319823,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1245,7 +1245,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RoketDizi.cs3",
     "status": 1,
-    "version": 39,
+    "version": 40,
     "name": "RoketDizi",
     "internalName": "RoketDizi",
     "authors": [
@@ -1253,7 +1253,7 @@
       "keyiflerolsun"
     ],
     "description": "Türkiye'nin en tatlış yabancı dizi izleme sitesi. Türkçe dublaj, altyazılı, eski ve yeni yabancı dizilerin yanı sıra kore (asya) dizileri izleyebilirsiniz.",
-    "fileSize": 58785,
+    "fileSize": 56207,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1286,14 +1286,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SelcukFlix.cs3",
     "status": 1,
-    "version": 12,
+    "version": 13,
     "name": "SelcukFlix",
     "internalName": "SelcukFlix",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Selcukflix'te her türden en yeni ve en popüler dizi ve filmleri izlemenin keyfini çıkarın. Aksiyondan romantiğe, bilim kurgudan dramaya, geniş kütüphanemizde herkes için bir şey var.",
-    "fileSize": 66393,
+    "fileSize": 63564,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1748,7 +1748,7 @@
       "ByAyzen"
     ],
     "description": "Her türlü filmi ister dublaj ister altyazılı, en kaliteli bir şekilde izleyebileceğiniz arşivi en geniş gerçek film izleme siteniz.",
-    "fileSize": 37438,
+    "fileSize": 37581,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
