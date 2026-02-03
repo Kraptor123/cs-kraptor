@@ -879,14 +879,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDIzle.cs3",
     "status": 1,
-    "version": 8,
+    "version": 9,
     "name": "FullHDIzle",
     "internalName": "FullHDIzle",
     "authors": [
       "kraptor"
     ],
     "description": "Film izle online platformunda, Full hd film izleme ayrıcalığını yaşayın. Türkçe Dublaj ve altyazılı filmleri kayıt derdi olmadan 720p veya 1080p izleyin.",
-    "fileSize": 12620,
+    "fileSize": 15647,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -998,14 +998,15 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/JetFilmizle.cs3",
     "status": 1,
-    "version": 37,
+    "version": 39,
     "name": "JetFilmizle",
     "internalName": "JetFilmizle",
     "authors": [
-      "kraptor"
+      "kraptor",
+      "ByAyzen"
     ],
     "description": "Binlerce Film İzleme Seçeneğiyle En İyi Film İzleme Sitesi",
-    "fileSize": 25134,
+    "fileSize": 22052,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1661,14 +1662,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TvDiziler.cs3",
     "status": 1,
-    "version": 4,
+    "version": 5,
     "name": "TvDiziler",
     "internalName": "TvDiziler",
     "authors": [
       "Kraptor"
     ],
     "description": "Tv Diziler Ücretsiz yerli dizi izleme sitesi en popüler dizileri tek parça hd kalitesiyle ve reklamsız bedava olarak buradan tv dizileri izleyin.",
-    "fileSize": 23328,
+    "fileSize": 22340,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1801,14 +1802,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YeniWatch.cs3",
     "status": 1,
-    "version": 8,
+    "version": 10,
     "name": "YeniWatch",
     "internalName": "YeniWatch",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Yeni diziwatch yani Yeniwatch. Yabancı dizi izle, anime izle, en popüler yabancı dizileri ve animeleri ücretsiz olarak yeniwatch.net.tr'te izleyin.",
-    "fileSize": 16868,
+    "fileSize": 16661,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
