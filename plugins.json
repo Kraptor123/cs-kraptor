@@ -164,8 +164,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaFilmIzlesene.cs3",
-    "status": 1,
-    "version": 5,
+    "status": 0,
+    "version": 6,
     "name": "AsyaFilmIzlesene",
     "internalName": "AsyaFilmIzlesene",
     "authors": [
@@ -740,7 +740,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmIzle.cs3",
     "status": 0,
-    "version": 16,
+    "version": 17,
     "name": "FilmIzle",
     "internalName": "FilmIzle",
     "authors": [
