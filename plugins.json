@@ -1076,7 +1076,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 28,
+    "version": 29,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -1085,7 +1085,7 @@
       "ByAyzen"
     ],
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
-    "fileSize": 319823,
+    "fileSize": 323106,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1720,7 +1720,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebDramaTurkey.cs3",
     "status": 1,
-    "version": 20,
+    "version": 21,
     "name": "WebDramaTurkey",
     "internalName": "WebDramaTurkey",
     "authors": [
@@ -1728,7 +1728,7 @@
       "kerimmkirac"
     ],
     "description": "Web Drama Turkey - Kore, Çin, Japon Dizileri, Filmleri ve Animeler",
-    "fileSize": 40222,
+    "fileSize": 40267,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
