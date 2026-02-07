@@ -1742,7 +1742,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebteIzle.cs3",
     "status": 1,
-    "version": 40,
+    "version": 41,
     "name": "WebteIzle",
     "internalName": "WebteIzle",
     "authors": [
@@ -1750,7 +1750,7 @@
       "ByAyzen"
     ],
     "description": "Her türlü filmi ister dublaj ister altyazılı, en kaliteli bir şekilde izleyebileceğiniz arşivi en geniş gerçek film izleme siteniz.",
-    "fileSize": 39861,
+    "fileSize": 72463,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
