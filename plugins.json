@@ -225,14 +225,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Atv.cs3",
     "status": 1,
-    "version": 6,
+    "version": 7,
     "name": "Atv",
     "internalName": "Atv",
     "authors": [
       "kraptor"
     ],
     "description": "Atv",
-    "fileSize": 26765,
+    "fileSize": 28086,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
