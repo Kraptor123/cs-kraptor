@@ -2,17 +2,18 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeciX.cs3",
     "status": 1,
-    "version": 31,
+    "version": 32,
     "name": "AnimeciX",
     "internalName": "AnimeciX",
     "authors": [
-      "kraptor123",
+      "kraptor",
+      "ByAyzen",
       "keyiflerolsun",
       "inatchii",
       "JustRelaxable"
     ],
     "description": "AnimeciX, animeleri keşfedebileceğiniz ve animeler hakkında her şeyi öğrenebileceğiniz bir paylaşım platformudur.",
-    "fileSize": 43465,
+    "fileSize": 44674,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
