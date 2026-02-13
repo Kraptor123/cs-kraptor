@@ -1167,8 +1167,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RecTV.cs3",
-    "status": 0,
-    "version": 15,
+    "status": 1,
+    "version": 16,
     "name": "RecTV",
     "internalName": "RecTV",
     "authors": [
