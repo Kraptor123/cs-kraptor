@@ -1547,15 +1547,15 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TurkAnime.cs3",
     "status": 1,
-    "version": 20,
+    "version": 21,
     "name": "TurkAnime",
     "internalName": "TurkAnime",
     "authors": [
       "kraptor",
-      "keyiflerolsun"
+      "ByAyzen"
     ],
     "description": "Türk Anime TV - Türkiye'nin Online Anime izleme sitesi.",
-    "fileSize": 26023,
+    "fileSize": 34576,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
