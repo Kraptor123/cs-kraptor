@@ -683,14 +683,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmEkseni.cs3",
     "status": 1,
-    "version": 27,
+    "version": 28,
     "name": "FilmEkseni",
     "internalName": "FilmEkseni",
     "authors": [
       "kraptor"
     ],
     "description": "Film Ekseni ⚡ Vizyonda ki, en güncel ve en yeni filmleri full hd kalitesinde türkçe dublaj ve altyazı seçenekleriyle 1080p olarak izleyebileceğiniz adresiniz.",
-    "fileSize": 25184,
+    "fileSize": 25496,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
