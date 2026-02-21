@@ -1109,14 +1109,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/OnePaceTr.cs3",
     "status": 1,
-    "version": 4,
+    "version": 5,
     "name": "OnePaceTr",
     "internalName": "OnePaceTr",
     "authors": [
       "kraptor"
     ],
     "description": "One Pace türkçe altyazılı izleme platformu.",
-    "fileSize": 22084,
+    "fileSize": 23983,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
