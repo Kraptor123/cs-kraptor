@@ -645,14 +645,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYou.cs3",
     "status": 1,
-    "version": 38,
+    "version": 39,
     "name": "DiziYou",
     "internalName": "DiziYou",
     "authors": [
       "keyiflerolsun"
     ],
     "description": "Diziyou en kaliteli Türkçe dublaj ve altyazılı yabancı dizi izleme sitesidir. Güncel ve efsanevi dizileri 1080p Full HD kalitede izlemek için hemen tıkla!",
-    "fileSize": 18691,
+    "fileSize": 18835,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
