@@ -300,14 +300,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziAsya.cs3",
     "status": 1,
-    "version": 12,
+    "version": 13,
     "name": "DiziAsya",
     "internalName": "DiziAsya",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Asya'nın en iyi Çin ve Kore dizilerini ve filmlerini keşfedin! Romantizm, dram, aksiyon... Diziasya ile Asya kültürüne hemen adım atın!",
-    "fileSize": 52682,
+    "fileSize": 50377,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1498,7 +1498,7 @@
       "ByAyzen"
     ],
     "description": "Her türlü filmi ister dublaj ister altyazılı, en kaliteli bir şekilde izleyebileceğiniz arşivi en geniş gerçek film izleme siteniz.",
-    "fileSize": 63357,
+    "fileSize": 63345,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
