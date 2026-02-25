@@ -1569,14 +1569,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YesilCamTv.cs3",
     "status": 1,
-    "version": 3,
+    "version": 4,
     "name": "YesilCamTv",
     "internalName": "YesilCamTv",
     "authors": [
       "kraptor"
     ],
     "description": "Türk sinemasının unutulmaz filmler bu adreste.",
-    "fileSize": 17040,
+    "fileSize": 18375,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
