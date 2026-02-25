@@ -185,14 +185,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/BelgeselX.cs3",
     "status": 1,
-    "version": 21,
+    "version": 22,
     "name": "BelgeselX",
     "internalName": "BelgeselX",
     "authors": [
       "Kraptor"
     ],
     "description": "En yeni belgeseller, türkçe altyazılı yada dublaj olarak 1080p kalitesinde HD belgesel izle.",
-    "fileSize": 24819,
+    "fileSize": 24273,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -243,14 +243,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiveDizi.cs3",
     "status": 1,
-    "version": 26,
+    "version": 27,
     "name": "CizgiveDizi",
     "internalName": "CizgiveDizi",
     "authors": [
       "kraptor"
     ],
     "description": "Ücretsiz bir şekilde çizgi dizi, dizi, anime ve daha fazlasını eski-yeni demeden izleyebilirsiniz.",
-    "fileSize": 36106,
+    "fileSize": 36414,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -843,7 +843,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/JetFilmizle.cs3",
     "status": 1,
-    "version": 47,
+    "version": 48,
     "name": "JetFilmizle",
     "internalName": "JetFilmizle",
     "authors": [
@@ -851,7 +851,7 @@
       "ByAyzen"
     ],
     "description": "Binlerce Film İzleme Seçeneğiyle En İyi Film İzleme Sitesi",
-    "fileSize": 49843,
+    "fileSize": 50217,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -921,7 +921,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 37,
+    "version": 38,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -930,7 +930,7 @@
       "ByAyzen"
     ],
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
-    "fileSize": 335573,
+    "fileSize": 325418,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1510,14 +1510,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YabanciDizi.cs3",
     "status": 1,
-    "version": 9,
+    "version": 10,
     "name": "YabanciDizi",
     "internalName": "YabanciDizi",
     "authors": [
       "Kraptor"
     ],
     "description": "Son çıkan yabancı dizi ve filmleri yabancidizi' de izle. En yeni yabancı film ve diziler, türkçe altyazılı yada dublaj olarak 1080p kalitesinde hd izle.",
-    "fileSize": 36670,
+    "fileSize": 36684,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
