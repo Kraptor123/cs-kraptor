@@ -843,7 +843,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/JetFilmizle.cs3",
     "status": 1,
-    "version": 48,
+    "version": 49,
     "name": "JetFilmizle",
     "internalName": "JetFilmizle",
     "authors": [
@@ -851,7 +851,7 @@
       "ByAyzen"
     ],
     "description": "Binlerce Film İzleme Seçeneğiyle En İyi Film İzleme Sitesi",
-    "fileSize": 50217,
+    "fileSize": 48901,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
