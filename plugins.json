@@ -947,7 +947,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
     "status": 1,
-    "version": 25,
+    "version": 26,
     "name": "KultFilmler",
     "internalName": "KultFilmler",
     "authors": [
@@ -955,7 +955,7 @@
       "keyiflerolsun"
     ],
     "description": "Kült Filmler özenle en iyi filmleri derler ve iyi bir altyazılı film izleme deneyimi sunmayı amaçlar",
-    "fileSize": 28138,
+    "fileSize": 28440,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
