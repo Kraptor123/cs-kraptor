@@ -165,15 +165,15 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Atv.cs3",
-    "status": 1,
-    "version": 7,
+    "status": 0,
+    "version": 8,
     "name": "Atv",
     "internalName": "Atv",
     "authors": [
       "kraptor"
     ],
     "description": "Atv",
-    "fileSize": 28086,
+    "fileSize": 28085,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -566,8 +566,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dmax.cs3",
-    "status": 1,
-    "version": 4,
+    "status": 0,
+    "version": 5,
     "name": "Dmax",
     "internalName": "Dmax",
     "authors": [
@@ -820,7 +820,7 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/InatBox.cs3",
-    "status": 1,
+    "status": 0,
     "version": 48,
     "name": "InatBox",
     "internalName": "InatBox",
@@ -863,8 +863,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KanalD.cs3",
-    "status": 1,
-    "version": 5,
+    "status": 0,
+    "version": 6,
     "name": "KanalD",
     "internalName": "KanalD",
     "authors": [
@@ -990,8 +990,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/NowTv.cs3",
-    "status": 1,
-    "version": 5,
+    "status": 0,
+    "version": 6,
     "name": "NowTv",
     "internalName": "NowTv",
     "authors": [
@@ -1174,8 +1174,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/ShowTv.cs3",
-    "status": 1,
-    "version": 4,
+    "status": 0,
+    "version": 5,
     "name": "ShowTv",
     "internalName": "ShowTv",
     "authors": [
@@ -1255,8 +1255,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/StarTv.cs3",
-    "status": 1,
-    "version": 3,
+    "status": 0,
+    "version": 4,
     "name": "StarTv",
     "internalName": "StarTv",
     "authors": [
@@ -1274,8 +1274,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Teve2.cs3",
-    "status": 1,
-    "version": 4,
+    "status": 0,
+    "version": 5,
     "name": "Teve2",
     "internalName": "Teve2",
     "authors": [
@@ -1293,8 +1293,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Tlc.cs3",
-    "status": 1,
-    "version": 5,
+    "status": 0,
+    "version": 6,
     "name": "Tlc",
     "internalName": "Tlc",
     "authors": [
@@ -1331,8 +1331,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Trt1.cs3",
-    "status": 1,
-    "version": 6,
+    "status": 0,
+    "version": 7,
     "name": "Trt1",
     "internalName": "Trt1",
     "authors": [
@@ -1351,8 +1351,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TrtCocuk.cs3",
-    "status": 1,
-    "version": 6,
+    "status": 0,
+    "version": 7,
     "name": "TrtCocuk",
     "internalName": "TrtCocuk",
     "authors": [
@@ -1390,16 +1390,35 @@
     "apiVersion": 1
   },
   {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Tv8.cs3",
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Turkdizileri.cs3",
     "status": 1,
-    "version": 5,
+    "version": 1,
+    "name": "Turkdizileri",
+    "internalName": "Turkdizileri",
+    "authors": [
+      "ByAyzen"
+    ],
+    "description": "TRT1, Showtv, Kanal D ve daha fazla site tek bir eklentide birleşiyor.",
+    "fileSize": 110597,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "Movie"
+    ],
+    "iconUrl": "https://i.imgur.com/Cff8v6J.png",
+    "apiVersion": 1
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Tv8.cs3",
+    "status": 0,
+    "version": 6,
     "name": "Tv8",
     "internalName": "Tv8",
     "authors": [
       "kerimmkirac"
     ],
     "description": "TV8'in eğlenceli programları, yarışmaları ve dizileri ile keyifle TV izle. Survivor, O Ses Türkiye, Jet Sosyete, Kızım, Yemekteyiz ve Masterchef için TV8 izle.",
-    "fileSize": 22134,
+    "fileSize": 22133,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
