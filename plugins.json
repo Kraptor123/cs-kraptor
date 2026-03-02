@@ -1331,8 +1331,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Trt1.cs3",
-    "status": 0,
-    "version": 5,
+    "status": 1,
+    "version": 6,
     "name": "Trt1",
     "internalName": "Trt1",
     "authors": [
@@ -1588,8 +1588,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Youtube.cs3",
-    "status": 0,
-    "version": 33,
+    "status": 1,
+    "version": 34,
     "name": "Youtube",
     "internalName": "Youtube",
     "authors": [
@@ -1598,7 +1598,7 @@
       "Kraptor"
     ],
     "description": "Youtube",
-    "fileSize": 114800,
+    "fileSize": 114801,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
