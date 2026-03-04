@@ -1,24 +1,5 @@
 [
   {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/__PlayerTest.cs3",
-    "status": 1,
-    "version": 0,
-    "name": "__PlayerTest",
-    "internalName": "__PlayerTest",
-    "authors": [
-      "kraptor"
-    ],
-    "description": "Player Test.",
-    "fileSize": 6328,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "Movie"
-    ],
-    "iconUrl": "https://placehold.co/200x200/png",
-    "apiVersion": 1
-  },
-  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeciX.cs3",
     "status": 1,
     "version": 38,
@@ -39,6 +20,28 @@
       "Anime"
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://animecix.net&size=16",
+    "apiVersion": 1
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeElysium.cs3",
+    "status": 0,
+    "version": 6,
+    "name": "AnimeElysium",
+    "internalName": "AnimeElysium",
+    "authors": [
+      "kraptor",
+      "ByAyzen"
+    ],
+    "description": "AnimeElysium ile en sevdiğiniz animeleri Türkçe altyazılı olarak HD kalitede izleyin. Güncel sezon animeleri, klasikler ve çok daha fazlası. Hemen ücretsiz hesap oluşturun ve anime dünyasına katılın. Binlerce bölüm anime içeriğiyle sizleri bekliyor!",
+    "fileSize": 22299,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "Anime",
+      "AnimeMovie",
+      "OVA"
+    ],
+    "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://animely.net/&size=128",
     "apiVersion": 1
   },
   {
@@ -178,6 +181,25 @@
       "Documentary"
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=belgeselx.com",
+    "apiVersion": 1
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/BirAsyaDizi.cs3",
+    "status": 0,
+    "version": 15,
+    "name": "BirAsyaDizi",
+    "internalName": "BirAsyaDizi",
+    "authors": [
+      "kraptor"
+    ],
+    "description": "Asya'nın En Ünlü Dizilerini en yüksek çözünürlükte HD ve kesintisiz izleyin, kaliteli Asya film ve dizilerinin keyfini sürün.",
+    "fileSize": 16912,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "AsianDrama"
+    ],
+    "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.birasyadizi.com/&size=16",
     "apiVersion": 1
   },
   {
@@ -663,6 +685,25 @@
     "apiVersion": 1
   },
   {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDIzle.cs3",
+    "status": 0,
+    "version": 12,
+    "name": "FullHDIzle",
+    "internalName": "FullHDIzle",
+    "authors": [
+      "kraptor"
+    ],
+    "description": "Film izle online platformunda, Full hd film izleme ayrıcalığını yaşayın. Türkçe Dublaj ve altyazılı filmleri kayıt derdi olmadan 720p veya 1080p izleyin.",
+    "fileSize": 18127,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "Movie"
+    ],
+    "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://fullhdizle.one/&size=48",
+    "apiVersion": 1
+  },
+  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/GinikoCanli.cs3",
     "status": 1,
     "version": 9,
@@ -721,6 +762,48 @@
     "apiVersion": 1
   },
   {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HintDizi.cs3",
+    "status": 0,
+    "version": 12,
+    "name": "HintDizi",
+    "internalName": "HintDizi",
+    "authors": [
+      "kraptor"
+    ],
+    "description": "En sevilen Hint dizileri ve filmleri, güncel içerikler ve arşivlik yapımlar HintDizi.com'da! Dizi arşivimize göz atın ve favori yapımlarınızı kaçırmayın.",
+    "fileSize": 18762,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "AsianDrama"
+    ],
+    "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://hintdizi.com&size=128",
+    "apiVersion": 1
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/InatBox.cs3",
+    "status": 2,
+    "version": 48,
+    "name": "InatBox",
+    "internalName": "InatBox",
+    "authors": [
+      "Eagle",
+      "kraptor",
+      "JustRelaxable"
+    ],
+    "description": "İnatBox cloudstream eklentisidir. Sevdiğiniz yayın platformlarını ve canlı maçları burada bulabilirsiniz.",
+    "fileSize": 50112,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "Movie",
+      "TvSeries",
+      "Live"
+    ],
+    "iconUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3vCp6N1K4bECoYRQD-cisJF2_6V_Hk01ZhDmoPR2JuM8O5qr4MqrPO1munM9cRlleBBSK6odYhLtDBWv4E3vhPhynlmS5hVVtJZShHoGA5REQ8_3v8SIlccTEqzVQu2UJyNYQdJNrKIfWy66RQeT0D-CcmFCbHPz5023H6p2v5fv4NVloZ5Rqo_yGrIY/s320/iNat-Box-App.png",
+    "apiVersion": 1
+  },
+  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/JetFilmizle.cs3",
     "status": 1,
     "version": 50,
@@ -738,6 +821,25 @@
       "Movie"
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://jetfilmizle.de&size=128",
+    "apiVersion": 1
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KanalD.cs3",
+    "status": 0,
+    "version": 6,
+    "name": "KanalD",
+    "internalName": "KanalD",
+    "authors": [
+      "kraptor"
+    ],
+    "description": "KanalD.",
+    "fileSize": 26236,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "TvSeries"
+    ],
+    "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.kanald.com.tr/&size=128",
     "apiVersion": 1
   },
   {
@@ -905,6 +1007,29 @@
       "Movie"
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://rarefilmm.com&size=128",
+    "apiVersion": 1
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RecTV.cs3",
+    "status": 0,
+    "version": 18,
+    "name": "RecTV",
+    "internalName": "RecTV",
+    "authors": [
+      "Eagle",
+      "kraptor",
+      "ByAyzen"
+    ],
+    "description": "RecTV,Türkiye’deki en popüler Çevrimiçi Medya Akış platformlarından biridir. Filmlerin, Canlı Sporların, Web Dizilerinin ve çok daha fazlasının keyfini ücretsiz çıkarın.",
+    "fileSize": 62450,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "Movie",
+      "Live",
+      "TvSeries"
+    ],
+    "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://rectvapk.cc&size=128",
     "apiVersion": 1
   },
   {
