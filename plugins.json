@@ -321,6 +321,26 @@
     "apiVersion": 1
   },
   {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziFilmORG.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "DiziFilmORG",
+    "internalName": "DiziFilmORG",
+    "authors": [
+      "ByAyzen"
+    ],
+    "description": "En yeni ve popüler yerli yabancı filmleri Türkçe dublaj ve altyazılı seçeneklerle Full HD kalitede, tek parça ve kesintisiz Dizifilm.org’da izle.",
+    "fileSize": 35188,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "Movie",
+      "TvSeries"
+    ],
+    "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizifilm.org/dizi/breaking-bad/sezon-1/bolum-2&size=128",
+    "apiVersion": 1
+  },
+  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziGom.cs3",
     "status": 1,
     "version": 26,
