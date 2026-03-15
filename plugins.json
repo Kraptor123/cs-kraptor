@@ -1137,15 +1137,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SinemaCX.cs3",
     "status": 1,
-    "version": 27,
+    "version": 28,
     "name": "SinemaCX",
     "internalName": "SinemaCX",
     "authors": [
-      "kraptor",
-      "keyiflerolsun"
+      "kraptor"
     ],
     "description": "Güncel ve en iyi yabancı filmleri yüksek görüntü kalitesinde, Türkçe dublaj ve altyazı seçenekleriyle filmleri full izleyin.",
-    "fileSize": 19086,
+    "fileSize": 20049,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
