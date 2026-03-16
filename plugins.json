@@ -40,7 +40,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "iconUrl": "https://animeler.me/wp-content/uploads/cropped-animelerpw-48x48.png",
+    "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://animeler.pw/&size=128",
     "apiVersion": 1
   },
   {
@@ -101,7 +101,7 @@
     "tvTypes": [
       "Anime"
     ],
-    "iconUrl": "https://asyaanimeleri.top/wp-content/uploads/2021/08/Asya-animeleri-12-e1629130525708.png",
+    "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://asyaanimeleri.top/&size=128",
     "apiVersion": 1
   },
   {
@@ -146,19 +146,18 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaWatch.cs3",
     "status": 1,
-    "version": 15,
+    "version": 16,
     "name": "AsyaWatch",
     "internalName": "AsyaWatch",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Kore, Çin ve Japon dizilerini tek tıkla HD ve Türkçe altyazılı izle. En güncel Asya dizileri, unutulmaz Asya filmleri ve web dramalar seni bekliyor.",
-    "fileSize": 90443,
+    "fileSize": 90389,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
-      "AsianDrama",
-      "Movie"
+      "AsianDrama"
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=asyawatch.com",
     "apiVersion": 1
@@ -323,14 +322,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziFilmORG.cs3",
     "status": 1,
-    "version": 2,
+    "version": 3,
     "name": "DiziFilmORG",
     "internalName": "DiziFilmORG",
     "authors": [
       "ByAyzen"
     ],
     "description": "En yeni ve popüler yerli yabancı filmleri Türkçe dublaj ve altyazılı seçeneklerle Full HD kalitede, tek parça ve kesintisiz Dizifilm.org’da izle.",
-    "fileSize": 36126,
+    "fileSize": 35068,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -527,7 +526,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
     "status": 1,
-    "version": 56,
+    "version": 57,
     "name": "DiziYo",
     "internalName": "DiziYo",
     "authors": [
@@ -535,12 +534,11 @@
       "ByAyzen"
     ],
     "description": "Diziyo ile Yabancı Dizi, Film, Anime, Çizgi-Film izle.",
-    "fileSize": 80671,
+    "fileSize": 80654,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
       "TvSeries",
-      "Movie",
       "Anime"
     ],
     "iconUrl": "https://i.imgur.com/zQYsL6Z.png",
@@ -587,18 +585,17 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmHane.cs3",
     "status": 1,
-    "version": 28,
+    "version": 29,
     "name": "FilmHane",
     "internalName": "FilmHane",
     "authors": [
       "kraptor"
     ],
-    "fileSize": 22869,
+    "fileSize": 22837,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
-      "Movie",
-      "TvSeries"
+      "Movie"
     ],
     "iconUrl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRbK_Pe3vpG-yUVt1NvckDpaD6COLDitImrBUnHfAVA4fawhijE",
     "apiVersion": 1
@@ -745,14 +742,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmCehennemi.cs3",
     "status": 1,
-    "version": 67,
+    "version": 68,
     "name": "HDFilmCehennemi",
     "internalName": "HDFilmCehennemi",
     "authors": [
       "kraptor"
     ],
     "description": "Hdfilmcehennemi - Türkiye'nin en hızlı hd film izleme sitesi. Tek ve gerçek hdfilmcehennemi sitesi.",
-    "fileSize": 37881,
+    "fileSize": 37942,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1055,7 +1052,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
     "status": 1,
-    "version": 11,
+    "version": 12,
     "name": "SeiCode",
     "internalName": "SeiCode",
     "authors": [
@@ -1063,12 +1060,11 @@
       "kerimmkirac"
     ],
     "description": "Seicode ile en yeni animeler keşfedin!",
-    "fileSize": 36371,
+    "fileSize": 36315,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
-      "Anime",
-      "Movie"
+      "Anime"
     ],
     "iconUrl": "https://seicode.net/favicon.png",
     "apiVersion": 1
@@ -1096,7 +1092,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SetFilmIzle.cs3",
     "status": 1,
-    "version": 29,
+    "version": 30,
     "name": "SetFilmIzle",
     "internalName": "SetFilmIzle",
     "authors": [
@@ -1104,12 +1100,11 @@
       "kerimmkirac"
     ],
     "description": "Setfilmizle sitemizde, donma yaşamadan Türkçe dublaj ve altyazılı filmleri ile dizileri muhteşem 1080p full HD kalitesinde izleyebilirsiniz.",
-    "fileSize": 35510,
+    "fileSize": 35445,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
-      "Movie",
-      "TvSeries"
+      "Movie"
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.setfilmizle.my/&size=128",
     "apiVersion": 1
@@ -1357,18 +1352,17 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YabanciDizi.cs3",
     "status": 1,
-    "version": 12,
+    "version": 13,
     "name": "YabanciDizi",
     "internalName": "YabanciDizi",
     "authors": [
       "Kraptor"
     ],
     "description": "Son çıkan yabancı dizi ve filmleri yabancidizi' de izle. En yeni yabancı film ve diziler, türkçe altyazılı yada dublaj olarak 1080p kalitesinde hd izle.",
-    "fileSize": 39049,
+    "fileSize": 39025,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
-      "Movie",
       "TvSeries"
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://yabancidizi.so/&size=128",
