@@ -302,15 +302,16 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziBox.cs3",
     "status": 1,
-    "version": 22,
+    "version": 23,
     "name": "DiziBox",
     "internalName": "DiziBox",
     "authors": [
       "kraptor",
-      "kerimmkirac"
+      "kerimmkirac",
+      "ByAyzen"
     ],
     "description": "Yabancı Dizi izle, Tüm yabancı dizilerin yeni ve eski sezonlarını full hd izleyebileceğiniz elit site.",
-    "fileSize": 27612,
+    "fileSize": 29527,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
