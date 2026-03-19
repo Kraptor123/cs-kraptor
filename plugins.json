@@ -664,15 +664,15 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FlixHQ.cs3",
-    "status": 1,
-    "version": 6,
+    "status": 0,
+    "version": 7,
     "name": "FlixHQ",
     "internalName": "FlixHQ",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Watch Free Movies and Series online - Very fast streaming - No Registration Required - Click NOW",
-    "fileSize": 52858,
+    "fileSize": 52857,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "en",
     "tvTypes": [
