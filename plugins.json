@@ -1194,14 +1194,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Sinezy.cs3",
     "status": 1,
-    "version": 29,
+    "version": 30,
     "name": "Sinezy",
     "internalName": "Sinezy",
     "authors": [
       "kraptor"
     ],
     "description": "Yerli ve yabancı film izle! Türkçe Dublaj ve Alt Yazılı Seçenekleriyle full hd film izlemek için En çok tercih edilen adres!",
-    "fileSize": 18764,
+    "fileSize": 19418,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
