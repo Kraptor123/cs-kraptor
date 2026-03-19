@@ -1111,7 +1111,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SetFilmIzle.cs3",
     "status": 1,
-    "version": 30,
+    "version": 31,
     "name": "SetFilmIzle",
     "internalName": "SetFilmIzle",
     "authors": [
@@ -1119,7 +1119,7 @@
       "kerimmkirac"
     ],
     "description": "Setfilmizle sitemizde, donma yaşamadan Türkçe dublaj ve altyazılı filmleri ile dizileri muhteşem 1080p full HD kalitesinde izleyebilirsiniz.",
-    "fileSize": 35445,
+    "fileSize": 35729,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
