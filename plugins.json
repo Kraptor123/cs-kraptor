@@ -127,14 +127,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaMinik.cs3",
     "status": 1,
-    "version": 9,
+    "version": 10,
     "name": "AsyaMinik",
     "internalName": "AsyaMinik",
     "authors": [
       "kraptor"
     ],
     "description": "Asyaminik - En Güncel Asya Dizileri Burada!",
-    "fileSize": 18681,
+    "fileSize": 19725,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
