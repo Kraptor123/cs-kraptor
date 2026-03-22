@@ -506,15 +506,15 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziWatch.cs3",
-    "status": 1,
-    "version": 8,
+    "status": 0,
+    "version": 9,
     "name": "DiziWatch",
     "internalName": "DiziWatch",
     "authors": [
       "kraptor"
     ],
     "description": "Yabancı dizi izle, anime izle, en popüler yabancı dizileri ve animeleri ücretsiz olarak diziwatch.tv'de izleyin.",
-    "fileSize": 26892,
+    "fileSize": 26891,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
