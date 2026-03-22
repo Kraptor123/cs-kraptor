@@ -87,22 +87,14 @@
 
   ---
 
-  # 💖 Devamlı Destekçiler
+  # 💖 Destekçiler
 
-  ### ⭐ Aktif Aboneler
   <table>
     <tr>
       <td align="center">
         <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/155932364/cd801d2b8839429b84845be99ef65101/eyJ3IjoyMDB9/1.png?token-hash=8szpaxXqRvq4qUVVO_GXwy2hDK9h1bThzm0Bm_sKfVc%3D" width="80" /><br/>
         <sub><b>Daniel Gary</b></sub>
       </td>
-    </tr>
-  </table>
-
-  ### ♥️ Destekçiler
-  <table>
-    <!-- 1. SATIR -->
-    <tr>
       <td align="center">
         <img src="https://avatars.githubusercontent.com/u/206325968?v=4" width="80" /><br/>
         <sub><b>Makoto Tokioki</b></sub>
@@ -123,13 +115,12 @@
         <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/191889064/93b5170bea5b42bda74b04541be51ce1/eyJ3IjoyMDB9/2.png?token-hash=rMZrXhcvTPp3F0fkiHKuZXzz2bLwJ-XjwTFMFXnrO5Q%3D" width="80" /><br/>
         <sub><b>Akın VeritasAequitas</b></sub>
       </td>
+    </tr>
+    <tr>
       <td align="center">
         <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/165740079/1866dfb6d755494eafb97ad5d79b1d0a/eyJ3IjoyMDB9/1.jpeg?token-hash=5bWNKWASZbz7q6CAfdBkgfcZrJaGpnbJswLsFIeT1vw%3D" width="80" /><br/>
         <sub><b>Elgun Tagizade</b></sub>
       </td>
-    </tr>
-    <!-- 2. SATIR -->
-    <tr>
       <td align="center">
         <img src="https://placehold.co/80x80/white/black/?text=Ali\nSahin" width="80" /><br/>
         <sub><b>Ali Şahin</b></sub>
@@ -150,6 +141,8 @@
         <img src="https://placehold.co/80x80/white/black/?text=Murat\nMert" width="80" /><br/>
         <sub><b>Murat Mert</b></sub>
       </td>
+    </tr>
+    <tr>
       <td align="center">
         <img src="https://placehold.co/80x80/white/black/?text=Zeki\nDincer" width="80" /><br/>
         <sub><b>Zeki Dinçer</b></sub>
