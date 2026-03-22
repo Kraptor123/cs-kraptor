@@ -1214,14 +1214,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TrAnimeIzle.cs3",
     "status": 1,
-    "version": 6,
+    "version": 7,
     "name": "TrAnimeIzle",
     "internalName": "TrAnimeIzle",
     "authors": [
       "kraptor"
     ],
     "description": "Anime izle, Anime tv, birbirinden farklı ve güzel animeleri keyifle seyredebileceğiniz Türk anime severlerin en popüler türkçe anime izleme sitesidir.",
-    "fileSize": 34379,
+    "fileSize": 36197,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
