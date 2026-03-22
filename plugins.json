@@ -487,15 +487,16 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
     "status": 1,
-    "version": 79,
+    "version": 80,
     "name": "DiziPalOrijinal",
     "internalName": "DiziPalOrijinal",
     "authors": [
       "kraptor",
-      "kerimmkirac"
+      "kerimmkirac",
+      "ByAyzen"
     ],
     "description": "DiziPal Orijinal.",
-    "fileSize": 91968,
+    "fileSize": 92508,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
