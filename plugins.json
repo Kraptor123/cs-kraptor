@@ -107,7 +107,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaFanatiklerim.cs3",
     "status": 1,
-    "version": 14,
+    "version": 15,
     "name": "AsyaFanatiklerim",
     "internalName": "AsyaFanatiklerim",
     "authors": [
@@ -115,7 +115,7 @@
       "kerimmkirac"
     ],
     "description": "Asya Fanatikleri, asya dizilerini izleme imkanı sunar. Kore dizileri izle, asyafanatikleri kore dizileri, tayvan dizileri izle, çin dizileri izle, anime izle.",
-    "fileSize": 18404,
+    "fileSize": 18746,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
