@@ -1074,7 +1074,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
     "status": 1,
-    "version": 12,
+    "version": 13,
     "name": "SeiCode",
     "internalName": "SeiCode",
     "authors": [
@@ -1082,7 +1082,7 @@
       "kerimmkirac"
     ],
     "description": "Seicode ile en yeni animeler keşfedin!",
-    "fileSize": 36315,
+    "fileSize": 36575,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
