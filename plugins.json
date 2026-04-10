@@ -604,7 +604,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmMakinesi.cs3",
     "status": 1,
-    "version": 51,
+    "version": 52,
     "name": "FilmMakinesi",
     "internalName": "FilmMakinesi",
     "authors": [
@@ -614,7 +614,7 @@
       "nikyokki"
     ],
     "description": "Film Makinesi, en yeni ve en güncel filmleri sitemizde full HD kalite farkı ile izleyebilirsiniz. HD film izle denildiğinde akla gelen en kaliteli film izleme sitesi.",
-    "fileSize": 39559,
+    "fileSize": 54190,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
