@@ -1132,7 +1132,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SezonlukDizi.cs3",
     "status": 1,
-    "version": 25,
+    "version": 26,
     "name": "SezonlukDizi",
     "internalName": "SezonlukDizi",
     "authors": [
@@ -1140,7 +1140,7 @@
       "kerimmkirac"
     ],
     "description": "Güncel ve eski dizileri en iyi görüntü kalitesiyle bulabileceğiniz yabancı dizi izleme siteniz.",
-    "fileSize": 45659,
+    "fileSize": 57438,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
