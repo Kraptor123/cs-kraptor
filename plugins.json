@@ -46,7 +46,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animely.cs3",
     "status": 2,
-    "version": 7,
+    "version": 8,
     "name": "Animely",
     "internalName": "Animely",
     "authors": [
@@ -54,7 +54,7 @@
       "ByAyzen"
     ],
     "description": "Animely ile en sevdiğiniz animeleri Türkçe altyazılı olarak HD kalitede izleyin. Güncel sezon animeleri, klasikler ve çok daha fazlası. Hemen ücretsiz hesap oluşturun ve anime dünyasına katılın. Binlerce bölüm anime içeriğiyle sizleri bekliyor!",
-    "fileSize": 26576,
+    "fileSize": 37872,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
