@@ -445,7 +445,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMom.cs3",
     "status": 1,
-    "version": 48,
+    "version": 49,
     "name": "DiziMom",
     "internalName": "DiziMom",
     "authors": [
@@ -453,7 +453,7 @@
       "keyiflerolsun"
     ],
     "description": "Binlerce yerli yabancı dizi arşivi, tüm sezonlar, kesintisiz bölümler. Sadece dizi izle, Dizimom heryerde seninle!",
-    "fileSize": 42857,
+    "fileSize": 42985,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
