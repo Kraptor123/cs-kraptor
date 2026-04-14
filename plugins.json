@@ -154,14 +154,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaWatch.cs3",
     "status": 1,
-    "version": 16,
+    "version": 17,
     "name": "AsyaWatch",
     "internalName": "AsyaWatch",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Kore, Çin ve Japon dizilerini tek tıkla HD ve Türkçe altyazılı izle. En güncel Asya dizileri, unutulmaz Asya filmleri ve web dramalar seni bekliyor.",
-    "fileSize": 90385,
+    "fileSize": 90463,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -169,7 +169,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=asyawatch.com",
     "apiVersion": 1,
-    "fileHash": "sha256-5923151dda327c3990dbb5a20918d0a4dd192b0dc9377b7e6f82159c277c0020"
+    "fileHash": "sha256-a3729290b7d199c71b0555dae2ac3faf9fd965ef1ec7a9d43182bef6d67c8bf0"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/BelgeselX.cs3",
@@ -1146,14 +1146,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SelcukFlix.cs3",
     "status": 1,
-    "version": 19,
+    "version": 20,
     "name": "SelcukFlix",
     "internalName": "SelcukFlix",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Selcukflix'te her türden en yeni ve en popüler dizi ve filmleri izlemenin keyfini çıkarın. Aksiyondan romantiğe, bilim kurgudan dramaya, geniş kütüphanemizde herkes için bir şey var.",
-    "fileSize": 92156,
+    "fileSize": 92155,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1162,7 +1162,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=selcukflix.com",
     "apiVersion": 1,
-    "fileHash": "sha256-15961d3b882a93ad41784eb7f22c61b0cac632921d99ba28e74732ffae80ce08"
+    "fileHash": "sha256-8b1583c982589bc37c990406a4c6408f7f0e71e02db528685c0cbccb6a344ffc"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SetFilmIzle.cs3",
