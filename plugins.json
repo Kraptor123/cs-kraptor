@@ -1440,6 +1440,26 @@
     "fileHash": "sha256-81b7c1eeea9f8aea594bf0014a933b3fadbc39936b994c1d89532636e27f3129"
   },
   {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WFilmizle.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "WFilmizle",
+    "internalName": "WFilmizle",
+    "authors": [
+      "ByAyzen"
+    ],
+    "description": "Yerli ve yabancı film izle, Türkçe dublaj ve altyazı seçenekleriyle en yeni ve unutulmamış olan filmleri Full HD kalitesinde online izleyebilirsiniz.",
+    "fileSize": 24984,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "Movie"
+    ],
+    "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://wfilmizle.bar&size=128",
+    "apiVersion": 1,
+    "fileHash": "sha256-780cf408046182f439e194fbcb490115d267d99f7b80c2ba62b3a492cb99aa39"
+  },
+  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YabanciDizi.cs3",
     "status": 1,
     "version": 13,
