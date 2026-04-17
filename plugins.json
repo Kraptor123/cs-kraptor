@@ -1397,7 +1397,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebDramaTurkey.cs3",
     "status": 1,
-    "version": 28,
+    "version": 29,
     "name": "WebDramaTurkey",
     "internalName": "WebDramaTurkey",
     "authors": [
@@ -1406,7 +1406,7 @@
       "ByAyzen"
     ],
     "description": "Web Drama Turkey - Kore, Çin, Japon Dizileri, Filmleri ve Animeler",
-    "fileSize": 55743,
+    "fileSize": 51254,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1416,7 +1416,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webdramaturkey.org/&size=40",
     "apiVersion": 1,
-    "fileHash": "sha256-a5129698a7cd49335d6bec83ebfee7b62661ab1a67c328a74c1b3d8c017af484"
+    "fileHash": "sha256-b829b0012b309bd10daa3bdacd22eeb2b9b32c360706d4937fe48678ad13a2c5"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebteIzle.cs3",
