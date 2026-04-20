@@ -530,27 +530,6 @@
     "fileHash": "sha256-70fc40acb6226a009e57ec038c1d0a7598f93e28b94d472011781a0ed9d59ffb"
   },
   {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziWatch.cs3",
-    "status": 0,
-    "version": 9,
-    "name": "DiziWatch",
-    "internalName": "DiziWatch",
-    "authors": [
-      "kraptor"
-    ],
-    "description": "Yabancı dizi izle, anime izle, en popüler yabancı dizileri ve animeleri ücretsiz olarak diziwatch.tv'de izleyin.",
-    "fileSize": 26891,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "TvSeries",
-      "Anime"
-    ],
-    "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://diziwatch.tv&size=128",
-    "apiVersion": 1,
-    "fileHash": "sha256-183e66bceb2fb4561006e4327ba3a15e37bf509a25eae913367b45f14d724b66"
-  },
-  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
     "status": 1,
     "version": 61,
@@ -696,27 +675,6 @@
     "fileHash": "sha256-496ae87c70a8f079c5e45dd3f3c2ef3039ab7ee91a2744d14ee34c6764f307b9"
   },
   {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FlixHQ.cs3",
-    "status": 0,
-    "version": 7,
-    "name": "FlixHQ",
-    "internalName": "FlixHQ",
-    "authors": [
-      "kerimmkirac"
-    ],
-    "description": "Watch Free Movies and Series online - Very fast streaming - No Registration Required - Click NOW",
-    "fileSize": 52857,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "en",
-    "tvTypes": [
-      "Movie",
-      "TvSeries"
-    ],
-    "iconUrl": "https://img.flixhq.to/xxrz/400x400/100/ab/5f/ab5f0e1996cc5b71919e10e910ad593e/ab5f0e1996cc5b71919e10e910ad593e.png",
-    "apiVersion": 1,
-    "fileHash": "sha256-1001caf9218cb2a9fa4012216a47d95a7cd616b18a7b1392d75da50a61d5af6f"
-  },
-  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDFilmizlesene.cs3",
     "status": 1,
     "version": 38,
@@ -839,26 +797,6 @@
     "fileHash": "sha256-8420b1e6dac2b45460dd39473c6cc79c62662aa0672cfefcc1b566366c2723a4"
   },
   {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HintDizi.cs3",
-    "status": 0,
-    "version": 12,
-    "name": "HintDizi",
-    "internalName": "HintDizi",
-    "authors": [
-      "kraptor"
-    ],
-    "description": "En sevilen Hint dizileri ve filmleri, güncel içerikler ve arşivlik yapımlar HintDizi.com'da! Dizi arşivimize göz atın ve favori yapımlarınızı kaçırmayın.",
-    "fileSize": 18767,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "AsianDrama"
-    ],
-    "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://hintdizi.com&size=128",
-    "apiVersion": 1,
-    "fileHash": "sha256-17b05d1520478574f694ab15b284efcab6a66d5a202b568dcf9ff15f1ea2909d"
-  },
-  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/InatBox.cs3",
     "status": 2,
     "version": 48,
@@ -902,26 +840,6 @@
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://jetfilmizle.de&size=128",
     "apiVersion": 1,
     "fileHash": "sha256-ac1cb28c9e0478362026fa15ec138736dd16715a24b5af3e5588c7cafd63c396"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KanalD.cs3",
-    "status": 0,
-    "version": 6,
-    "name": "KanalD",
-    "internalName": "KanalD",
-    "authors": [
-      "kraptor"
-    ],
-    "description": "KanalD.",
-    "fileSize": 26236,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "TvSeries"
-    ],
-    "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.kanald.com.tr/&size=128",
-    "apiVersion": 1,
-    "fileHash": "sha256-7b73390ef33fd252e3fbd364d4b64c7e91a7f6695dc4b10399763d542cd1183f"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KickTR.cs3",
@@ -1499,26 +1417,6 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.yenikaynak.com/&size=16",
     "apiVersion": 1,
     "fileHash": "sha256-8e46142fd66138d86b4d39a1b3efb551fad5ad0b8986f5f4ae704bb26330a554"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YeniWatch.cs3",
-    "status": 0,
-    "version": 12,
-    "name": "YeniWatch",
-    "internalName": "YeniWatch",
-    "authors": [
-      "kerimmkirac"
-    ],
-    "description": "Yeni diziwatch yani Yeniwatch. Yabancı dizi izle, anime izle, en popüler yabancı dizileri ve animeleri ücretsiz olarak yeniwatch.net.tr'te izleyin.",
-    "fileSize": 19194,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "Anime"
-    ],
-    "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=yeniwatch.net.tr",
-    "apiVersion": 1,
-    "fileHash": "sha256-94e9ae11e1a11350524d44d5ee78c5a0d7293d8ed59c24dff4092ebf95bba2d3"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YesilCamTv.cs3",
