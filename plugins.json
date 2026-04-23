@@ -496,7 +496,7 @@
       "ByAyzen"
     ],
     "description": "En yeni dizileri güvenli ve hızlı şekilde sunar.",
-    "fileSize": 30092,
+    "fileSize": 29988,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -505,7 +505,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal1206.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-ef2281dd18c8e31d8b226a28201208cf8a99b67e4ed1c31c4c7f381c276bcef1"
+    "fileHash": "sha256-09274cd16bdfd5ecf6eaf37bfe7382d29e6906790712090cd7f1a9179dd4fdbf"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
@@ -738,14 +738,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmCehennemi.cs3",
     "status": 1,
-    "version": 72,
+    "version": 73,
     "name": "HDFilmCehennemi",
     "internalName": "HDFilmCehennemi",
     "authors": [
       "kraptor"
     ],
     "description": "HDFilmCehennemi - Türkiye'nin en hızlı hd film izleme sitesi. Tek ve gerçek HDFilmCehennemi sitesi.",
-    "fileSize": 53298,
+    "fileSize": 53081,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -754,7 +754,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=http://hdfilmcehennemi.nl",
     "apiVersion": 1,
-    "fileHash": "sha256-169075409146f380048804455ebf46e8786b646f0706ef0bb9d7e197fc4ee144"
+    "fileHash": "sha256-934c49ef455e117452ca8116564c579b9c5ee98fdc485aab85d2ced639a7f69c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmDelisi.cs3",
@@ -885,7 +885,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 49,
+    "version": 50,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -894,7 +894,7 @@
       "ByAyzen"
     ],
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
-    "fileSize": 381179,
+    "fileSize": 381678,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -907,7 +907,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-2284634ef8a85690f51bb5a46491c141052cbebe2a6866d884353c3789d59f81"
+    "fileHash": "sha256-4bfe12fc96c857c083caa4aafa303c77dae8c2152ea665258bcb252630f090f8"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
