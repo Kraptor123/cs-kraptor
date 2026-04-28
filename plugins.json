@@ -154,7 +154,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaWatch.cs3",
     "status": 1,
-    "version": 23,
+    "version": 24,
     "name": "AsyaWatch",
     "internalName": "AsyaWatch",
     "authors": [
@@ -169,7 +169,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=asyawatch.com",
     "apiVersion": 1,
-    "fileHash": "sha256-b41b3a1c48a1e9bc893aed339c15e6f6a5c78f07ba884200df98896f77758c7a"
+    "fileHash": "sha256-cc9e66c12fe41987b14d62feafd9cc63fef66fbd714e8b0de9825cc78170b56c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/BelgeselX.cs3",
@@ -367,7 +367,7 @@
       "kerimmkirac"
     ],
     "description": "Türkçe altyazılı yabancı dizi izle, Tüm yabancı, kore, netflix dizilerin yeni ve eski sezonlarını orijinal dilinde dizigom1 alt yazılı film izleyebilir, sadece türkçe altyazılı en iyi yabancı diziler ve filmler hakkında yorum yapabilirsiniz.",
-    "fileSize": 51554,
+    "fileSize": 51524,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -377,7 +377,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=dizigom1.co",
     "apiVersion": 1,
-    "fileHash": "sha256-0b02eb0c2317c8afa816da623704671de230106a700f076c1e86cc735c9cd261"
+    "fileHash": "sha256-401d0ebaaa53825a0ce49298fa906e020f2703b8e9380e26ffa8f4b896d6bd8e"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziKorea.cs3",
