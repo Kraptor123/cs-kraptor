@@ -823,7 +823,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/JetFilmizle.cs3",
     "status": 1,
-    "version": 54,
+    "version": 55,
     "name": "JetFilmizle",
     "internalName": "JetFilmizle",
     "authors": [
@@ -831,7 +831,7 @@
       "ByAyzen"
     ],
     "description": "Binlerce Film İzleme Seçeneğiyle En İyi Film İzleme Sitesi",
-    "fileSize": 54930,
+    "fileSize": 54654,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -839,7 +839,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://jetfilmizle.de&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-b01f679a3a628b5f2a15d265e0e0db29c4061a0b1b48877571d3b8119d0c5508"
+    "fileHash": "sha256-3810e49453ee2fc47b55f45a39894feb21c792b115823203620c6e80bcab761a"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KickTR.cs3",
