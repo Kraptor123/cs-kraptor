@@ -1212,7 +1212,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TurkAnime.cs3",
     "status": 1,
-    "version": 24,
+    "version": 25,
     "name": "TurkAnime",
     "internalName": "TurkAnime",
     "authors": [
@@ -1220,7 +1220,7 @@
       "ByAyzen"
     ],
     "description": "Türk Anime TV - Türkiye'nin Online Anime izleme sitesi.",
-    "fileSize": 48858,
+    "fileSize": 49671,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1229,7 +1229,7 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.turkanime.co&size=64",
     "apiVersion": 1,
-    "fileHash": "sha256-9d8c445727a3556a78c1d9d8aed6ea02a87c134ce7bdcb7f798bf3f10e57ddea"
+    "fileHash": "sha256-1947a18574cd210d803444f3a600d02cb88f657e3dc892d420a03f9f2c22ede2"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Turkdizileri.cs3",
