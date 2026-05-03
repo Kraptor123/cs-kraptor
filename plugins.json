@@ -403,7 +403,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziLife.cs3",
     "status": 1,
-    "version": 35,
+    "version": 36,
     "name": "DiziLife",
     "internalName": "DiziLife",
     "authors": [
@@ -411,7 +411,7 @@
       "kraptor"
     ],
     "description": "Dizilife yabancı dizi ve film izlemek için tasarlanmış bir platformdur. Tüm dünyadan yerli/yabancı bütün dizileri ve filmleri ücretsiz ve donmadan izleyebilirsiniz.",
-    "fileSize": 52321,
+    "fileSize": 52568,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -420,7 +420,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=dizi18.life",
     "apiVersion": 1,
-    "fileHash": "sha256-2039788aa397256cf36acbc536e76a4135e47cf8b0bd02c0b94137b52e298c17"
+    "fileHash": "sha256-ac0dea041c7bc1213269725275ba8d7304a0db77678dc6c2066dd3aeb81bdc36"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizilla.cs3",
@@ -434,7 +434,7 @@
       "keyiflerolsun"
     ],
     "description": "1080p yabancı dizi izle. Türkçe altyazılı veya dublaj seçenekleriyle 1080p çözünürlükte yabancı dizilere anında ulaş. Popüler dizileri kesintisiz izle.",
-    "fileSize": 108827,
+    "fileSize": 109286,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -442,7 +442,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=https://dizilla.to",
     "apiVersion": 1,
-    "fileHash": "sha256-b4bc83eac50b62eb703e5a6c0562cfe50512de0aa6047e508eac419f593d40f4"
+    "fileHash": "sha256-50b3ab223a37c39870bf1fe5fdae8a9426d5ad73c53c4adca21b69c7084a2db6"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMag.cs3",
@@ -1043,7 +1043,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
     "status": 1,
-    "version": 13,
+    "version": 14,
     "name": "SeiCode",
     "internalName": "SeiCode",
     "authors": [
@@ -1051,7 +1051,7 @@
       "kerimmkirac"
     ],
     "description": "Seicode ile en yeni animeler keşfedin!",
-    "fileSize": 36550,
+    "fileSize": 36570,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1059,7 +1059,7 @@
     ],
     "iconUrl": "https://seicode.net/favicon.png",
     "apiVersion": 1,
-    "fileHash": "sha256-c4f07bcc9d78c02842f8969a52f3b3823d599f34e9bcbd67941ba39b28c75447"
+    "fileHash": "sha256-3cec8e4105e6028aefabd80413e5cebcb00282d526acba90e505b83db931befd"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SelcukFlix.cs3",
