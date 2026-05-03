@@ -594,13 +594,13 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmHane.cs3",
     "status": 1,
-    "version": 29,
+    "version": 30,
     "name": "FilmHane",
     "internalName": "FilmHane",
     "authors": [
       "kraptor"
     ],
-    "fileSize": 22947,
+    "fileSize": 25479,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -608,7 +608,7 @@
     ],
     "iconUrl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRbK_Pe3vpG-yUVt1NvckDpaD6COLDitImrBUnHfAVA4fawhijE",
     "apiVersion": 1,
-    "fileHash": "sha256-5bbe1f6de78d456efc74fc36d6fcf34f35c98af06d24e1e41d336ba816c6e4ea"
+    "fileHash": "sha256-6f5e2f64034b6a727678ddab7247515ff0e703af5b96085fabb36fb7de87f022"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmMakinesi.cs3",
