@@ -411,7 +411,7 @@
       "kraptor"
     ],
     "description": "Dizilife yabancı dizi ve film izlemek için tasarlanmış bir platformdur. Tüm dünyadan yerli/yabancı bütün dizileri ve filmleri ücretsiz ve donmadan izleyebilirsiniz.",
-    "fileSize": 55112,
+    "fileSize": 55107,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -420,7 +420,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=dizi18.life",
     "apiVersion": 1,
-    "fileHash": "sha256-06a3d8bbe8c6a32e8bb4b7fffbd034cbb279ee333356ef359d8e0ab3224307b5"
+    "fileHash": "sha256-c250dabe0643c65101183f3ff68403cde2f258901b6a9832b8578a9060f3d65c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizilla.cs3",
@@ -594,13 +594,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmHane.cs3",
     "status": 1,
-    "version": 30,
+    "version": 31,
     "name": "FilmHane",
     "internalName": "FilmHane",
     "authors": [
-      "kraptor"
+      "kraptor",
+      "ByAyzen"
     ],
-    "fileSize": 25479,
+    "fileSize": 46869,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -608,7 +609,7 @@
     ],
     "iconUrl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRbK_Pe3vpG-yUVt1NvckDpaD6COLDitImrBUnHfAVA4fawhijE",
     "apiVersion": 1,
-    "fileHash": "sha256-6f5e2f64034b6a727678ddab7247515ff0e703af5b96085fabb36fb7de87f022"
+    "fileHash": "sha256-29056bc4f31dda5cace6f0e7105fc5b87dc0be8cacccdfcbdb8efa3d70e6ed58"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmMakinesi.cs3",
