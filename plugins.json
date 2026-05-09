@@ -359,7 +359,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziGom.cs3",
     "status": 1,
-    "version": 35,
+    "version": 36,
     "name": "DiziGom",
     "internalName": "DiziGom",
     "authors": [
@@ -367,7 +367,7 @@
       "kerimmkirac"
     ],
     "description": "Türkçe altyazılı yabancı dizi izle, Tüm yabancı, kore, netflix dizilerin yeni ve eski sezonlarını orijinal dilinde dizigom1 alt yazılı film izleyebilir, sadece türkçe altyazılı en iyi yabancı diziler ve filmler hakkında yorum yapabilirsiniz.",
-    "fileSize": 55640,
+    "fileSize": 54127,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -377,7 +377,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=dizigom1.co",
     "apiVersion": 1,
-    "fileHash": "sha256-cea752ee685ca6feb1054a75a74ad64d717b0f862984a3d723a45cf5dc56c481"
+    "fileHash": "sha256-60f748f2ee742fc8849962d76b3f3a06f5769290e7bdac97c3b702d65f774ce5"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziKorea.cs3",
