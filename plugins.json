@@ -316,7 +316,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziBox.cs3",
     "status": 1,
-    "version": 28,
+    "version": 29,
     "name": "DiziBox",
     "internalName": "DiziBox",
     "authors": [
@@ -325,7 +325,7 @@
       "ByAyzen"
     ],
     "description": "Yabancı Dizi izle, Tüm yabancı dizilerin yeni ve eski sezonlarını full hd izleyebileceğiniz elit site.",
-    "fileSize": 32330,
+    "fileSize": 33064,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -333,7 +333,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.dizibox.de&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-f64e0c8ca1d50d9bdf2860dddc8a972f6d03c0cbaee1af928a4f208fc65ffb2c"
+    "fileHash": "sha256-33467eff8b60992c264fb71016dd246dabbd93e9fbc2c43d3c65e0eb48f1c54e"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziFilmORG.cs3",
