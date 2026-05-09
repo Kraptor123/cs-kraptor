@@ -316,7 +316,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziBox.cs3",
     "status": 1,
-    "version": 27,
+    "version": 28,
     "name": "DiziBox",
     "internalName": "DiziBox",
     "authors": [
@@ -325,7 +325,7 @@
       "ByAyzen"
     ],
     "description": "Yabancı Dizi izle, Tüm yabancı dizilerin yeni ve eski sezonlarını full hd izleyebileceğiniz elit site.",
-    "fileSize": 32337,
+    "fileSize": 32330,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -333,7 +333,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.dizibox.de&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-20b0c25faafe12d799f5c998b57408d2f65e67b05e0b56d08ed70c65efcbeb71"
+    "fileHash": "sha256-f64e0c8ca1d50d9bdf2860dddc8a972f6d03c0cbaee1af928a4f208fc65ffb2c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziFilmORG.cs3",
@@ -447,14 +447,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMag.cs3",
     "status": 1,
-    "version": 44,
+    "version": 45,
     "name": "DiziMag",
     "internalName": "DiziMag",
     "authors": [
       "nikyokki"
     ],
     "description": "En son çıkan yabancı dizi ve filmleri DiziMag farkıyla full hd 1080p kalitede izle. Dizimag Geniş ve güncel arşiviyle dizi ve filmlerin tadını çıkartın.",
-    "fileSize": 36068,
+    "fileSize": 36070,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -462,12 +462,12 @@
     ],
     "iconUrl": "https://dizimag.mom/uploads/logo/original/logo-5063.webp",
     "apiVersion": 1,
-    "fileHash": "sha256-c1a5145d63a5c99e3ab53fc2f3e9d0bd1b7396ff0ffd4df1215f609355069068"
+    "fileHash": "sha256-6ba0639f7d60452df7dfdac1b5b414d550c30d75340facbc56cc3dd8cd8718f9"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMom.cs3",
     "status": 1,
-    "version": 50,
+    "version": 51,
     "name": "DiziMom",
     "internalName": "DiziMom",
     "authors": [
@@ -475,7 +475,7 @@
       "keyiflerolsun"
     ],
     "description": "Binlerce yerli yabancı dizi arşivi, tüm sezonlar, kesintisiz bölümler. Sadece dizi izle, Dizimom heryerde seninle!",
-    "fileSize": 43098,
+    "fileSize": 43165,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -483,12 +483,12 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.dizimom.mom&size=32",
     "apiVersion": 1,
-    "fileHash": "sha256-37a9c688cd143ae2459b0f86ba13bedae026e4851113d1e57bc04395b8ff7a76"
+    "fileHash": "sha256-caf2b6b21ed0fc8fc01f73b092b228a6fbfb0daa61d1a109751de98a43152f43"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPal.cs3",
     "status": 1,
-    "version": 73,
+    "version": 74,
     "name": "DiziPal",
     "internalName": "DiziPal",
     "authors": [
@@ -496,7 +496,7 @@
       "ByAyzen"
     ],
     "description": "En yeni dizileri güvenli ve hızlı şekilde sunar.",
-    "fileSize": 31381,
+    "fileSize": 31541,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -505,7 +505,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal1206.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-bd1bb8597e5074e4e12a4cd07dc347ab60fead6efb01f2a70bfa7e5322f83b15"
+    "fileHash": "sha256-e929be3ebda9aaa31e9f5d00b7bf53208a85c761cc65b5fb6036fd748f0c0bfb"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
@@ -532,7 +532,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
     "status": 1,
-    "version": 63,
+    "version": 64,
     "name": "DiziYo",
     "internalName": "DiziYo",
     "authors": [
@@ -540,7 +540,7 @@
       "ByAyzen"
     ],
     "description": "Diziyo ile Yabancı Dizi, Film, Anime, Çizgi-Film izle.",
-    "fileSize": 24096,
+    "fileSize": 23904,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -548,19 +548,19 @@
     ],
     "iconUrl": "https://i.imgur.com/zQYsL6Z.png",
     "apiVersion": 1,
-    "fileHash": "sha256-8579d2bc08b6f73c1ae64788f66e695a35a4846c90d431a536044b033145394f"
+    "fileHash": "sha256-67e85ffe42b79e943acc21c3ee3233e07ce3d1f8ea948f0209a2325ac5af1de1"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYou.cs3",
     "status": 1,
-    "version": 40,
+    "version": 41,
     "name": "DiziYou",
     "internalName": "DiziYou",
     "authors": [
       "keyiflerolsun"
     ],
     "description": "Diziyou en kaliteli Türkçe dublaj ve altyazılı yabancı dizi izleme sitesidir. Güncel ve efsanevi dizileri 1080p Full HD kalitede izlemek için hemen tıkla!",
-    "fileSize": 20327,
+    "fileSize": 20372,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -568,7 +568,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.diziyou.co",
     "apiVersion": 1,
-    "fileHash": "sha256-4f7f8a1969eccd2a521152d16fe0d128c12dd6ba276a18ce2ced5ce6161a47de"
+    "fileHash": "sha256-76d47ac33185466492901052ef12f878d0e7b9557a29bba183d6e60642e897c4"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmEkseni.cs3",
