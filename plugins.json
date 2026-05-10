@@ -193,26 +193,6 @@
     "fileHash": "sha256-2a57bab33a24ccdb547483c8824dd58f7d238293fec0370e9150099afc0bdbbf"
   },
   {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/BirAsyaDizi.cs3",
-    "status": 0,
-    "version": 15,
-    "name": "BirAsyaDizi",
-    "internalName": "BirAsyaDizi",
-    "authors": [
-      "kraptor"
-    ],
-    "description": "Asya'nın En Ünlü Dizilerini en yüksek çözünürlükte HD ve kesintisiz izleyin, kaliteli Asya film ve dizilerinin keyfini sürün.",
-    "fileSize": 17253,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "AsianDrama"
-    ],
-    "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.birasyadizi.com/&size=16",
-    "apiVersion": 1,
-    "fileHash": "sha256-f87355e1176e1c992a9e0cea640e4ac0fab2de00d9298b7ab22a06744594b4da"
-  },
-  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiMax.cs3",
     "status": 1,
     "version": 24,
@@ -695,26 +675,6 @@
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.fullhdfilmizlesene.de",
     "apiVersion": 1,
     "fileHash": "sha256-a59928b4c73320e7616bdfa0cc393f2dc6c10df6a8060c5e0b6004dcc6438456"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDIzle.cs3",
-    "status": 0,
-    "version": 12,
-    "name": "FullHDIzle",
-    "internalName": "FullHDIzle",
-    "authors": [
-      "kraptor"
-    ],
-    "description": "Film izle online platformunda, Full hd film izleme ayrıcalığını yaşayın. Türkçe Dublaj ve altyazılı filmleri kayıt derdi olmadan 720p veya 1080p izleyin.",
-    "fileSize": 18433,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "Movie"
-    ],
-    "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://fullhdizle.one/&size=48",
-    "apiVersion": 1,
-    "fileHash": "sha256-729e92e359aca2e7cdd1eb9031d1994443f0c2287922780218c9e29f37a48822"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/GinikoCanli.cs3",
@@ -1292,26 +1252,6 @@
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ugurfilm3.xyz/&size=128",
     "apiVersion": 1,
     "fileHash": "sha256-3d511dee81a0e07eca34f6e51a8c912b49b51da97a9da6640eff6c7a2f1656a4"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Watch2Movies.cs3",
-    "status": 0,
-    "version": 7,
-    "name": "Watch2Movies",
-    "internalName": "Watch2Movies",
-    "authors": [
-      "kraptor"
-    ],
-    "description": "Watch2Movies is a Free Movies streaming site with zero ads. We let you watch movies online without having to register or paying, with over 10000 movies and TV-Series. You can also Download full movies from Watch2Movies and watch it later if you want.",
-    "fileSize": 42606,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "en",
-    "tvTypes": [
-      "Movie"
-    ],
-    "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://watch2movies.net/&size=128",
-    "apiVersion": 1,
-    "fileHash": "sha256-1ec3dd414269c8d261f64caeeb428b3c924c20b1c8370d3443964b240955f315"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebDramaTurkey.cs3",
