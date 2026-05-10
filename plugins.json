@@ -243,7 +243,7 @@
       "kraptor"
     ],
     "description": "Ücretsiz bir şekilde çizgi dizi, dizi, anime ve daha fazlasını eski-yeni demeden izleyebilirsiniz.",
-    "fileSize": 35887,
+    "fileSize": 35888,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -251,7 +251,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=cizgivedizi.com",
     "apiVersion": 1,
-    "fileHash": "sha256-fab28d4c04cb8e2d35b6b4fc4c75609f6758f478dccebd663f68b6acbad3d373"
+    "fileHash": "sha256-c5492ffff6ee24bdcbc688bd17135082a0e5368182e62e9740b5ef23566b02e7"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Ddizi.cs3",
