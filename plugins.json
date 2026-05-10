@@ -236,14 +236,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiveDizi.cs3",
     "status": 1,
-    "version": 34,
+    "version": 35,
     "name": "CizgiveDizi",
     "internalName": "CizgiveDizi",
     "authors": [
       "kraptor"
     ],
     "description": "Ücretsiz bir şekilde çizgi dizi, dizi, anime ve daha fazlasını eski-yeni demeden izleyebilirsiniz.",
-    "fileSize": 43466,
+    "fileSize": 35883,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -251,7 +251,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=cizgivedizi.com",
     "apiVersion": 1,
-    "fileHash": "sha256-8164bf1007d77b48f00f87297c1cd1c0db094ae74e7a4dfdc32df9a19b115985"
+    "fileHash": "sha256-cbb8b44e3c35240399b2b11c68ca7b478c27a514bb5506e04f455d619fa82583"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Ddizi.cs3",
