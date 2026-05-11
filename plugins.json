@@ -71,7 +71,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizium.cs3",
     "status": 1,
-    "version": 12,
+    "version": 13,
     "name": "Anizium",
     "internalName": "Anizium",
     "authors": [
@@ -79,7 +79,7 @@
       "ByAyzen"
     ],
     "description": "Anizium ile dünyada ilk ve tek 4K Türkçe dublaj platformunda anime keyfini yaşa. En yeni animeleri İngilizce altyazı ve dublaj seçenekleriyle 1080p ve 4K kalitesinde HD izle.",
-    "fileSize": 64070,
+    "fileSize": 65099,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -88,7 +88,7 @@
     ],
     "iconUrl": "https://anizium.co/assets/images/logo.png",
     "apiVersion": 1,
-    "fileHash": "sha256-c3ebc4f1e13f9e94b3b5d5ee3da5f6cf37e75eec733002db11bc6637b29060e3"
+    "fileHash": "sha256-8964a05e5b7a072ec59858bcd9c9a199f80df0f2cfd27dc7492f27fc59396446"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaAnimeleri.cs3",
@@ -414,7 +414,7 @@
       "keyiflerolsun"
     ],
     "description": "1080p yabancı dizi izle. Türkçe altyazılı veya dublaj seçenekleriyle 1080p çözünürlükte yabancı dizilere anında ulaş. Popüler dizileri kesintisiz izle.",
-    "fileSize": 120142,
+    "fileSize": 120200,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -422,7 +422,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=https://dizilla.to",
     "apiVersion": 1,
-    "fileHash": "sha256-694a81669a80329b7cc82b15ef2495facad68091794e75cdba1042dc327fbabb"
+    "fileHash": "sha256-7586f88bdba030d0aeb08f71fafef3d7931d88b2df4913d8db5cf37e90a9e412"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMag.cs3",
@@ -706,7 +706,7 @@
       "kraptor"
     ],
     "description": "HDFilmCehennemi - Türkiye'nin en hızlı hd film izleme sitesi. Tek ve gerçek HDFilmCehennemi sitesi.",
-    "fileSize": 61921,
+    "fileSize": 62081,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -715,7 +715,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=http://hdfilmcehennemi.nl",
     "apiVersion": 1,
-    "fileHash": "sha256-d771bf177fc7b2e247b2bb72d7b3558e1e0575b750f9dae4be3bfae50048d2b3"
+    "fileHash": "sha256-326fc990d3eb48dbec3b1686de3642227f14484b051f24cb4844b0e594c0d022"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmDelisi.cs3",
