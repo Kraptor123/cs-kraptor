@@ -553,7 +553,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmEkseni.cs3",
     "status": 1,
-    "version": 34,
+    "version": 36,
     "name": "FilmEkseni",
     "internalName": "FilmEkseni",
     "authors": [
@@ -561,7 +561,7 @@
       "ByAyzen"
     ],
     "description": "Film Ekseni ⚡ Vizyonda ki, en güncel ve en yeni filmleri full hd kalitesinde türkçe dublaj ve altyazı seçenekleriyle 1080p olarak izleyebileceğiniz adresiniz.",
-    "fileSize": 27646,
+    "fileSize": 54007,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -569,7 +569,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmekseni.net/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-6ced008ebf1c15798bd8bd9c074731ff851f46e57b414ca70dd56d81b862c11b"
+    "fileHash": "sha256-43429d501907ac35fcdefd6797bd98263a6bad567583e3db4f86238b1a75e756"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmHane.cs3",
