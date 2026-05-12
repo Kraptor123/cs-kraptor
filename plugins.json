@@ -25,7 +25,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animeler.cs3",
     "status": 1,
-    "version": 33,
+    "version": 34,
     "name": "Animeler",
     "internalName": "Animeler",
     "authors": [
@@ -34,7 +34,7 @@
       "kerimmkirac"
     ],
     "description": "HD kalitesinde ücretsiz anime izle! Animeler.me, en yeni ve popüler anime serilerini Türkçe altyazılı ve dublajlı olarak sunar. Favori animelerini hemen keşfet!",
-    "fileSize": 45592,
+    "fileSize": 45653,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -42,7 +42,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://animeler.pw/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-6742a614fbc691248fc4e83a6fcfd0e376be9d2877e484a0a551dd605aacf905"
+    "fileHash": "sha256-2b9747b664d0d8dac669f395bd094d17d71fd1ff45860b768eed319cb8500e67"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animely.cs3",
