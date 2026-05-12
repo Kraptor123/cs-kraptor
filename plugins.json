@@ -821,8 +821,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KoreanTurk.cs3",
-    "status": 1,
-    "version": 16,
+    "status": 0,
+    "version": 17,
     "name": "KoreanTurk",
     "internalName": "KoreanTurk",
     "authors": [
@@ -837,7 +837,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.koreanturk.com",
     "apiVersion": 1,
-    "fileHash": "sha256-4b5f0718e5fa97897319f31f8e5d0b75a9b6587c2c9f81872e5548176ea826b0"
+    "fileHash": "sha256-f7cef96500e3bca045e46f43cf7336a99b5b27daa3646e5a9dba42c4320de4ca"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
