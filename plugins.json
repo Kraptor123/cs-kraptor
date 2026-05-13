@@ -1355,8 +1355,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YesilCamTv.cs3",
-    "status": 1,
-    "version": 6,
+    "status": 0,
+    "version": 7,
     "name": "YesilCamTv",
     "internalName": "YesilCamTv",
     "authors": [
@@ -1371,7 +1371,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://yesilcamtv.com.tr&size=64",
     "apiVersion": 1,
-    "fileHash": "sha256-006c6acac8398a5a073a544ad793ddfceef23d912876b8bf41aab27ff140dc01"
+    "fileHash": "sha256-dd261475364a8cf026dc809fc533417cd1ca6e60b5b8ee11adc2ad10783c149c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Youtube.cs3",
