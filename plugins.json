@@ -70,7 +70,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizium.cs3",
     "status": 1,
-    "version": 15,
+    "version": 16,
     "name": "Anizium",
     "internalName": "Anizium",
     "authors": [
@@ -78,7 +78,7 @@
       "ByAyzen"
     ],
     "description": "Anizium ile dünyada ilk ve tek 4K Türkçe dublaj platformunda anime keyfini yaşa. En yeni animeleri İngilizce altyazı ve dublaj seçenekleriyle 1080p ve 4K kalitesinde HD izle.",
-    "fileSize": 66574,
+    "fileSize": 67936,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -87,7 +87,7 @@
     ],
     "iconUrl": "https://anizium.co/assets/images/logo.png",
     "apiVersion": 1,
-    "fileHash": "sha256-d590a30e104ca0d97497e9c1cbe9aca2c628812a25c9c759071ce424a19484cd"
+    "fileHash": "sha256-f4cd7b07aae796729995689dd8b08af510a49c0f6bcea62e6507b80ceec0e712"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaAnimeleri.cs3",
