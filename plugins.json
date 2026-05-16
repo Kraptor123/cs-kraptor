@@ -337,8 +337,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziGom.cs3",
-    "status": 1,
-    "version": 41,
+    "status": 0,
+    "version": 42,
     "name": "DiziGom",
     "internalName": "DiziGom",
     "authors": [
@@ -356,7 +356,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=dizigom1.co",
     "apiVersion": 1,
-    "fileHash": "sha256-29441c44e3c9e0b89a7d25f3397b7dee9a403b11d8d0ff55587e29bd06446732"
+    "fileHash": "sha256-5ea031f18c4a1699fa3b89a7ecce7871ee34cab50d4bfaf95da904555bc0cc64"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziKorea.cs3",
