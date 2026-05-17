@@ -425,14 +425,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMag.cs3",
     "status": 1,
-    "version": 45,
+    "version": 46,
     "name": "DiziMag",
     "internalName": "DiziMag",
     "authors": [
       "nikyokki"
     ],
     "description": "En son çıkan yabancı dizi ve filmleri DiziMag farkıyla full hd 1080p kalitede izle. Dizimag Geniş ve güncel arşiviyle dizi ve filmlerin tadını çıkartın.",
-    "fileSize": 35998,
+    "fileSize": 36420,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -440,7 +440,7 @@
     ],
     "iconUrl": "https://dizimag.mom/uploads/logo/original/logo-5063.webp",
     "apiVersion": 1,
-    "fileHash": "sha256-fb15588cffe545657d5ed564209e8d07802e1374c357644758e81e1281a49f1d"
+    "fileHash": "sha256-24e96097fd3e62111c266275e2d146bb8b91438435102a1884e0240a8a9131bd"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMom.cs3",
@@ -1104,7 +1104,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SineWix.cs3",
     "status": 1,
-    "version": 23,
+    "version": 24,
     "name": "SineWix",
     "internalName": "SineWix",
     "authors": [
@@ -1112,7 +1112,7 @@
       "ByAyzen"
     ],
     "description": "SineWix - Ücretsiz Film, Dizi ve Anime İzleme Uygulaması 5000+ HD İçerik, Türkçe Altyazılı, Otaku Dostu Anime Arşivi, Premium Kalite Yabancı Yapımlar",
-    "fileSize": 67528,
+    "fileSize": 67666,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1124,7 +1124,7 @@
     ],
     "iconUrl": "https://play-lh.googleusercontent.com/brwGNmr7IjA_MKk_TTPs0va10hdKE_bD_a1lnKoiMuCayW98EHpRv55edA6aEoJlmwfX=w240-h480",
     "apiVersion": 1,
-    "fileHash": "sha256-bfcdbd4015e5febcf63e7f08785b562275b5c2ade64f6de78fde97a82d85ad56"
+    "fileHash": "sha256-61806a3e3018122c6ecb1ac8fcb4b950a4e8c0082fc06d5f117706bc33a3e6b7"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Sinezy.cs3",
