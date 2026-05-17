@@ -695,7 +695,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmCehennemi.cs3",
     "status": 1,
-    "version": 79,
+    "version": 80,
     "name": "HDFilmCehennemi",
     "internalName": "HDFilmCehennemi",
     "authors": [
@@ -711,7 +711,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=http://hdfilmcehennemi.nl",
     "apiVersion": 1,
-    "fileHash": "sha256-2e2f278e7671f4daf513462b1f491e3210057e3e50dc471feb368f2a8f904d93"
+    "fileHash": "sha256-303a4c158ad64ad94e4a2891bf20ebacf9e3ab5d90a37fcc71f8f3b4dcf63fa6"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmDelisi.cs3",
