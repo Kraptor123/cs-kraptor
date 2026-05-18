@@ -390,7 +390,7 @@
       "kraptor"
     ],
     "description": "Dizilife yabancı dizi ve film izlemek için tasarlanmış bir platformdur. Tüm dünyadan yerli/yabancı bütün dizileri ve filmleri ücretsiz ve donmadan izleyebilirsiniz.",
-    "fileSize": 67333,
+    "fileSize": 72250,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -399,7 +399,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=dizi18.life",
     "apiVersion": 1,
-    "fileHash": "sha256-9889b693bf4d2649e2db6957108171a10d04ac90095ca3d9bd95c403640df3e7"
+    "fileHash": "sha256-d3fca321f89539983f6da87a513e1102633debd2565e569f2bae9052dcc693b1"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizilla.cs3",
