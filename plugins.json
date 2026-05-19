@@ -336,29 +336,6 @@
     "fileHash": "sha256-24ab088bb9a420250cd0e1c4640e4943d245c28e2bf0c6fa28c136fa6927f11b"
   },
   {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziGom.cs3",
-    "status": 0,
-    "version": 42,
-    "name": "DiziGom",
-    "internalName": "DiziGom",
-    "authors": [
-      "kraptor",
-      "kerimmkirac"
-    ],
-    "description": "Türkçe altyazılı yabancı dizi izle, Tüm yabancı, kore, netflix dizilerin yeni ve eski sezonlarını orijinal dilinde dizigom1 alt yazılı film izleyebilir, sadece türkçe altyazılı en iyi yabancı diziler ve filmler hakkında yorum yapabilirsiniz.",
-    "fileSize": 60227,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "Movie",
-      "TvSeries",
-      "AsianDrama"
-    ],
-    "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=dizigom1.co",
-    "apiVersion": 1,
-    "fileHash": "sha256-f279e58b9c66f82f73ebc3b348a7f057d20cdce3b22febd66aad977f10692c07"
-  },
-  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziKorea.cs3",
     "status": 1,
     "version": 25,
@@ -505,6 +482,30 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal932.com&size=128",
     "apiVersion": 1,
     "fileHash": "sha256-fc8352df672c8e72ced1d7dd3b45d366e45a85dd8b1b8e2cd474eaf25d0f880e"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizipod.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "Dizipod",
+    "internalName": "Dizipod",
+    "authors": [
+      "kraptor",
+      "ByAyzen ",
+      "kerimmkirac"
+    ],
+    "description": "Güncel diziler, son eklenen yabancı dizileri bu sayfadan takip edebilirsiniz. Son eklenen yabancı dizileri donmadan izlemek için bizi takip etmeye devam edin.",
+    "fileSize": 68288,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "Movie",
+      "TvSeries",
+      "AsianDrama"
+    ],
+    "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipod.com&size=128",
+    "apiVersion": 1,
+    "fileHash": "sha256-e3b2b9ae80a2d0110c7a171a18ce63967cd092e1f0b92457ba66a67e8cd00220"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
