@@ -975,8 +975,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RecTV.cs3",
-    "status": 0,
-    "version": 21,
+    "status": 1,
+    "version": 22,
     "name": "RecTV",
     "internalName": "RecTV",
     "authors": [
@@ -995,7 +995,7 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://rectvapk.cc&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-ef68c18f05e99f639478fb4e1c4057990e17c3ea2cf14b856533fb153ba2c1ac"
+    "fileHash": "sha256-7d9495e5d5ac461f071060b20d244a423c00bd743f7353594ce799d31318e78f"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
