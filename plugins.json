@@ -401,8 +401,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMag.cs3",
-    "status": 1,
-    "version": 46,
+    "status": 0,
+    "version": 47,
     "name": "DiziMag",
     "internalName": "DiziMag",
     "authors": [
@@ -417,7 +417,7 @@
     ],
     "iconUrl": "https://dizimag.mom/uploads/logo/original/logo-5063.webp",
     "apiVersion": 1,
-    "fileHash": "sha256-1b45c863956ede3cf1896ea655d1cbbbdb0a2924925c49f891c7269e3a1f784f"
+    "fileHash": "sha256-8f8868521bb7fecf052a9b6feae1e1eca96c550bd37d990c5a2539bcc8c0a06c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMom.cs3",
