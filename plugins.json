@@ -614,15 +614,15 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmModu.cs3",
-    "status": 0,
-    "version": 32,
+    "status": 1,
+    "version": 33,
     "name": "FilmModu",
     "internalName": "FilmModu",
     "authors": [
       "kraptor"
     ],
     "description": "Film modun geldiyse yüksek kalitede en yeni filmleri izle, 1080p izleyebileceğiniz reklamsiz film sitesi.",
-    "fileSize": 21827,
+    "fileSize": 21826,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -630,7 +630,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.filmmodu.one/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-0f3848987096fb0cc83fb4e83c8290cbce2d6c6091aa163d85b9b0ae5999a7e7"
+    "fileHash": "sha256-1ea60714a878de5fe45c9db6f98b48d200afe7ef1b266bf4d5b3ff40755b4aad"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Filmzal.cs3",
