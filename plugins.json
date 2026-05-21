@@ -592,7 +592,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmMakinesi.cs3",
     "status": 1,
-    "version": 61,
+    "version": 62,
     "name": "FilmMakinesi",
     "internalName": "FilmMakinesi",
     "authors": [
@@ -601,7 +601,7 @@
       "nikyokki"
     ],
     "description": "Film Makinesi, en yeni ve en güncel filmleri sitemizde full HD kalite farkı ile izleyebilirsiniz. HD film izle denildiğinde akla gelen en kaliteli film izleme sitesi.",
-    "fileSize": 74251,
+    "fileSize": 73076,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -610,7 +610,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmmakinesi.tv&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-f0cde2938fb265cd5b32f69387e011368f20413a832e8573eda09e021d60f24d"
+    "fileHash": "sha256-3276a94e4e689bda90e4712918dfee60f83e692b73b6a28f30eb331d6aee19f0"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmModu.cs3",
@@ -696,14 +696,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmCehennemi.cs3",
     "status": 1,
-    "version": 81,
+    "version": 82,
     "name": "HDFilmCehennemi",
     "internalName": "HDFilmCehennemi",
     "authors": [
       "kraptor"
     ],
     "description": "HDFilmCehennemi - Türkiye'nin en hızlı hd film izleme sitesi. Tek ve gerçek HDFilmCehennemi sitesi.",
-    "fileSize": 64838,
+    "fileSize": 64281,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -712,7 +712,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=http://hdfilmcehennemi.nl",
     "apiVersion": 1,
-    "fileHash": "sha256-f74ebf61014b2ad3f14388778841d8133584492ea6327a530eb62abe1a488b45"
+    "fileHash": "sha256-b1ca576f8b5566cee92d0db30aa3c5701f6e45361ef1b4689a52dba7274bcbe1"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmDelisi.cs3",
