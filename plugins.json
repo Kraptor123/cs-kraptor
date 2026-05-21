@@ -1192,14 +1192,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Turkdizileri.cs3",
     "status": 1,
-    "version": 18,
+    "version": 19,
     "name": "Turkdizileri",
     "internalName": "Turkdizileri",
     "authors": [
       "ByAyzen"
     ],
     "description": "TRT1, Showtv, Kanal D ve daha fazla site tek bir eklentide birleşiyor.",
-    "fileSize": 155939,
+    "fileSize": 159025,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1207,7 +1207,7 @@
     ],
     "iconUrl": "https://i.imgur.com/Cff8v6J.png",
     "apiVersion": 1,
-    "fileHash": "sha256-77fe9d216e307009dd57f1209a81ce663d631bf7ac2ab6ba34f49b18cf2fecec"
+    "fileHash": "sha256-3388b1b6e19e682f8e1b20de54e332ad64fa0d0272a436f1ae7502cbd210ccc8"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TvDiziler.cs3",
