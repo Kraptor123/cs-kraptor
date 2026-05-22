@@ -2,7 +2,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeciX.cs3",
     "status": 1,
-    "version": 64,
+    "version": 65,
     "name": "AnimeciX",
     "internalName": "AnimeciX",
     "authors": [
@@ -12,7 +12,7 @@
       "JustRelaxable"
     ],
     "description": "AnimeciX, animeleri keşfedebileceğiniz ve animeler hakkında her şeyi öğrenebileceğiniz bir paylaşım platformudur.",
-    "fileSize": 145553,
+    "fileSize": 146760,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -20,7 +20,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://animecix.net&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-6608296c5811a99d02518b8958dac94d5896731d8bf6623eab56f1f340c89c0b"
+    "fileHash": "sha256-5a130be60f0393d225a6e5a16a5c8e1d12e721ba3c1bc096f953918796271715"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animeler.cs3",
