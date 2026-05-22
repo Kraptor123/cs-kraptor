@@ -173,7 +173,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/BelgeselX.cs3",
     "status": 1,
-    "version": 26,
+    "version": 27,
     "name": "BelgeselX",
     "internalName": "BelgeselX",
     "authors": [
@@ -181,7 +181,7 @@
       "ByAyzen"
     ],
     "description": "En yeni belgeseller, türkçe altyazılı yada dublaj olarak 1080p kalitesinde HD belgesel izle.",
-    "fileSize": 38732,
+    "fileSize": 42201,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -189,7 +189,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=belgeselx.com",
     "apiVersion": 1,
-    "fileHash": "sha256-44edff97d81f9f72166a6407212e2828815f0839389e5259e94684af1c71d078"
+    "fileHash": "sha256-3bbd6741ace605efd0f6ce933be4bab8b4a4a4bddda953dc6a8dbd4b00f66baf"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiMax.cs3",
