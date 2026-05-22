@@ -194,7 +194,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiMax.cs3",
     "status": 1,
-    "version": 27,
+    "version": 28,
     "name": "CizgiMax",
     "internalName": "CizgiMax",
     "authors": [
@@ -202,7 +202,7 @@
       "ByAyzen"
     ],
     "description": "ÇizgiMax ile Çizgi Film izlemek artık daha kolay, donmadan full hd ve reklamsız bir sitedir, içerisinde 700 den fazla çizgi film olan, Bu site bu işi profesyonelce yapıyor.",
-    "fileSize": 39631,
+    "fileSize": 39893,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -210,7 +210,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=cizgimax.online",
     "apiVersion": 1,
-    "fileHash": "sha256-3dcd42a5e58598415cbbf919f8fe1eaa28291ecbd57976c00111d01443b31f45"
+    "fileHash": "sha256-dd4cdb0732d23bf54d5e5f4c64c81b9788fd72f812aa0d21560f2b3f0081197d"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiveDizi.cs3",
