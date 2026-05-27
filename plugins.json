@@ -486,7 +486,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizipod.cs3",
     "status": 1,
-    "version": 2,
+    "version": 3,
     "name": "Dizipod",
     "internalName": "Dizipod",
     "authors": [
@@ -495,7 +495,7 @@
       "kerimmkirac"
     ],
     "description": "Güncel diziler, son eklenen yabancı dizileri bu sayfadan takip edebilirsiniz. Son eklenen yabancı dizileri donmadan izlemek için bizi takip etmeye devam edin.",
-    "fileSize": 68775,
+    "fileSize": 69131,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -505,7 +505,7 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipod.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-36cd20e3d0b945c7a4d294b6d5593240c881c93a1ee7b2b897d435cbd2425ac1"
+    "fileHash": "sha256-32998cde273795d0f1095baacc3ff8e75d9d672851b4561a3c5851c3fc66bd27"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
