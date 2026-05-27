@@ -47,7 +47,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animely.cs3",
     "status": 2,
-    "version": 9,
+    "version": 10,
     "name": "Animely",
     "internalName": "Animely",
     "authors": [
@@ -55,7 +55,7 @@
       "ByAyzen"
     ],
     "description": "Animely ile en sevdiğiniz animeleri Türkçe altyazılı olarak HD kalitede izleyin. Güncel sezon animeleri, klasikler ve çok daha fazlası. Hemen ücretsiz hesap oluşturun ve anime dünyasına katılın. Binlerce bölüm anime içeriğiyle sizleri bekliyor!",
-    "fileSize": 38147,
+    "fileSize": 38148,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -63,9 +63,9 @@
       "AnimeMovie",
       "OVA"
     ],
-    "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=https://animecim.tv",
+    "iconUrl": "https://play-lh.googleusercontent.com/BIE1R3FVOpIoCPxkx3Erfuw5sVc5wVIbeHAcRuTUGesuvc1S1Cr6KYumGVbn7xABuLc=w240-h480",
     "apiVersion": 1,
-    "fileHash": "sha256-ec50e9e3729bfd1094a340ed81d4eb65f44be061fa1c65effd04f2e36de1e195"
+    "fileHash": "sha256-28f8e9b47c0a59b8818adeb66de0faff17eea93f562efc3cc75f53927b90c4bb"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizium.cs3",
