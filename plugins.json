@@ -47,7 +47,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animely.cs3",
     "status": 2,
-    "version": 8,
+    "version": 9,
     "name": "Animely",
     "internalName": "Animely",
     "authors": [
@@ -63,9 +63,9 @@
       "AnimeMovie",
       "OVA"
     ],
-    "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://animely.net/&size=128",
+    "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=https://animecim.tv",
     "apiVersion": 1,
-    "fileHash": "sha256-1a29acdd6ea5ad5624c3476aa200a866c35c6d80c7bd5771c12635e4726320ba"
+    "fileHash": "sha256-ec50e9e3729bfd1094a340ed81d4eb65f44be061fa1c65effd04f2e36de1e195"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizium.cs3",
@@ -663,7 +663,7 @@
       "ByAyzen"
     ],
     "description": "Sinema zevkini evinize kadar getirdik. Türkiye'nin lider Film sitesinde, en yeni filmleri Full HD izleyin.",
-    "fileSize": 132189,
+    "fileSize": 132208,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -671,7 +671,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.fullhdfilmizlesene.de",
     "apiVersion": 1,
-    "fileHash": "sha256-64731818c28821352d9edc0eac947b7bf805bfe0c38aecf9fcc9f7bc052af8d1"
+    "fileHash": "sha256-2268005ddd56cc6a7dcc523d0ef1055d855a71cbbe28009979302ff1b36e3e26"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/GinikoCanli.cs3",
@@ -1021,14 +1021,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SelcukFlix.cs3",
     "status": 1,
-    "version": 38,
+    "version": 39,
     "name": "SelcukFlix",
     "internalName": "SelcukFlix",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Selcukflix'te her türden en yeni ve en popüler dizi ve filmleri izlemenin keyfini çıkarın. Aksiyondan romantiğe, bilim kurgudan dramaya, geniş kütüphanemizde herkes için bir şey var.",
-    "fileSize": 66258,
+    "fileSize": 66281,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1037,7 +1037,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=selcukflix.com",
     "apiVersion": 1,
-    "fileHash": "sha256-51e77b18ed368b92edf49408235ed8eb28f264c6d3ddcdc8e4241e1be5d98310"
+    "fileHash": "sha256-e43cd4a78d943475bed32c28f5371d360cb221b77816819a92afc296bb7da4a6"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SetFilmIzle.cs3",
