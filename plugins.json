@@ -736,8 +736,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmizle.cs3",
-    "status": 0,
-    "version": 14,
+    "status": 1,
+    "version": 15,
     "name": "HDFilmizle",
     "internalName": "HDFilmizle",
     "authors": [
@@ -752,7 +752,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.hdfilmizle.life/rally-caps/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-1cb79afe654c66e8438fd6886b7daac8b3d73037e77dd2230e34554536d39e8a"
+    "fileHash": "sha256-78d64c214db63b3874df32a927149a07adaf47cd6dc9ab41af766dd81c4bb91d"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/InatBox.cs3",
