@@ -664,7 +664,7 @@
       "ByAyzen"
     ],
     "description": "Sinema zevkini evinize kadar getirdik. Türkiye'nin lider Film sitesinde, en yeni filmleri Full HD izleyin.",
-    "fileSize": 133558,
+    "fileSize": 133623,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -672,7 +672,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.fullhdfilmizlesene.de",
     "apiVersion": 1,
-    "fileHash": "sha256-0e2ef04b0ca0d38090210020c707f115c11d0c5a953d7fff506fea565724ce08"
+    "fileHash": "sha256-965f6a4fc240e758a548aa50eeebfe982e0bd0e81a4b9f185dd361dd9565f7cb"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/GinikoCanli.cs3",
@@ -745,7 +745,7 @@
       "ByAyzen"
     ],
     "description": "En yeni ve popüler filmleri 1080p kalitesinde Türkçe dublaj altyazılı izle. Aksiyon, macera, komedi, dram ve daha fazlası film izle sayfamızda.",
-    "fileSize": 54943,
+    "fileSize": 55404,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -753,7 +753,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.hdfilmizle.life/rally-caps/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-016c9c5627ba1f7895df4e40a70124de5c4b54db9ae017c2df239c0122b29469"
+    "fileHash": "sha256-3a2fc599ed12bd6241743a724f58e100da43f6d8cd484f4448b1a2ff4060264d"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/InatBox.cs3",
@@ -790,7 +790,7 @@
       "ByAyzen"
     ],
     "description": "Binlerce Film İzleme Seçeneğiyle En İyi Film İzleme Sitesi",
-    "fileSize": 61653,
+    "fileSize": 62183,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -798,7 +798,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://jetfilmizle.de&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-4d7f53b5748fe0600de68f6e6ce48e0154fd121c7adea5e9425b5f2d2ee3caf5"
+    "fileHash": "sha256-aa2319e2a6ca42bba041814e740188c321e0b2545418545db996b0685378f88c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KickTR.cs3",
@@ -1029,7 +1029,7 @@
       "kerimmkirac"
     ],
     "description": "Selcukflix'te her türden en yeni ve en popüler dizi ve filmleri izlemenin keyfini çıkarın. Aksiyondan romantiğe, bilim kurgudan dramaya, geniş kütüphanemizde herkes için bir şey var.",
-    "fileSize": 62570,
+    "fileSize": 63090,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1038,7 +1038,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=selcukflix.com",
     "apiVersion": 1,
-    "fileHash": "sha256-93dc53773bb748b2b8328e1a0e00fdebb628521cb95f678b5fe4bbe8f760889f"
+    "fileHash": "sha256-c616715c3fb02359f4022dbd43d66183a66b9024dcb286743e8f5c0bc8eeeea0"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SetFilmIzle.cs3",
