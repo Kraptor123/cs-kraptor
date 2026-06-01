@@ -2,7 +2,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeciX.cs3",
     "status": 1,
-    "version": 73,
+    "version": 74,
     "name": "AnimeciX",
     "internalName": "AnimeciX",
     "authors": [
@@ -20,12 +20,12 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://animecix.net&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-d936ed5d11b72f810e8854405b0afc72f6e8d5320b1eb547ac891cd817440a67"
+    "fileHash": "sha256-caef72fd437700cf760e669f82ac799529847969bf777aba4f3ea2a96aa70a93"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animeler.cs3",
     "status": 1,
-    "version": 37,
+    "version": 38,
     "name": "Animeler",
     "internalName": "Animeler",
     "authors": [
@@ -42,12 +42,12 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://animeler.pw/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-40c41523d481caff3f87916b398666c3ca624596ec6115f9cefd821b6ef03eaf"
+    "fileHash": "sha256-a4fb8096aa5b1f53179c38e4769190eb986f48d3cc0e21d72139004d0f0bab3f"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animely.cs3",
     "status": 2,
-    "version": 13,
+    "version": 14,
     "name": "Animely",
     "internalName": "Animely",
     "authors": [
@@ -65,12 +65,12 @@
     ],
     "iconUrl": "https://play-lh.googleusercontent.com/BIE1R3FVOpIoCPxkx3Erfuw5sVc5wVIbeHAcRuTUGesuvc1S1Cr6KYumGVbn7xABuLc=w240-h480",
     "apiVersion": 1,
-    "fileHash": "sha256-09f4b0ca42355fa22145e0af197478d25b40f8ca03f51545a275b2fb90e444fb"
+    "fileHash": "sha256-faf60dcbf155dc179c5d73068add2c6faab27cb871aa38caf34394ae089863ec"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizium.cs3",
     "status": 1,
-    "version": 20,
+    "version": 21,
     "name": "Anizium",
     "internalName": "Anizium",
     "authors": [
@@ -87,12 +87,12 @@
     ],
     "iconUrl": "https://anizium.co/assets/images/logo.png",
     "apiVersion": 1,
-    "fileHash": "sha256-cf5538a9aa1df082481a28883a349e5c5929047807e423805dc4f2643dd08b46"
+    "fileHash": "sha256-52d3452fc236255a922f32455a5dd680028da6a0f99432ee5551234706438c88"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaAnimeleri.cs3",
     "status": 1,
-    "version": 19,
+    "version": 20,
     "name": "AsyaAnimeleri",
     "internalName": "AsyaAnimeleri",
     "authors": [
@@ -107,12 +107,12 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://asyaanimeleri.top/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-65e8da5edac0c265bc20f919a54154c116c6f1ef923eb40a626be9dbe0a8c45a"
+    "fileHash": "sha256-eb2293d496ddb9768df511529b7498c4075c1682f3f7bac6c3b24c8d06b14bd7"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaFanatiklerim.cs3",
     "status": 1,
-    "version": 19,
+    "version": 20,
     "name": "AsyaFanatiklerim",
     "internalName": "AsyaFanatiklerim",
     "authors": [
@@ -128,12 +128,12 @@
     ],
     "iconUrl": "https://asyafanatiklerim.com/wp-content/uploads/2018/08/md_5aaeb1de75bea.png",
     "apiVersion": 1,
-    "fileHash": "sha256-91dfa7a31a2a89c83ad50e95efb26fa46edeb86a5ee266502010d72ee84ba83c"
+    "fileHash": "sha256-f2bec5071233fd03d31e9046bd7f4dbe8762c431bf5d483076cd49bfd5076e5b"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaMinik.cs3",
     "status": 1,
-    "version": 13,
+    "version": 14,
     "name": "AsyaMinik",
     "internalName": "AsyaMinik",
     "authors": [
@@ -148,12 +148,12 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://asyaminik.com/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-0fc8b0306029a3bb2ef7bba5dfa6126b981112a51cc0099bc09ca00559bdbca3"
+    "fileHash": "sha256-4240bb11e038471461b2b6286fd40de81a1f65829296eade244122b37cc11161"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaWatch.cs3",
     "status": 1,
-    "version": 37,
+    "version": 38,
     "name": "AsyaWatch",
     "internalName": "AsyaWatch",
     "authors": [
@@ -168,12 +168,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=asyawatch.com",
     "apiVersion": 1,
-    "fileHash": "sha256-c9f87908504aa75eb5e8fab89803cec091e063e7c193d7f8b96b599beac5f95c"
+    "fileHash": "sha256-00ede7b9497d80b7c945d090fe2f75c1466e07386800a8bd1c8a03766563fff2"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/BelgeselX.cs3",
     "status": 1,
-    "version": 34,
+    "version": 35,
     "name": "BelgeselX",
     "internalName": "BelgeselX",
     "authors": [
@@ -189,12 +189,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=belgeselx.com",
     "apiVersion": 1,
-    "fileHash": "sha256-9572c8620449bfdc230b7cba816cf2fe6a1060ce63d0a351365aee3037e0deda"
+    "fileHash": "sha256-aa03af45ae027f250b43c4c4e18e21901201a5e529be2aede4236cebbd0fbbc4"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiMax.cs3",
     "status": 1,
-    "version": 31,
+    "version": 32,
     "name": "CizgiMax",
     "internalName": "CizgiMax",
     "authors": [
@@ -210,12 +210,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=cizgimax.online",
     "apiVersion": 1,
-    "fileHash": "sha256-039b504b6b5e7b7b3dddb452633eaa377735d72c278f63e93e928c44f28d72bb"
+    "fileHash": "sha256-26b0396bc9cb048b83c1564484a6fbc4f019537f9f5662c60b5ff73ccc6cc9fa"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiveDizi.cs3",
     "status": 1,
-    "version": 43,
+    "version": 44,
     "name": "CizgiveDizi",
     "internalName": "CizgiveDizi",
     "authors": [
@@ -230,12 +230,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=cizgivedizi.com",
     "apiVersion": 1,
-    "fileHash": "sha256-17580631c95406a39e863643c58ebac707b930c46fd023217aaf0627954b4834"
+    "fileHash": "sha256-9168b413efd28eb50dc10984242c80143f1d69dc646e26a8f2b56b4219411ce3"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Ddizi.cs3",
     "status": 1,
-    "version": 13,
+    "version": 14,
     "name": "Ddizi",
     "internalName": "Ddizi",
     "authors": [
@@ -250,12 +250,12 @@
     ],
     "iconUrl": "https://www.ddizi.im/images/logo.png",
     "apiVersion": 1,
-    "fileHash": "sha256-28d56af246a99b37092bd2d73c9ab494b38471e73cad96ba9ce917e485cee8c8"
+    "fileHash": "sha256-ada64b4eb65f586f3c42b1f17faa2d36dae555f0c0e6a78b52866e5da804be20"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziAsia.cs3",
     "status": 1,
-    "version": 14,
+    "version": 15,
     "name": "DiziAsia",
     "internalName": "DiziAsia",
     "authors": [
@@ -270,12 +270,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=diziasia.com",
     "apiVersion": 1,
-    "fileHash": "sha256-8741efcbd349ca2822659ae2b11a46dc31ffeedb71848e88bd21f399b2370a93"
+    "fileHash": "sha256-3941f367bb0e5dd4d54363b6cdeb17e561f3caf6134ab523b18266133223a0a9"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziAsya.cs3",
     "status": 1,
-    "version": 20,
+    "version": 21,
     "name": "DiziAsya",
     "internalName": "DiziAsya",
     "authors": [
@@ -290,12 +290,12 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.diziasya.com&size=32",
     "apiVersion": 1,
-    "fileHash": "sha256-aba8c459272dcc1b169cf8dfe7740a846e9d71a84281d35c4405865aa9af0e06"
+    "fileHash": "sha256-a304b53030f98a0ff515392973cf015d9d56e260182f7dd45f1f1c3f6fd9e2c0"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziBox.cs3",
     "status": 1,
-    "version": 34,
+    "version": 35,
     "name": "DiziBox",
     "internalName": "DiziBox",
     "authors": [
@@ -312,12 +312,12 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.dizibox.de&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-e5c720d92aa2b237901f6b9cd4751ac6b67e9feddbb2e993b5f1cb7968ddf421"
+    "fileHash": "sha256-7fed4461c5dd95fceb3aa6aac6741b606a0e8e7b9edbc08ab133543536ffe193"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziFilmORG.cs3",
     "status": 1,
-    "version": 16,
+    "version": 17,
     "name": "DiziFilmORG",
     "internalName": "DiziFilmORG",
     "authors": [
@@ -333,12 +333,12 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizifilm.org/dizi/breaking-bad/sezon-1/bolum-2&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-3cb40854cc7d2d6c1d548ec52a05e9a8e7a5ef1ab82ba9a872e675abbc8f51c7"
+    "fileHash": "sha256-4228d1196185993d44c946da1464306e1342450ac3143b636340f5e33f8b178c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziKorea.cs3",
     "status": 1,
-    "version": 28,
+    "version": 29,
     "name": "DiziKorea",
     "internalName": "DiziKorea",
     "authors": [
@@ -354,12 +354,12 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://dizikorea.pw&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-9cbc4be4f275ab3482998c62afd8912b51f14a141267d173c62cd209c6e5fc79"
+    "fileHash": "sha256-9a58f6515dd095fb4beceb20afede714f2fccf303498e4df48d3a26dff9cc236"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziLife.cs3",
     "status": 1,
-    "version": 52,
+    "version": 53,
     "name": "DiziLife",
     "internalName": "DiziLife",
     "authors": [
@@ -377,12 +377,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=dizi18.life",
     "apiVersion": 1,
-    "fileHash": "sha256-ce3149d5549f5209a4a6e51446ff0df781cec87067246ea54ffe2d7c57bc9070"
+    "fileHash": "sha256-9ba302fcc5228c084b00283518636af637703b25c701a71631227db5c263568c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizilla.cs3",
     "status": 1,
-    "version": 101,
+    "version": 102,
     "name": "Dizilla",
     "internalName": "Dizilla",
     "authors": [
@@ -398,7 +398,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=https://dizilla.to",
     "apiVersion": 1,
-    "fileHash": "sha256-19fbd848d5a380c5045ea3e4a62f350e784907071db1e02feee036e2a640ae65"
+    "fileHash": "sha256-2cd1b37e200247bce57d05ea8fe72b73ed82afe8d0313b27d093a51137156120"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMag.cs3",
@@ -423,7 +423,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMom.cs3",
     "status": 1,
-    "version": 55,
+    "version": 56,
     "name": "DiziMom",
     "internalName": "DiziMom",
     "authors": [
@@ -438,12 +438,12 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.dizimom.mom&size=32",
     "apiVersion": 1,
-    "fileHash": "sha256-133bcfeeb687c7b6dad0ab4ba1588254d1618653c8660014355c0280b85c045c"
+    "fileHash": "sha256-10cc0d6f81a1a1dc744e2650893f63bba749d08aa9362b21f831a2f3fee4402e"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPal.cs3",
     "status": 1,
-    "version": 84,
+    "version": 85,
     "name": "DiziPal",
     "internalName": "DiziPal",
     "authors": [
@@ -460,12 +460,12 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal1206.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-4a53d28169d2c3ff4198428bcc7cf1151f8066c53dfdf5ea33c64edef4bc225b"
+    "fileHash": "sha256-90e66fbc05eb015386bf93c078929dd8e7d3a3bbe0bf12b56175bff64a92fe7f"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
     "status": 1,
-    "version": 32,
+    "version": 33,
     "name": "DiziPalOrijinal",
     "internalName": "DiziPalOrijinal",
     "authors": [
@@ -482,12 +482,12 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal932.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-d85cabc315d66e17a427cd269546c9567ba9cdd81036ad7af507094b7226655a"
+    "fileHash": "sha256-07b4861c522a4de8b62d0aa649e03f7b0ff7795efacde0b60deb5d8a4d6d891a"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizipod.cs3",
     "status": 1,
-    "version": 7,
+    "version": 8,
     "name": "Dizipod",
     "internalName": "Dizipod",
     "authors": [
@@ -496,7 +496,7 @@
       "kerimmkirac"
     ],
     "description": "Güncel diziler, son eklenen yabancı dizileri bu sayfadan takip edebilirsiniz. Son eklenen yabancı dizileri donmadan izlemek için bizi takip etmeye devam edin.",
-    "fileSize": 70333,
+    "fileSize": 70332,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -506,12 +506,12 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipod.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-6e018a3915173a46f2bbc8c23542daa99aebd37cf937bbc640fca67f11dde588"
+    "fileHash": "sha256-caf1ea1f8f48a20b15d3b9fa06cc08181dceedbcf6e95c8cc26d83ae3e9d7517"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
     "status": 1,
-    "version": 69,
+    "version": 70,
     "name": "DiziYo",
     "internalName": "DiziYo",
     "authors": [
@@ -527,12 +527,12 @@
     ],
     "iconUrl": "https://i.imgur.com/zQYsL6Z.png",
     "apiVersion": 1,
-    "fileHash": "sha256-5ff8b4510e4d23b8049d1e60b3882e8eedfff72cc664a5c543c648715ac6bfeb"
+    "fileHash": "sha256-04879201d74b36db33ab3c92cfdb55e26c1585b099570e2961ea60bcfce6686e"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYou.cs3",
     "status": 1,
-    "version": 44,
+    "version": 45,
     "name": "DiziYou",
     "internalName": "DiziYou",
     "authors": [
@@ -547,12 +547,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.diziyou.co",
     "apiVersion": 1,
-    "fileHash": "sha256-240a737012015a09478e3e44c7f1825728b2d4886c9ae5bb46fb30d6290f3907"
+    "fileHash": "sha256-b5e3bc782f6240108b5d3a38b04341f98497934d5cbfd36641918d60fe20c8a7"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmEkseni.cs3",
     "status": 1,
-    "version": 45,
+    "version": 46,
     "name": "FilmEkseni",
     "internalName": "FilmEkseni",
     "authors": [
@@ -560,7 +560,7 @@
       "ByAyzen"
     ],
     "description": "Film Ekseni ⚡ Vizyonda ki, en güncel ve en yeni filmleri full hd kalitesinde türkçe dublaj ve altyazı seçenekleriyle 1080p olarak izleyebileceğiniz adresiniz.",
-    "fileSize": 57985,
+    "fileSize": 57986,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -568,12 +568,12 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmekseni.net/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-c29c7385016eefcea1ebb8bc8a7f8871e699b61d653f94f01315292854c67d7d"
+    "fileHash": "sha256-0218f8243defbd4a7e3a76fa33b96918ebb1c0eff2fa02a4ef2c0beac7324091"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmHane.cs3",
     "status": 1,
-    "version": 39,
+    "version": 40,
     "name": "FilmHane",
     "internalName": "FilmHane",
     "authors": [
@@ -588,12 +588,12 @@
     ],
     "iconUrl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRbK_Pe3vpG-yUVt1NvckDpaD6COLDitImrBUnHfAVA4fawhijE",
     "apiVersion": 1,
-    "fileHash": "sha256-28d95a47ef27e9fd0105e78ed989c44537b1b7c71772aed02776a8de3a8208cb"
+    "fileHash": "sha256-ff4c2c3bfee150c6527912e0389ee192f614d63d05b36b9ea85b8cc03d1474fe"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmMakinesi.cs3",
     "status": 1,
-    "version": 66,
+    "version": 67,
     "name": "FilmMakinesi",
     "internalName": "FilmMakinesi",
     "authors": [
@@ -611,12 +611,12 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmmakinesi.tv&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-06b97440c2886394707fc04dcff53fbd35ddcaac5cf79dc2cb178d36d09e49b5"
+    "fileHash": "sha256-9042e6782da030b2fbd77b2699985215570310e2e20f0f869c36acd78804255e"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmModu.cs3",
     "status": 1,
-    "version": 37,
+    "version": 38,
     "name": "FilmModu",
     "internalName": "FilmModu",
     "authors": [
@@ -631,12 +631,12 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.filmmodu.one/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-6bd56944871819b8f59060956c81e6d0c68cdd43b7686364120c395a38eb7f72"
+    "fileHash": "sha256-a22648a17d3ac307239cfcb9e4c90ea0deaa905e1a94475b7d8fbaa70551b94e"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Filmzal.cs3",
     "status": 1,
-    "version": 11,
+    "version": 12,
     "name": "Filmzal",
     "internalName": "Filmzal",
     "authors": [
@@ -651,12 +651,12 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmzal.me/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-f843e5a93f29680838d8e353e7689d2a8af932954b7631fb4161b9b56cd1d378"
+    "fileHash": "sha256-3c7ba518ae98a84795d8f728ce80dec7277896cc45b9a1ee71c36aec65593eb7"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDFilmizlesene.cs3",
     "status": 1,
-    "version": 61,
+    "version": 62,
     "name": "FullHDFilmizlesene",
     "internalName": "FullHDFilmizlesene",
     "authors": [
@@ -672,12 +672,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.fullhdfilmizlesene.de",
     "apiVersion": 1,
-    "fileHash": "sha256-7beececaa4960f542004b30daac2cba3ed3b237b7c69aee2aff238e6fec712c4"
+    "fileHash": "sha256-f556f1ec414933716c55538f1b6fb37c77ed077dced27c0864ae26a52246f4d2"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/GinikoCanli.cs3",
     "status": 1,
-    "version": 13,
+    "version": 14,
     "name": "GinikoCanli",
     "internalName": "GinikoCanli",
     "authors": [
@@ -692,12 +692,12 @@
     ],
     "iconUrl": "https://www.giniko.com/images/favicon.ico",
     "apiVersion": 1,
-    "fileHash": "sha256-275372f7d28bed4ce7e292625ae3690dfcda2829a64e22b843d9ea1d7d16769b"
+    "fileHash": "sha256-6f2d0b61d7e7344b8b4b77dd31194676afaa02078676e33f40b5e9cb8e4daea8"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmCehennemi.cs3",
     "status": 1,
-    "version": 85,
+    "version": 86,
     "name": "HDFilmCehennemi",
     "internalName": "HDFilmCehennemi",
     "authors": [
@@ -713,12 +713,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=http://hdfilmcehennemi.nl",
     "apiVersion": 1,
-    "fileHash": "sha256-68e15ab10a5575d9107bdd1e35a2c5dab1c40fd96286a4ff1d295093a719ac78"
+    "fileHash": "sha256-74251dc72413cc29a5e604c2009b4a0db72408344bda6a5292ff763d67b528aa"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmDelisi.cs3",
     "status": 1,
-    "version": 14,
+    "version": 15,
     "name": "HDFilmDelisi",
     "internalName": "HDFilmDelisi",
     "authors": [
@@ -733,12 +733,12 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://hdfilmdelisi.one/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-5d26aec61467b03f12a4277900c2aaca28f21850953e439126b2f377e815bfa1"
+    "fileHash": "sha256-3492e426d64fec2933d45b758d1d2850000b7d0deab353f37522ee8d65db37b9"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmizle.cs3",
     "status": 1,
-    "version": 18,
+    "version": 19,
     "name": "HDFilmizle",
     "internalName": "HDFilmizle",
     "authors": [
@@ -753,12 +753,12 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.hdfilmizle.life/rally-caps/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-5bbbb285ef9ef2c43bb9b2f8417593003eb4fa612486ca5fad3e8b621190b4ba"
+    "fileHash": "sha256-9d1526ac7a13d8b2054185d4a6903809ff65ad90ee429adcfa9fc5b691ca453a"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/InatBox.cs3",
     "status": 2,
-    "version": 53,
+    "version": 54,
     "name": "InatBox",
     "internalName": "InatBox",
     "authors": [
@@ -767,7 +767,7 @@
       "JustRelaxable"
     ],
     "description": "Bu eklenti düzenli güncelleme almayacaktır!",
-    "fileSize": 50830,
+    "fileSize": 50829,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -777,12 +777,12 @@
     ],
     "iconUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3vCp6N1K4bECoYRQD-cisJF2_6V_Hk01ZhDmoPR2JuM8O5qr4MqrPO1munM9cRlleBBSK6odYhLtDBWv4E3vhPhynlmS5hVVtJZShHoGA5REQ8_3v8SIlccTEqzVQu2UJyNYQdJNrKIfWy66RQeT0D-CcmFCbHPz5023H6p2v5fv4NVloZ5Rqo_yGrIY/s320/iNat-Box-App.png",
     "apiVersion": 1,
-    "fileHash": "sha256-107f1e0acc96f13be82f40aebc809d752c953b42af48d685b984a87d7041b73b"
+    "fileHash": "sha256-643098f164c5465f50c2bd4bb2455a0f1d675fad1e7765d6c34e1f1fff1b4ce8"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/JetFilmizle.cs3",
     "status": 1,
-    "version": 59,
+    "version": 60,
     "name": "JetFilmizle",
     "internalName": "JetFilmizle",
     "authors": [
@@ -790,7 +790,7 @@
       "ByAyzen"
     ],
     "description": "Binlerce Film İzleme Seçeneğiyle En İyi Film İzleme Sitesi",
-    "fileSize": 61951,
+    "fileSize": 61952,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -798,12 +798,12 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://jetfilmizle.de&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-23e0cc13467997da07a27c09e57e5ba3b0de1940676b2bd8f7b372614d8c9462"
+    "fileHash": "sha256-834376fc45083f40847fafc3ec7ad42305e12a3e74ec67545253fe356350898f"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KickTR.cs3",
     "status": 1,
-    "version": 13,
+    "version": 14,
     "name": "KickTR",
     "internalName": "KickTR",
     "authors": [
@@ -819,7 +819,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://kick.com&size=48",
     "apiVersion": 1,
-    "fileHash": "sha256-970e42ec2f3371f6d0624571c773b27c355a1d67257df0847df88bdf30b1e49d"
+    "fileHash": "sha256-bc76a6867fd81b20c983a4548dfad8fd92e0400626094e13a76495210e2cdceb"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KoreanTurk.cs3",
@@ -844,7 +844,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 61,
+    "version": 62,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -866,19 +866,19 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-e27f1e7d4963725f12aeb7159bd30e1d014fc8cace5edadf49b29dcaab27667e"
+    "fileHash": "sha256-d89cfe22c60a6f2979a686762e40b51808b15f17927ca79943e1e9151d4a2cdf"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
     "status": 1,
-    "version": 28,
+    "version": 29,
     "name": "KultFilmler",
     "internalName": "KultFilmler",
     "authors": [
       "kraptor"
     ],
     "description": "Kült Filmler özenle en iyi filmleri derler ve iyi bir altyazılı film izleme deneyimi sunmayı amaçlar",
-    "fileSize": 28918,
+    "fileSize": 28917,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -887,12 +887,12 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://kultfilmler.net&size=32",
     "apiVersion": 1,
-    "fileHash": "sha256-3f8c0599b6954f796cb5e077e9071dd608563a46ce80b7a133c21db8ccbf5a55"
+    "fileHash": "sha256-380438bf29e02fdd456f91af16bfc9b70ff43134dd6c82b2da44a6c8aa920801"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/MirrorVerse.cs3",
     "status": 1,
-    "version": 27,
+    "version": 28,
     "name": "MirrorVerse",
     "internalName": "MirrorVerse",
     "authors": [
@@ -910,19 +910,19 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/mirrorverseicon.png",
     "apiVersion": 1,
-    "fileHash": "sha256-3903bca1bd192fdbaf20bd213bee627101aaef187e4c146106dbfd94869b1e5d"
+    "fileHash": "sha256-0cb23782e1b6b2213f57dc6b73029517abfba99d6be81af57e6d662f41204078"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/OnePaceTr.cs3",
     "status": 1,
-    "version": 9,
+    "version": 10,
     "name": "OnePaceTr",
     "internalName": "OnePaceTr",
     "authors": [
       "kraptor"
     ],
     "description": "One Pace türkçe altyazılı izleme platformu.",
-    "fileSize": 25091,
+    "fileSize": 25092,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -930,12 +930,12 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.onepacetr.net/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-fa749b53787a75e045ec90c60d23c4ebd782f5d4bbf431ac8fafc43ea763d116"
+    "fileHash": "sha256-6d0966ad8ec790fb2c83399f5f873ef1ea85b74c87047095df94bc26582c4318"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/OpenAnime.cs3",
     "status": 1,
-    "version": 23,
+    "version": 24,
     "name": "OpenAnime",
     "internalName": "OpenAnime",
     "authors": [
@@ -943,7 +943,7 @@
       "ByAyzen"
     ],
     "description": "Anime izleme deneyiminizi zenginleştiren, hızlı ve etkileyici özelliklerle donatılmış, şık bir tasarıma sahip anime platformu. Anime izleme deneyiminiz, kolaylaştırıldı.",
-    "fileSize": 67607,
+    "fileSize": 67608,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -952,12 +952,12 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://openani.me/&size=24",
     "apiVersion": 1,
-    "fileHash": "sha256-83e7e18f8714afec1fd21412515e0e49fd0b0bd98ff460b24ccfeadefd59034f"
+    "fileHash": "sha256-0b06e7d331150faac31f5c6a8e01efd04d1ef539c94b6710ce192b8891dd0c0c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RareFilmm.cs3",
     "status": 1,
-    "version": 15,
+    "version": 16,
     "name": "RareFilmm",
     "internalName": "RareFilmm",
     "authors": [
@@ -972,12 +972,12 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://rarefilmm.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-446cfee9e711a2d260645641a968c452d1c69cb996b9091d526a6e64df1cf31c"
+    "fileHash": "sha256-1af9e775e229673aa7320e73b0145ef56a5052e7d7a72b716d7179bfe0c27367"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RecTV.cs3",
     "status": 1,
-    "version": 25,
+    "version": 26,
     "name": "RecTV",
     "internalName": "RecTV",
     "authors": [
@@ -986,7 +986,7 @@
       "ByAyzen"
     ],
     "description": "RecTV,Türkiye’deki en popüler Çevrimiçi Medya Akış platformlarından biridir. Filmlerin, Canlı Sporların, Web Dizilerinin ve çok daha fazlasının keyfini ücretsiz çıkarın.",
-    "fileSize": 63880,
+    "fileSize": 64590,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -996,12 +996,12 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://rectvapk.cc&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-675f810163c084b39e8229ff0bc7b8638e6b7c8cb869e535684d1a69fba73365"
+    "fileHash": "sha256-f7f82d2450b71f9968f3e95304822da59c64acda903561a40c0f557a6f628843"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
     "status": 1,
-    "version": 20,
+    "version": 21,
     "name": "SeiCode",
     "internalName": "SeiCode",
     "authors": [
@@ -1017,19 +1017,19 @@
     ],
     "iconUrl": "https://seicode.net/favicon.png",
     "apiVersion": 1,
-    "fileHash": "sha256-c3fb46b08864800d1f40f1e4a244ff078bcc5a6373f88c464a3356e17e55579e"
+    "fileHash": "sha256-fd6e628fded1f8e2a92488ae26bc01e854e96c6c70437a8181777cc9ceb5c708"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SelcukFlix.cs3",
     "status": 1,
-    "version": 45,
+    "version": 46,
     "name": "SelcukFlix",
     "internalName": "SelcukFlix",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Selcukflix'te her türden en yeni ve en popüler dizi ve filmleri izlemenin keyfini çıkarın. Aksiyondan romantiğe, bilim kurgudan dramaya, geniş kütüphanemizde herkes için bir şey var.",
-    "fileSize": 63091,
+    "fileSize": 63092,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1038,12 +1038,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=selcukflix.com",
     "apiVersion": 1,
-    "fileHash": "sha256-9b5da273be8ca26336936ede608434b3a5641681888dca50176a11c5da514683"
+    "fileHash": "sha256-08f6419d73c7ee225042924946bf5f88499a252b51133aa54ef8d7d66354f9e6"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SetFilmIzle.cs3",
     "status": 1,
-    "version": 37,
+    "version": 38,
     "name": "SetFilmIzle",
     "internalName": "SetFilmIzle",
     "authors": [
@@ -1060,12 +1060,12 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.setfilmizle.uk/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-7103c6e7624e368cdf83310bbca6cd0c68c36ba9744b2d585a3413dd89b28d32"
+    "fileHash": "sha256-a48a7442313158643c0a0c2b15ba48d78dc3410379e6fa9a600b915e575fe1ef"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SezonlukDizi.cs3",
     "status": 1,
-    "version": 36,
+    "version": 37,
     "name": "SezonlukDizi",
     "internalName": "SezonlukDizi",
     "authors": [
@@ -1081,12 +1081,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=sezonlukdizi6.com",
     "apiVersion": 1,
-    "fileHash": "sha256-4ff8b6cb5260bcf6d2b08c8df2e94937b9520e5c7eeafdca5ba019e76a81f2ff"
+    "fileHash": "sha256-dee96f1e4148e2bd0c7ab37a832af5290329401233fc80a6235accb5f3be441d"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SinemaCX.cs3",
     "status": 1,
-    "version": 31,
+    "version": 32,
     "name": "SinemaCX",
     "internalName": "SinemaCX",
     "authors": [
@@ -1101,12 +1101,12 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.sinema.cx",
     "apiVersion": 1,
-    "fileHash": "sha256-fdb76ddc8844fa1e8965b613b29763ab9aca0d4018013e6eee1512f183878d4e"
+    "fileHash": "sha256-c1cbe3cbdf308a7b372b1ebf1abda499ff82eb3684b82b80a6975bdc6fdd17ab"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SineWix.cs3",
     "status": 1,
-    "version": 29,
+    "version": 30,
     "name": "SineWix",
     "internalName": "SineWix",
     "authors": [
@@ -1126,12 +1126,12 @@
     ],
     "iconUrl": "https://play-lh.googleusercontent.com/brwGNmr7IjA_MKk_TTPs0va10hdKE_bD_a1lnKoiMuCayW98EHpRv55edA6aEoJlmwfX=w240-h480",
     "apiVersion": 1,
-    "fileHash": "sha256-3d831697504ac123d29fe2ce881091ab89784cad1d490a00c478f75d8708a9dc"
+    "fileHash": "sha256-487afe22e0f1b4e238b482a93eb86bfa7f738f00c94d3f63c0d6f2c6cc25a8a0"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Sinezy.cs3",
     "status": 1,
-    "version": 37,
+    "version": 38,
     "name": "Sinezy",
     "internalName": "Sinezy",
     "authors": [
@@ -1146,12 +1146,12 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://sinezy.fit&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-cd034b62cf9b4f51c1186090defd3a4f8f3f57199809212716c0f05b7bd107af"
+    "fileHash": "sha256-c0fd874b895605f77db1e94bc5b8953918376a15f93e9e1565095ffd3173bfed"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TrAnimeIzle.cs3",
     "status": 1,
-    "version": 10,
+    "version": 11,
     "name": "TrAnimeIzle",
     "internalName": "TrAnimeIzle",
     "authors": [
@@ -1166,12 +1166,12 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.tranimeizle.io/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-a00dd7879e88f5103b7ea22c700de197a728a29da47886f94b27f649dfa70794"
+    "fileHash": "sha256-68f85490caaa6a23f5f09504c05698e76c0b780af6ef5db3d81d88eb3ee7e716"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TurkAnime.cs3",
     "status": 1,
-    "version": 28,
+    "version": 29,
     "name": "TurkAnime",
     "internalName": "TurkAnime",
     "authors": [
@@ -1188,12 +1188,12 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.turkanime.co&size=64",
     "apiVersion": 1,
-    "fileHash": "sha256-51f77c7432f6f646763df2d27cf2bfe05789d2afcf2eadbb4bfb17c5671cd0e0"
+    "fileHash": "sha256-95e7e2f1331d8a816de8c5c645a841daba90fd8c76289622ce2090fa41e0bd22"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Turkdizileri.cs3",
     "status": 1,
-    "version": 28,
+    "version": 29,
     "name": "Turkdizileri",
     "internalName": "Turkdizileri",
     "authors": [
@@ -1208,19 +1208,19 @@
     ],
     "iconUrl": "https://i.imgur.com/Cff8v6J.png",
     "apiVersion": 1,
-    "fileHash": "sha256-48ae65f1e1685c3c1239d984d8a64a3e54e0bee324cb1e931d2e7c1a9b5fad5d"
+    "fileHash": "sha256-bc98116ec313afcfda2528a3dfd33f55cdba40bd651f43906296965e355dea3e"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TvDiziler.cs3",
     "status": 1,
-    "version": 13,
+    "version": 14,
     "name": "TvDiziler",
     "internalName": "TvDiziler",
     "authors": [
       "kraptor"
     ],
     "description": "Tv Diziler Ücretsiz yerli dizi izleme sitesi en popüler dizileri tek parça hd kalitesiyle ve reklamsız bedava olarak buradan tv dizileri izleyin.",
-    "fileSize": 30709,
+    "fileSize": 30710,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1228,12 +1228,12 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tvdiziler.cc&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-89c3bd31d7326035a8c22eb6f7f0b49627ffaa8b7f5d978e0b1bae9824052048"
+    "fileHash": "sha256-f5dd4a9b71e3dce9a0db7c7038468b80a7c740cfa7dc66792f741892778d18ec"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/UgurFilm.cs3",
     "status": 1,
-    "version": 32,
+    "version": 33,
     "name": "UgurFilm",
     "internalName": "UgurFilm",
     "authors": [
@@ -1249,12 +1249,12 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ugurfilm3.xyz/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-2ac9de6adb55d28192c39e3bded996d85069e2f98ac044df753521be4ba19038"
+    "fileHash": "sha256-b21afc67b6792f060b18e6305763e660cff7ab14b4681abf6938ae927eb87435"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebDramaTurkey.cs3",
     "status": 1,
-    "version": 35,
+    "version": 36,
     "name": "WebDramaTurkey",
     "internalName": "WebDramaTurkey",
     "authors": [
@@ -1271,7 +1271,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webdramaturkey.org/&size=40",
     "apiVersion": 1,
-    "fileHash": "sha256-0d98575ce8f0a69f84aead5beb6ddb2818f6ca615b6bec151636aac5ceaaa38a"
+    "fileHash": "sha256-0c6e9363573a6f907c33606195b91ba4bde926a8aa98c91ee3bd0eee4ca870f7"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebteIzle.cs3",
@@ -1297,7 +1297,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WFilmizle.cs3",
     "status": 1,
-    "version": 17,
+    "version": 18,
     "name": "WFilmizle",
     "internalName": "WFilmizle",
     "authors": [
@@ -1312,12 +1312,12 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://wfilmizle.bar&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-cfb0fadbc54e9f9cb0d82bd496f83bb02ded78208d02f08840c8de403c64a65a"
+    "fileHash": "sha256-610c8cd5fa1ab9b6c26fdada934e4c54145120318b9519f3cdd7da6efd134126"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YabanciDizi.cs3",
     "status": 1,
-    "version": 15,
+    "version": 16,
     "name": "YabanciDizi",
     "internalName": "YabanciDizi",
     "authors": [
@@ -1332,12 +1332,12 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://yabancidizi.so/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-a643fb5370ec3786e41c09e7d099359c11e9842ff7cee7f5cdb934b9003eb4b5"
+    "fileHash": "sha256-7e7addd3bd1dea58928da5c2f3c9abb0e84f401b076272942ceae1b110eaab14"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YeniKaynak.cs3",
     "status": 1,
-    "version": 6,
+    "version": 7,
     "name": "YeniKaynak",
     "internalName": "YeniKaynak",
     "authors": [
@@ -1353,7 +1353,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.yenikaynak.com/&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-dbbafac7bfd2c44089e4da53b970cf17000a6dc2978335639a02613e5df6c96d"
+    "fileHash": "sha256-6e7b4afb97a1eeece64ffea19a7666efee0ee9a5569073e5a3b8a1a712770dad"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YesilCamTv.cs3",
@@ -1378,7 +1378,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Youtube.cs3",
     "status": 1,
-    "version": 35,
+    "version": 36,
     "name": "Youtube",
     "internalName": "Youtube",
     "authors": [
@@ -1398,12 +1398,12 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.youtube.com/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-9e587c4a363f5cefb323ae5be705b837f9cf1c0df9ed0cd173a60e151e040315"
+    "fileHash": "sha256-6cddf8fe4b6d96554039724bcc7963ab622a00986dde64135be014d138613dcb"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YTS.cs3",
     "status": 1,
-    "version": 36,
+    "version": 37,
     "name": "YTS",
     "internalName": "YTS",
     "authors": [
@@ -1420,6 +1420,6 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://en.yts-official.mx&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-28512ea1b5427339167047f8815cd2b67873b1fcddac7ae99da4c1ab7c8475a2"
+    "fileHash": "sha256-be75db837ff39575013c939806f180e0b4f35b0613180306b46382d377bf963c"
   }
 ]
