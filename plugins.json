@@ -843,8 +843,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
-    "status": 1,
-    "version": 65,
+    "status": 0,
+    "version": 66,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -866,7 +866,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-7fb2d5a2543e9ce4033da5aa6df718a6de6139740bd962aa2e244d4f5832bced"
+    "fileHash": "sha256-b80db1aa15735ced6e6d435d75813ec01694c646b1d5aa7b9cc19ad7c56b9703"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
