@@ -1022,14 +1022,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SelcukFlix.cs3",
     "status": 1,
-    "version": 46,
+    "version": 47,
     "name": "SelcukFlix",
     "internalName": "SelcukFlix",
     "authors": [
       "kerimmkirac"
     ],
     "description": "Selcukflix'te her türden en yeni ve en popüler dizi ve filmleri izlemenin keyfini çıkarın. Aksiyondan romantiğe, bilim kurgudan dramaya, geniş kütüphanemizde herkes için bir şey var.",
-    "fileSize": 63092,
+    "fileSize": 64517,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1038,7 +1038,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=selcukflix.com",
     "apiVersion": 1,
-    "fileHash": "sha256-08f6419d73c7ee225042924946bf5f88499a252b51133aa54ef8d7d66354f9e6"
+    "fileHash": "sha256-cf99f63b04d6a16f11a5c242ce79d666153ec6a091aa260512bccaaadf9f92ee"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SetFilmIzle.cs3",
