@@ -2,7 +2,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeciX.cs3",
     "status": 1,
-    "version": 74,
+    "version": 75,
     "name": "AnimeciX",
     "internalName": "AnimeciX",
     "authors": [
@@ -12,7 +12,7 @@
       "JustRelaxable"
     ],
     "description": "AnimeciX, animeleri keşfedebileceğiniz ve animeler hakkında her şeyi öğrenebileceğiniz bir paylaşım platformudur.",
-    "fileSize": 156499,
+    "fileSize": 159468,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -20,7 +20,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://animecix.net&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-caef72fd437700cf760e669f82ac799529847969bf777aba4f3ea2a96aa70a93"
+    "fileHash": "sha256-7af36afe8af064567ccd07334d470183c8659cd1f4f75ef95b4901dfe2dcafd9"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animeler.cs3",
@@ -173,7 +173,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/BelgeselX.cs3",
     "status": 1,
-    "version": 35,
+    "version": 36,
     "name": "BelgeselX",
     "internalName": "BelgeselX",
     "authors": [
@@ -181,7 +181,7 @@
       "ByAyzen"
     ],
     "description": "En yeni belgeseller, türkçe altyazılı yada dublaj olarak 1080p kalitesinde HD belgesel izle.",
-    "fileSize": 40055,
+    "fileSize": 42446,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -189,7 +189,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=belgeselx.com",
     "apiVersion": 1,
-    "fileHash": "sha256-aa03af45ae027f250b43c4c4e18e21901201a5e529be2aede4236cebbd0fbbc4"
+    "fileHash": "sha256-cbf5629bc1e72752f55ae1121d9ff65811e5414045c5543e06017caf7e9570f9"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiMax.cs3",
@@ -382,7 +382,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizilla.cs3",
     "status": 1,
-    "version": 102,
+    "version": 103,
     "name": "Dizilla",
     "internalName": "Dizilla",
     "authors": [
@@ -390,7 +390,7 @@
       "kerimmkirac"
     ],
     "description": "1080p yabancı dizi izle. Türkçe altyazılı veya dublaj seçenekleriyle 1080p çözünürlükte yabancı dizilere anında ulaş. Popüler dizileri kesintisiz izle.",
-    "fileSize": 142329,
+    "fileSize": 144931,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -398,7 +398,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=https://dizilla.to",
     "apiVersion": 1,
-    "fileHash": "sha256-2cd1b37e200247bce57d05ea8fe72b73ed82afe8d0313b27d093a51137156120"
+    "fileHash": "sha256-d031047be814b1a56b10731d46efbc4f0973a0de22a87f172a890b01d7634616"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMag.cs3",
@@ -423,14 +423,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMom.cs3",
     "status": 1,
-    "version": 56,
+    "version": 57,
     "name": "DiziMom",
     "internalName": "DiziMom",
     "authors": [
       "kraptor"
     ],
     "description": "Binlerce yerli yabancı dizi arşivi, tüm sezonlar, kesintisiz bölümler. Sadece dizi izle, Dizimom heryerde seninle!",
-    "fileSize": 44954,
+    "fileSize": 44861,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -438,7 +438,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.dizimom.mom&size=32",
     "apiVersion": 1,
-    "fileHash": "sha256-10cc0d6f81a1a1dc744e2650893f63bba749d08aa9362b21f831a2f3fee4402e"
+    "fileHash": "sha256-c351b188399903bc190afe23b43f1fb5dd2aab1eeec881c1915717cf9c01eaa5"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPal.cs3",
@@ -465,7 +465,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziPalOrijinal.cs3",
     "status": 1,
-    "version": 33,
+    "version": 34,
     "name": "DiziPalOrijinal",
     "internalName": "DiziPalOrijinal",
     "authors": [
@@ -474,7 +474,7 @@
       "ByAyzen"
     ],
     "description": "DiziPal Orijinal.",
-    "fileSize": 153786,
+    "fileSize": 156813,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -482,7 +482,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal932.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-07b4861c522a4de8b62d0aa649e03f7b0ff7795efacde0b60deb5d8a4d6d891a"
+    "fileHash": "sha256-ca2e3442164ef08b37f19f24d4f3a8b3e877ddb6c5a97579ee0299a61623ef52"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizipod.cs3",
@@ -656,7 +656,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDFilmizlesene.cs3",
     "status": 1,
-    "version": 62,
+    "version": 63,
     "name": "FullHDFilmizlesene",
     "internalName": "FullHDFilmizlesene",
     "authors": [
@@ -664,7 +664,7 @@
       "ByAyzen"
     ],
     "description": "Sinema zevkini evinize kadar getirdik. Türkiye'nin lider Film sitesinde, en yeni filmleri Full HD izleyin.",
-    "fileSize": 139971,
+    "fileSize": 142719,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -672,7 +672,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.fullhdfilmizlesene.de",
     "apiVersion": 1,
-    "fileHash": "sha256-f556f1ec414933716c55538f1b6fb37c77ed077dced27c0864ae26a52246f4d2"
+    "fileHash": "sha256-d16fed95164eab3f8a46aba96689d06387c0a8ee15588266ede84a25ee84d5eb"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/GinikoCanli.cs3",
@@ -957,14 +957,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RareFilmm.cs3",
     "status": 1,
-    "version": 16,
+    "version": 17,
     "name": "RareFilmm",
     "internalName": "RareFilmm",
     "authors": [
       "ByAyzen"
     ],
     "description": "The Cave of Forgotten Films",
-    "fileSize": 26691,
+    "fileSize": 29033,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "en",
     "tvTypes": [
@@ -972,7 +972,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://rarefilmm.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-1af9e775e229673aa7320e73b0145ef56a5052e7d7a72b716d7179bfe0c27367"
+    "fileHash": "sha256-2b0f23614e8afc8e9452080ed3b116573d1a2a47e3441a0c54f9098e66c50abd"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RecTV.cs3",
@@ -1233,7 +1233,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/UgurFilm.cs3",
     "status": 1,
-    "version": 33,
+    "version": 34,
     "name": "UgurFilm",
     "internalName": "UgurFilm",
     "authors": [
@@ -1241,7 +1241,7 @@
       "kerimmkirac"
     ],
     "description": "Yabancı film izle, Türkçe dublaj ve Türkçe altyazılı film seçenekleriyle 720p ve 1080p HD kalitesinde film izle - Uğur Film full hd film izle.",
-    "fileSize": 32621,
+    "fileSize": 35531,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1249,7 +1249,7 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ugurfilm3.xyz/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-b21afc67b6792f060b18e6305763e660cff7ab14b4681abf6938ae927eb87435"
+    "fileHash": "sha256-b806b708bf500c01dd124b8ab70d1f17009917c5f4a4aca72987fdc46d1feaf1"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebDramaTurkey.cs3",
@@ -1276,7 +1276,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebteIzle.cs3",
     "status": 0,
-    "version": 51,
+    "version": 52,
     "name": "WebteIzle",
     "internalName": "WebteIzle",
     "authors": [
@@ -1284,7 +1284,7 @@
       "ByAyzen"
     ],
     "description": "Her türlü filmi ister dublaj ister altyazılı, en kaliteli bir şekilde izleyebileceğiniz arşivi en geniş gerçek film izleme siteniz.",
-    "fileSize": 79836,
+    "fileSize": 82391,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1292,19 +1292,19 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webteizle1.xyz&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-86da8b00477a87fa33bbb86c3fd88f8aa03962e91b9785622c795850f8b7a907"
+    "fileHash": "sha256-43f102f0a8ffbb3270fc6e237954fb17dc480cb09be6053549765fa76cfed900"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WFilmizle.cs3",
     "status": 1,
-    "version": 18,
+    "version": 19,
     "name": "WFilmizle",
     "internalName": "WFilmizle",
     "authors": [
       "ByAyzen"
     ],
     "description": "Yerli ve yabancı film izle, Türkçe dublaj ve altyazı seçenekleriyle en yeni ve unutulmamış olan filmleri Full HD kalitesinde online izleyebilirsiniz.",
-    "fileSize": 50555,
+    "fileSize": 50589,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1312,7 +1312,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://wfilmizle.bar&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-610c8cd5fa1ab9b6c26fdada934e4c54145120318b9519f3cdd7da6efd134126"
+    "fileHash": "sha256-69671bf37e4181fe981af6f1d7436c81e15b018c1a98097b593d5d4d27db05a7"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YabanciDizi.cs3",
