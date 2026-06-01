@@ -55,7 +55,7 @@
       "ByAyzen"
     ],
     "description": "Animely ile en sevdiğiniz animeleri Türkçe altyazılı olarak HD kalitede izleyin. Güncel sezon animeleri, klasikler ve çok daha fazlası. Hemen ücretsiz hesap oluşturun ve anime dünyasına katılın. Binlerce bölüm anime içeriğiyle sizleri bekliyor!",
-    "fileSize": 38646,
+    "fileSize": 35560,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -65,7 +65,7 @@
     ],
     "iconUrl": "https://play-lh.googleusercontent.com/BIE1R3FVOpIoCPxkx3Erfuw5sVc5wVIbeHAcRuTUGesuvc1S1Cr6KYumGVbn7xABuLc=w240-h480",
     "apiVersion": 1,
-    "fileHash": "sha256-d5b0dcaddbb31e4f7053f71ad7ec532bdb73071542cfb3539ce1922cf915f428"
+    "fileHash": "sha256-09f4b0ca42355fa22145e0af197478d25b40f8ca03f51545a275b2fb90e444fb"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizium.cs3",
@@ -853,7 +853,7 @@
       "ByAyzen"
     ],
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
-    "fileSize": 410345,
+    "fileSize": 410444,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -866,7 +866,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-786ba3792276a9d81811c9efe34d72922ce27014674e74433b05f3e74960bce1"
+    "fileHash": "sha256-1c97014cd281be2389d925b0486db8bbcb9ec356cc718afabf674aebeb16f4e3"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
@@ -986,7 +986,7 @@
       "ByAyzen"
     ],
     "description": "RecTV,Türkiye’deki en popüler Çevrimiçi Medya Akış platformlarından biridir. Filmlerin, Canlı Sporların, Web Dizilerinin ve çok daha fazlasının keyfini ücretsiz çıkarın.",
-    "fileSize": 64068,
+    "fileSize": 63967,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -996,7 +996,7 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://rectvapk.cc&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-397984b6e3bc00ec2c0be9c075b8cc5c966e240315465d478832c2f1a6ff822d"
+    "fileHash": "sha256-e379a0da3fda6208acd91aad69921e3e55e47a173f691987875c858f9b88b0ba"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
@@ -1412,7 +1412,7 @@
       "ByAyzen"
     ],
     "description": "YTS Filmleri 4K Desteği Otomatik altyazı ve film açıklaması (Torrent)",
-    "fileSize": 82551,
+    "fileSize": 83336,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1420,6 +1420,6 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://en.yts-official.mx&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-d3c38eed8f96c8e54543e2b06cd761cfe6e0d75333931b9de7737988df319971"
+    "fileHash": "sha256-28512ea1b5427339167047f8815cd2b67873b1fcddac7ae99da4c1ab7c8475a2"
   }
 ]
