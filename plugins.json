@@ -401,26 +401,6 @@
     "fileHash": "sha256-96c738f4d73c63772b31e5cbfa3ba946e5b29f4bf1498ab0e48bcc29453a3b59"
   },
   {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMag.cs3",
-    "status": 0,
-    "version": 49,
-    "name": "DiziMag",
-    "internalName": "DiziMag",
-    "authors": [
-      "nikyokki"
-    ],
-    "description": "En son çıkan yabancı dizi ve filmleri DiziMag farkıyla full hd 1080p kalitede izle. Dizimag Geniş ve güncel arşiviyle dizi ve filmlerin tadını çıkartın.",
-    "fileSize": 36636,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "TvSeries"
-    ],
-    "iconUrl": "https://dizimag.mom/uploads/logo/original/logo-5063.webp",
-    "apiVersion": 1,
-    "fileHash": "sha256-b8df379861cf33c0b25bb750a6bfff1744593b558e849a76462df5c0fa3e87a0"
-  },
-  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMom.cs3",
     "status": 1,
     "version": 57,
@@ -820,26 +800,6 @@
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://kick.com&size=48",
     "apiVersion": 1,
     "fileHash": "sha256-bc76a6867fd81b20c983a4548dfad8fd92e0400626094e13a76495210e2cdceb"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KoreanTurk.cs3",
-    "status": 0,
-    "version": 18,
-    "name": "KoreanTurk",
-    "internalName": "KoreanTurk",
-    "authors": [
-      "kraptor"
-    ],
-    "description": "Güney Kore sevdalılarının vazgeçemediği ve Türkiye'nin en çok ziyaret edilen Güney Kore Portalı; Koreantürk'e hoşgeldiniz!",
-    "fileSize": 21185,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "AsianDrama"
-    ],
-    "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.koreanturk.com",
-    "apiVersion": 1,
-    "fileHash": "sha256-15effc4ebd7cee6d95b36ca18ae4987b08fe1d61747c1acba58a2ab6c5976527"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
@@ -1354,26 +1314,6 @@
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.yenikaynak.com/&size=16",
     "apiVersion": 1,
     "fileHash": "sha256-6e7b4afb97a1eeece64ffea19a7666efee0ee9a5569073e5a3b8a1a712770dad"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YesilCamTv.cs3",
-    "status": 0,
-    "version": 8,
-    "name": "YesilCamTv",
-    "internalName": "YesilCamTv",
-    "authors": [
-      "kraptor"
-    ],
-    "description": "Türk sinemasının unutulmaz filmler bu adreste.",
-    "fileSize": 20768,
-    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
-    "language": "tr",
-    "tvTypes": [
-      "Movie"
-    ],
-    "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://yesilcamtv.com.tr&size=64",
-    "apiVersion": 1,
-    "fileHash": "sha256-4776724690ddda487544f4f6ac672aff641d6e4e30bca5c8c4b7a4f7bc59ec98"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Youtube.cs3",
