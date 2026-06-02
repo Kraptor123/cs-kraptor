@@ -844,7 +844,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 68,
+    "version": 69,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -853,7 +853,7 @@
       "ByAyzen"
     ],
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
-    "fileSize": 425178,
+    "fileSize": 422780,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -866,7 +866,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-89782d4ab7f6585ed2b89c35fcd1d66887d95fe5614e4a9f63afc44ef1c111da"
+    "fileHash": "sha256-9784e11241460547386c817f22d55e74ad0d62e771cc607842bf5c1cb580d86d"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
@@ -977,7 +977,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RecTV.cs3",
     "status": 1,
-    "version": 28,
+    "version": 29,
     "name": "RecTV",
     "internalName": "RecTV",
     "authors": [
@@ -986,7 +986,7 @@
       "ByAyzen"
     ],
     "description": "RecTV,Türkiye’deki en popüler Çevrimiçi Medya Akış platformlarından biridir. Filmlerin, Canlı Sporların, Web Dizilerinin ve çok daha fazlasının keyfini ücretsiz çıkarın.",
-    "fileSize": 62824,
+    "fileSize": 54469,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -996,7 +996,7 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://rectvapk.cc&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-9abd2fd2b3817f76c2cb6cf92cb960693946e953b671f8913ccdbfda5cd09f30"
+    "fileHash": "sha256-a2ea4391eebfdece24b2152240535de3c6c55118b69a0cc52474f5b059021865"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
@@ -1193,14 +1193,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Turkdizileri.cs3",
     "status": 1,
-    "version": 29,
+    "version": 30,
     "name": "Turkdizileri",
     "internalName": "Turkdizileri",
     "authors": [
       "ByAyzen"
     ],
     "description": "TRT1, Showtv, Kanal D ve daha fazla site tek bir eklentide birleşiyor.",
-    "fileSize": 165570,
+    "fileSize": 165709,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1208,7 +1208,7 @@
     ],
     "iconUrl": "https://i.imgur.com/Cff8v6J.png",
     "apiVersion": 1,
-    "fileHash": "sha256-bc98116ec313afcfda2528a3dfd33f55cdba40bd651f43906296965e355dea3e"
+    "fileHash": "sha256-09ec42da408bc78a18d9ea16afa8cc416b5e558b5029697f9a52e9edb9db1111"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TvDiziler.cs3",
@@ -1276,7 +1276,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebteIzle.cs3",
     "status": 0,
-    "version": 52,
+    "version": 53,
     "name": "WebteIzle",
     "internalName": "WebteIzle",
     "authors": [
@@ -1284,7 +1284,7 @@
       "ByAyzen"
     ],
     "description": "Her türlü filmi ister dublaj ister altyazılı, en kaliteli bir şekilde izleyebileceğiniz arşivi en geniş gerçek film izleme siteniz.",
-    "fileSize": 82391,
+    "fileSize": 81122,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1292,7 +1292,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webteizle1.xyz&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-43f102f0a8ffbb3270fc6e237954fb17dc480cb09be6053549765fa76cfed900"
+    "fileHash": "sha256-4d5a70aadeb3a9aabd07af6f22981c186acd34a1dd639cbe06bba4cb0ee1e5b1"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WFilmizle.cs3",
@@ -1378,7 +1378,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Youtube.cs3",
     "status": 1,
-    "version": 36,
+    "version": 37,
     "name": "Youtube",
     "internalName": "Youtube",
     "authors": [
@@ -1387,7 +1387,7 @@
       "kraptor"
     ],
     "description": "Youtube",
-    "fileSize": 104514,
+    "fileSize": 102213,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1398,7 +1398,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.youtube.com/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-4e32143c4592fc1ed1258cbc4df3f5bf43698dec8d28a72b1ec56554c9beb048"
+    "fileHash": "sha256-f639d0c3059a052f65781ddce5fab0371a4c64aa9f87b1efe361fcf9feda20d5"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YTS.cs3",
