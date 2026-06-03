@@ -1046,14 +1046,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SinemaCX.cs3",
     "status": 1,
-    "version": 32,
+    "version": 33,
     "name": "SinemaCX",
     "internalName": "SinemaCX",
     "authors": [
       "kraptor"
     ],
     "description": "Güncel ve en iyi yabancı filmleri yüksek görüntü kalitesinde, Türkçe dublaj ve altyazı seçenekleriyle filmleri full izleyin.",
-    "fileSize": 20863,
+    "fileSize": 20828,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1061,7 +1061,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.sinema.cx",
     "apiVersion": 1,
-    "fileHash": "sha256-c1cbe3cbdf308a7b372b1ebf1abda499ff82eb3684b82b80a6975bdc6fdd17ab"
+    "fileHash": "sha256-d36969b22997bc264e10544b607a0527d9efd0dab96f555c9be6ef833117fa90"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SineWix.cs3",
