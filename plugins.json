@@ -851,8 +851,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/MirrorVerse.cs3",
-    "status": 1,
-    "version": 28,
+    "status": 0,
+    "version": 29,
     "name": "MirrorVerse",
     "internalName": "MirrorVerse",
     "authors": [
@@ -861,7 +861,7 @@
       "ByAyzen"
     ],
     "description": "Netflix, Disney+ ve Primevideo eklentileri tek bir eklentide kendisi bir eklenti degildir bu 3 eklentiyi kurar, tüm eklentilerde altyazı netflixde dublaj desteği var.",
-    "fileSize": 126260,
+    "fileSize": 126259,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -870,7 +870,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/mirrorverseicon.png",
     "apiVersion": 1,
-    "fileHash": "sha256-0cb23782e1b6b2213f57dc6b73029517abfba99d6be81af57e6d662f41204078"
+    "fileHash": "sha256-cbb294e345f3c886e773b376d6afecb8dc18007f29c3a2b3daa41b460159f3d9"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/OnePaceTr.cs3",
