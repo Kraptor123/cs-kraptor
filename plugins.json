@@ -337,8 +337,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziKorea.cs3",
-    "status": 1,
-    "version": 29,
+    "status": 0,
+    "version": 30,
     "name": "DiziKorea",
     "internalName": "DiziKorea",
     "authors": [
@@ -354,7 +354,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://dizikorea.pw&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-9a58f6515dd095fb4beceb20afede714f2fccf303498e4df48d3a26dff9cc236"
+    "fileHash": "sha256-75c142c88e8b13b095d2c089a97769d57441d8508d8bb8df3e8bd4a1f2a45259"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziLife.cs3",
