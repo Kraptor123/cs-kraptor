@@ -1297,14 +1297,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YeniKaynak.cs3",
     "status": 1,
-    "version": 7,
+    "version": 8,
     "name": "YeniKaynak",
     "internalName": "YeniKaynak",
     "authors": [
       "kraptor"
     ],
     "description": "İran Sinemasının Yeni Adresi - İran Filmleri, İran Dizileri, İslami Filmler, Dini Filmler, Dini Sinema, İslami Diziler,...",
-    "fileSize": 17444,
+    "fileSize": 21423,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1313,7 +1313,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.yenikaynak.com/&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-6e7b4afb97a1eeece64ffea19a7666efee0ee9a5569073e5a3b8a1a712770dad"
+    "fileHash": "sha256-c651cce0ff51551116bced370e8ed3bb0fb48b3f67692cbaaf52c2a1bc3906f0"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Youtube.cs3",
