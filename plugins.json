@@ -895,7 +895,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/OpenAnime.cs3",
     "status": 1,
-    "version": 24,
+    "version": 25,
     "name": "OpenAnime",
     "internalName": "OpenAnime",
     "authors": [
@@ -903,7 +903,7 @@
       "ByAyzen"
     ],
     "description": "Anime izleme deneyiminizi zenginleştiren, hızlı ve etkileyici özelliklerle donatılmış, şık bir tasarıma sahip anime platformu. Anime izleme deneyiminiz, kolaylaştırıldı.",
-    "fileSize": 67729,
+    "fileSize": 67615,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -912,7 +912,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://openani.me/&size=24",
     "apiVersion": 1,
-    "fileHash": "sha256-d62d14c98cedd2c17aab2623a2152f844d287cd2470cbad3bf6e3b0e221588e7"
+    "fileHash": "sha256-eed28bebf342b67d1d5ae9b870c73c9acd0b6fd7bac1ffb7ff46bce6aaabc1f5"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/RareFilmm.cs3",
