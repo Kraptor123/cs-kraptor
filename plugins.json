@@ -533,14 +533,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYou.cs3",
     "status": 1,
-    "version": 45,
+    "version": 46,
     "name": "DiziYou",
     "internalName": "DiziYou",
     "authors": [
       "ByAyzen"
     ],
     "description": "Diziyou en kaliteli Türkçe dublaj ve altyazılı yabancı dizi izleme sitesidir. Güncel ve efsanevi dizileri 1080p Full HD kalitede izlemek için hemen tıkla!",
-    "fileSize": 20800,
+    "fileSize": 47190,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -548,7 +548,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.diziyou.co",
     "apiVersion": 1,
-    "fileHash": "sha256-b5e3bc782f6240108b5d3a38b04341f98497934d5cbfd36641918d60fe20c8a7"
+    "fileHash": "sha256-fed5934e6c1c2c641e9d8ef9587e5351f7fc96067499f71905496a1ba62b9a27"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmEkseni.cs3",
