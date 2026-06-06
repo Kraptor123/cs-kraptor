@@ -698,14 +698,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmCehennemi.cs3",
     "status": 1,
-    "version": 87,
+    "version": 88,
     "name": "HDFilmCehennemi",
     "internalName": "HDFilmCehennemi",
     "authors": [
       "kraptor"
     ],
     "description": "HDFilmCehennemi - Türkiye'nin en hızlı hd film izleme sitesi. Tek ve gerçek HDFilmCehennemi sitesi.",
-    "fileSize": 68656,
+    "fileSize": 68254,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -714,7 +714,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=http://hdfilmcehennemi.nl",
     "apiVersion": 1,
-    "fileHash": "sha256-5e3bcc764d866cacf735bec7c4a193962db267b5e1451122e8ed1f3628fc7ce2"
+    "fileHash": "sha256-937362244a9b7f9303d300116280cc2f3110cc1e53a9aa2af1b6a12b3762f37d"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmDelisi.cs3",
