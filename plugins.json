@@ -825,7 +825,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 70,
+    "version": 71,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -834,7 +834,7 @@
       "ByAyzen"
     ],
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
-    "fileSize": 425762,
+    "fileSize": 425736,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -847,7 +847,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-6024abe7f6000dff45e63898aceb5bc141d7c7e10b4535077d49a1d5d8ded747"
+    "fileHash": "sha256-78d5b854b459186373ce7e7729600982a96e34a13eb6040838a1e1f9a75bbc7c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
