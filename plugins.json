@@ -872,8 +872,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/MirrorVerse.cs3",
-    "status": 0,
-    "version": 30,
+    "status": 1,
+    "version": 31,
     "name": "MirrorVerse",
     "internalName": "MirrorVerse",
     "authors": [
@@ -891,7 +891,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/mirrorverseicon.png",
     "apiVersion": 1,
-    "fileHash": "sha256-d82c870d8b70247fe4d4aa5ea50efd598dec9776bd3b8c88121e0119374b52b9"
+    "fileHash": "sha256-71e39c936561e1d2b3074c510157eb077dc99e0ced6cc41cb9f24fd5f9808a4b"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/OnePaceTr.cs3",
