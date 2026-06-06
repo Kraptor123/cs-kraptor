@@ -90,14 +90,8 @@
   # 💖 Devamlı Destekçiler
 
   ### ⭐ Aktif Aboneler
-  <table>
-    <tr>
-      <td align="center">
-        <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/155932364/cd801d2b8839429b84845be99ef65101/eyJ3IjoyMDB9/1.png?token-hash=8szpaxXqRvq4qUVVO_GXwy2hDK9h1bThzm0Bm_sKfVc%3D" width="80" /><br/>
-        <sub><b>Daniel Gary</b></sub>
-      </td>
-    </tr>
-  </table>
+  
+  Aktif Abone Bulunmuyor.
 
   ### ♥️ Destekçiler
   <table>
@@ -153,6 +147,10 @@
       <td align="center">
         <img src="https://placehold.co/80x80/white/black/?text=Zeki\nDincer" width="80" /><br/>
         <sub><b>Zeki Dinçer</b></sub>
+      </td>
+        <td align="center">
+        <img src="https://c10.patreonusercontent.com/4/patreon-media/p/user/155932364/cd801d2b8839429b84845be99ef65101/eyJ3IjoyMDB9/1.png?token-hash=8szpaxXqRvq4qUVVO_GXwy2hDK9h1bThzm0Bm_sKfVc%3D" width="80" /><br/>
+        <sub><b>Daniel Gary</b></sub>
       </td>
     </tr>
   </table>
