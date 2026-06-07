@@ -804,7 +804,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KickTR.cs3",
     "status": 1,
-    "version": 14,
+    "version": 15,
     "name": "KickTR",
     "internalName": "KickTR",
     "authors": [
@@ -812,7 +812,7 @@
       "kraptor"
     ],
     "description": "Kick, canlı yayın yapılan bir platformdur. Daha gevşek kuralları ve yayıncılara daha fazla kazanç sağlamasıyla bilinir. Platform, yayıncılardan sadece %5 kesinti yapar ve bu oran diğer yayın platformlarına göre en düşük kesintilerden biridir.",
-    "fileSize": 30373,
+    "fileSize": 33902,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -820,7 +820,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://kick.com&size=48",
     "apiVersion": 1,
-    "fileHash": "sha256-bc76a6867fd81b20c983a4548dfad8fd92e0400626094e13a76495210e2cdceb"
+    "fileHash": "sha256-b66a5685ddf5757d0db5265356c6c9635fca66c8431040f3cb5d22a78bf093c1"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
