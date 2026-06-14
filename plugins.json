@@ -637,14 +637,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Filmzal.cs3",
     "status": 1,
-    "version": 13,
+    "version": 14,
     "name": "Filmzal",
     "internalName": "Filmzal",
     "authors": [
       "kraptor"
     ],
     "description": "Filmzal: HD Film izle, Tv-Seriallar - HD Film izle, Azerbaycanca Dublaj film izle, Türkçe Dublaj Film İzle",
-    "fileSize": 31734,
+    "fileSize": 32294,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "az",
     "tvTypes": [
@@ -652,7 +652,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmzal.me/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-b9fcce165f2ef69b71114436ac0a0c89d5a4cac21de9366c452cca577404ef8e"
+    "fileHash": "sha256-acf1664864d6a93cf2ef40340116db28ab8294124b1b05efb1e03c64afe3d0d2"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FullHDFilmizlesene.cs3",
@@ -1213,8 +1213,8 @@
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/UgurFilm.cs3",
-    "status": 1,
-    "version": 35,
+    "status": 0,
+    "version": 36,
     "name": "UgurFilm",
     "internalName": "UgurFilm",
     "authors": [
@@ -1222,7 +1222,7 @@
       "kerimmkirac"
     ],
     "description": "Yabancı film izle, Türkçe dublaj ve Türkçe altyazılı film seçenekleriyle 720p ve 1080p HD kalitesinde film izle - Uğur Film full hd film izle.",
-    "fileSize": 35921,
+    "fileSize": 35922,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1230,7 +1230,7 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ugurfilm3.xyz/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-df29d5bff9a33ec436061c66fd69be1877c56d3f62e4f47951e25634beaccecc"
+    "fileHash": "sha256-0c3e6dc66a9e7f022035748a22030d2e76a58d7af8c99ba4b00b2b72579650a5"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebDramaTurkey.cs3",
