@@ -852,14 +852,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
     "status": 1,
-    "version": 29,
+    "version": 30,
     "name": "KultFilmler",
     "internalName": "KultFilmler",
     "authors": [
       "kraptor"
     ],
     "description": "Kült Filmler özenle en iyi filmleri derler ve iyi bir altyazılı film izleme deneyimi sunmayı amaçlar",
-    "fileSize": 28917,
+    "fileSize": 29813,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -868,7 +868,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://kultfilmler.net&size=32",
     "apiVersion": 1,
-    "fileHash": "sha256-380438bf29e02fdd456f91af16bfc9b70ff43134dd6c82b2da44a6c8aa920801"
+    "fileHash": "sha256-fbc4e3efc7c85f78ad9fbc0ce61338958b6d0163a485b4b28b4f37b46b5da8dc"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/MirrorVerse.cs3",
