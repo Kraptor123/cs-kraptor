@@ -235,14 +235,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Ddizi.cs3",
     "status": 1,
-    "version": 17,
+    "version": 18,
     "name": "Ddizi",
     "internalName": "Ddizi",
     "authors": [
       "kraptor"
     ],
     "description": "Ddizi, dizi izle, dizi seyret, yerli dizi izle, canlı dizi, türk dizi izle, dizi izle full, diziizle, eski diziler.",
-    "fileSize": 29058,
+    "fileSize": 30049,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -250,7 +250,7 @@
     ],
     "iconUrl": "https://www.ddizi.im/images/logo.png",
     "apiVersion": 1,
-    "fileHash": "sha256-35c7231a9f49f6877e95be4940c2435793cfe0cdd67cece45ff30e8b8ad9d3b9"
+    "fileHash": "sha256-cf70e6690dadddc1336e70a2981fcc2ae03b2832ab4a9317d462559ce0604cb0"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziAsia.cs3",
