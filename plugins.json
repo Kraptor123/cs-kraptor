@@ -1181,7 +1181,7 @@
       "ByAyzen"
     ],
     "description": "TRT1, Showtv, Kanal D ve daha fazla site tek bir eklentide birleşiyor.",
-    "fileSize": 165395,
+    "fileSize": 165822,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1189,7 +1189,7 @@
     ],
     "iconUrl": "https://i.imgur.com/Cff8v6J.png",
     "apiVersion": 1,
-    "fileHash": "sha256-a9c5947bd827fddb57a114e469f1be9e890500645fbaf5c79c588c9be39beeaf"
+    "fileHash": "sha256-ca66ba2d25a087f2e54ba26c5a6094e4eec5751196e914ffaa371b4c882a63a3"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TvDiziler.cs3",
