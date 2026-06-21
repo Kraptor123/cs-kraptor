@@ -845,7 +845,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 72,
+    "version": 73,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -854,7 +854,7 @@
       "ByAyzen"
     ],
     "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
-    "fileSize": 436254,
+    "fileSize": 455385,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -867,7 +867,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-6cb396d7c040ac22962e460b70d9f2237ae3e2ec16e8851660ed50ea55aa5e1d"
+    "fileHash": "sha256-6abc8f621569a6eb068b1889130a90fe3d6b0f114eaed0c8d9e11c4eeaee7ca7"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
@@ -893,7 +893,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/MirrorVerse.cs3",
     "status": 1,
-    "version": 31,
+    "version": 32,
     "name": "MirrorVerse",
     "internalName": "MirrorVerse",
     "authors": [
@@ -902,7 +902,7 @@
       "ByAyzen"
     ],
     "description": "Netflix, Disney+ ve Primevideo eklentileri tek bir eklentide kendisi bir eklenti degildir bu 3 eklentiyi kurar, tüm eklentilerde altyazı netflixde dublaj desteği var.",
-    "fileSize": 119508,
+    "fileSize": 119532,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -911,7 +911,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/mirrorverseicon.png",
     "apiVersion": 1,
-    "fileHash": "sha256-71e39c936561e1d2b3074c510157eb077dc99e0ced6cc41cb9f24fd5f9808a4b"
+    "fileHash": "sha256-5364778bed9b31958f5d85f9cd592f8a2ccedd42d0141833f6563aa7402e6a5a"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/OnePaceTr.cs3",
