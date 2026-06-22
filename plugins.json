@@ -1002,15 +1002,16 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
     "status": 1,
-    "version": 22,
+    "version": 23,
     "name": "SeiCode",
     "internalName": "SeiCode",
     "authors": [
       "kraptor",
+      "ByAyzen",
       "kerimmkirac"
     ],
     "description": "Seicode ile en yeni animeler keşfedin!",
-    "fileSize": 35188,
+    "fileSize": 34067,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1018,7 +1019,7 @@
     ],
     "iconUrl": "https://seicode.net/favicon.png",
     "apiVersion": 1,
-    "fileHash": "sha256-adc73651794b52e550e4cea19ac751b4d44bd202f06a183b08ae0803237b1268"
+    "fileHash": "sha256-b3ae9daa7b6c5f08bb11dcea40322cd1666e0f33294342ea99ba653d024ac46b"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SelcukFlix.cs3",
