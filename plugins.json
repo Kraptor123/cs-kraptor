@@ -379,15 +379,16 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziKorea.cs3",
     "status": 1,
-    "version": 32,
+    "version": 33,
     "name": "DiziKorea",
     "internalName": "DiziKorea",
     "authors": [
       "Kerimmkirac",
-      "kraptor"
+      "kraptor",
+      "ByAyzen"
     ],
     "description": "Kore Dizileri izle, Dizikorea size en yeni ve güncel romantik komedi, okul tarzında ki Kore Asya Dizilerini Full HD Türkçe Altyazılı izleme şansı verir.",
-    "fileSize": 55631,
+    "fileSize": 70040,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -395,7 +396,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://dizikorea.pw&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-89eb1850e3d13f9d59d0ae6515489c2baec4eee197b9f7872e298a762166f507"
+    "fileHash": "sha256-eeaf7397e766d17455b4b1d34074d5643be21ee32eadeabe79925eb3ba287664"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziLife.cs3",
