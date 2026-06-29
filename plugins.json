@@ -533,7 +533,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYo.cs3",
     "status": 1,
-    "version": 72,
+    "version": 73,
     "name": "DiziYo",
     "internalName": "DiziYo",
     "authors": [
@@ -541,7 +541,7 @@
       "ByAyzen"
     ],
     "description": "Diziyo ile Yabancı Dizi, Film, Anime, Çizgi-Film izle.",
-    "fileSize": 29221,
+    "fileSize": 30413,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -549,7 +549,7 @@
     ],
     "iconUrl": "https://i.imgur.com/zQYsL6Z.png",
     "apiVersion": 1,
-    "fileHash": "sha256-83d448da31ebb1922f8339f67c7b53fa56142b729c9421401f9579b3bdc71269"
+    "fileHash": "sha256-b24f42b71ef11c14fa0c4feeb670a85ca7b322c1f122458caa3cf1e76eb4f36f"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziYou.cs3",
