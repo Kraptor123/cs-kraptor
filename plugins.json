@@ -42,7 +42,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://animeler.pw/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-f7c155351dc77bd343fbc732b55f4bc34ba1753e7cbf0b1e2c4e32c8d43a35ab"
+    "fileHash": "sha256-7ab7de463c93a75253f8423f9b1dd022c3f9514fbdb2e271359d6ae726ba242f"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animely.cs3",
@@ -302,7 +302,7 @@
       "kerimmkirac"
     ],
     "description": "Asya'nın en iyi Çin ve Kore dizilerini ve filmlerini keşfedin! Romantizm, dram, aksiyon... Diziasya ile Asya kültürüne hemen adım atın!",
-    "fileSize": 30312,
+    "fileSize": 30310,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -310,7 +310,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.diziasya.com&size=32",
     "apiVersion": 1,
-    "fileHash": "sha256-62faa46dd0c096ffe391cb9f0c2cd4fad6e203293a26db855bdd8f52b454d4b0"
+    "fileHash": "sha256-aff3543f38fa8f52eb37cb329f4ae6a3898b9c615e35b261da3a3af3fd454a1b"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziBox.cs3",
@@ -846,7 +846,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 74,
+    "version": 75,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -854,8 +854,8 @@
       "Phisher98",
       "ByAyzen"
     ],
-    "description": "Kaliteli kaynakları ile birlikte KraptorPlus eklentisi, sizlere 4K kalitesine kadar yüksek kaliteli ve altyazılı film izleme zevkini sağlıyor.",
-    "fileSize": 455659,
+    "description": "Bir çok sitenin birleştiği toplama eklenti.",
+    "fileSize": 476007,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -868,7 +868,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-b95d20d9a2eea9364cd8c2d83cb366503229860f9f44a38280852c554e29034e"
+    "fileHash": "sha256-481d735ecbb6d9b0351834b0482ed084c6eb01f469d68bf98696e2f19c9eba0f"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
@@ -912,7 +912,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/mirrorverseicon.png",
     "apiVersion": 1,
-    "fileHash": "sha256-ac35feee7e1cd766804a978967dc1856b4725e769bd4e27715c61fd822605bfa"
+    "fileHash": "sha256-264375d7d102aca4ffae50b55e41b409c0e27b799ce996157620386873576b98"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/OnePaceTr.cs3",
@@ -988,7 +988,7 @@
       "ByAyzen"
     ],
     "description": "RecTV,Türkiye’deki en popüler Çevrimiçi Medya Akış platformlarından biridir. Filmlerin, Canlı Sporların, Web Dizilerinin ve çok daha fazlasının keyfini ücretsiz çıkarın.",
-    "fileSize": 54879,
+    "fileSize": 54886,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -998,7 +998,7 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://rectvapk.cc&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-0f3995c60aa2e8b95af2c2ab5c68b4b48c999d4382d54fa3802baac96c61c052"
+    "fileHash": "sha256-d6d1191f5752012fed4402eb1a7cf6a76f837cfad7aa15da8274bdb6d79ceeee"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SeiCode.cs3",
