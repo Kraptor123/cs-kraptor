@@ -12,7 +12,7 @@
       "JustRelaxable"
     ],
     "description": "AnimeciX, animeleri keşfedebileceğiniz ve animeler hakkında her şeyi öğrenebileceğiniz bir paylaşım platformudur.",
-    "fileSize": 156003,
+    "fileSize": 155973,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -20,7 +20,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://animecix.net&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-697e3296a3d06f7e8ac0f0311d566e0a8fdd10d40b281cfa2c99e430426241de"
+    "fileHash": "sha256-ad8d2e49ae3f0a5fe4922c4b4f7cd5e92d026654c0a7b8e26daf33787788d1bc"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animeler.cs3",
@@ -440,7 +440,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=https://dizilla.to",
     "apiVersion": 1,
-    "fileHash": "sha256-8c31fd03848e475009de487a4a3819f21afcf00d521e4ee09d345c66f824157a"
+    "fileHash": "sha256-55b196f0c25d792f52d37b8582dc70f7aa85a4f65cb04163c474f3d68efd5f43"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziMom.cs3",
@@ -496,7 +496,7 @@
       "ByAyzen"
     ],
     "description": "DiziPal Orijinal.",
-    "fileSize": 148822,
+    "fileSize": 148829,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -504,7 +504,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal932.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-3efc23d9c426d61e5545e3e819382e6cec029227e4db01d47b1dec8a004b83a0"
+    "fileHash": "sha256-b147f5aae15c31ad099d97733e52d7fd8488cd6f930075107e40b76f35dc8c9a"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizipod.cs3",
@@ -686,7 +686,7 @@
       "ByAyzen"
     ],
     "description": "Sinema zevkini evinize kadar getirdik. Türkiye'nin lider Film sitesinde, en yeni filmleri Full HD izleyin.",
-    "fileSize": 137999,
+    "fileSize": 138032,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -694,7 +694,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=www.fullhdfilmizlesene.de",
     "apiVersion": 1,
-    "fileHash": "sha256-86cde5a7df72183fa7ac17dac6286799def6873d5685c1889f8b601fb94f6178"
+    "fileHash": "sha256-693378ee2e2b2f8a3bce162b5efcfcf387fe173074f5eceb0a7b6b79f8d45fbc"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/GinikoCanli.cs3",
@@ -1161,7 +1161,7 @@
       "kraptor"
     ],
     "description": "Anime izle, Anime tv, birbirinden farklı ve güzel animeleri keyifle seyredebileceğiniz Türk anime severlerin en popüler türkçe anime izleme sitesidir.",
-    "fileSize": 41177,
+    "fileSize": 42741,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1169,7 +1169,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.tranimeizle.io/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-68f85490caaa6a23f5f09504c05698e76c0b780af6ef5db3d81d88eb3ee7e716"
+    "fileHash": "sha256-cf538f566a2b534021e88e97c18fd49d0c7ffefbb84f88ddd5d564a94cea6552"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TurkAnime.cs3",
