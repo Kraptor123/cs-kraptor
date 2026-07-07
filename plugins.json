@@ -855,7 +855,7 @@
       "ByAyzen"
     ],
     "description": "Bir çok sitenin birleştiği toplama eklenti.",
-    "fileSize": 476226,
+    "fileSize": 476177,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -868,7 +868,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-a7745d7891b1b93e3c1e2467b8250f6bb076d1f55898a2d56d9b1c48560c1e39"
+    "fileHash": "sha256-795fdbe2593ff2e461a73dd37b67388d61937f93ed0c360ae3693afb9b79c25c"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
