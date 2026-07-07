@@ -12,7 +12,7 @@
       "JustRelaxable"
     ],
     "description": "AnimeciX, animeleri keşfedebileceğiniz ve animeler hakkında her şeyi öğrenebileceğiniz bir paylaşım platformudur.",
-    "fileSize": 163625,
+    "fileSize": 161966,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -20,7 +20,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://animecix.net&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-f781950a67b707021617618f6e27cc624cea5c1d1d8f31f903b9bf521cf0edd9"
+    "fileHash": "sha256-9eee83b4e2ac5ddc21df83b8d2e62f2f529e09ffaa910e62ddd0dd5c76648bde"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Animeler.cs3",
