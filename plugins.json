@@ -572,6 +572,26 @@
     "fileHash": "sha256-f3e6670c0020f384575fed85dd2b458d376673403b88edc3d2346e91c368d192"
   },
   {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DramaDizilerim.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "DramaDizilerim",
+    "internalName": "DramaDizilerim",
+    "authors": [
+      "kraptor"
+    ],
+    "description": "Shorts formatında en popüler Kore dizileri, Çin dizileri, Asya dizileri ve drama içerikleri.",
+    "fileSize": 16218,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "tr",
+    "tvTypes": [
+      "TvSeries"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=dramadizilerim.com",
+    "apiVersion": 1,
+    "fileHash": "sha256-6375f9e872013e48426495d13adfe4104ff193792aacd94b91c90f9e5fd996d1"
+  },
+  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmEkseni.cs3",
     "status": 1,
     "version": 48,
