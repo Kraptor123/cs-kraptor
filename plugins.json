@@ -739,14 +739,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmCehennemi.cs3",
     "status": 1,
-    "version": 91,
+    "version": 92,
     "name": "HDFilmCehennemi",
     "internalName": "HDFilmCehennemi",
     "authors": [
       "kraptor"
     ],
     "description": "HDFilmCehennemi - Türkiye'nin en hızlı hd film izleme sitesi. Tek ve gerçek HDFilmCehennemi sitesi.",
-    "fileSize": 69466,
+    "fileSize": 70635,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -755,7 +755,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=128&domain=http://hdfilmcehennemi.nl",
     "apiVersion": 1,
-    "fileHash": "sha256-609c27fd7cc51ae02a88dbed2aabb94da5471832447acb7ab9ecd272f39d47e1"
+    "fileHash": "sha256-991bfd491747d73425aee0c6598ce370dd797fe22339ff7d0bc3e8ea34e8d4d4"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmDelisi.cs3",
@@ -866,7 +866,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 76,
+    "version": 77,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -875,7 +875,7 @@
       "ByAyzen"
     ],
     "description": "Bir çok sitenin birleştiği toplama eklenti.",
-    "fileSize": 476177,
+    "fileSize": 478000,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -888,7 +888,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-795fdbe2593ff2e461a73dd37b67388d61937f93ed0c360ae3693afb9b79c25c"
+    "fileHash": "sha256-06276a7c1a7ecfa96702174ac2309f728fb6381797edf685d06d35e435df1906"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
