@@ -77,7 +77,7 @@
       "ByAyzen"
     ],
     "description": "AnimPow da binlerce güncel animeyi reklamsız, 1080p HD kalitesinde Türkçe altyazılı olarak ücretsiz izle! Yeni üyelere 1 haftalık 4K Video Plus anime sistemi denemesi bedava.",
-    "fileSize": 64431,
+    "fileSize": 64437,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -85,7 +85,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://animpow.com/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-24295d47d65db261ef896e40d9513d5e585d0038caeed940a18f1db133adee4c"
+    "fileHash": "sha256-d466ad4d1106f7ed2b7592421c61a9a6656393afc4d6102614ac54ce0c399f09"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Anizium.cs3",
@@ -235,14 +235,15 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/CizgiveDizi.cs3",
     "status": 1,
-    "version": 45,
+    "version": 46,
     "name": "CizgiveDizi",
     "internalName": "CizgiveDizi",
     "authors": [
-      "kraptor"
+      "kraptor",
+      "ByAyzen"
     ],
     "description": "Ücretsiz bir şekilde çizgi dizi, dizi, anime ve daha fazlasını eski-yeni demeden izleyebilirsiniz.",
-    "fileSize": 35208,
+    "fileSize": 36226,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -250,7 +251,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=cizgivedizi.com",
     "apiVersion": 1,
-    "fileHash": "sha256-9830fa3e5b205de480ebb661ac07edfbca3f358d4558f1ac5fdb85e6eacbe647"
+    "fileHash": "sha256-d77d49b6aeb23b9a450598c3ccd475764737761c53f8f5bf279baa1f9cd69704"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Ddizi.cs3",
@@ -496,7 +497,7 @@
       "ByAyzen"
     ],
     "description": "DiziPal Orijinal.",
-    "fileSize": 154719,
+    "fileSize": 155134,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -504,7 +505,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizipal932.com&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-f4da3b37f3c00ea626611e9db939bc57c5fd9ec9d04d04b1799a3749248f7e1f"
+    "fileHash": "sha256-3c0f2d9270c2988be1f3d5060f5e6dfcc0e695cb7db67a75e132164a5ac3c351"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Dizipod.cs3",
