@@ -867,7 +867,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 80,
+    "version": 81,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -877,7 +877,7 @@
       "Megix"
     ],
     "description": "Bir çok sitenin birleştiği toplama eklenti.",
-    "fileSize": 620267,
+    "fileSize": 621686,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -890,7 +890,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-f1584857e42a19d3a4036195fdccf665781f799f2adfe1a891ebba3c9566bf86"
+    "fileHash": "sha256-bbc6a71f7fb5d24e4f5045cca78131585536cd0ed9448716697087f8cdb45ba3"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
