@@ -1,5 +1,25 @@
 [
   {
+    "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/__New.cs3",
+    "status": 1,
+    "version": 0,
+    "name": "__New",
+    "internalName": "__New",
+    "authors": [
+      "kraptor"
+    ],
+    "description": "DESCRIPTIONDONOTFORGET",
+    "fileSize": 12445,
+    "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
+    "language": "en",
+    "tvTypes": [
+      "Movie"
+    ],
+    "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=https://",
+    "apiVersion": 1,
+    "fileHash": "sha256-b965ea9a7e0529fbde89b9d1549eab37a3d4d0c5dfac2d1d99f345764ded93be"
+  },
+  {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AnimeciX.cs3",
     "status": 1,
     "version": 83,
@@ -781,14 +801,14 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmizle.cs3",
     "status": 1,
-    "version": 22,
+    "version": 23,
     "name": "HDFilmizle",
     "internalName": "HDFilmizle",
     "authors": [
       "ByAyzen"
     ],
     "description": "En yeni ve popüler filmleri 1080p kalitesinde Türkçe dublaj altyazılı izle. Aksiyon, macera, komedi, dram ve daha fazlası film izle sayfamızda.",
-    "fileSize": 60120,
+    "fileSize": 60173,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -796,7 +816,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.hdfilmizle.life/rally-caps/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-8679d4d269325eef96846e17d85a47c12742c2559561f06b1131b1e4352de935"
+    "fileHash": "sha256-ba400b39049581164a207c402ce9e66003e716eda2399ab382b2ecc8b5f1ec42"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/InatBox.cs3",
@@ -867,7 +887,7 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KraptorPlus.cs3",
     "status": 1,
-    "version": 81,
+    "version": 82,
     "name": "KraptorPlus",
     "internalName": "KraptorPlus",
     "authors": [
@@ -877,7 +897,7 @@
       "Megix"
     ],
     "description": "Bir çok sitenin birleştiği toplama eklenti.",
-    "fileSize": 621686,
+    "fileSize": 590210,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -890,7 +910,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-bbc6a71f7fb5d24e4f5045cca78131585536cd0ed9448716697087f8cdb45ba3"
+    "fileHash": "sha256-45df95fdb60a5f23705ee2dcb44f5e02a838cdbf2cf5414dcf596582f8706726"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
