@@ -366,7 +366,7 @@
       "ByAyzen"
     ],
     "description": "Dizigecesi ile yüksek kalitede Türkçe altyazılı yabancı dizileri kesintisiz ve reklamsız izleyebilirsiniz. Yabancı dizi izle, yabancı film izle, yabancı diziler, yabancı filmler.",
-    "fileSize": 55782,
+    "fileSize": 56909,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -375,7 +375,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dizigecesi.com/tr&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-229c73d0fe7a03a11ef53742563168bb5686d51b564b49c23d7987b33b277b60"
+    "fileHash": "sha256-e575e5ade9b925ef606a7a447859c545678fd40f23229a9708d7007bc7bf2c25"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DiziKorea.cs3",
@@ -727,7 +727,7 @@
       "kraptor"
     ],
     "description": "Vpn Gerekli! Dünyanın tüm ülkelerinden ücretsiz çevrimiçi TV.",
-    "fileSize": 16732,
+    "fileSize": 17904,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -735,7 +735,7 @@
     ],
     "iconUrl": "https://www.giniko.com/images/favicon.ico",
     "apiVersion": 1,
-    "fileHash": "sha256-60986c28eac0470ff2625d50b87f916b164892fd64b8efc27e858d25c69fe87a"
+    "fileHash": "sha256-74d715346d47a7c0706e464c81fbec9cde1a758c1e7afebea839da1d68820ae9"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/HDFilmCehennemi.cs3",
@@ -788,7 +788,7 @@
       "ByAyzen"
     ],
     "description": "En yeni ve popüler filmleri 1080p kalitesinde Türkçe dublaj altyazılı izle. Aksiyon, macera, komedi, dram ve daha fazlası film izle sayfamızda.",
-    "fileSize": 60173,
+    "fileSize": 61331,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -796,7 +796,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.hdfilmizle.life/rally-caps/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-ba400b39049581164a207c402ce9e66003e716eda2399ab382b2ecc8b5f1ec42"
+    "fileHash": "sha256-34cb4187049278f3081adb2896e32d4ba00a688490fbfe48a5a657e64d4c0473"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/InatBox.cs3",
@@ -833,7 +833,7 @@
       "ByAyzen"
     ],
     "description": "Binlerce Film İzleme Seçeneğiyle En İyi Film İzleme Sitesi",
-    "fileSize": 62351,
+    "fileSize": 63414,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -841,7 +841,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://jetfilmizle.de&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-269429b4725f061346fb64811b2d195574a438b6246e7bd6eef78adf233cb26e"
+    "fileHash": "sha256-70eb05dbe1eb44c4385a3e4b028bef039f2595bb0d98257c463462418122f229"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KickTR.cs3",
@@ -877,7 +877,7 @@
       "Megix"
     ],
     "description": "Bir çok sitenin birleştiği toplama eklenti.",
-    "fileSize": 590210,
+    "fileSize": 590995,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -890,7 +890,7 @@
     ],
     "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorplus.png",
     "apiVersion": 1,
-    "fileHash": "sha256-45df95fdb60a5f23705ee2dcb44f5e02a838cdbf2cf5414dcf596582f8706726"
+    "fileHash": "sha256-eea42de583b60237c84b7a0b08e0f50a39e066eedc7d1c1ada29f1bcf54956bf"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/KultFilmler.cs3",
@@ -902,7 +902,7 @@
       "kraptor"
     ],
     "description": "Kült Filmler özenle en iyi filmleri derler ve iyi bir altyazılı film izleme deneyimi sunmayı amaçlar",
-    "fileSize": 30195,
+    "fileSize": 31282,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -911,7 +911,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://kultfilmler.net&size=32",
     "apiVersion": 1,
-    "fileHash": "sha256-96bf21f5c6245d3178fa8aa5c4939029b03892cd6e51c375014d954be084f276"
+    "fileHash": "sha256-6ebae096018715eb7cc09dbffab497cc980c76ad9414e4f28499676e89dad26e"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/MirrorVerse.cs3",
@@ -1054,7 +1054,7 @@
       "kerimmkirac"
     ],
     "description": "Selcukflix'te her türden en yeni ve en popüler dizi ve filmleri izlemenin keyfini çıkarın. Aksiyondan romantiğe, bilim kurgudan dramaya, geniş kütüphanemizde herkes için bir şey var.",
-    "fileSize": 65681,
+    "fileSize": 66745,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1063,7 +1063,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=selcukflix.com",
     "apiVersion": 1,
-    "fileHash": "sha256-16c2d31d382f29aa32db5a8d2c14cfca9ff0925861bee52acdbc058f4f1ccfae"
+    "fileHash": "sha256-55f9965d625ba1acf891bb70ace2ff9ffff04ef5c383c8a160418c8b0f83d86f"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SetFilmIzle.cs3",
@@ -1077,7 +1077,7 @@
       "ByAyzen"
     ],
     "description": "Setfilmizle sitemizde, donma yaşamadan Türkçe dublaj ve altyazılı filmleri ile dizileri muhteşem 1080p full HD kalitesinde izleyebilirsiniz.",
-    "fileSize": 69026,
+    "fileSize": 70148,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1085,7 +1085,7 @@
     ],
     "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.setfilmizle.uk/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-14f2d4f255743d9243f071a949823b6ed99ae0d93f69d80537ec252aa46b83fb"
+    "fileHash": "sha256-ae39703ebe14fde2af4b191415ff3206b9b4d2704b57aba5bbdaeec18d359297"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SezonlukDizi.cs3",
@@ -1098,7 +1098,7 @@
       "kerimmkirac"
     ],
     "description": "Güncel ve eski dizileri en iyi görüntü kalitesiyle bulabileceğiniz yabancı dizi izleme siteniz.",
-    "fileSize": 99883,
+    "fileSize": 100965,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1106,7 +1106,7 @@
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=sezonlukdizi6.com",
     "apiVersion": 1,
-    "fileHash": "sha256-21e2b9674560fe816406873e61b49af82e5702a119168f82e454429efc5c2917"
+    "fileHash": "sha256-f6305ab152badcc3cdaf373f6e6fe3c3c076e8850d35630187732cf025d177a7"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/SinemaCX.cs3",
@@ -1183,7 +1183,7 @@
       "kraptor"
     ],
     "description": "Anime izle, Anime tv, birbirinden farklı ve güzel animeleri keyifle seyredebileceğiniz Türk anime severlerin en popüler türkçe anime izleme sitesidir.",
-    "fileSize": 69842,
+    "fileSize": 70920,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1191,7 +1191,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.tranimeizle.io/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-05192762807867a1208a78dee9562ee426d5297141509d33cfecbb84524071b7"
+    "fileHash": "sha256-087d42661a88f68b5d67666f9c13c7e7d296016bb280ca385aa5625cd0b4a457"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TurkAnime.cs3",
@@ -1225,7 +1225,7 @@
       "ByAyzen"
     ],
     "description": "TRT1, Showtv, Kanal D ve daha fazla site tek bir eklentide birleşiyor.",
-    "fileSize": 166160,
+    "fileSize": 167435,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1233,7 +1233,7 @@
     ],
     "iconUrl": "https://i.imgur.com/Cff8v6J.png",
     "apiVersion": 1,
-    "fileHash": "sha256-820ff9474eee3f8fb4f60c299d256005a50873cd1e8381c98efa44694c395216"
+    "fileHash": "sha256-d9d75f07fbb29aff0c9501976b7437c060da787f073ec57ca5a83c3e5738d02d"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/TvDiziler.cs3",
@@ -1267,7 +1267,7 @@
       "ByAyzen"
     ],
     "description": "Web Drama Turkey - Kore, Çin, Japon Dizileri, Filmleri ve Animeler",
-    "fileSize": 54039,
+    "fileSize": 55096,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1275,7 +1275,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webdramaturkey.org/&size=40",
     "apiVersion": 1,
-    "fileHash": "sha256-5d4a9b1420b2a87a3aed3d34b39d3d494ebb1c6d17eab864e8e008065261eda4"
+    "fileHash": "sha256-521be83f28cd701dbb8f2afa19056a9b80858ca53134fbb807be43423fa9b5c5"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WebteIzle.cs3",
@@ -1288,7 +1288,7 @@
       "ByAyzen"
     ],
     "description": "Her türlü filmi ister dublaj ister altyazılı, en kaliteli bir şekilde izleyebileceğiniz arşivi en geniş gerçek film izleme siteniz.",
-    "fileSize": 81435,
+    "fileSize": 82346,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1296,7 +1296,7 @@
     ],
     "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://webteizle1.xyz&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-f5feb80c093ba0e6d00ddd2192433c67b47b52059c4f438b6e5870955740a1d7"
+    "fileHash": "sha256-5917bc89f4ac18a055877637dd74bd702872768859194c176479d9988d4d61b5"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/WFilmizle.cs3",
@@ -1328,7 +1328,7 @@
       "kraptor"
     ],
     "description": "Son çıkan yabancı dizi ve filmleri yabancidizi' de izle. En yeni yabancı film ve diziler, türkçe altyazılı yada dublaj olarak 1080p kalitesinde hd izle.",
-    "fileSize": 40028,
+    "fileSize": 41131,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1336,7 +1336,7 @@
     ],
     "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://yabancidizi.so/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-198aa2439dbac809685dc348b925d5ccb54681d18886440efec8ee172734fbf2"
+    "fileHash": "sha256-1e9c0abf321750f9af1f4370b0685866d42f827096093337d708866c0bb45dc4"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YeniKaynak.cs3",
@@ -1348,7 +1348,7 @@
       "kraptor"
     ],
     "description": "İran Sinemasının Yeni Adresi - İran Filmleri, İran Dizileri, İslami Filmler, Dini Filmler, Dini Sinema, İslami Diziler,...",
-    "fileSize": 22355,
+    "fileSize": 23519,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1357,7 +1357,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.yenikaynak.com/&size=16",
     "apiVersion": 1,
-    "fileHash": "sha256-251db120dd8d0c9326702f9b5506fb3455f6500d65109f1e417845d40674e9d0"
+    "fileHash": "sha256-5d741267b5171e4886f10f680ad379c9fc3a36a5dfe6db7346462462401545fc"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YesilCamTv.cs3",
@@ -1369,7 +1369,7 @@
       "kraptor"
     ],
     "description": "Türk sinemasının unutulmaz filmler bu adreste.",
-    "fileSize": 20768,
+    "fileSize": 22326,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1377,7 +1377,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://yesilcamtv.com.tr&size=64",
     "apiVersion": 1,
-    "fileHash": "sha256-f02428285c8a9ca3dc63b8299a5f50b15b9ee816321483184891be9d5a5182e6"
+    "fileHash": "sha256-062e14cb3ad9238f9560a178e8f4b1093933afdc13dc66c79aa21dcb5d27e3f0"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/Youtube.cs3",
