@@ -160,7 +160,7 @@
       "kerimmkirac"
     ],
     "description": "Asya Fanatikleri, asya dizilerini izleme imkanı sunar. Kore dizileri izle, asyafanatikleri kore dizileri, tayvan dizileri izle, çin dizileri izle, anime izle.",
-    "fileSize": 27470,
+    "fileSize": 28602,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -168,7 +168,7 @@
     ],
     "iconUrl": "https://asyafanatiklerim.com/wp-content/uploads/2018/08/md_5aaeb1de75bea.png",
     "apiVersion": 1,
-    "fileHash": "sha256-5e2496c585082d26f870ddfade3491adfea919197815823f243ad856ccf23528"
+    "fileHash": "sha256-d563c569560cfe911769035d6b9ed0b45721b416e837ab3f2d9a19e2a949bb64"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/AsyaMinik.cs3",
@@ -1411,7 +1411,7 @@
       "kraptor"
     ],
     "description": "Youtube",
-    "fileSize": 108145,
+    "fileSize": 108163,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
@@ -1422,7 +1422,7 @@
     ],
     "iconUrl": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.youtube.com/&size=128",
     "apiVersion": 1,
-    "fileHash": "sha256-b644cbdfdaf5c6e8b38e1031e9d0b4b94aeefbd71dcc4da7aee3c6be7002c330"
+    "fileHash": "sha256-ab626f0981324c90d4ac46420ed38d56dda259cca4307e1792cf009f17aa0aaf"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/YTS.cs3",
