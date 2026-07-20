@@ -575,22 +575,22 @@
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/DramaDizilerim.cs3",
     "status": 1,
-    "version": 2,
+    "version": 3,
     "name": "DramaDizilerim",
     "internalName": "DramaDizilerim",
     "authors": [
       "kraptor"
     ],
     "description": "Shorts formatında en popüler Kore dizileri, Çin dizileri, Asya dizileri ve drama içerikleri.",
-    "fileSize": 22947,
+    "fileSize": 23825,
     "repositoryUrl": "https://github.com/Kraptor123/cs-kraptor",
     "language": "tr",
     "tvTypes": [
-      "TvSeries"
+      "AsianDrama"
     ],
     "iconUrl": "https://www.google.com/s2/favicons?sz=64&domain=dramadizilerim.com",
     "apiVersion": 1,
-    "fileHash": "sha256-b68f3cea28894276564c486be6c53ff2e478e9a9d7a59fc02bb163393e06d6a6"
+    "fileHash": "sha256-38936f72e0f14bfb61886b24747fc25584f31911b7990acda7e7e2ee179059cd"
   },
   {
     "url": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/builds/FilmEkseni.cs3",
