@@ -1,9 +1,0 @@
-{
-  "iconUrl": "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/master/.github/icons/logo/kraptorfavicon.png",
-  "name": "Kraptor'un CloudStream Reposu | @kraptor123",
-  "description": "Tüm linklerim: https://linktr.ee/kraptorcs",
-  "manifestVersion": 1,
-  "pluginLists": [
-    "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/builds/plugins.json"
-  ]
-}
