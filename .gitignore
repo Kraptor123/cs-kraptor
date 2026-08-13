@@ -1,0 +1,5 @@
+*
+!build/
+!build/**/
+build/*
+!build/**/*.cs3
